@@ -9,10 +9,10 @@ router.post('/addQuestion', function(req, res) {
     // will hold set under category of question
     let questionsAnswerSetID = req.body.questionsAnswerSetID;
     // will code cateogry of question
-    let questionsCategoryID=req.body.questionsCategoryID;
+    let questionsCategoryID = req.body.questionsCategoryID;
     //let words=[];
     // extract the main words from the sentence
-    addQuestion(res,questionsCategoryID, questionsAnswerSetID, question, function(response) {
+    addQuestion(res, questionsCategoryID, questionsAnswerSetID, question, function(response) {
         console.log('Inside resultCallback');
         res.send(response);
     });

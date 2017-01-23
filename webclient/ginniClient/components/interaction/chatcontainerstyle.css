@@ -1,12 +1,11 @@
 .formstyle {
     width: 89%;
-    
 }
 
 #ginniview {
     margin-left: 2%;
-    margin-top: 3%;
-    margin-bottom: 2%;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 #geniestyle {
@@ -15,6 +14,8 @@
 
 #assistantView {
     margin-left: 2%;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 #textinput {

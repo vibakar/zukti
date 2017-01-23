@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AssistantUserView from './assistantUserView';
-import AssistantGinniView from './assistantGinniView';
-import {Form} from 'semantic-ui-react';
 import {Scrollbars} from 'react-custom-scrollbars';
 import InputUserMessage from './inputUserMessage';
 import './chatcontainerstyle.css';
@@ -38,13 +36,15 @@ export default class AssistantChatContainer extends React.Component {
     }
     pushGinniMessages(ginniReply) {
 
-        let index = this.state.messages.length - 1;
-        let ginniReplyDisplay = (
-            <div ref={(ref) => this['_div' + index] = ref} key={index}>
-                {ginniReply}
-            </div>
-        );
-        this.state.messages.push(ginniReply);
+        ginniReply.forEach((reply) => {
+          let index = this.state.messages.length - 1;
+            let displayItem = (
+                <div ref={(ref) => this['_div' + index] = ref} key={index}>
+                    {reply}
+                </div>
+            );
+            this.state.messages.push(displayItem);
+        });
         this.setState({messages: this.state.messages});
     }
     pushUserMessages(message) {
@@ -64,7 +64,6 @@ export default class AssistantChatContainer extends React.Component {
         return (
             <div className='formstyle'>
                 <h1 id='chatheading'>I Am Your Code Assistant/Genie</h1>
-
                 <Scrollbars id='ginni' renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
                     display: "none",
                     position: "right"

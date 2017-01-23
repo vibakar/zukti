@@ -11,7 +11,6 @@ export default class AssistantView extends React.Component {
         return (
 
             <Feed id='assistantView'>
-
                 <Feed.Event>
                     <Feed.Label image='../../images/avatar.png'/>
                     <Feed.Content>

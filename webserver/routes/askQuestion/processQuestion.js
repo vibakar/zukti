@@ -1,32 +1,41 @@
 let express = require('express');
 let router = express.Router();
-let keywordExtractor = require('keyword-extractor');
 let extractInfoFromQuestion = require('../natural');
 let getPossibleAnswer = require('./getPossibleAnswer');
 
 router.post('/', function(req, res) {
-    let possibleQuestionsAnswers = [];
     let question = req.body.question;
     // get info about question
     let questionInfo = extractInfoFromQuestion(question.value);
     let verbs = questionInfo.verbs;
-    let keywords = questionInfo.keywords;
     let reactTerms = questionInfo.reactTerms;
-    let resultCallback = function(result) {
-
-        if(result.records.length==0){
-          res.json({answer:'I will respond to your answer later'});
+    let resultNotFoundCallback = function(noInfo) {
+        if(noInfo){
+          res.json({
+            answer: "Sorry I didn't found and answer I ll notify u soon"
+          });
         }
         else{
-          let answer=result.records[0]._fields[0].properties.textAnswer;
-          res.json({answer:answer});
+          res.json({
+            answer: "Here is what i have for you",
+            keywords:reactTerms
+          });
         }
-        res.json({answer:'a',result:result});
+    };
+    let resultFoundCallback = function(finalResult) {
+        res.json({
+            answer: finalResult.textAnswer,
+            result: finalResult.otherResult
+        });
+    };
+    if (reactTerms.length === 0) {
+        res.json({
+            answer: 'I am not able to understand you'
+        });
     }
-    if (reactTerms.length==0) {
-      res.json({answer:'I am not able to understand you'});
+    else{
+      getPossibleAnswer(question, reactTerms, verbs, resultFoundCallback, resultNotFoundCallback);
     }
-    getPossibleAnswer(keywords,reactTerms,verbs,resultCallback);
 });
 
 module.exports = router;

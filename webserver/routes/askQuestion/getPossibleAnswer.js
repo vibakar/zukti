@@ -1,41 +1,45 @@
 let getNeo4jDriver = require('./../../neo4j/connection');
-
-module.exports = function(keywords, reactTerms, verbs, resultCallback) {
+let selectBestPossibleAnswers = require('./selectBestPossibleAnswer');
+module.exports = function(question, reactTerms, verbs, resultFoundCallback, resultNotFoundCallback) {
     // thought IF KEYWORD THEN SEARCH THOSE LABELS ELSE SEARCH ENTIRE
-    let whereQuery = '';
+    // it includes verb relations
     let relation = '';
     let query = '';
-
-    if (keywords.length != 0) {
-        keywords.forEach(function(keyword) {
-            whereQuery += 'OR probNodes:' + keyword;
-        });
-    }
-    if (verbs.length != 0) {
+    if (verbs.length === 0) {
+        resultNotFoundCallback(false);
+    } else {
         verbs.forEach(function(verb) {
             relation += ':' + verb + '|';
         });
         relation = relation.substring(0, relation.length - 1);
-    }
-    if (verbs.length == 0) {
-        relation = ':belongs_to';
-    }
-    if (verbs.length == 0 && keywords.length == 0) {
-        whereQuery = '';
-        query = ` MATCH (q:concept:${reactTerms[0]}) return q`;
-    } else {
         let reactKeywords = 'tags';
         reactTerms.forEach(function(terms) {
-            reactKeywords += ':' + terms
-        })
-        query = `MATCH (probNodes:${reactKeywords})-[${relation}]->(results)
-      WHERE probNodes:${reactTerms[0]} ${whereQuery}
-      return results,probNodes`;
-    }
-    console.log('*********************');
-    console.log(query);
-    console.log('**********************');
+            reactKeywords = reactKeywords + ' : ' + terms
+        });
+        query = `MATCH (questions:${reactKeywords})-[${relation}]->(results)
+                 return
+                 [questions.question,results.textAnswer,results.videoAnswer,results.blogAnswer,results.CodeSnippetAnswer]`;
+        let questionAnswerResultCallback = function(questionAsked, result) {
+            if (result.records.length === 0) {
+                resultNotFoundCallback();
+            } else {
+                let records = result.records;
+                // tihs is use classifier
+                let answer = selectBestPossibleAnswers(questionAsked, records);
+                resultFoundCallback(answer);
+            }
+        }
 
+        let errorCallback = function errorCallback() {
+            resultNotFoundCallback(true);
+        }
+
+        queryNeo4j(query, question, questionAnswerResultCallback, errorCallback);
+    }
+}
+
+
+function queryNeo4j(query, question, resultCallback, errorCallback) {
     let session = getNeo4jDriver().session();
     session
         .run(query)
@@ -43,10 +47,10 @@ module.exports = function(keywords, reactTerms, verbs, resultCallback) {
             console.log(result);
             // Completed!
             session.close();
-            resultCallback(result);
+            resultCallback(question, result);
         })
         .catch(function(error) {
-            resultCallback(error);
+            console.log(error);
+            errorCallback(error);
         });
-
 }
