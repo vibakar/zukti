@@ -1,0 +1,47 @@
+.heading1
+{
+
+  margin-left:38px;
+  color: white;
+}
+.heading2
+{
+  margin-left:30px;
+  color: white;
+}
+.heading3
+{
+  margin-left:45px;
+  color: white;
+}
+.heading4
+{
+  margin-left:15px;
+  color: white;
+}
+.heading5
+{
+  margin-left:45px;
+  color: white;
+}
+.heading6
+{
+
+  margin-left:25px;
+  color: white;
+}
+.iconstyle
+{
+  margin-bottom:60px;
+}
+#menustyle
+{
+  background-color:white;
+  height:90px;
+}
+#iconstyle{
+  margin-top: 40px;
+  margin-left: 1280px;
+  height:20px;
+
+}

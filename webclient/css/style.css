@@ -1,0 +1,22 @@
+/* to prevent horizontal scrolling in Assitant*/
+.assistantView{
+  float:right;
+
+}
+
+.GinniView{
+   margin-top: 40px;
+
+}
+.reminder{
+  background:#FFFFFF;
+}
+
+.example-appear {
+   opacity: 0.01;
+}
+
+.example-appear.example-appear-active {
+   opacity: 1;
+   transition: opacity 500ms ease-in;
+}

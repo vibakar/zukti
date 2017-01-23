@@ -1,0 +1,26 @@
+#fullbackground
+{
+  backgroundColor:gray;
+}
+#tablecolor
+{
+backgroundColor:lightgray;
+}
+#cardstyle
+{
+width:80%;
+margin-top:-4px;
+}
+#header
+{
+  margin-left:2%;
+  margin-top:2%;
+}
+#commentstyle
+{
+  margin-left:2%;
+}
+#menustyle
+{
+margin-left:32%;
+}
