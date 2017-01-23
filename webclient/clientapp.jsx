@@ -19,6 +19,7 @@ import ClientProfile from './ginniClient/components/clientprofile/clientprofile'
 import Logout from './ginniClient/components/logout/logout';
 import ForgetpasswordEmail from './applicationHome/forgetpasswordEmail';
 import SentMailPage from './applicationHome/SentMailPage';
+import Addnode from './ginniAdmin/components/buildNodeAndRelationship/createNodeAndRelation.jsx';
 
 injectTapEventPlugin();
 
@@ -39,6 +40,8 @@ ReactDOM.render(
   <Route path='/profile' component={ClientProfile}/>
   <Route path='/logout' component={Logout}/>
   <Route path='/log' component={LogoutAdmin}/>
+  <Route path='/addnode' component={Addnode}/>
+
 
       </Router>
 ,document.getElementById('mountapp')
