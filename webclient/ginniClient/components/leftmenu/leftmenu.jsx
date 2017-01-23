@@ -29,7 +29,7 @@ handleItemClick = (e, {name}) => this.setState({activeItem: name})
             <div  id="leftbarmenu">
                 <Sidebar as={Menu} className='fixed' animation='slide along' width='thin' visible={true} icon='labeled' vertical inverted>
                     <Menu.Item name='Genie' active={activeItem === 'Genie'} onClick={this.handleItemClick}>
-                      <a href="#/homeclient">  <Image src='../../images/ginianim.gif'  size='tiny' avatar/></a>
+                      <a href="#/clienthome">  <Image src='../../images/ginianim.gif'  size='tiny' avatar/></a>
                     </Menu.Item>
                 <Menu.Item name='Home' active={activeItem === 'Home'} onClick={this.handleItemClick}>
                      <Icon name='home' color='teal'/>
@@ -47,10 +47,10 @@ handleItemClick = (e, {name}) => this.setState({activeItem: name})
                     <Menu.Item name='Unanswered Queries' active={activeItem === 'Unanswered Queries'} onClick={this.handleItemClick}>
                         <Icon name='help' color='teal'/>
                       Unanswered Queries
-                    </Menu.Item>
+                    </Menu.Item><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                     <Menu.Item name='LogOut' active={activeItem === 'LogOut'} onClick={this.handleItemClick}>
-                        <Icon name='sign out' color='teal'/>
-                        LogOut
+                        <a href='#/logout'><Icon name='sign out' color='teal'/>
+                        LogOut</a>
                     </Menu.Item>
                 </Sidebar>
                 <Sidebar.Pusher id="sidebarpusher">

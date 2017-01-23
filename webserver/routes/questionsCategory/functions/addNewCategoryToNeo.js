@@ -1,12 +1,12 @@
+// to get driver from connection.js file in neo4j
+let getNeo4jDriver = require('../../../neo4j/connection');
+
 module.exports = function(categoryName, successCB, failureCB) {
 
-
-    let neo4j = require('neo4j-driver').v1;
-    let driver = neo4j.driver("bolt://192.168.1.34", neo4j.auth.basic("neo4j", "Wilkinson"));
+    console.log(getNeo4jDriver);
     let query = `CREATE (qc:questionCategory {category:${JSON.stringify(categoryName)}}) return qc`;
-    let session = driver.session();
-    session
-        .run(query)
+    let session = getNeo4jDriver().session();
+    session.run(query)
         .then((result) => {
             console.log(result);
             // Completed!

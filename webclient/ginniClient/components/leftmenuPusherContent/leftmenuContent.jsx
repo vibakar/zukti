@@ -23,10 +23,7 @@ export default class LeftMenuContent extends React.Component{
         return  <TopMenu/>
         }
         case 'Unanswered Queries':{
-        return  <HomeClient/>
-        }
-        case 'LogOut':{
-        return  <HomeClient/>
+        return  <TopMenu/>
         }
       }
   }

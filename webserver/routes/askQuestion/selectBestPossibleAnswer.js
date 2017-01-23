@@ -1,6 +1,5 @@
 var natural = require('natural');
 
-
 module.exports = function(question,possibleQuestionsAnswers){
   // add questions to the classifier
   var classifier = new natural.BayesClassifier();

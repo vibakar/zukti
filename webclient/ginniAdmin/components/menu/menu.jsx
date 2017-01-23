@@ -36,7 +36,7 @@ export default class SidebarBot extends Component {
             }}>
                 <Sidebar as={Menu} className='fixed' animation='slide along' width='thin' visible={true} icon='labeled' vertical inverted>
                     <Menu.Item name='Genie'>
-                        <a href="/home"><Image src='../../images/genie1.gif'  size='massive' avatar/></a>
+                        <a href="/home"><Image src='../../images/ginianim.gif'  size='tiny' avatar/></a>
                     </Menu.Item>
                     <Menu.Item name='SetupAi' active={activeItem === 'SetupAi'} onClick={this.handleItemClick}>
                         <Icon name='book' color='teal'/>
@@ -57,9 +57,12 @@ export default class SidebarBot extends Component {
                     <Menu.Item name='UseTheBot' active={activeItem === 'UseTheBot'} onClick={this.handleItemClick}>
                         <Icon name='book' color='teal'/>
                         Use the bot
+                    </Menu.Item><br/><br/><br/><br/><br/><br/><br/><br/>
+                    <Menu.Item name='UseTheBot'>
+                          <a href='#/log'><Icon name='sign out' color='teal'/>
+                      Logout</a>
                     </Menu.Item>
-
-                </Sidebar>
+                  </Sidebar>
                 <Sidebar.Pusher className='container' style={{
                     width: '90%',
                     height:'100%'

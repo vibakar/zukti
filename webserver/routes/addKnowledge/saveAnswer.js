@@ -1,5 +1,4 @@
-let neo4j = require('neo4j-driver').v1;
-let driver = neo4j.driver("bolt://192.168.1.34", neo4j.auth.basic("neo4j", "Wilkinson"));
+let getNeo4jDriver = require('./../../neo4j/connection');
 module.exports = function(nodeID, answer, type, successCB, failureCB) {
 
 
@@ -7,7 +6,7 @@ module.exports = function(nodeID, answer, type, successCB, failureCB) {
                 SET
                 a.${type}=${JSON.stringify(answer)}`;
 
-    var session = driver.session();
+    var session = getNeo4jDriver().session();
     console.log('***************************************');
     console.log(query);
     console.log('**************************************');

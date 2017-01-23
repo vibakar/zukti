@@ -1,12 +1,11 @@
-let neo4j = require('neo4j-driver').v1;
-let driver = neo4j.driver("bolt://192.168.1.34", neo4j.auth.basic("neo4j", "Wilkinson"));
+let getNeo4jDriver = require('../../../neo4j/connection');
 
 module.exports = function(successCB, failureCB) {
 
 
     let query = `MATCH (qc:questionCategory) WHERE qc.category<>'' RETURN qc`;
 
-    let session = driver.session();
+    let session = getNeo4jDriver().session();
     session
         .run(query)
         .then(function(result) {

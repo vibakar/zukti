@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card, Rating, Grid,  List, Image, Header,Menu,Button,Divider,Icon,Modal,Input} from 'semantic-ui-react';
-import './carouselstyle.css';
+import './applicationHome.css';
 import {Scrollbars} from 'react-custom-Scrollbars';
 import {Link} from 'react-router';
 

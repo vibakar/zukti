@@ -1,5 +1,4 @@
-let neo4j = require('neo4j-driver').v1;
-let driver = neo4j.driver("bolt://192.168.1.34", neo4j.auth.basic("neo4j", "Wilkinson"));
+let getNeo4jDriver = require('./../../neo4j/connection');
 var extractInfoFromQuestion = require('../natural');
 let reactKeyword = require('../../../config/concepts');
 module.exports = function(res, questionsCategoryID, questionsAnswerSetID, question, resultCallback) {
@@ -34,7 +33,7 @@ module.exports = function(res, questionsCategoryID, questionsAnswerSetID, questi
                  ${relationshipQuery}
                 ${conceptInQuestionQuery}`;
     console.log(query);
-    let session = driver.session();
+    let session = getNeo4jDriver().session();
     session.run(query)
     session
         .then(function(result) {
