@@ -1,6 +1,7 @@
 .formstyle {
     width: 89%;
-}
+    margin-bottom: 0%;
+      }
 
 #ginniview {
     margin-left: 2%;
@@ -20,14 +21,15 @@
 
 #textinput {
     border-color: teal;
-    margin-top: 6%;
+    margin-top: 5%;
     background-color: gray;
+    vertical-align: bottom;
+    position: relative;
 }
-
 #chatheading {
     text-align: center;
 }
 
 #ginni {
-    margin-top: 4%;
+    margin-top:3%;
 }

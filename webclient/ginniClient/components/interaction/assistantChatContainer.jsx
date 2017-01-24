@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import AssistantUserView from './assistantUserView';
 import {Scrollbars} from 'react-custom-scrollbars';
 import InputUserMessage from './inputUserMessage';
+import {Input} from 'semantic-ui-react';
 import './chatcontainerstyle.css';
+import {Menu, Icon} from 'semantic-ui-react';
 export default class AssistantChatContainer extends React.Component {
-
     constructor() {
         super();
         this.state = {
@@ -19,7 +20,7 @@ export default class AssistantChatContainer extends React.Component {
     componentDidMount() {
 
         // Scroll to the bottom on initialization
-        var len = this.state.messages.length - 1;
+        var len = this.state.messages.length - 2;
         const node = ReactDOM.findDOMNode(this['_div' + len]);
         if (node) {
             node.scrollIntoView();
@@ -28,7 +29,7 @@ export default class AssistantChatContainer extends React.Component {
 
     componentDidUpdate() {
         // Scroll as new elements come along
-        var len = this.state.messages.length - 1;
+        var len = this.state.messages.length - 2;
         const node = ReactDOM.findDOMNode(this['_div' + len]);
         if (node) {
             node.scrollIntoView();
@@ -37,7 +38,7 @@ export default class AssistantChatContainer extends React.Component {
     pushGinniMessages(ginniReply) {
 
         ginniReply.forEach((reply) => {
-          let index = this.state.messages.length - 1;
+          let index = this.state.messages.length-1;
             let displayItem = (
                 <div ref={(ref) => this['_div' + index] = ref} key={index}>
                     {reply}
@@ -60,10 +61,13 @@ export default class AssistantChatContainer extends React.Component {
     }
 
     render() {
-
         return (
-            <div className='formstyle'>
-                <h1 id='chatheading'>I Am Your Code Assistant/Genie</h1>
+            <div className='formstyle' style={{backgroundImage: "url('https://barbarashdwallpapers.com/wp-content/uploads/2011/01/White-abstract-water-wallpaper.jpg')"}}>
+                <Menu secondary>
+                  <Menu.Item position='left'>
+                    <Input transparent icon='search' placeholder='Search your content'/>
+                </Menu.Item>
+              </Menu>
                 <Scrollbars id='ginni' renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
                     display: "none",
                     position: "right"
