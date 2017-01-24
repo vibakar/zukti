@@ -20,6 +20,7 @@ import Logout from './ginniClient/components/logout/logout';
 import ForgetpasswordEmail from './applicationHome/forgetpasswordEmail';
 import SentMailPage from './applicationHome/SentMailPage';
 import Addnode from './ginniAdmin/components/buildNodeAndRelationship/createNodeAndRelation.jsx';
+import Graph from './ginniAdmin/components/databasegraph/graph';
 
 injectTapEventPlugin();
 
@@ -28,6 +29,7 @@ ReactDOM.render(
       <Route path='/' component={ApplicationHome}/>
       <Route path='/adminHome' component={AdminHome}/>
       <Route path='/clienthome' component={HomeClient}/>
+        <Route path='/graph' component={Graph}/>
         <Route path='/react' component={react}/>
         <Route path='/newpassword' component={NewPassword}/>
           <Route path='/login' component={LoginPage}/>
