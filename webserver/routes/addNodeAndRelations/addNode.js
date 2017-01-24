@@ -15,11 +15,11 @@ router.post('/a',function(req,res){
     let propertyvaluerelation=req.body.propertyvaluerelation;
     let node1detail=req.body.node1detail;
     let node1propdetail=req.body.node1propdetail;
-    let relationdetail=req.body.relationdetail;
+    let relationdetail=req.body.relationdetail.value;
     let relationpropdetail=req.body.relationpropdetail;
     let node2detail=req.body.node2detail;
     let node2propdetail=req.body.node2propdetail;
-
+    let relationChecked=req.body.relationChecked;
 
 
     let resultCallback=function(response){
@@ -32,7 +32,7 @@ router.post('/a',function(req,res){
     console.log(relation);
     console.log("********************************************************");
 
-    addnodes(node1,node2,relation,propertykeynode1,propertyvaluenode1,propertykeynode2,propertyvaluenode2,propertykeyrelation,propertyvaluerelation,node1detail,node1propdetail,relationdetail,relationpropdetail,node2detail,node2propdetail,resultCallback,res);
+    addnodes(node1,node2,relation,propertykeynode1,propertyvaluenode1,propertykeynode2,propertyvaluenode2,propertykeyrelation,propertyvaluerelation,node1detail,node1propdetail,relationdetail,relationpropdetail,node2detail,node2propdetail,relationChecked,resultCallback,res);
     res.send('saved');
 });
 module.exports = router;
