@@ -65,8 +65,7 @@ export default class AssistantChatContainer extends React.Component {
         return (
             <div className='formstyle' style={{backgroundImage: "url('../../images/wall14.jpg')"}}>
               <Menu secondary>
-                <Menu.Item secondary/>
-                <Menu.Item secondary/>
+                <Menu.Item secondary position='right'/>
               <Menu.Item position='left'>
                   <Input transparent className='icon' icon='search' placeholder='Search your content' focus/>
               </Menu.Item>

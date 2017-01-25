@@ -74,7 +74,7 @@ export default class ForgotPassword extends React.Component
     }
     render() {
         return (
-            <div>
+            <div style={{backgroundImage: "url('../../images/wall.jpg')", height: '100%'}}>
                 <br/><br/>
                 <Grid columns={3}>
                     <Grid.Column width={5}>
@@ -120,7 +120,7 @@ export default class ForgotPassword extends React.Component
                                     <Icon circular name='mail outline'/>
                                     <label>Email</label>
                                 </h3>
-                                <Form.Input placeholder='Email id' name="email" onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
+                                <Form.Input placeholder='Email id' id='inputtext' name="email" onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
                                 <p>{this.state.userexists}</p>
                                 <p>{this.state.errormessageemail}</p>
                             </Form.Field>
