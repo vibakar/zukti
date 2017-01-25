@@ -75,10 +75,10 @@ export default class NewPassword extends React.Component {
                     <Form.Field >
                          <h3 id='heading'><Icon name='lock' id='icon'/>Reset your new password</h3><Divider id='divider'/>
                         <h3>Keep your credential secure by changing it </h3><br/>
-                        <Form.Input type='password' placeholder='new password' circular id='fields' name="password" onChange={this.ChangePassword.bind(this)} error={this.state.errorpassword} required/><br/>
-                        <p>{this.state.errormessagepassword}</p>
-                        <Form.Input type='password' placeholder='confirm password' id='fields' name="repassword" onChange={this.ChangeRepassword.bind(this)} error={this.state.errorrepassword} required/><br/>
-                        <p>{this.state.errormessage}</p>
+                        <Form.Input type='password' placeholder='new password' circular id='fields' icon='key' iconPosition='left' name="password" onChange={this.ChangePassword.bind(this)} error={this.state.errorpassword} required/><br/>
+                        <p style={{color:'#a54f4f'}}>{this.state.errormessagepassword}</p>
+                        <Form.Input type='password' placeholder='confirm password' id='fields' icon='key' iconPosition='left' name="repassword" onChange={this.ChangeRepassword.bind(this)} error={this.state.errorrepassword} required/><br/>
+                        <p style={{color:'#a54f4f'}}>{this.state.errormessage}</p>
                         <Button size='small' id='submit' type='submit'>submit</Button>
                     </Form.Field>
                 </Form>

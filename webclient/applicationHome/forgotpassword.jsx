@@ -108,7 +108,7 @@ export default class ForgotPassword extends React.Component
                     </Grid.Column>
                     <Grid.Column Width={6} id="gridstyle">
                        <Header id="headerstylefor">
-                            <h2>Request a Password Reset</h2>
+                            <h2><Icon name='mail' id='mailicon'/>Request a Password Reset</h2>
                         </Header>
                         <Divider/>
                         <p id="textstyle">
@@ -116,13 +116,9 @@ export default class ForgotPassword extends React.Component
                         </p>
                         <Form onSubmit={this.onSubmitData}>
                             <Form.Field id="forgotfield">
-                                <h3>
-                                    <Icon circular name='mail outline'/>
-                                    <label>Email</label>
-                                </h3>
-                                <Form.Input placeholder='Email id' id='inputtext' name="email" onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
-                                <p>{this.state.userexists}</p>
-                                <p>{this.state.errormessageemail}</p>
+                                <Form.Input placeholder='email id' id='inputtext' name="email" icon='mail outline' iconPosition='left' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
+                                <p style={{color:'green'}}>{this.state.userexists}</p>
+                                <p style={{color:'#a54f4f'}}>{this.state.errormessageemail}</p>
                             </Form.Field>
                             <Button id="buttonstylefor" type="submit">Send
                             </Button>

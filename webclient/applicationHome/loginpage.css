@@ -1,9 +1,10 @@
-#modalwindowlogin
+#formstyle
 {
-  width:800px;
-  height:500px;
-  margin-left:-350px;
-  margin-top: -500px;
+  border-style: solid;
+  border-width: thin;
+  border-left-width: medium;
+  border-right-width: medium;
+  margin-top: 20px;
 }
 #headerstyle
 {
@@ -22,21 +23,17 @@
 #forgotpassword
 {
   margin-left: 130px;
+
 }
 #formfieldlogin
 {
-  margin-top:15px;
   width:250px;
   height:50px;
-  margin-left: 10px;
+  margin-left: 45px;
 }
-
 #buttonwidthfacebook{
   width:250px;
-}
-#buttonsegment
-{
-  margin-top: 80px;
+  margin-top: 9%;
 }
 #buttonwidthgoogle{
   width:250px;
@@ -44,20 +41,23 @@
 }
 #buttonwidth1{
   width:245px;
+  margin-top: 20px;
+  margin-left: 16%;
 }
 #footer
 {
-  margin-left: 10px;
+  margin-left:50px;
 }
+
 #stylelist
 {
   margin-left:200px;
 }
-
 @media only screen and (max-width:360px) {
 
   #buttonwidthfacebook{
     width:250px;
+    margin-top: -60px;
   }
 
   #buttonwidthgoogle{
@@ -67,7 +67,6 @@
   {
     margin-top: -20px;
   }
-
 }
 @media only screen and (max-width:414px) {
 
@@ -117,7 +116,6 @@
 
   #buttonwidthfacebook{
     width:220px;
-    margin-left: 0;
 
   }
   #buttonwidthgoogle{
@@ -127,7 +125,7 @@
   }
   #buttonsegment
   {
-    margin-top: 80px;
+    margin-top: 0px;
   }
   #formfieldlogin
   {
@@ -144,5 +142,4 @@
   {
     font-size: 12px;
   }
-
 }
