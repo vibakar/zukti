@@ -2,34 +2,31 @@
     width: 89%;
     margin-bottom: 0%;
       }
-
 #ginniview {
     margin-left: 2%;
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
 
+    
+}
 #geniestyle {
     margin-left: 2%;
 }
-
+.content {
+  overflow: auto;
+  width:89%;
+}
 #assistantView {
     margin-left: 2%;
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
 
+
+}
 #textinput {
     border-color: teal;
     margin-top: 5%;
     background-color: gray;
-    vertical-align: bottom;
-    position: relative;
-}
+  }
 #chatheading {
     text-align: center;
 }
-
 #ginni {
     margin-top:3%;
 }

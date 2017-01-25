@@ -4,6 +4,7 @@ import BuildAi from '../buildAi/questionSetDisplay'
 import UserTable from '../users/usertable';
 import Analytics from '../Analytics/info';
 import BroadCast from '../broadCast/broadCast';
+import TrainBot from '../trainbot/trainbot';
 export default class Content extends React.Component {
     constructor(props) {
         super(props);
@@ -30,6 +31,10 @@ export default class Content extends React.Component {
                 {
                     return <BuildAi/>
                 }
+                case 'TrainBot':
+                    {
+                        return <TrainBot/>
+                    }
         }
     }
 }

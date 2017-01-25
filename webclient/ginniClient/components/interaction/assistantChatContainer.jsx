@@ -68,11 +68,9 @@ export default class AssistantChatContainer extends React.Component {
                     <Input transparent icon='search' placeholder='Search your content'/>
                 </Menu.Item>
               </Menu>
-                <Scrollbars id='ginni' renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
-                    display: "none",
-                    position: "right"
-                }}/>} autoHeight autoHeightMin={400}>
-                    {this.state.messages}
+                <Scrollbars id='ginni' renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{display: "none",
+                position: "right" }}/>} autoHeight autoHeightMin={400}>
+                    <div className="content">{this.state.messages}</div>
                 </Scrollbars>
                 <InputUserMessage handlerUserReply={this.pushUserMessages} handleGinniReply={this.pushGinniMessages}/>
             </div>
