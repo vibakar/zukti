@@ -15,10 +15,12 @@ import GraphData from './graphData';
 export default class Info extends React.Component {
     render() {
         return (
+          <div  style={{backgroundImage: "url('../../images/wall.jpg')"}}>
             <Grid style={{
                 width: '95%',
                 margin: 'auto',
-               'background-color':'#f3f2f2'
+               'background-color':'#f3f2f2',
+               backgroundImage: "url('../../images/wall.jpg')"
             }}>
                 <Grid.Row>
                       <Card.Group className='container' stackable itemsPerRow={3}>
@@ -99,7 +101,9 @@ export default class Info extends React.Component {
                 <Grid.Row>
                   <GraphData/>
                 </Grid.Row>
+                <Grid.Row></Grid.Row>
             </Grid>
+            </div>
         )
     }
 }

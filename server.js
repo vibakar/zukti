@@ -9,6 +9,8 @@ const session = require('express-session');
 var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackHotMiddleware = require('webpack-hot-middleware');
 var config = require('./webpack.config');
+var addnode = require('./webserver/routes/addNodeAndRelations/addNode');
+var graph = require('./webserver/routes/graphdata/graphroute');
 
 var addKnowledge=require('./webserver/routes/addKnowledge/question');
 var askQuestion = require('./webserver/routes/askQuestion/processQuestion');
@@ -67,7 +69,9 @@ require('./webserver/routes/auth.js')(app, passport);
 //Ruotes
 app.use('/qa',addKnowledge);
 app.use('/qc',questionCategory);
+app.use('/graph',graph);
 app.use('/askQuestion',askQuestion);
+app.use('/cn',addnode);
 
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,

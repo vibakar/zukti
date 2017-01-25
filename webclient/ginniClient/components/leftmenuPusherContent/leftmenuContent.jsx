@@ -13,7 +13,7 @@ export default class LeftMenuContent extends React.Component{
         return  <DefaultPage/>
       }
         case 'Home':{
-        return  <DefaultPage/>
+        return  <DefaultPage />
         }
         case 'ChatBot':{
         return  <AssistanView/>

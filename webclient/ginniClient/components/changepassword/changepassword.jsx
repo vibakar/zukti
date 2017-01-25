@@ -11,7 +11,7 @@ export default class ChangePassword extends React.Component {
     modalOpen: true,
   })
 
-  close = () => hashHistory.push ('/left');
+  close = () => hashHistory.push ('/chat');
 
   render() {
     const { open, trigger,closeOnRootNodeClick } = this.state

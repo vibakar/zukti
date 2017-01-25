@@ -25,9 +25,11 @@ export default class TopMenu extends React.Component {
                             <Popup trigger={< Icon name = "arrow circle left" size = "large" circular color = 'teal' />} content='Back' size='mini'/>
                         </a>
                     </Menu.Item>
-                    <Menu.Item>
-                        <Input transparent className='icon' icon='search' placeholder='Search your content'/>
-                    </Menu.Item>
+                      <Menu.Item position='right'>
+                      </Menu.Item>
+                        <Menu.Item>
+                          <h3>THE CODE AESSISTANT/GENIE</h3>
+                        </Menu.Item>
 
                     <Menu.Item position='right'>
                         <Dropdown trigger={trigger} pointing='top right' icon={null}>

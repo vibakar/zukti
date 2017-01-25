@@ -31,7 +31,7 @@ handleItemClick = (e, {name}) => this.setState({activeItem: name})
                     <Menu.Item name='Genie' active={activeItem === 'Genie'} onClick={this.handleItemClick}>
                       <a href="#/clienthome">  <Image src='../../images/ginianim.gif'  size='tiny' avatar/></a>
                     </Menu.Item>
-                <Menu.Item name='Home' active={activeItem === 'Home'} onClick={this.handleItemClick}>
+                <Menu.Item name='Home' active={activeItem === 'Home'} onClick={this.handleItemClick} >
                      <Icon name='home' color='teal'/>
                         Home
 

@@ -23,7 +23,7 @@ show = (size) => () => this.setState({ size, open: true })
        photo.append('IMG', file[0]);
        this.setState({file: file});
        }
-    close = () => hashHistory.push('/left');
+    close = () => hashHistory.push('/chat');
     render() {
         const {open, size} = this.state;
         return (

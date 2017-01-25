@@ -6,7 +6,7 @@ import './usertable.css';
 export default class UserTable extends React.Component {
   render() {
 return (
-  <div id="fullbackground">
+  <div id="fullbackground" style={{backgroundImage: "url('../../images/wall.jpg')"}}>
     <Grid divided="vertically">
       <Grid.Row columns={3}>
       <Grid.Column width={1}></Grid.Column>
@@ -153,8 +153,12 @@ return (
       </Table.Body>
     </Table>
     </Grid.Column>
-    <Grid.Column width={4}></Grid.Column>
     </Grid.Row>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/>
+
   </Grid>
     </div>
   )

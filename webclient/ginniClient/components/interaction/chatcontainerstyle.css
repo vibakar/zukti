@@ -20,8 +20,10 @@
 
 #textinput {
     border-color: teal;
-    margin-top: 6%;
-    background-color: gray;
+    width: 98%;
+    margin-left: 1%;
+    background-color: #688fba;
+
 }
 
 #chatheading {
@@ -29,5 +31,6 @@
 }
 
 #ginni {
-    margin-top: 4%;
+    margin-top: -15px;
+    min-height: 510px;
 }
