@@ -28,6 +28,13 @@
     margin-left: 1%;
     background-color: #688fba;
 }
+#messagechat
+{
+    position: absolute;
+    bottom: 0;
+    max-height: 519px;
+
+}
 #chatheading {
     text-align: center;
 }

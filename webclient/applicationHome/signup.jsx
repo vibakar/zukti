@@ -160,7 +160,7 @@ render() {
     return (
         <div>
         <Modal id="modelwindow" dimmer={dimmer} open={open} onClose={this.close} size="small" closeIcon="close">
-        <Modal.Header id="signup"><Image src="../../images/genie1.gif" avatar/>SIGN UP</Modal.Header>
+        <Modal.Header id="signup"><Image src="../../images/ginianim.gif" avatar/>Sign Up</Modal.Header>
         <Modal.Content>
         <Form size="small" id="formfield" onSubmit={this.onRegisterUser}>
         <Form.Field id="formfield">

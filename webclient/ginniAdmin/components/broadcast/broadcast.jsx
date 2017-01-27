@@ -6,6 +6,7 @@ import AddContent from './addContent';
 export default class BroadCast extends React.Component {
     render() {
         return (
+          <div style={{backgroundImage: "url('../../images/wall.jpg')",height:'100%'}}>
             <Grid  columns={2} style={{
                 width: '95%',
                 margin: 'auto'
@@ -21,6 +22,7 @@ export default class BroadCast extends React.Component {
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
+                </div>
 );
 }
 }

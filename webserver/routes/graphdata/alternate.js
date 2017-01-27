@@ -1,9 +1,9 @@
 module.exports = function(resultcall){
 var r=require("request");
 var username = "neo4j";
-var  password = "neo4js";
+var  password = "runald";
 var auth = "Basic " + new Buffer(username + ":" + password).toString("base64");
-var txUrl = "http://192.168.1.113:7474/db/data/transaction/commit";
+var txUrl = "http://192.168.1.39:7474/db/data/transaction/commit";
 function cypher(query,params,cb) {
   r.post({uri:txUrl,
     headers : {

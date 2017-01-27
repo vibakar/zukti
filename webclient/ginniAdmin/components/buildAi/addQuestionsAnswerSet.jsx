@@ -23,7 +23,7 @@ export default class AddQuestionsAnswerSet extends React.Component{
   }
   render(){
     return(
-      <div>
+      <div >
           <Button onClick={this.createQuestionSetBlock} color='red'><Icon name='plus'/>Add Questions Answer Set</Button>
       </div>
     );

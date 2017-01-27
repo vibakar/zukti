@@ -79,7 +79,7 @@ export default class NewPassword extends React.Component {
                         <p style={{color:'#a54f4f'}}>{this.state.errormessagepassword}</p>
                         <Form.Input type='password' placeholder='confirm password' id='fields' icon='key' iconPosition='left' name="repassword" onChange={this.ChangeRepassword.bind(this)} error={this.state.errorrepassword} required/><br/>
                         <p style={{color:'#a54f4f'}}>{this.state.errormessage}</p>
-                        <Button size='small' id='submit' type='submit'>submit</Button>
+                        <Button size='small' id='submit' type='submit' circular>submit</Button>
                     </Form.Field>
                 </Form>
 

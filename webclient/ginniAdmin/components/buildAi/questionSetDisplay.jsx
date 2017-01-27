@@ -59,6 +59,7 @@ export default class QuestionSetDisplay extends React.Component {
             return questionsSet
         });
         return (
+          <div style={{backgroundImage: "url('../../images/wall.jpg')"}}>
             <Grid style={{
                 width: '95%',
                 margin: 'auto'
@@ -84,7 +85,27 @@ export default class QuestionSetDisplay extends React.Component {
                 <Grid.Row>
                     {questionsAnswerSet}
                 </Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+                <Grid.Row></Grid.Row>
+
+
             </Grid>
+            </div>
         );
     }
 }

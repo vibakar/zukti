@@ -1,15 +1,11 @@
 #formstyle
 {
-  border-style: solid;
-  border-width: thin;
-  border-left-width: medium;
-  border-right-width: medium;
   margin-top: 20px;
 }
 #headerstyle
 {
   text-align: center;
-  background-color: black;
+  background-color: teal;
   color: white;
 }
 #para
@@ -35,14 +31,29 @@
   width:250px;
   margin-top: 9%;
 }
+#buttonwidthfacebook:hover
+{
+  background: transparent;
+  color: blue;
+}
 #buttonwidthgoogle{
   width:250px;
   margin-top: 30px;
+}
+#buttonwidthgoogle:hover
+{
+  background: transparent;
+  color: red;
 }
 #buttonwidth1{
   width:245px;
   margin-top: 20px;
   margin-left: 16%;
+}
+#buttonwidth1:hover
+{
+  background: transparent;
+  color: teal;
 }
 #footer
 {

@@ -9,7 +9,6 @@ export default class AdminWelcomePage extends React.Component {
     super();
   }
 
-
 render(){
     return(
 <div style={{ backgroundImage: "url('../../images/homes.jpg')"}} >
