@@ -89,8 +89,8 @@ export default class LoginPage extends React.Component
             <a href="#/forgotpassword" id='forgotpassword'>Forgot Password?</a>
             </Form.Field><br/><br/><br/>
             <Modal.Actions>
-            
-            <Button color='black' id="buttonwidth1">
+
+            <Button color='teal' id="buttonwidth1" circular>
             <Button.Content visible type='submit' ><Icon name='sign in'/>Login</Button.Content>
             </Button><br/><br/>
             <p id="footer">New Here?
@@ -104,12 +104,12 @@ export default class LoginPage extends React.Component
             <Segment id='buttonsegment' basic>
             <Modal.Actions>
             <a href='/auth/facebook'>
-            <Button color='blue' id='buttonwidthfacebook'>
+            <Button color='blue' id='buttonwidthfacebook' circular>
             <Button.Content visible><Icon name='facebook'/>Sign Up With Facebook</Button.Content>
             </Button>
             </a>
             <a href='/auth/google'>
-            <Button color='red' id='buttonwidthgoogle'>
+            <Button color='red' id='buttonwidthgoogle' circular>
             <Button.Content visible><Icon name='google'/>Sign Up With Google</Button.Content>
             </Button>
             </a>

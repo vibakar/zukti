@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import AssistantUserView from './assistantUserView';
 import {Scrollbars} from 'react-custom-scrollbars';
 import InputUserMessage from './inputUserMessage';
-import {Menu,Icon,Input} from 'semantic-ui-react';
+import {Menu, Icon, Input} from 'semantic-ui-react';
 import './chatcontainerstyle.css';
 export default class AssistantChatContainer extends React.Component {
 
@@ -38,7 +38,7 @@ export default class AssistantChatContainer extends React.Component {
     pushGinniMessages(ginniReply) {
 
         ginniReply.forEach((reply) => {
-          let index = this.state.messages.length - 1;
+            let index = this.state.messages.length - 1;
             let displayItem = (
                 <div ref={(ref) => this['_div' + index] = ref} key={index}>
                     {reply}
@@ -63,21 +63,25 @@ export default class AssistantChatContainer extends React.Component {
     render() {
 
         return (
-            <div className='formstyle' style={{backgroundImage: "url('../../images/wall14.jpg')"}}>
-              <Menu secondary>
-                <Menu.Item secondary position='right'/>
-              <Menu.Item position='left'>
-                  <Input transparent className='icon' icon='search' placeholder='Search your content' focus/>
-              </Menu.Item>
-              </Menu>
+            <div className='formstyle' style={{
+                backgroundImage: "url('../../images/wall14.jpg')"
+            }}>
+                <Menu secondary>
+                    <Menu.Item secondary position='right'/>
+                    <Menu.Item position='left'>
+                        <Input transparent className='icon' icon='search' placeholder='Search your content' focus/>
+                    </Menu.Item>
+                </Menu>
                 <Scrollbars id='ginni' renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
                     display: "none",
                     position: "right",
-                    minHeight:"519px"
+                    minHeight: "519px"
                 }}/>} autoHeight autoHeightMin={519}>
-                    {this.state.messages}
+                    <div id='messagechat'>
+                        {this.state.messages}
+                    </div>
                 </Scrollbars>
-                <InputUserMessage handlerUserReply={this.pushUserMessages} handleGinniReply={this.pushGinniMessages} />
+                <InputUserMessage handlerUserReply={this.pushUserMessages} handleGinniReply={this.pushGinniMessages}/>
             </div>
         );
     }

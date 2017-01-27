@@ -79,28 +79,27 @@ export default class ForgotPassword extends React.Component
                 <Grid columns={3}>
                     <Grid.Column width={5}>
                         <Menu fixed='top' style={{
-                            background: 'black'
-                        }}>
-                            <Menu.Item style={{
-                                color: 'white'
-                            }}>
+                            background: 'transparent'
+                        }} secondary>
+                            <Menu.Item>
                                 <h1 style={{
                                     fontFamily: 'monospace'
+
                                 }}>GENIE</h1>
                             </Menu.Item>
                             <Menu.Menu position='right'>
                                 <Menu.Item>
                                     <Button circular style={{
-                                        backgroundColor: 'white',
-                                        color: 'black'
+                                        background: 'transparent'
+
                                     }}>
-                                        <a href="#/login">Login</a>
+                                        <a href="#/login" style={{color:'black'}}>Login</a>
                                     </Button>
                                     &nbsp;&nbsp;<Button circular style={{
-                backgroundColor: 'white',
-                color: 'black'
+                background: 'transparent'
+
             }}>
-                                        <a href="#/signup">Signup</a>
+                                        <a href="#/signup" style={{color:'black'}}>Signup</a>
                                     </Button>
                                 </Menu.Item>
                             </Menu.Menu>
@@ -116,11 +115,11 @@ export default class ForgotPassword extends React.Component
                         </p>
                         <Form onSubmit={this.onSubmitData}>
                             <Form.Field id="forgotfield">
-                                <Form.Input placeholder='email id' id='inputtext' name="email" icon='mail outline' iconPosition='left' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
+                                <Form.Input placeholder='email id'  name="email" icon='mail outline' iconPosition='left' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
                                 <p style={{color:'green'}}>{this.state.userexists}</p>
                                 <p style={{color:'#a54f4f'}}>{this.state.errormessageemail}</p>
                             </Form.Field>
-                            <Button id="buttonstylefor" type="submit">Send
+                            <Button id="buttonstylefor" type="submit" circular>Send
                             </Button>
                         </Form>
                    </Grid.Column>
