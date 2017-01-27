@@ -1,0 +1,33 @@
+.formstyle {
+    width: 89%;
+}
+
+#ginniview {
+    margin-left: 2%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#geniestyle {
+    margin-left: 2%;
+}
+
+#assistantView {
+    margin-left: 2%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#textinput {
+    border-color: teal;
+    margin-top: 6%;
+    background-color: gray;
+}
+
+#chatheading {
+    text-align: center;
+}
+
+#ginni {
+    margin-top: 4%;
+}

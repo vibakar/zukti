@@ -1,0 +1,148 @@
+#modalwindowlogin
+{
+  width:800px;
+  height:500px;
+  margin-left:-350px;
+  margin-top: -500px;
+}
+#headerstyle
+{
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+#para
+{
+  text-align:center;
+}
+#para1
+{
+  margin-left:7%;
+}
+#forgotpassword
+{
+  margin-left: 130px;
+}
+#formfieldlogin
+{
+  margin-top:15px;
+  width:250px;
+  height:50px;
+  margin-left: 10px;
+}
+
+#buttonwidthfacebook{
+  width:250px;
+}
+#buttonsegment
+{
+  margin-top: 80px;
+}
+#buttonwidthgoogle{
+  width:250px;
+  margin-top: 30px;
+}
+#buttonwidth1{
+  width:245px;
+}
+#footer
+{
+  margin-left: 10px;
+}
+#stylelist
+{
+  margin-left:200px;
+}
+
+@media only screen and (max-width:360px) {
+
+  #buttonwidthfacebook{
+    width:250px;
+  }
+
+  #buttonwidthgoogle{
+    width:250px;
+  }
+  #footer
+  {
+    margin-top: -20px;
+  }
+
+}
+@media only screen and (max-width:414px) {
+
+  #buttonwidthfacebook{
+    width:250px;
+    margin-top: 0px;
+  }
+  #buttonwidthgoogle{
+    width:250px;
+    margin-top: 0px;
+  }
+  #buttonsegment
+  {
+    margin-top: 0px;
+  }
+}
+@media only screen and (max-width:320px) {
+
+  #buttonwidthfacebook{
+    width:220px;
+    margin-left: 0;
+  }
+  #buttonwidthgoogle{
+    width:220px;
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+  #buttonsegment
+  {
+    margin-top: 0px;
+  }
+  #formfieldlogin
+  {
+    width:240px;
+    height:50px;
+    margin-left: 0px;
+  }
+  #buttonwidth1
+  {
+    width:220px;
+    margin-left: 0;
+  }
+
+}
+
+@media only screen and (max-width:768px) {
+
+  #buttonwidthfacebook{
+    width:220px;
+    margin-left: 0;
+
+  }
+  #buttonwidthgoogle{
+    width:220px;
+    margin-top: 30px;
+    margin-left: 0px;
+  }
+  #buttonsegment
+  {
+    margin-top: 80px;
+  }
+  #formfieldlogin
+  {
+    width:240px;
+    height:50px;
+    margin-left: 0px;
+  }
+  #buttonwidth1
+  {
+    width:220px;
+    margin-left: 0;
+  }
+  #footer
+  {
+    font-size: 12px;
+  }
+
+}
