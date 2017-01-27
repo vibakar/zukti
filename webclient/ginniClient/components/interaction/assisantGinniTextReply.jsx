@@ -23,6 +23,7 @@ export default class AssistantGinniTextReply extends React.Component{
               </Feed.Content>
           </Feed.Event>
       </Feed>
+
     )
   }
 }

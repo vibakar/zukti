@@ -36,7 +36,17 @@ module.exports = function(app, passport) {
             }
         });
 });
-
+app.get('/view', function(req, res, next) {
+  RegisteredUser.find({},function(err,alldetails){
+  if(err) {
+    res.send(err);
+    console.log('error ocuured');
+  }
+  else {
+     res.send(alldetails);
+  }
+});
+});
 
 
 

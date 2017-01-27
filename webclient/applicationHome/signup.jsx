@@ -1,6 +1,6 @@
 import React from 'react';
 import {hashHistory} from 'react-router';
-import {Button, Image, Modal} from 'semantic-ui-react';
+import {Button, Image, Modal, Popup, Icon} from 'semantic-ui-react';
 import {Form} from 'semantic-ui-react';
 import validator from 'validator';
 import axios from 'axios';
@@ -28,7 +28,10 @@ export default class Signup extends React.Component {
             errormessagepassword: '',
             repassword: '',
             password: '',
+            mailexists: false,
             decoration: false,
+            confirmpassword: false,
+            verifypassword: false,
             open: true
         };
         this.onRegisterUser = this.onRegisterUser.bind(this);
@@ -99,11 +102,13 @@ export default class Signup extends React.Component {
                 },
                 success: function(msg) {
                     if (msg) {
+                      this.setState({userexists: 'Already Exists'});
+                      this.setState({mailexists:false});
                         // console.log(msg);
-                        this.setState({userexists: 'Already exists'});
                     } else {
                         // console.log(msg);
-                        this.setState({userexists: 'You can use'});
+                        this.setState({userexists: ' '});
+                        this.setState({mailexists:true});
                     }
                 }.bind(this),
                 error: function(err) {
@@ -129,8 +134,10 @@ export default class Signup extends React.Component {
         if (has_letter.test(password_info) && points >= 6 && has_caps.test(password_info) && has_numbers.test(password_info)) {
             this.setState({errorpassword: false});
             this.setState({errormessagepassword: false});
+              this.setState({verifypassword:true});
         } else {
             this.setState({errorpassword: true});
+            this.setState({verifypassword:false});
             this.setState({errormessagepassword: 'Password should contain numbers,letters(capital and small) and Length should be greater than 6'});
         }
     }
@@ -141,7 +148,9 @@ export default class Signup extends React.Component {
           //checking equality between password and confirmpassword
           this.setState({errorrepassword: false});
           this.setState({errormessage: false});
+            this.setState({confirmpassword:true});
       } else {
+        this.setState({confirmpassword:false});
         this.setState({errorrepassword: true});
         this.setState({errormessage: 'Not matched'});
     }
@@ -155,32 +164,27 @@ render() {
         <Modal.Content>
         <Form size="small" id="formfield" onSubmit={this.onRegisterUser}>
         <Form.Field id="formfield">
-        <h4>FIRST NAME</h4>
         <Form.Input label='First Name' name='firstName' placeholder='First Name' type='text' onChange={this.ChangeFirst} error={this.state.errorfirst} required/>
-        <p>{this.state.errormessagefirst}</p>
+        <p id="textcolor">{this.state.errormessagefirst}</p>
         </Form.Field>
         <Form.Field id="formfield">
-        <h4>LAST NAME</h4>
-        <Form.Input id="input" name="lastName" placeholder='Last Name' onChange={this.ChangeLast.bind(this)} error={this.state.errorlast} required/>
-        <p>{this.state.errormessagelast}</p>
+        <Form.Input label='Last Name' id="input" name="lastName" placeholder='Last Name' type='text' onChange={this.ChangeLast.bind(this)} error={this.state.errorlast} required/>
+        <p id="textcolor">{this.state.errormessagelast}</p>
         </Form.Field>
         <Form.Field id="formfield">
-        <h4>USER-NAME or EMAIL-ID</h4>
-        <Form.Input id="to" name="email" placeholder='User Name or Email-ID' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
-        <p>{this.state.errormessageemail}</p>
-        <p>{this.state.userexists}</p>
+        <Form.Input label='EMail' id="to" name="email" placeholder='User Name or Email-ID' type='text' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
+        <p id="textcolor">{this.state.errormessageemail}</p>
+        <p id="textcolor">{this.state.userexists}</p>
         </Form.Field>
         <Form.Field id="formfield">
-        <h4>PASSWORD</h4>
-        <Form.Input id="input" name="password" placeholder='Password' type='password' onChange={this.ChangePassword.bind(this)} error={this.state.errorpassword} required/>
-        <p>{this.state.errormessagepassword}</p>
+        <Form.Input label='Password' id="input" name="password" placeholder='Password' type='password' onChange={this.ChangePassword.bind(this)} error={this.state.errorpassword} required/>
+        <p id="textcolor">{this.state.errormessagepassword}</p>
         </Form.Field>
         <Form.Field id="formfield">
-        <h4>CONFIRM PASSWORD</h4>
-        <Form.Input id="input" name="repassword" type='password' placeholder='Confirm Password' onChange={this.ChangeRepassword.bind(this)} error={this.state.errorrepassword} required/>
-        <p>{this.state.errormessage}</p>
+        <Form.Input label='Confirm Password' id="input" name="repassword" type='password' placeholder='Confirm Password' onChange={this.ChangeRepassword.bind(this)} error={this.state.errorrepassword} required/>
+        <p id="textcolor">{this.state.errormessage}</p>
         </Form.Field>
-        <Button type='submit' id='send_email' disabled={(!this.state.firstname) || (!this.state.lastname) || (!this.state.email) || (!this.state.password) || (!this.state.repassword)}>SET UP YOUR ACCOUNT</Button>
+        <Button type='submit' id='send_email' disabled={(!this.state.firstname) || (!this.state.lastname) || (!this.state.email) || (!this.state.password) || (!this.state.repassword) || (!this.state.mailexists) || (!this.state.verifypassword) || (!this.state.confirmpassword)}>SET UP YOUR ACCOUNT</Button>
         <span id="message"></span>
         <h4 id="text">Already a Genie member?<a href='#/login'>
         Sign in here</a>

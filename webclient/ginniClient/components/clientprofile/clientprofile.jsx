@@ -3,7 +3,6 @@ import {Button, Image, Modal, Divider, Form, Icon} from 'semantic-ui-react';
 import {hashHistory} from 'react-router';
 import Dropzone from 'react-dropzone';
 import './clientprofile.css';
-
 export default class ClientProfile extends React.Component
 {
     constructor(props) {
@@ -16,14 +15,13 @@ show = (size) => () => this.setState({ size, open: true })
   onOpenClick = () => {
        this.refs.dropzone.open();
    }
-
  /* function to attach the file to the server*/
    dropHandler = (file) => {
        var photo = new FormData();
        photo.append('IMG', file[0]);
        this.setState({file: file});
        }
-    close = () => hashHistory.push('/left');
+    close = () => hashHistory.push('/chat');
     render() {
         const {open, size} = this.state;
         return (
@@ -65,7 +63,7 @@ show = (size) => () => this.setState({ size, open: true })
                       </Modal.Header>
                       <Modal.Actions>
                                 <Button color='gray' onClick={this.close}>
-                            <a href="#/left"><Button.Content visible  ><Icon name='thumbs up'/>Ok</Button.Content>
+                            <a href="#/left"><Button.Content visible  ><Icon name='thumbs up'/>OK</Button.Content>
                           </a></Button>
                               </Modal.Actions>
                         </Modal>

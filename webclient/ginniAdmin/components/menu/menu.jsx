@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Content from '../sideBarPusherContent/content';
-import TopMenuBot from './topmenubot'
+import TopMenuBot from './topmenubot';
 import {
     Sidebar,
     Segment,
