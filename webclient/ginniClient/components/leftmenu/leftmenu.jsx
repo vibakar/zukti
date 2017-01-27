@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import LeftMenuContent from '../leftmenuPusherContent/leftmenuContent';
 import ClientProfile from '../clientprofile/clientprofile';
 import ChangePassword from '../changepassword/changepassword';
+import TopMenu from './topmenu';
 import {
     Sidebar,
     Segment,
@@ -63,6 +64,7 @@ export default class LeftMenu extends Component {
         <ChangePassword email={this.state.email}/>
       </div>*/
       hashHistory.push('/change?email=' + this.props.location.query.email)
+
     }
 handleItemClick = (e, {name}) => this.setState({activeItem: name})
     render() {
@@ -75,7 +77,7 @@ handleItemClick = (e, {name}) => this.setState({activeItem: name})
           </span>
         )
         return (
-            <div id="leftbarmenu">
+            <div  id="leftbarmenu">
                 <Sidebar as={Menu} className='fixed' animation='slide along' width='thin' visible={true} icon='labeled' vertical inverted>
                     <Menu.Item name='Genie' active={activeItem === 'Genie'} onClick={this.handleItemClick}>
                       <a href="#/clienthome">  <Image src='../../images/ginianim.gif'  size='tiny' avatar/></a>
@@ -125,6 +127,8 @@ handleItemClick = (e, {name}) => this.setState({activeItem: name})
                               </Menu.Item>
                           </Menu>
                       </div>
+                    <TopMenu/>
+
                       <div id='leftmenucontentdiv'>
                             <LeftMenuContent sidebarItemSelected={activeItem}/>
                       </div>

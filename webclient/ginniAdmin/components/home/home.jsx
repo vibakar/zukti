@@ -1,8 +1,10 @@
 import React from 'react';
+
 import {Image, Icon, Divider, Grid} from 'semantic-ui-react';
 import Link from 'react-router';
 import './homestyle.css';
 import axios from 'axios';
+
 // const trigger = (
 //     <span>
 //         <Header as='h2' inverted>
@@ -11,6 +13,7 @@ import axios from 'axios';
 //     </span>
 // )
 export default class FrontPage extends React.Component {
+
     componentDidMount()
     {
         this.getUserProfile();
@@ -162,4 +165,5 @@ render() {
         </div>
     );
 }
+
 }

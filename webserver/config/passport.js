@@ -26,33 +26,29 @@ module.exports = function(passport) {
             RegisteredUser.findOne({
                 'email': email
             }, function(err, user) {
-              if (err) {
-            return done(err);
-        }
-        else if (!user) {
-          console.log(user);
-            const error = new Error('Your Email ID is not registered');
-            error.name = 'You have not Register Yet ! Please SignUp first :)';
-            return done(error.name);
-        }
-        else if(!user.verified){
-          console.log(user);
-            const error = new Error('Email ID is not Verified');
-            error.name = 'Check your email for Login Verification !';
-            return done(error.name);
-        }
-        else if (!(user.password === password)) {
-          console.log(user);
-            const error = new Error('Incorrect password');
-            error.name = 'You Have Entered Incorrect password !';
-            return done(error.name);
-        }
-       else {
-            let userData = {};
-            userData.email = user.email;
-            userData.token = RegisteredUser.generateToken(userData.email);
-            return done(null, userData);
-         }
+                if (err) {
+                    return done(err);
+                } else if (!user) {
+                    console.log(user);
+                    const error = new Error('Your Email ID is not registered');
+                    error.name = 'You have not Register Yet ! Please SignUp first :)';
+                    return done(error.name);
+                } else if (!user.verified) {
+                    console.log(user);
+                    const error = new Error('Email ID is not Verified');
+                    error.name = 'Check your email for Login Verification !';
+                    return done(error.name);
+                } else if (!(user.password === password)) {
+                    console.log(user);
+                    const error = new Error('Incorrect password');
+                    error.name = 'You Have Entered Incorrect password !';
+                    return done(error.name);
+                } else {
+                    let userData = {};
+                    userData.email = user.email;
+                    userData.token = RegisteredUser.generateToken(userData.email);
+                    return done(null, userData);
+                }
             });
         });
     }));

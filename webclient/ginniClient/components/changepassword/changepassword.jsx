@@ -50,28 +50,25 @@ passwordchange(e,value){
       trigger={trigger}
       open={open} onClose={this.close}
       closeOnRootNodeClick={false}
-      size='small' closeIcon="close" basic>
+      size='small' closeIcon="close"
+      >
       <Modal.Header id="headerchange"><h1>Reset Password</h1></Modal.Header>
       <Modal.Content>
       <Form onSubmit={this.passwordchange.bind(this)}>
       <Form.Field width={8} id='forminput'>
-      <h3>  <Icon circular  name='lock'>
-      </Icon> <label>NewPassword</label></h3>
-      <Form.Input placeholder='NewPassword' type='password' name='password' />
-      </Form.Field >
+      <Input placeholder='new password' icon='lock' iconPosition='left'/>
+    </Form.Field>
       <Form.Field width={8} id='forminput'>
-      <h3>  <Icon circular  name='lock'>
-      </Icon><label>ConfirmPassword</label></h3>
-      <Form.Input type='password' placeholder='confirmpassword'/>
+      <Input type='password' placeholder='confirm password' icon='lock' iconPosition='left'/>
       </Form.Field><br/>
       <Form.Field>
       <a href ="#/left">
       <Button color='red' onClick={this.handleClose} inverted id='cancelbutton'>
-      <Icon name='checkmark'/> Cancel
-      </Button></a>
-      <Button color='green' type='submit' inverted id='resetbutton'>
-     Reset
+      <Icon name='cancel'/> Cancel
       </Button>
+      <Button color='green' type='submit' onClick={this.handleClose} inverted id='resetbutton'>
+      <Icon name='checkmark' /> Reset
+      </Button></a>
       </Form.Field>
       </Form></Modal.Content>
       </Modal>

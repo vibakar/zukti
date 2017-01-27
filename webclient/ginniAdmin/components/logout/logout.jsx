@@ -1,13 +1,15 @@
 import React from 'react';
 import { Button, Image, Modal} from 'semantic-ui-react';
 import {hashHistory} from 'react-router';
+import Axios from 'axios';
 import './logout.css';
 export default class LogoutAdmin extends React.Component
 {
   state = { open: true }
   close=()=>hashHistory.push('/react');
+
   logout() {
-    axios({
+    Axios({
     url: 'http://localhost:8080/signout',
     method: 'GET',
   }).then(function(response) {
@@ -23,7 +25,8 @@ componentDidMount()
   this.logout();
 }
 
- 
+
+
 
   render() {
     const { open} = this.state;
@@ -35,8 +38,9 @@ componentDidMount()
       </Modal.Header>
       <Modal.Content>
       <Modal.Description id="logoutdescription">
+
       <Button size="small" color='blue' onClick={this.logout.bind(this)}>Yes</Button>&nbsp;&nbsp;&nbsp;&nbsp;
-      <Button size="small" color='red' onClick={this.close} >No</Button>
+  <Button size="small" color='red' onClick={this.close} >No</Button>
       </Modal.Description>
       </Modal.Content>
       </Modal>

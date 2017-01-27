@@ -49,21 +49,20 @@ export default class Signup extends React.Component {
             }).then(function(msg) {
                 hashHistory.push('/mail');
             }).catch(function(err) {
-               //  alert(err);
+                alert(err);
             })
         }
     //new user signup
     onRegisterUser(e, value) {
-      console.log(value);
       e.preventDefault();
       axios({
         url: 'http://localhost:8080/signup',
         method: 'post',
         data: value.formData
       }).then(function(msg) {
+
           console.log(msg.firstname);
-      }).
-      catch(function(err) {
+      }).catch(function(err) {
           console.log(err);
           // alert(err + 'check the details' + Object.keys(value.formData));
       });
@@ -162,7 +161,7 @@ render() {
     return (
         <div>
         <Modal id="modelwindow" dimmer={dimmer} open={open} onClose={this.close} size="small" closeIcon="close">
-        <Modal.Header id="signup"><Image src="../../images/genie1.gif" avatar/>SIGN UP</Modal.Header>
+        <Modal.Header id="signup"><Image src="../../images/ginianim.gif" avatar/>Sign Up</Modal.Header>
         <Modal.Content>
         <Form size="small" id="formfield" onSubmit={this.onRegisterUser}>
         <Form.Field id="formfield">

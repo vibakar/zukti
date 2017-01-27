@@ -1,6 +1,7 @@
+
 import React, {Component} from 'react';
 import Content from '../sideBarPusherContent/content';
-import TopMenuBot from './topmenubot'
+import TopMenuBot from './topmenubot';
 import {
     Sidebar,
     Segment,
@@ -57,7 +58,11 @@ export default class SidebarBot extends Component {
                     <Menu.Item name='UseTheBot' active={activeItem === 'UseTheBot'} onClick={this.handleItemClick}>
                         <Icon name='book' color='teal'/>
                         Use the bot
-                    </Menu.Item><br/><br/><br/><br/><br/><br/><br/><br/>
+                    </Menu.Item>
+                    <Menu.Item name='TrainBot' active={activeItem === 'UseTheBot'} onClick={this.handleItemClick}>
+                        <Icon name='child' color='teal'/>
+                        TrainBot
+                    </Menu.Item><br/><br/><br/><br/>
                     <Menu.Item name='UseTheBot'>
                           <a href='#/log'><Icon name='sign out' color='teal'/>
                       Logout</a>

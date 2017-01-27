@@ -31,7 +31,6 @@ export default class LoginPage extends React.Component
     onSubmitLoginData(e, value) {
         // console.log(value.formData);
         e.preventDefault();
-
         var self=this;
         axios({
             url: 'http://localhost:8080/login',
@@ -89,26 +88,17 @@ export default class LoginPage extends React.Component
             <Segment basic>
             <Form onSubmit={this.onSubmitLoginData}>
             <Form.Field id="formfieldlogin">
-            <h3>
-            <Icon circular name='users'/>
-            <label>UserName</label>
-            </h3>
-            <Form.Input name="userName" placeholder='Email' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
-            <br/>
-            <p>{this.state.errormessageemail}</p>
-            </Form.Field><br/>
-            <Form.Field id="formfieldlogin">
-            <h3><br/><br/>
-            <Icon circular name='privacy'/>
-            <label>Password</label>
-            </h3>
-            <Form.Input type='password' name="password" placeholder='password' id="formstyle" required/>
+            <Form.Input name="userName" placeholder='username or email id' icon='user' iconPosition='left' id="formstyle" onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required />
+
+            <p style={{color:'#a54f4f'}}>{this.state.errormessageemail}</p>
+            </Form.Field>
+            <Form.Field id="formfieldlogin"><br/>
+            <Form.Input type='password' name="password" placeholder='password' icon='lock' iconPosition='left' id="formstyle" required/>
             <a href="#/forgotpassword" id='forgotpassword'>Forgot Password?</a>
             </Form.Field><br/><br/><br/>
             <Modal.Actions>
-            <br/><br/><br/>
-            <Button color='black' id="buttonwidth1">
-            <Button.Content visible type='submit'><Icon name='sign in'/>Login</Button.Content>
+            <Button color='teal' id="buttonwidth1" circular>
+            <Button.Content visible type='submit' ><Icon name='sign in'/>Login</Button.Content>
             </Button><br/><br/>
             <p id="footer">New Here?
             <a href="#/signup">Create an Genie Account</a>
@@ -121,12 +111,14 @@ export default class LoginPage extends React.Component
             <Segment id='buttonsegment' basic>
             <Modal.Actions>
             <a href='/auth/facebook'>
-            <Button color='blue' id='buttonwidthfacebook'>
+
+            <Button color='blue' id='buttonwidthfacebook' circular>
             <Button.Content visible><Icon name='facebook'/>Sign Up With Facebook</Button.Content>
             </Button>
             </a>
             <a href='/auth/google'>
-            <Button color='red' id='buttonwidthgoogle'>
+
+            <Button color='red' id='buttonwidthgoogle' circular>
             <Button.Content visible><Icon name='google'/>Sign Up With Google</Button.Content>
             </Button>
             </a>
@@ -137,7 +129,7 @@ export default class LoginPage extends React.Component
             </Modal.Description>
             </Modal.Content>
             </Modal>
-            <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
+            <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>-
             </div>
             );
 }

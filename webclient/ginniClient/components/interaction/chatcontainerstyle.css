@@ -1,7 +1,12 @@
 .formstyle {
     width: 89%;
 }
-
+#messagechat
+{
+  position: absolute;
+  bottom: 0;
+  max-height: 519px;
+}
 #ginniview {
     margin-left: 2%;
     margin-top: 0px;
@@ -11,13 +16,11 @@
 #geniestyle {
     margin-left: 2%;
 }
-
 #assistantView {
     margin-left: 2%;
     margin-top: 0px;
     margin-bottom: 0px;
 }
-
 #textinput {
     border-color: teal;
     margin-top: 6%;
@@ -28,6 +31,23 @@
     text-align: center;
 }
 
+#textinput {
+    border-color: teal;
+    width: 98%;
+    margin-left: 1%;
+    background-color: #688fba;
+}
+#messagechat
+{
+    position: absolute;
+    bottom: 0;
+    max-height: 519px;
+
+}
+#chatheading {
+    text-align: center;
+}
 #ginni {
-    margin-top: 4%;
+    margin-top: -15px;
+    min-height: 510px;
 }

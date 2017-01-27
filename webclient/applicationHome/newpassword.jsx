@@ -2,7 +2,7 @@ import validator from 'validator';
 import React from 'react';
 import axios from 'axios';
 import {hashHistory} from 'react-router';
-import {Button, Form, Label, Divider} from 'semantic-ui-react';
+import {Button, Form, Label, Divider,Icon} from 'semantic-ui-react';
 import './newpassword.css';
 
 export default class NewPassword extends React.Component {
@@ -58,7 +58,7 @@ export default class NewPassword extends React.Component {
     ChangeRepassword = (event) => {
         this.setState({repassword: event.target.value});
 
-     //checking equality between password and confirmpassword
+      //checking equality between password and confirmpassword
         if (validator.equals(event.target.value, this.state.password)) {
             this.setState({errorrepassword: false});
             this.setState({errormessage: ''});
@@ -69,21 +69,20 @@ export default class NewPassword extends React.Component {
     }
     render() {
         return (
-            <div id='newpassword'>
-                <Form onSubmit={this.onSubmitData}>
+            <div id='newpassword' style={{backgroundImage:"url('../../images/wall.jpg')"}}>
+                <br/><br/><br/><br/><br/><br/><br/>
+                  <Form onSubmit={this.onSubmitData} >
                     <Form.Field >
-                        <h3 id='heading'>Reset your new password</h3><Divider id='divider'/><br/>
-
-                     <Label pointing='right' id='labelpassword'>new password</Label>
-                        <Form.Input type='password' placeholder='password' id='fields' name="password" onChange={this.ChangePassword.bind(this)} error={this.state.errorpassword} required/><br/><br/><br/>
-                        <p>{this.state.errormessagepassword}</p>
-                        <Label pointing='right' id='labelpassword'>confirm password</Label>
-                        <Form.Input type='password' placeholder='password' id='fields' name="repassword" onChange={this.ChangeRepassword.bind(this)} error={this.state.errorrepassword} required/><br/><br/><br/>
-                        <p>{this.state.errormessage}</p>
-                        <Button size='small' id='submit' type='submit'>submit</Button>
+                         <h3 id='heading'><Icon name='lock' id='icon'/>Reset your new password</h3><Divider id='divider'/>
+                        <h3>Keep your credential secure by changing it </h3><br/>
+                        <Form.Input type='password' placeholder='new password' circular id='fields' icon='key' iconPosition='left' name="password" onChange={this.ChangePassword.bind(this)} error={this.state.errorpassword} required/><br/>
+                        <p style={{color:'#a54f4f'}}>{this.state.errormessagepassword}</p>
+                        <Form.Input type='password' placeholder='confirm password' id='fields' icon='key' iconPosition='left' name="repassword" onChange={this.ChangeRepassword.bind(this)} error={this.state.errorrepassword} required/><br/>
+                        <p style={{color:'#a54f4f'}}>{this.state.errormessage}</p>
+                        <Button size='small' id='submit' type='submit' circular>submit</Button>
                     </Form.Field>
                 </Form>
-            </div>
+</div>
         );
     }
 }

@@ -18,7 +18,6 @@ export default class ForgotPassword extends React.Component
         super();
         this.state = {
             email: ' ',
-            checkmail: false,
             erroremail:false,
             errormessageemail: "",
               userexists: ''
@@ -75,33 +74,32 @@ export default class ForgotPassword extends React.Component
     }
     render() {
         return (
-            <div>
+            <div style={{backgroundImage: "url('../../images/wall.jpg')", height: '100%'}}>
                 <br/><br/>
                 <Grid columns={3}>
                     <Grid.Column width={5}>
                         <Menu fixed='top' style={{
-                            background: 'black'
-                        }}>
-                            <Menu.Item style={{
-                                color: 'white'
-                            }}>
+                            background: 'transparent'
+                        }} secondary>
+                            <Menu.Item>
                                 <h1 style={{
                                     fontFamily: 'monospace'
+
                                 }}>GENIE</h1>
                             </Menu.Item>
                             <Menu.Menu position='right'>
                                 <Menu.Item>
                                     <Button circular style={{
-                                        backgroundColor: 'white',
-                                        color: 'black'
+                                        background: 'transparent'
+
                                     }}>
-                                        <a href="#/login">Login</a>
+                                        <a href="#/login" style={{color:'black'}}>Login</a>
                                     </Button>
                                     &nbsp;&nbsp;<Button circular style={{
-                backgroundColor: 'white',
-                color: 'black'
+                background: 'transparent'
+
             }}>
-                                        <a href="#/signup">Signup</a>
+                                        <a href="#/signup" style={{color:'black'}}>Signup</a>
                                     </Button>
                                 </Menu.Item>
                             </Menu.Menu>
@@ -109,7 +107,7 @@ export default class ForgotPassword extends React.Component
                     </Grid.Column>
                     <Grid.Column Width={6} id="gridstyle">
                        <Header id="headerstylefor">
-                            <h2>Request a Password Reset</h2>
+                            <h2><Icon name='mail' id='mailicon'/>Request a Password Reset</h2>
                         </Header>
                         <Divider/>
                         <p id="textstyle">
@@ -117,15 +115,12 @@ export default class ForgotPassword extends React.Component
                         </p>
                         <Form onSubmit={this.onSubmitData}>
                             <Form.Field id="forgotfield">
-                                <h3>
-                                    <Icon circular name='mail outline'/>
-                                    <label>Email</label>
-                                </h3>
-                                <Form.Input placeholder='Email id' name="email" onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
-                                <p>{this.state.userexists}</p>
-                                <p>{this.state.errormessageemail}</p>
+                                <Form.Input placeholder='email id'  name="email" icon='mail outline' iconPosition='left' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
+                                <p style={{color:'green'}}>{this.state.userexists}</p>
+                                <p style={{color:'#a54f4f'}}>{this.state.errormessageemail}</p>
                             </Form.Field>
-                            <Button type='submit' id='buttonstylefor' disabled={(!this.state.email) || (!this.state.checkmail)}>Send</Button>
+                            <Button id="buttonstylefor" type="submit" circular>Send
+                            </Button>
                         </Form>
                    </Grid.Column>
                     <Grid.Column width={5}/>

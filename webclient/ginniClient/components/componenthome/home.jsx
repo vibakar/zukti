@@ -21,6 +21,7 @@ import IconButton from 'material-ui/IconButton';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import Link from 'react-router';
 import './homestyle.css'
+
 export default class FrontPage extends React.Component {
   componentDidMount()
       {
@@ -64,6 +65,7 @@ export default class FrontPage extends React.Component {
             }
         }
           render() {
+
         return (
 
             <div style={{
@@ -73,7 +75,10 @@ export default class FrontPage extends React.Component {
                 <Grid fluid>
 
                     <Grid.Row>
+
                         <a href=''><Icon name='sign out' size='large' inverted id='iconstyle' onClick={this.logout.bind(this)}/></a>
+
+
                     </Grid.Row>
 
                     <Divider  horizontal inverted><h2>WELCOME &nbsp;&nbsp; CLIENT</h2></Divider>

@@ -68,6 +68,7 @@ require('./webserver/routes/auth.js')(app, passport);
 app.use('/qa',addKnowledge);
 app.use('/qc',questionCategory);
 app.use('/askQuestion',askQuestion);
+app.use('/askQuestion',askQuestion);
 
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,

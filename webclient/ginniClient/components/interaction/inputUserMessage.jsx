@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Form} from 'semantic-ui-react';
@@ -25,7 +26,6 @@ export default class InputUserMesaage extends React.Component {
         let url = Config.url + '/askQuestion';
         Axios.post(url, {question: message}).then((response) => {
             console.log(response);
-            console.log('hiii');
             if (response.data.result) {
                 ginniReply = [< AssistantGinniMixedReply handleGinniReply = {
                         this.props.handleGinniReply
@@ -34,11 +34,14 @@ export default class InputUserMesaage extends React.Component {
                         response.data.result
                     } />];
             } else if (response.data.keywords) {
-                ginniReply.push(< AssistantGinniTextReply text = {
-                    response.data.answer
-                } />);
+                ginniReply.push(< AssistantGinniTextReply text = {response.data.answer} />);
 
-                ginniReply.push(<AssistantGinniKeywordReply handleGinniReply={this.props.handleGinniReply} data={response.data.keywords}/>)
+                ginniReply.push(<AssistantGinniKeywordReply handleGinniReply = {
+                        this.props.handleGinniReply
+                    }
+                    data = {
+                        response.data.keywords
+                    } />)
             } else {
                 ginniReply = [< AssistantGinniTextReply text = {
                         response.data.answer

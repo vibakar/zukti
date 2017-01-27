@@ -38,24 +38,24 @@ function requireAuth(nextState, replace) {
 }
 
 ReactDOM.render(
-  <MuiThemeProvider>
+    <MuiThemeProvider>
     <Router history={hashHistory}>
-    <Route path='/' component={ApplicationHome}/>
-    <Route path='/adminHome' component={AdminHome}/>
-    <Route path='/clienthome' component={HomeClient}/>
-    <Route path='/react' component={react} onEnter={requireAuth.bind(this)}/>
-    <Route path='/newpassword' component={NewPassword}/>
-    <Route path='/login' component={LoginPage}/>
-    <Route path='/forgotpassword' component={ForgotPassword}/>
-    <Route path='/forgetmail' component={ForgetpasswordEmail}/>
-    <Route path='/signup' component={Signup}/>
-    <Route path='/mail' component={SentMailPage}/>
-    <Route path='/chat' component={LeftMenu}/>
-    <Route path='/left' component={LeftMenu} onEnter={requireAuth.bind(this)}/>
-    <Route path='/change' component={ChangePassword}/>
-    <Route path='/profile' component={ClientProfile}/>
-    <Route path='/logout' component={Logout} onEnter={requireAuth.bind(this)}/>
-    <Route path='/log' component={LogoutAdmin} onEnter={requireAuth.bind(this)}/>
-    <Route path='/expiryLink' component={ExpiryLink}/>
-</Router>
+        <Route path='/' component={ApplicationHome}/>
+        <Route path='/adminHome' component={AdminHome}/>
+        <Route path='/clienthome' component={HomeClient}/>
+        <Route path='/react' component={react} onEnter={requireAuth.bind(this)}/>
+        <Route path='/newpassword' component={NewPassword}/>
+        <Route path='/login' component={LoginPage}/>
+        <Route path='/forgotpassword' component={ForgotPassword}/>
+        <Route path='/forgetmail' component={ForgetpasswordEmail}/>
+        <Route path='/signup' component={Signup}/>
+        <Route path='/mail' component={SentMailPage}/>
+        <Route path='/chat' component={LeftMenu}/>
+        <Route path='/left' component={LeftMenu} onEnter={requireAuth.bind(this)}/>
+        <Route path='/change' component={ChangePassword}/>
+        <Route path='/profile' component={ClientProfile}/>
+        <Route path='/logout' component={Logout} onEnter={requireAuth.bind(this)}/>
+        <Route path='/log' component={LogoutAdmin} onEnter={requireAuth.bind(this)}/>
+        <Route path='/expiryLink' component={ExpiryLink}/>
+    </Router>
 </MuiThemeProvider>, document.getElementById('mountapp'));

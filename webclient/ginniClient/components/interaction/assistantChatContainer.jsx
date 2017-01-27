@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import AssistantUserView from './assistantUserView';
 import {Scrollbars} from 'react-custom-scrollbars';
 import InputUserMessage from './inputUserMessage';
+import {Menu, Icon, Input} from 'semantic-ui-react';
 import './chatcontainerstyle.css';
 export default class AssistantChatContainer extends React.Component {
 
@@ -31,7 +32,6 @@ export default class AssistantChatContainer extends React.Component {
         var len = this.state.messages.length - 2;
         const node = ReactDOM.findDOMNode(this['_div' + len]);
         if (node) {
-            console.log('Inside node');
             node.scrollIntoView();
         }
     }
@@ -63,13 +63,24 @@ export default class AssistantChatContainer extends React.Component {
     render() {
 
         return (
-            <div className='formstyle'>
-                <h1 id='chatheading'>I Am Your Code Assistant/Genie</h1>
+            <div className='formstyle' style={{
+                backgroundImage: "url('../../images/chatbot.png')",
+                height: '100%'
+            }}>
+                <Menu secondary>
+                    <Menu.Item secondary position='right'/>
+                    <Menu.Item position='left'>
+                        <Input transparent className='icon' icon='search' placeholder='Search your content' focus/>
+                    </Menu.Item>
+                </Menu>
                 <Scrollbars id='ginni' renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
                     display: "none",
-                    position: "right"
-                }}/>} autoHeight autoHeightMin={400}>
-                    {this.state.messages}
+                    position: "right",
+                    minHeight: "519px"
+                }}/>} autoHeight autoHeightMin={519}>
+                    <div id='messagechat'>
+                        {this.state.messages}
+                    </div>
                 </Scrollbars>
                 <InputUserMessage handlerUserReply={this.pushUserMessages} handleGinniReply={this.pushGinniMessages}/>
             </div>

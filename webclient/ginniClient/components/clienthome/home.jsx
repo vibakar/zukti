@@ -18,9 +18,12 @@ import {
     MenuItem
 } from 'semantic-ui-react';
 import {Link, hashHistory} from 'react-router';
+
 import LeftMenu from '../leftmenu/leftmenu.jsx';
 import './homestyle.css';
 import axios from 'axios';
+
+
 // const trigger = (
 //     <span>
 //         <Header as='h2' inverted>
@@ -78,6 +81,7 @@ logout() {
               })
           }
 
+
     render() {
         return (
             <div style={{
@@ -89,7 +93,9 @@ logout() {
             <Grid.Column width={2}></Grid.Column>
             <Grid.Column width={10}></Grid.Column>
             <Grid.Column width={4}>
+
             <center><Icon name='sign out' size='large' inverted id='iconstyle' onClick={this.logout.bind(this)}/></center>
+
             </Grid.Column>
             </Grid.Row>
             <Divider horizontal inverted>
@@ -101,12 +107,14 @@ logout() {
             <Grid.Column width={4} centered={'true'}>
             <Grid.Row>
             <center>
+
             <Image src='../../images/react.jpg' size='small' avatar onclick={this.onSubmitEmail.bind(this)}/>
             </center>
             </Grid.Row>
             <Grid.Row>
             <center>
                 <h2 className="heading1" onClick={this.onSubmitEmail.bind(this)}>REACT</h2>
+
             </center>
             </Grid.Row>
             </Grid.Column>
@@ -138,7 +146,6 @@ logout() {
             </center>
             </Grid.Row>
             </Grid.Column>
-            <Grid.Column width={2}/>
             </Grid.Row>
             <Grid.Row divided vertically>
             <Grid.Column width={2}/>

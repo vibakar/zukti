@@ -41,14 +41,14 @@ export default class QuestionSetDisplay extends React.Component {
 
       });
     }*/
-    goBackToQuestionCategories(){
-      this.props.handlerBackToQuestionCategories();
+    goBackToQuestionCategories() {
+        this.props.handlerBackToQuestionCategories();
     }
 
     // handler called by addQuestionAnswerSet to pass id and re render display
-    addNewQuestionAnswerSet(id){
-      this.state.questionsAnswerSet.push(<QuestionsAnswer categoryID={this.props.categoryID} questionsAnswerSetID={id} handlerRemoveQuestionAnswerSet={this.removeQuestionAnswerSet}/>);
-      this.setState({questionsAnswerSet:this.state.questionsAnswerSet})
+    addNewQuestionAnswerSet(id) {
+        this.state.questionsAnswerSet.push(<QuestionsAnswer categoryID={this.props.categoryID} questionsAnswerSetID={id} handlerRemoveQuestionAnswerSet={this.removeQuestionAnswerSet}/>);
+        this.setState({questionsAnswerSet: this.state.questionsAnswerSet})
     }
     removeQuestionAnswerSet(index) {
         this.state.questionsAnswerSet.splice(index, 1);
@@ -59,32 +59,36 @@ export default class QuestionSetDisplay extends React.Component {
             return questionsSet
         });
         return (
-            <Grid style={{
-                width: '95%',
-                margin: 'auto'
+            <div style={{
+                backgroundImage: "url('../../images/wall.jpg')"
             }}>
-                <Grid.Row columns={1}>
-                  <Breadcrumb size='big'>
-                  <Breadcrumb.Section link onClick={this.goBackToQuestionCategories}>Question Category</Breadcrumb.Section>
-                  <Breadcrumb.Divider icon='right chevron' />
-                  <Breadcrumb.Section link>{this.props.categoryName}</Breadcrumb.Section>
-                  </Breadcrumb>
-                </Grid.Row>
-                <Grid.Row columns={1}>
-                    <div style={{
-                        width: '100%'
-                    }}>
-                        <p>It is a set of questions and the corresponding bot replies. Ginni will understand user questions similar to those you’ve set up and reply with a appropiate answer.</p>
-                        <Divider fitted/>
-                    </div>
-                </Grid.Row>
-                <Grid.Row>
-                  <AddQuestionAnswerSet handlerNewQuestionsAnswerSet={this.addNewQuestionAnswerSet} questionsSetCategoryID={this.props.categoryID}/>
-                </Grid.Row>
-                <Grid.Row>
-                    {questionsAnswerSet}
-                </Grid.Row>
-            </Grid>
+                <Grid style={{
+                    width: '95%',
+                    margin: 'auto'
+                }}>
+                    <Grid.Row columns={1}>
+                        <Breadcrumb size='big'>
+                            <Breadcrumb.Section link onClick={this.goBackToQuestionCategories}>Question Category</Breadcrumb.Section>
+                            <Breadcrumb.Divider icon='right chevron'/>
+                            <Breadcrumb.Section link>{this.props.categoryName}</Breadcrumb.Section>
+                        </Breadcrumb>
+                    </Grid.Row>
+                    <Grid.Row columns={1}>
+                        <div style={{
+                            width: '100%'
+                        }}>
+                            <p>It is a set of questions and the corresponding bot replies. Ginni will understand user questions similar to those you’ve set up and reply with a appropiate answer.</p>
+                            <Divider fitted/>
+                        </div>
+                    </Grid.Row>
+                    <Grid.Row>
+                        <AddQuestionAnswerSet handlerNewQuestionsAnswerSet={this.addNewQuestionAnswerSet} questionsSetCategoryID={this.props.categoryID}/>
+                    </Grid.Row>
+                    <Grid.Row>
+                        {questionsAnswerSet}
+                    </Grid.Row>
+                </Grid>
+            </div>
         );
     }
 }

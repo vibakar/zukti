@@ -7,7 +7,9 @@ export default class Users extends React.Component {
             <Grid columns={1} style={{
                 width: '95%',
                 margin: 'auto'
-            }}>
+
+                  }}>
+
                 <Grid.Row>
                     <Grid.Column>
                         <Table className='ui very basic striped cell' celled selectable>
