@@ -21,15 +21,51 @@ import IconButton from 'material-ui/IconButton';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import Link from 'react-router';
 import './homestyle.css'
-const trigger = (
-    <span>
-        <Header as='h2' inverted>
-            <Image shape='circular' src='http://semantic-ui.com/images/avatar2/large/patrick.png' inverted/> {' '}Patrick
-        </Header>
-    </span>
-)
+
 export default class FrontPage extends React.Component {
-    render() {
+  componentDidMount()
+      {
+          this.getUserProfile();
+      }
+  logout() {
+    var self=this;
+    axios({
+    url: 'http://localhost:8080/signout',
+    method: 'GET',
+  }).then(function(response) {
+        window.localStorage.removeItem('token');
+            hashHistory.push('/');
+    }).catch(function(err) {
+     console.log(err);
+   });
+  }
+
+      onSubmitEmail(){
+
+          hashHistory.push('/chat?email=' + this.props.location.query.email)
+          /*<div>
+            <LeftMenu email={this.state.email}/>
+          </div>
+          hashHistory.push('/chat');*/
+      }
+      getUserProfile() {
+            axios({
+                url: 'http://localhost:8080/userinfo',
+                method: 'GET',
+              }).then(function(response) {
+                    localStorage.setItem('token', response.token);
+                    // console.log("success");
+                    // console.log(response);
+                }).catch(function(err) {
+                    //localStorage.setItem('token', 'Error');
+                    // console.log(localStorage.getItem('token'));
+                    // console.log("error");
+                     console.log(err);
+                })
+            }
+        }
+          render() {
+
         return (
 
             <div style={{
@@ -39,7 +75,10 @@ export default class FrontPage extends React.Component {
                 <Grid fluid>
 
                     <Grid.Row>
-                        <a href=''><Icon name='sign out' size='large' inverted id='iconstyle'/></a>
+
+                        <a href=''><Icon name='sign out' size='large' inverted id='iconstyle' onClick={this.logout.bind(this)}/></a>
+
+
                     </Grid.Row>
 
                     <Divider  horizontal inverted><h2>WELCOME &nbsp;&nbsp; CLIENT</h2></Divider>

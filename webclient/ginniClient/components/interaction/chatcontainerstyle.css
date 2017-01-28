@@ -1,7 +1,13 @@
 .formstyle {
     width: 89%;
 }
-
+#messagechat
+{
+  position: absolute;
+  bottom: 0;
+  max-height: 519px;
+  margin-left: 30px;
+}
 #ginniview {
     margin-left: 2%;
     margin-top: 0px;
@@ -11,7 +17,6 @@
 #geniestyle {
     margin-left: 2%;
 }
-
 #assistantView {
     margin-left: 2%;
     margin-top: 0px;
@@ -29,12 +34,11 @@
     position: absolute;
     bottom: 0;
     max-height: 519px;
-}
 
+}
 #chatheading {
     text-align: center;
 }
-
 #ginni {
     margin-top: -15px;
     min-height: 510px;

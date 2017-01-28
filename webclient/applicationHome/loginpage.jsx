@@ -1,4 +1,5 @@
 import React from 'react';
+import Snackbar from 'material-ui/Snackbar';
 import {
     Button,
     Modal,
@@ -11,12 +12,15 @@ import {
 import {hashHistory} from 'react-router';
 import './loginpage.css';
 import validator from 'validator';
+import axios from 'axios';
 export default class LoginPage extends React.Component
 {
     constructor(props) {
         super(props);
         this.state = {
             open: true,
+            openSnackbar:false,
+            snackbarMsg: "",
             erroremail: false,
             errormessageemail: '',
             email: ''
@@ -27,22 +31,26 @@ export default class LoginPage extends React.Component
     onSubmitLoginData(e, value) {
         // console.log(value.formData);
         e.preventDefault();
-        $.ajax({
+        var self=this;
+        axios({
             url: 'http://localhost:8080/login',
-            type: 'POST',
+            method: 'post',
             data: {
                 email: value.formData.userName,
                 password: value.formData.password
-            },
-            success: function(msg) {
-                alert(msg);
-                hashHistory.push('/clienthome');
-            },
-            error: function(err) {
-                alert(err + 'check the details' + Object.keys(value.formData));
             }
-        });
-    }
+          }).then(function(response) {
+            alert("bbhvbj");
+              hashHistory.push('/clienthome?email=' + value.formData.userName)
+            }).catch(function(err) {
+              //  alert(err.responseText);
+                console.log(err);
+                self.setState({openSnackbar: true, snackbarMsg: err.responseText});
+        })
+}
+        handleRequestClose = () => {
+            this.setState({openSnackbar: false});
+        };
     //validation for email
     ChangeEmail = (event) => {
         this.setState({email: event.target.value});
@@ -89,7 +97,6 @@ export default class LoginPage extends React.Component
             <a href="#/forgotpassword" id='forgotpassword'>Forgot Password?</a>
             </Form.Field><br/><br/><br/>
             <Modal.Actions>
-
             <Button color='teal' id="buttonwidth1" circular>
             <Button.Content visible type='submit' ><Icon name='sign in'/>Login</Button.Content>
             </Button><br/><br/>
@@ -104,11 +111,13 @@ export default class LoginPage extends React.Component
             <Segment id='buttonsegment' basic>
             <Modal.Actions>
             <a href='/auth/facebook'>
+
             <Button color='blue' id='buttonwidthfacebook' circular>
             <Button.Content visible><Icon name='facebook'/>Sign Up With Facebook</Button.Content>
             </Button>
             </a>
             <a href='/auth/google'>
+
             <Button color='red' id='buttonwidthgoogle' circular>
             <Button.Content visible><Icon name='google'/>Sign Up With Google</Button.Content>
             </Button>
@@ -120,6 +129,7 @@ export default class LoginPage extends React.Component
             </Modal.Description>
             </Modal.Content>
             </Modal>
+            <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>-
             </div>
             );
 }

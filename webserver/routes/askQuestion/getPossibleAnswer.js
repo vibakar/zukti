@@ -21,7 +21,7 @@ module.exports = function(question, reactTerms, verbs, resultFoundCallback, resu
                  [questions.question,results.textAnswer,results.videoAnswer,results.blogAnswer,results.CodeSnippetAnswer]`;
         let questionAnswerResultCallback = function(questionAsked, result) {
             if (result.records.length === 0) {
-                resultNotFoundCallback();
+                resultNotFoundCallback(true);
             } else {
                 let records = result.records;
                 // tihs is use classifier

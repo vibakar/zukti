@@ -29,9 +29,10 @@ export default class ForgetpasswordEmail extends React.Component {
       <Grid.Row></Grid.Row>
       <Grid.Row>
       <Grid.Column style={{textAlign:'center'}}>
-      <p id='head1'>You can change your password now!!!!!!!<br/>
-      <h3 id='head4'>Verification link sent to your Mail</h3>
-      <h4 id='head4'>"Please check your mail for change your password"</h4>
+
+        <p id='head1'>Please check your mail for change your password<br/>
+        <h3 id='head4'>Verification link sent to your Mail</h3>
+        <h1 id='head4'>"You can change your password now!!!!!!!"</h1>
     </p>
       </Grid.Column>
       </Grid.Row>

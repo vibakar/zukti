@@ -1,7 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
 import ReactDOM from 'react-dom';
-
 import {
     Input,
     Form,
@@ -137,7 +136,6 @@ export default class CreateNodeAndRelation extends React.Component {
                                 <Grid.Column width={5}>
                                     <Card color='green' fluid>
                                     <Card.Content><Card.Header>
-
                                             <Checkbox radio label='New' name='radionode2' value='newnode2' checked={this.state.node2val === 'newnode2'} onChange={this.handlenode2Change}/>
                                             <Checkbox radio label='Existing' name='radionode2' value='existingnode2' checked={this.state.node2val === 'existingnode2'} onChange={this.handlenode2Change}/>
                                             <Checkbox label='properties' onChange={this.handlenode2propChange}/>
@@ -149,7 +147,6 @@ export default class CreateNodeAndRelation extends React.Component {
                                             <input placeholder='key' ref='propertykeynode2'/>
                                             <input placeholder='value' ref='propertyvaluenode2'/><Button circular icon='plus' color='green'/><Button circular icon='delete' color='red'/></Form.Group></Form>
                                         </Card.Content>
-
                                     </Card>
                                 </Grid.Column>
                             </Grid.Row>

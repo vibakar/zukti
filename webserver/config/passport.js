@@ -28,13 +28,20 @@ module.exports = function(passport) {
             }, function(err, user) {
                 if (err) {
                     return done(err);
-                } else if (!(user.verified)) {
-                    const error = new Error('Email ID not registered');
-                    error.name = 'IncorrectCredentialsError';
+                } else if (!user) {
+                    console.log(user);
+                    const error = new Error('Your Email ID is not registered');
+                    error.name = 'You have not Register Yet ! Please SignUp first :)';
+                    return done(error.name);
+                } else if (!user.verified) {
+                    console.log(user);
+                    const error = new Error('Email ID is not Verified');
+                    error.name = 'Check your email for Login Verification !';
                     return done(error.name);
                 } else if (!(user.password === password)) {
-                    const error = new Error('Email ID not registered');
-                    error.name = 'IncorrectCredentialsError';
+                    console.log(user);
+                    const error = new Error('Incorrect password');
+                    error.name = 'You Have Entered Incorrect password !';
                     return done(error.name);
                 } else {
                     let userData = {};

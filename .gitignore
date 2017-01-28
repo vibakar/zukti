@@ -1,6 +1,10 @@
 node_modules
+<<<<<<< HEAD
+*.log.*
+=======
 *.log
 *.mp4
 *.gpg
 *.csv
 images
+>>>>>>> f7c62904d6f33ea0b1b269f8fb5eb518f1417fd6

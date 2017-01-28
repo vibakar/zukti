@@ -40,31 +40,31 @@ export default class ForgotPassword extends React.Component
                  console.log(error);
             });
     }
-    //validation for email
     ChangeEmail = (event) => {
         this.setState({email: event.target.value});
         // console.log(event.target.value);
         //check whether the user is alreay exists or not
         if (validator.isEmail(event.target.value)) {
-            $.ajax({
+          var self=this;
+            axios({
                 url: ' http://localhost:8080/checkuser',
-                type: 'POST',
+                method: 'POST',
                 data: {
                     email: event.target.value
-                },
-                success: function(msg) {
-                    if (msg) {
+                }
+              }).then(function(response) {
+                    if (response.data.userexists) {
                         // console.log(msg);
-                        this.setState({userexists: 'You can use'});
+                        self.setState({userexists: 'We Found Your Mail'});
+                        self.setState({checkmail: true});
                     } else {
                         // console.log(msg);
-                        this.setState({userexists: 'No such email exists in Genie. Please sign up'});
-                    }
-                }.bind(this),
-                error: function(err) {
+                        self.setState({userexists: 'No such email exists in Genie. Please sign up'});
+                        self.setState({checkmail: false});
+                      }
+                }).catch(function(err) {
                     // console.log(err);
-                }
-            });
+                })
             this.setState({erroremail: false});
             this.setState({errormessageemail: false});
         } else {

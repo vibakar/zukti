@@ -28,12 +28,12 @@ export default class UserTable extends React.Component
         });
     }
 
- render() {
+  render() {
     var user=this.state.userinformation.map(function(newsdata){
 return (
-  <div id="fullbackground">
+  <div id='eachcardstyle'>
 
-   <Card >
+    <Card >
       <Card.Content>
         <Image floated='right' size='mini' src='http://semantic-ui.com/images/avatar/large/steve.jpg' />
         <Card.Header>
@@ -50,16 +50,16 @@ return (
       </Card.Content>
     </Card>
 
-   </div>
+    </div>
   );
 }.bind(this));
 return(
-<div>
+<div style={{backgroundImage:"url('../../images/wall.jpg')",height:'100%',marginTop:'1%'}}>
   <Grid divided="vertically">
     <Grid.Row columns={3}>
     <Grid.Column width={1}/>
-    <Grid.Column width={14}>
-        <Card.Group>
+    <Grid.Column width={14} id='cardlayoutstyle'>
+        <Card.Group id='cardgrouplayout'>
   {user}
 </Card.Group>
 </Grid.Column>

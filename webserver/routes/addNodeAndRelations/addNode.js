@@ -20,8 +20,6 @@ router.post('/a',function(req,res){
     let node2detail=req.body.node2detail;
     let node2propdetail=req.body.node2propdetail;
     let relationChecked=req.body.relationChecked;
-
-
     let resultCallback=function(response){
         res.send(response);
     }

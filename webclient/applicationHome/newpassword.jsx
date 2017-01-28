@@ -31,7 +31,7 @@ export default class NewPassword extends React.Component {
             }
           }).
             then(function(msg) {
-                hashHistory.push('/');
+                hashHistory.push('/login');
             }).
             catch(function(err) {
                 alert('check the details');
@@ -82,8 +82,7 @@ export default class NewPassword extends React.Component {
                         <Button size='small' id='submit' type='submit' circular>submit</Button>
                     </Form.Field>
                 </Form>
-
-            </div>
+</div>
         );
     }
 }

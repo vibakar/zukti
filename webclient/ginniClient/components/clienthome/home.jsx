@@ -18,7 +18,12 @@ import {
     MenuItem
 } from 'semantic-ui-react';
 import {Link, hashHistory} from 'react-router';
-import './homestyle.css'
+
+import LeftMenu from '../leftmenu/leftmenu.jsx';
+import './homestyle.css';
+import axios from 'axios';
+
+
 // const trigger = (
 //     <span>
 //         <Header as='h2' inverted>
@@ -27,33 +32,56 @@ import './homestyle.css'
 //     </span>
 // )
 export default class ClientHome extends React.Component {
+constructor(props){
+  super(props);
+  this.state={
+      email: " "
+  };
+      this.setState({email:this.props.emailId});
 
-    componentDidMount()
+}
+componentDidMount()
     {
         this.getUserProfile();
     }
-    logoutsession() {
-        window.localStorage.removeItem('token');
-        hashHistory.push('/');
+logout() {
+  var self=this;
+  axios({
+  url: 'http://localhost:8080/signout',
+  method: 'GET',
+}).then(function(response) {
+      window.localStorage.removeItem('token');
+          hashHistory.push('/');
+  }).catch(function(err) {
+   console.log(err);
+ });
+}
+
+    onSubmitEmail(){
+
+        hashHistory.push('/chat?email=' + this.props.location.query.email)
+        /*<div>
+          <LeftMenu email={this.state.email}/>
+        </div>
+        hashHistory.push('/chat');*/
     }
     getUserProfile() {
-        $.ajax({
-            url: 'http://localhost:8080/userinfo',
-            type: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                localStorage.setItem('token', response.token);
-                // console.log("success");
-                // console.log(response);
-            },
-            error: function(err) {
-                localStorage.setItem('token', 'Error');
-                // console.log(localStorage.getItem('token'));
-                // console.log("error");
-                // console.log(err);
-            }
-        });
-    }
+          axios({
+              url: 'http://localhost:8080/userinfo',
+              method: 'GET',
+            }).then(function(response) {
+                  localStorage.setItem('token', response.token);
+                  // console.log("success");
+                  // console.log(response);
+              }).catch(function(err) {
+                  //localStorage.setItem('token', 'Error');
+                  // console.log(localStorage.getItem('token'));
+                  // console.log("error");
+                   console.log(err);
+              })
+          }
+
+
     render() {
         return (
             <div style={{
@@ -66,7 +94,7 @@ export default class ClientHome extends React.Component {
             <Grid.Column width={10}></Grid.Column>
             <Grid.Column width={4}>
 
-            <center><Icon name='sign out' size='large' inverted id='iconstyle' onClick={this.logoutsession.bind(this)}/></center>
+            <center><Icon name='sign out' size='large' inverted id='iconstyle' onClick={this.logout.bind(this)}/></center>
 
             </Grid.Column>
             </Grid.Row>
@@ -79,14 +107,14 @@ export default class ClientHome extends React.Component {
             <Grid.Column width={4} centered={'true'}>
             <Grid.Row>
             <center>
-            <a href="#/chat"><Image src='../../images/react.jpg' size='small' avatar/></a>
+
+            <Image src='../../images/react.jpg' size='small' avatar onclick={this.onSubmitEmail.bind(this)}/>
             </center>
             </Grid.Row>
             <Grid.Row>
             <center>
-            <a href="#/chat">
-            <h2 className="heading1">REACT</h2>
-            </a>
+                <h2 className="heading1" onClick={this.onSubmitEmail.bind(this)}>REACT</h2>
+
             </center>
             </Grid.Row>
             </Grid.Column>
@@ -118,7 +146,6 @@ export default class ClientHome extends React.Component {
             </center>
             </Grid.Row>
             </Grid.Column>
-            <Grid.Column width={2}/>
             </Grid.Row>
             <Grid.Row divided vertically>
             <Grid.Column width={2}/>
