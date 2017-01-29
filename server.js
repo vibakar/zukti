@@ -10,6 +10,7 @@ let webpackDevMiddleware = require('webpack-dev-middleware');
 let webpackHotMiddleware = require('webpack-hot-middleware');
 let config = require('./webpack.config');
 let getLexicon = require('./webserver/lexicon/getLexicon');
+let intent = require('./webserver/routes/intent/intent');
 let addKnowledge = require('./webserver/routes/addKnowledge/question');
 let askQuestion = require('./webserver/routes/askQuestion/processQuestion');
 let questionCategory = require('./webserver/routes/questionsCategory/questionsCategory');
@@ -66,6 +67,7 @@ require('./webserver/routes/auth.js')(app, passport);
 
 
 //Ruotes
+app.use('/intent',intent);
 app.use('/qa', addKnowledge);
 app.use('/qc', questionCategory);
 app.use('/askQuestion', askQuestion);

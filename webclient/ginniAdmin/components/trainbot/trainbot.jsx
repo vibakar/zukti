@@ -1,83 +1,53 @@
 import React from 'react';
-import {
-    Grid,
-    Button,
-    Form,
-    Dropdown,
-    Input,
-    Icon,
-    Card,
-    Label
-} from 'semantic-ui-react';
+import {Grid, Button, Icon, Card} from 'semantic-ui-react';
+import IntentDropDown from './IntentDropDown';
+import InputNewSameAsIntent from './inputNewSameAsIntent';
+import SameAsIntents from './sameAsIntents';
 export default class TrainBot extends React.Component {
     constructor(props) {
         super(props);
+        this.setSameAsIntents = this.setSameAsIntents.bind(this);
+        this.addNewSameAsIntent = this.addNewSameAsIntent.bind(this);
         this.state = {
-            options: [
-                {
-                    text: 'What',
-                    value: 'what'
-                }, {
-                    text: 'How',
-                    value: 'how'
-                }, {
-                    text: 'Why',
-                    value: 'why'
-                }, {
-                    text: 'When',
-                    value: 'when'
-                }
-            ]
+            sameAsIntentsDisplay: [],
+            baseIntent: ''
         }
     }
-    handleAddition = (e, {value}) => {
-        this.setState({
-            options: [
-                {
-                    text: what,
-                    value: what
-                },
-                ...this.state.options
-            ]
-        })
+    setSameAsIntents(baseIntent, intents) {
+        // map sameAs intents with baseIntent
+        let sameAsIntentsDisplay = intents.map((intent, index) => {
+            return <SameAsIntents key={index} intent={intent}/>;
+        });
+        this.setState({sameAsIntentsDisplay: sameAsIntentsDisplay, baseIntent: baseIntent});
     }
-    handleChange = (e, {value}) => this.setState({currentValue: value})
+    addNewSameAsIntent(intent){
+      let length = this.state.baseIntent.length;
+      this.state.sameAsIntentsDisplay.push(<SameAsIntents key={length} intent={intent}/>);
+      this.setState({sameAsIntentsDisplay: this.state.sameAsIntentsDisplay});
+    }
     render() {
-        const {currentValue} = this.state;
         return (
             <div style={{
-                backgroundImage: "url('../../images/trainbot.jpg')",
+                backgroundImage: 'url("../../images/trainbot.jpg")',
                 height: '100%'
             }}>
                 <Grid >
                     <Grid.Row></Grid.Row>
                     <Grid.Row textAlign='center'>
                         <Grid.Column width={8}>
-                         <h2>Add Intent</h2>
+                            <h2>Add Intent</h2>
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
                         <Grid.Column width={1}></Grid.Column>
                         <Grid.Column width={6}>
-                            <Form>
-                                <Form.Field >
-                                    <label><h3>Select Intent</h3></label>
-                                    <Input >
-                                        <Dropdown fluid options={this.state.options} placeholder='Intent' search selection allowAdditions value={currentValue} onAddItem={this.handleAddition} onChange={this.handleChange}/>
-                                    </Input>
-                                </Form.Field>
-                            </Form>
+                            <IntentDropDown handlerForSameAsIntents={this.setSameAsIntents}/>
                         </Grid.Column>
                     </Grid.Row>
-                                        <Grid.Row>
+                    <Grid.Row>
                         <Grid.Column width={1}></Grid.Column>
                         <Grid.Column width={6}>
-                            <Form>
-                                <Form.Field>
-                                    <label><h3>Same As</h3></label>
-                                    <Input placeholder='sameas'/>
-                                </Form.Field>
-                            </Form>
+                            <InputNewSameAsIntent baseIntent={this.state.baseIntent} handlerAddNewIntent={this.addNewSameAsIntent}/>
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
@@ -100,16 +70,13 @@ export default class TrainBot extends React.Component {
                                     </Card.Header>
                                 </Card.Content>
                                 <Card.Content extra>
-                                  <Label color='gray'>
-                                        what
-                                        <Icon name='delete'/>
-                                    </Label>
+                                    {this.state.sameAsIntentsDisplay}
                                 </Card.Content>
                             </Card>
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
             </div>
-        )
-    };
+        );
+    }
 }
