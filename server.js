@@ -12,8 +12,7 @@ let config = require('./webpack.config');
 let getLexicon = require('./webserver/lexicon/getLexicon');
 let intent = require('./webserver/routes/intent/intent');
 let addKnowledge = require('./webserver/routes/addKnowledge/question');
-let askQuestion = require('./webserver/routes/askQuestion/processQuestion');
-let questionCategory = require('./webserver/routes/questionsCategory/questionsCategory');
+let askQuestion = require('./webserver/routes/getReply/reply');
 let app = express();
 let compiler = webpack(config);
 const configDB = require('./webserver/config/database');
@@ -69,10 +68,7 @@ require('./webserver/routes/auth.js')(app, passport);
 //Ruotes
 app.use('/intent',intent);
 app.use('/qa', addKnowledge);
-app.use('/qc', questionCategory);
-app.use('/askQuestion', askQuestion);
-app.use('/askQuestion', askQuestion);
-
+app.use('/question', askQuestion)
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     publicPath: config.output.publicPath,

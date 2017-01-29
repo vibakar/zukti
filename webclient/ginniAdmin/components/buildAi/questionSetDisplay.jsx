@@ -1,63 +1,26 @@
 import React from 'react';
 import {
-    Container,
-    Header,
     Divider,
-    Card,
-    Button,
-    Image,
-    TextArea,
-    Grid,
-    Segment,
-    Icon,
-    Label,
-    Breadcrumb
-} from 'semantic-ui-react';
-import Config from '../../../../config/url';
-import QuestionsAnswer from './questionsAnswer';
+    Grid
+  } from 'semantic-ui-react';
+import QuestionAnswer from './questionsAnswer';
 import AddQuestionAnswerSet from './addQuestionsAnswerSet';
 
 export default class QuestionSetDisplay extends React.Component {
 
     constructor() {
         super();
-        this.addNewQuestionAnswerSet = this.addNewQuestionAnswerSet.bind(this); //function to add a new AI rule block to screen
-        this.removeQuestionAnswerSet = this.removeQuestionAnswerSet.bind(this);
-        // function to re render the questionCategory component
-        // there we will make is component clicked false
-        this.goBackToQuestionCategories = this.goBackToQuestionCategories.bind(this);
+        this.addQuestionAnswerSet = this.addQuestionAnswerSet.bind(this);
         this.state = {
-            questionsAnswerSet: []
-        }
+           questionAnswerSet: []
+        };
     }
-    //component did mount function here we will be making an ajax call to fetch existing question in Graph database
-    /*componentDidMount(){
-      let url =Config.url+'/getQASets';
-      Axios.get(url).
-      then((response)=>{
-
-      }).
-      catch(()=>{
-
-      });
-    }*/
-    goBackToQuestionCategories() {
-        this.props.handlerBackToQuestionCategories();
-    }
-
-    // handler called by addQuestionAnswerSet to pass id and re render display
-    addNewQuestionAnswerSet(id) {
-        this.state.questionsAnswerSet.push(<QuestionsAnswer categoryID={this.props.categoryID} questionsAnswerSetID={id} handlerRemoveQuestionAnswerSet={this.removeQuestionAnswerSet}/>);
-        this.setState({questionsAnswerSet: this.state.questionsAnswerSet})
-    }
-    removeQuestionAnswerSet(index) {
-        this.state.questionsAnswerSet.splice(index, 1);
-        this.setState({questionsAnswerSet: this.state.questionsAnswerSet}); //re render after remving an rule block
+    // function to add a Question answer set to display
+    addQuestionAnswerSet(id) {
+        this.state.questionAnswerSet.push(<QuestionAnswer answerID={id}/>);
+        this.setState({questionAnswerSet: this.state.questionAnswerSet});
     }
     render() {
-        let questionsAnswerSet = this.state.questionsAnswerSet.map(function(questionsSet, index) {
-            return questionsSet
-        });
         return (
             <div style={{
                 backgroundImage: "url('../../images/wall.jpg')"
@@ -67,11 +30,6 @@ export default class QuestionSetDisplay extends React.Component {
                     margin: 'auto'
                 }}>
                     <Grid.Row columns={1}>
-                        <Breadcrumb size='big'>
-                            <Breadcrumb.Section link onClick={this.goBackToQuestionCategories}>Question Category</Breadcrumb.Section>
-                            <Breadcrumb.Divider icon='right chevron'/>
-                            <Breadcrumb.Section link>{this.props.categoryName}</Breadcrumb.Section>
-                        </Breadcrumb>
                     </Grid.Row>
                     <Grid.Row columns={1}>
                         <div style={{
@@ -82,10 +40,10 @@ export default class QuestionSetDisplay extends React.Component {
                         </div>
                     </Grid.Row>
                     <Grid.Row>
-                        <AddQuestionAnswerSet handlerNewQuestionsAnswerSet={this.addNewQuestionAnswerSet} questionsSetCategoryID={this.props.categoryID}/>
+                        <AddQuestionAnswerSet handlerAddQASet={this.addQuestionAnswerSet}/>
                     </Grid.Row>
                     <Grid.Row>
-                        {questionsAnswerSet}
+                      {this.state.questionAnswerSet}
                     </Grid.Row>
                 </Grid>
             </div>

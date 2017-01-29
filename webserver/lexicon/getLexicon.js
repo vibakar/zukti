@@ -4,7 +4,7 @@ let fs = require('fs');
 function createLexiconFiles(result) {
     let intentTerms = result.records[0]._fields[0]
     let reactTerms = result.records[0]._fields[1];
-    fs.writeFile(__dirname + '/reactLexicon.json', JSON.stringify(reactTerms), 'utf8');
+    fs.writeFile(__dirname + '/keywordLexicon.json', JSON.stringify(reactTerms), 'utf8');
     fs.writeFile(__dirname + '/intentLexicon.json', JSON.stringify(intentTerms), 'utf8');
 }
 module.exports = function() {

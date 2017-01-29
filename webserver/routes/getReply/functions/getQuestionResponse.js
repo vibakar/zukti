@@ -28,7 +28,18 @@ module.exports = function(intents, keywords, questionResultCallback) {
         .then(function(result) {
             // Completed!
             session.close();
-            questionResultCallback(result);
+            console.log(result);
+            let properties = result.records[0]._fields[0][0].properties;
+            console.log(properties);
+            let resultObj = {
+                textAnswer: properties.textAnswer,
+                otherResult: {
+                    textAnswer: properties.textAnswer,
+                    videoUrl: properties.videoAnswer,
+                    blogUrl: properties.blogAnswer
+                }
+            };
+            questionResultCallback(resultObj);
         })
         .catch(function(error) {
             console.log(error);

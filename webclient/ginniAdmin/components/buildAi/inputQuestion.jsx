@@ -22,11 +22,11 @@ export default class InputQuestion extends React.Component {
         console.log(this.props.categoryID);
         Axios.post(url, {
             question: question,
-            questionsCategoryID:this.props.categoryID,
-            questionsAnswerSetID: this.props.questionsAnswerSetID
-        }).then((response)=> {
-            this.props.handlerAddQuestionToDisplay(question);
-        }).catch((error)=> {
+            answerID: this.props.answerID
+        }).then((response) => {
+            let questionID=response.data.id;
+            this.props.handlerAddQuestionToDisplay(questionID,question);
+        }).catch((error) => {
             alert('Error in AJAX call while saving question to the respective question set');
             console.log(error);
         });

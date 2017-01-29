@@ -4,13 +4,16 @@ let processQuestion = require('./functions/processQuestion');
 // let getKeywordResponse = require('./getKeywordResponse');
 let getQuestionResponse = require('./functions/getQuestionResponse');
 // let saveUnansweredQuery = require('./saveUnansweredQuery');
-router.get('/askQuestion', function(req, res) {
-    let question = req.query.question;
-    let query = processQuestion(question);
+router.post('/askQuestion', function(req, res) {
+    let question = req.body.question;
+    let query = processQuestion(question.value);
     let keywords = query.keywords;
     let intents = query.intents;
-    let questionResultCallback = function(result) {
-        res.send(result);
+    let questionResultCallback = function(finalResult) {
+      res.json({
+          answer: finalResult.textAnswer,
+          result: finalResult.otherResult
+      });
     }
     if (keywords.length === 0) {
         res.send('No keywords found');
@@ -21,6 +24,12 @@ router.get('/askQuestion', function(req, res) {
         getQuestionResponse(intents, keywords, questionResultCallback);
     }
 })
+
+
+
+
+
+
 
 
 module.exports = router;
