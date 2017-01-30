@@ -18,13 +18,13 @@ export default class ForgotPassword extends React.Component
         super();
         this.state = {
             email: ' ',
-            erroremail:false,
-            errormessageemail: "",
+            erroremail: false,
+            errormessageemail: '',
               userexists: ''
         };
         this.onSubmitData = this.onSubmitData.bind(this);
     }
-    //sending the email verification for reset password
+    // sending the email verification for reset password
     onSubmitData(e, value) {
         e.preventDefault();
         axios({
@@ -43,9 +43,9 @@ export default class ForgotPassword extends React.Component
     ChangeEmail = (event) => {
         this.setState({email: event.target.value});
         // console.log(event.target.value);
-        //check whether the user is alreay exists or not
+        // check whether the user is alreay exists or not
         if (validator.isEmail(event.target.value)) {
-          var self=this;
+          var self = this;
             axios({
                 url: ' http://localhost:8080/checkuser',
                 method: 'POST',
@@ -59,12 +59,12 @@ export default class ForgotPassword extends React.Component
                         self.setState({checkmail: true});
                     } else {
                         // console.log(msg);
-                        self.setState({userexists: 'No such email exists in Genie. Please sign up'});
-                        self.setState({checkmail: false});
+                      self.setState({userexists: 'No such email exists in Genie. Please sign up'});
+                      self.setState({checkmail: false});
                       }
                 }).catch(function(err) {
                     // console.log(err);
-                })
+                });
             this.setState({erroremail: false});
             this.setState({errormessageemail: false});
         } else {
@@ -94,7 +94,7 @@ export default class ForgotPassword extends React.Component
                                     </Button>
                                     &nbsp;&nbsp;<Button circular id='loginsignup'>
                                         <a href="#/signup" style={{color:'black'}}>Signup</a>
-                                    </Button>
+                                   </Button>
                                 </Menu.Item>
                             </Menu.Menu>
                         </Menu>
@@ -109,9 +109,9 @@ export default class ForgotPassword extends React.Component
                         </p>
                         <Form onSubmit={this.onSubmitData}>
                             <Form.Field id="forgotfield">
-                                <Form.Input placeholder='email id'  name="email" icon='mail outline' iconPosition='left' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
-                                <p style={{color:'green'}}>{this.state.userexists}</p>
-                                <p style={{color:'#a54f4f'}}>{this.state.errormessageemail}</p>
+                        <Form.Input placeholder= 'email id' name= "email" icon='mail outline' iconPosition='left' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
+                                <p style={{color: 'green'}}>{this.state.userexists}</p>
+                                <p style={{color: '#a54f4f'}}>{this.state.errormessageemail}</p>
                             </Form.Field>
                             <Button id="buttonstylefor" type="submit" circular>Send
                             </Button>

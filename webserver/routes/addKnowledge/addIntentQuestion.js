@@ -7,7 +7,7 @@ module.exports = function(answerID, question, keywords, intents, resultCallback)
                  MATCH (n:concept) where n.name=${JSON.stringify(keywords[0])}
                  MERGE (a)-[:${intents[0]}]->(n)
                  MERGE (q:question {value:${JSON.stringify(question)}})-[:${intents[0]}]->(n)
-                 RETURN ID(n)`
+                 RETURN ID(n)`;
     let session = getNeo4jDriver().session();
     session
         .run(query)

@@ -9,8 +9,19 @@ import {
 } from 'semantic-ui-react';
 import MessagesSend from './messagesSend';
 import ContentType from './contentType';
-import AddContent from './addContent';
+
 export default class BroadCast extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            content: []
+        }
+    }
+    handlerfrom = (text) => {
+        this.state.content.push(text);
+        this.setState({content:  this.state.content});
+
+    }
     render() {
         return (
             <div style={{
@@ -24,11 +35,11 @@ export default class BroadCast extends React.Component {
                     <Grid.Row>
                         <Grid.Column width={6}>
                             <Header as='h1' color='blue'>Send Message</Header>
-                            <ContentType/>
-                            <AddContent/>
+                            <ContentType handlercontent={this.handlerfrom}/>
+
                         </Grid.Column>
                         <Grid.Column width={10}>
-                            <MessagesSend/>
+                            <MessagesSend send={this.state.content}/>
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>

@@ -1,5 +1,5 @@
 let getNeo4jDriver = require('../../../neo4j/connection');
-
+let getLexicon = require('../../../lexicon/getLexicon');
 module.exports = function(baseIntent, newSameAsIntent, resultCallback) {
     let query = `MATCH (n:intent {name:${JSON.stringify(baseIntent)}})
                  MERGE (:intent {name:${JSON.stringify(newSameAsIntent)}})-[:same_as]->(n)`;
@@ -8,9 +8,12 @@ module.exports = function(baseIntent, newSameAsIntent, resultCallback) {
         .then((result) => {
             // Completed!
             session.close();
+            // update the lexicon json files in lexicon folder
+            getLexicon();
             resultCallback({
                 saved: true
             });
+
         })
         .catch((error) => {
             resultCallback({

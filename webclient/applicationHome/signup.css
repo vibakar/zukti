@@ -2,19 +2,21 @@
 {
   background-color: teal;
 color: white;
-align-content: center;
+text-align: center;
 }
-#modelwindow
-{
-  width: 550px;
-  height:615px;
-  margin-left:-290px;
-}
+
 #buttonstyle
 {
-   background-color: black;
+   background-color: teal;
     color:white;
-    margin-left: 120px;
+    margin-left: 96px;
+    margin-top: 15px;
+    width: 350px;
+}
+#buttonstyle:hover
+{
+  color: teal;
+  background-color: white;
 }
 #input
 {
@@ -23,85 +25,42 @@ align-content: center;
 }
 #formfield
 {
-  margin-left: 38px;
+  margin-left: 80px;
+  width: 350px;
+  margin-top: 0px;
 }
-#checkbox
-{
-  margin-left: 5px;
-}
+
 #text
 {
-  margin-left: 100px;
+  margin-left: 105px;
+  width:250px;
 }
-@media only screen and (max-width: 896px) {
-  #modelwindow
-  {
-    width: 450px;
+#textcolor
+{
+  color: #a54f4f;
+}
 
-    height:600px;
-  }
+@media only screen and (max-width: 640px) {
   #buttonstyle
   {
-     background-color: black;
+     background-color: teal;
       color:white;
-      margin-left: 100px;
+
   }
   #input
   {
-    margin-left: 3px;
-    width:350px;
+    margin-left: 0px;
   }
-  #formfield
-  {
-    margin-left: 18px;
-  }
-  #checkbox
-  {
-    margin-left: 2px;
-  }
-  #text
-  {
-    margin-left: 50px;
-  }
-}
-@media only screen and (max-width: 650px) {
-  #modelwindow
-  {
-    width: 450px;
 
-    height:600px;
-  }
-  #buttonstyle
+
+  #textcolor
   {
-     background-color: black;
-      color:white;
-      margin-left: 100px;
+    color: #a54f4f;
   }
-  #input
-  {
-    margin-left: 3px;
-    width:350px;
-  }
-  #formfield
-  {
-    margin-left: 18px;
-  }
-  #checkbox
-  {
-    margin-left: 2px;
-  }
-  #text
-  {
-    margin-left: 50px;
-  }
+
 }
 @media only screen and (max-width: 480px) {
-  #modelwindow
-  {
-    width: 300px;
 
-    height:600px;
-  }
   #buttonstyle
   {
      background-color: black;

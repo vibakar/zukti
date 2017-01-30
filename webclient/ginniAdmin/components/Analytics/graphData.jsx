@@ -2,7 +2,6 @@ import React from 'react';
 import {Line} from "react-chartjs";
 import {Grid,Container} from 'semantic-ui-react';
 import {Bar} from 'react-chartjs';
-
 var styles = {
     "graphContainer": {
         "height": "350px",
@@ -18,7 +17,6 @@ var chartOptions = {
     scaleShowVerticalLines: false,
     responsive: true
 };
-
 export default class GraphData extends React.Component {
     constructor(props) {
         super(props);
@@ -154,9 +152,8 @@ export default class GraphData extends React.Component {
                     }
                 ]
             }
-        }
+        };
       }
-
         render() {
             return (    <Grid   stackable itemsPerRow={2}>
             <Grid.Column width={10}>

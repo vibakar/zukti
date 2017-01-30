@@ -1,5 +1,5 @@
 let getNeo4jDriver = require('../../../neo4j/connection');
-module.exports = function(intents, keywords, questionResultCallback) {
+module.exports = function(intents, keywords, questionResultCallback, noAnswerFoundCallback) {
 
     let query = `UNWIND ${JSON.stringify(intents)} AS token
                  MATCH (n:intent)
@@ -29,20 +29,22 @@ module.exports = function(intents, keywords, questionResultCallback) {
             // Completed!
             session.close();
             console.log(result);
-            let properties = result.records[0]._fields[0][0].properties;
-            console.log(properties);
-            let resultObj = {
-                textAnswer: properties.textAnswer,
-                otherResult: {
+            if (result.records[0]._fields[0].length === 0) {
+                noAnswerFoundCallback();
+            } else {
+                let properties = result.records[0]._fields[0][0].properties;
+                let resultObj = {
                     textAnswer: properties.textAnswer,
-                    videoUrl: properties.videoAnswer,
-                    blogUrl: properties.blogAnswer
-                }
-            };
-            questionResultCallback(resultObj);
+                    otherResult: {
+                        textAnswer: properties.textAnswer,
+                        videoUrl: properties.videoAnswer,
+                        blogUrl: properties.blogAnswer
+                    }
+                };
+                questionResultCallback(resultObj);
+            }
         })
         .catch(function(error) {
             console.log(error);
         });
-
-}
+};
