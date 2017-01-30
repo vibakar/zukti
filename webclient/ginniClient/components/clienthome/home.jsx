@@ -27,7 +27,7 @@ export default class ClientHome extends React.Component {
   });
    }
    onSubmitEmail() {
-       hashHistory.push('/chat?email=' + this.props.location.query.email)
+       hashHistory.push('/chat')
        /*<div>
          <LeftMenu email={this.state.email}/>
        </div>

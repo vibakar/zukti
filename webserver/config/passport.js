@@ -45,9 +45,13 @@ module.exports = function(passport) {
                     error.name = 'You Have Entered Incorrect password !';
                     return done(error.name);
                 } else  {
+                  console.log(user);
                     let userData = {};
                     userData.email = user.email;
                     userData.type = user.type;
+                    userData.firstname = user.firstname;
+                    userData.lastname = user.lastname;
+                    userData.name = user.name;
                     userData.token = RegisteredUser.generateToken(userData.email);
                     return done(null, userData);
                 }

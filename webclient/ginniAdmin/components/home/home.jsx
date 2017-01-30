@@ -27,7 +27,7 @@ export default class FrontPage extends React.Component {
   });
    }
    onSubmitEmail() {
-       hashHistory.push('/chat?email=' + this.props.location.query.email)
+       hashHistory.push('/react')
    }
     getUserProfile() {
         $.ajax({

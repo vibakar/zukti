@@ -12,6 +12,7 @@ import {
 import {hashHistory} from 'react-router';
 import './loginpage.css';
 import validator from 'validator';
+import FrontPage from '../ginniAdmin/components/home/home';
 import axios from 'axios';
 export default class LoginPage extends React.Component
 {
@@ -42,11 +43,11 @@ export default class LoginPage extends React.Component
           }).then(function(response) {
             // alert("bbhvbj");
             console.log(response.data.type);
-            if(response.data.type==='Admin'){
-                hashHistory.push('/adminHome?email=' + value.formData.userName);
+            if(response.data.type==='Admin') {
+               hashHistory.push('/adminHome');
             }
             else{
-              hashHistory.push('/clienthome?email=' + value.formData.userName);
+              hashHistory.push('/clienthome');
             }
             }).catch(function(err) {
               //  alert(err.responseText);
