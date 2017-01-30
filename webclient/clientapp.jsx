@@ -50,7 +50,7 @@ ReactDOM.render(
         <Route path='/forgetmail' component={ForgetpasswordEmail}/>
         <Route path='/signup' component={Signup}/>
         <Route path='/mail' component={SentMailPage}/>
-        <Route path='/chat' component={LeftMenu}/>
+        <Route path='/chat' component={LeftMenu} />
         <Route path='/left' component={LeftMenu} onEnter={requireAuth.bind(this)}/>
         <Route path='/change' component={ChangePassword}/>
         <Route path='/profile' component={ClientProfile}/>

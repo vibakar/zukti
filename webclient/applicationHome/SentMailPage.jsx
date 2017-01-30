@@ -1,22 +1,9 @@
 import React from 'react';
 import {
-    Card,
-    Rating,
     Grid,
-    List,
-    Image,
-    Header,
-    Menu,
-    Button,
-    Divider,
-    Icon,
-    Modal,
-    Input
+    Button
 } from 'semantic-ui-react';
 import './applicationHome.css';
-import {Scrollbars} from 'react-custom-Scrollbars';
-import {Link} from 'react-router';
-
 export default class SentMailPage extends React.Component {
     constructor() {
         super();
@@ -28,14 +15,13 @@ export default class SentMailPage extends React.Component {
             }}>
 
                 <Grid container={'true'} centered={'true'}>
-                    <Grid.Row></Grid.Row>
+                    <Grid.Row/>
                     <Grid.Row>
                         <Grid.Column width={2}>
                             <h1 id="genie">GENIE</h1>
                         </Grid.Column>
-                        <Grid.Column width={9}></Grid.Column>
+                        <Grid.Column width={9}/>
                         <Grid.Column width={5}>
-
                             <h2>
                                 <Button className="buttonlogin" circular style={{
                                     backgroundColor: 'white'
@@ -54,42 +40,36 @@ export default class SentMailPage extends React.Component {
                             </h2>
                         </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-
+                    <Grid.Row/>
+                    <Grid.Row/>
+                    <Grid.Row/>
+                    <Grid.Row/>
                     <Grid.Row>
-
                         <Grid.Column style={{
                             textAlign: 'center'
                         }}>
-
                             <p id='head1'>
                                 Please check your mail for login<br/>
                                 <h3 id='head4'>Verification link sent to your Mail</h3>
                                 <h1 id='head4'>"Thank you for register our Genie"</h1>
-
                             </p>
                         </Grid.Column>
                     </Grid.Row>
-
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-                    <Grid.Row></Grid.Row>
-
+                    <Grid.Row/>
+                    <Grid.Row/>
+                    <Grid.Row/>
+                    <Grid.Row/>
+                    <Grid.Row/>
+                    <Grid.Row/>
+                    <Grid.Row/>
+                    <Grid.Row/>
+                    <Grid.Row/>
+                    <Grid.Row/>
+                    <Grid.Row/>
+                    <Grid.Row/>
+                    <Grid.Row/>
+                    <Grid.Row/>
+                    <Grid.Row/>
                 </Grid>
             </div>
         );

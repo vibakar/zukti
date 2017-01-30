@@ -6,42 +6,25 @@ export default class Logout extends React.Component
 {
   state = { open: true }
   close=()=>hashHistory.push('/chat');
-  /*logout() {
-    axios({
-    url: 'http://localhost:8080/signout',
-    method: 'GET',
-  }).then(function(response) {
-        window.localStorage.removeItem('token');
-             hashHistory.push('/');
-    }).catch(function(err) {
 
+  logout() {
+    $.ajax({
+    url: 'http://localhost:8080/signout',
+    type: 'GET',
+    dataType:'text',
+    success: function(response) {
+        window.localStorage.removeItem('token');
+            hashHistory.push('/');
+    },
+    error: function(err) {
       console.log(err);
-    })
-}
+    }
+});
 componentDidMount()
 {
   this.logout();
 }
-*/
-logout() {
-  $.ajax({
-  url: 'http://localhost:8080/signout',
-  type: 'GET',
-  dataType:'text',
-  success: function(response) {
-      window.localStorage.removeItem('token');
-          hashHistory.push('/');
-  }.bind(this),
-  error: function(err) {
-
-    console.log(err);
-  }
-});
-}
-componentDidMount()
-{
-this.logout();
-}
+ }
   render() {
     const { open} = this.state;
     return(
@@ -52,7 +35,7 @@ this.logout();
           </Modal.Header>
           <Modal.Content>
           <Modal.Description id="logoutdescription">
-            <Button size="small" color='blue' onClick={this.logout.bind(this)}>Yes</Button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#/"><Button size="small" color='blue' onClick={this.logout.bind(this)}>Yes</Button></a>&nbsp;&nbsp;&nbsp;&nbsp;
             <Button size="small" color='red' onClick={this.close} >No</Button>
           </Modal.Description>
          </Modal.Content>

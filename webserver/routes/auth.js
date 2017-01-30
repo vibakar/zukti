@@ -20,7 +20,9 @@ module.exports = function(app, passport) {
 
     // local login route
     app.post('/login', passport.authenticate('local'), function(req, res) {
-        res.send("Welcome")
+      console.log(req.user);
+          res.send(req.user)
+
     });
     //logout
     app.get('/signout', function(req, res) {
@@ -40,12 +42,13 @@ module.exports = function(app, passport) {
         newUser.password = req.body.password;
         newUser.firstname = req.body.firstName;
         newUser.lastname = req.body.lastName;
+
         if (req.body.userType) {
             newUser.type = 'Admin';
         } else {
             newUser.type = 'Customer';
         }
-        newUser.verified = false;
+        newUser.isEmailVerified = false;
         newUser.save(function(err) {
             if (err) {
                 res.send('Error in registration');
@@ -134,7 +137,7 @@ module.exports = function(app, passport) {
                             email: req.query.email
                         }, {
                             $set: {
-                                verified: true,
+                                isEmailVerified: true,
                                 verificationID: 0
                             }
                         }, function(err) {

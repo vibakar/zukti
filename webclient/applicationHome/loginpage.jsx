@@ -19,8 +19,8 @@ export default class LoginPage extends React.Component
         super(props);
         this.state = {
             open: true,
-            openSnackbar:false,
-            snackbarMsg: "",
+            openSnackbar: false,
+            snackbarMsg: '',
             erroremail: false,
             errormessageemail: '',
             email: ''
@@ -40,18 +40,24 @@ export default class LoginPage extends React.Component
                 password: value.formData.password
             }
           }).then(function(response) {
-            alert("bbhvbj");
-              hashHistory.push('/clienthome?email=' + value.formData.userName)
+            // alert("bbhvbj");
+            console.log(response.data.type);
+            if(response.data.type==='Admin'){
+                hashHistory.push('/adminHome?email=' + value.formData.userName);
+            }
+            else{
+              hashHistory.push('/clienthome?email=' + value.formData.userName);
+            }
             }).catch(function(err) {
               //  alert(err.responseText);
                 console.log(err);
                 self.setState({openSnackbar: true, snackbarMsg: err.responseText});
-        })
+        });
 }
         handleRequestClose = () => {
             this.setState({openSnackbar: false});
         };
-    //validation for email
+    // validation for email
     ChangeEmail = (event) => {
         this.setState({email: event.target.value});
         // console.log(event.target.value);
@@ -88,9 +94,9 @@ export default class LoginPage extends React.Component
             <Segment basic>
             <Form onSubmit={this.onSubmitLoginData}>
             <Form.Field id="formfieldlogin">
-            <Form.Input name="userName" placeholder='username or email id' icon='user' iconPosition='left' id="formstyle" onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required />
+            <Form.Input name= "userName" placeholder= 'username or email id' icon='user' iconPosition='left' id="formstyle" onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required />
 
-            <p style={{color:'#a54f4f'}}>{this.state.errormessageemail}</p>
+            <p style={{color: '#a54f4f'}}>{this.state.errormessageemail}</p>
             </Form.Field>
             <Form.Field id="formfieldlogin"><br/>
             <Form.Input type='password' name="password" placeholder='password' icon='lock' iconPosition='left' id="formstyle" required/>
