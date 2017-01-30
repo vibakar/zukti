@@ -1,4 +1,3 @@
-
 var RegisteredUser = require('../models/tempUserModel');
 var nodemailer = require('nodemailer');
 var rand,
@@ -21,8 +20,8 @@ module.exports = function(app, passport) {
 
     // local login route
     app.post('/login', passport.authenticate('local'), function(req, res) {
-      console.log(req.user);
-          res.send(req.user)
+        console.log(req.user);
+        res.send(req.user)
 
     });
     //logout
@@ -83,17 +82,15 @@ module.exports = function(app, passport) {
     });
 
     app.get('/view', function(req, res, next) {
-      RegisteredUser.find({},function(err,alldetails){
-      if(err) {
-        res.send(err);
-        console.log('error ocuured');
-      }
-      else {
-         res.send(alldetails);
-      }
+        RegisteredUser.find({}, function(err, alldetails) {
+            if (err) {
+                res.send(err);
+                console.log('error ocuured');
+            } else {
+                res.send(alldetails);
+            }
+        });
     });
-    });
-
 
     app.get('/', function(req, res) {
         res.sendfile('index.html');
@@ -381,8 +378,15 @@ module.exports = function(app, passport) {
     });
     // customer Information
     app.get('/clientinformation', function(req, res) {
-      console.log(req.user.email);
-      res.send(req.user);
+        let email = req.user.email;
+        RegisteredUser.find({
+            'email': email
+        }, function(err, profile) {
+            res.send(profile);
+            if (err) {
+                res.send(err);
+            }
+        });
     });
 
     // *******************************************

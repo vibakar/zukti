@@ -29,19 +29,14 @@ export default class LeftMenu extends Component {
       }
       this.onSubmitEmail=this.onSubmitEmail.bind(this);
     }
-    componentDidMount(){
-      var self=this;
-      axios({
-          url: ' http://localhost:8080/clientinformation',
-          method: 'get'
-        }).then(function(response) {
-          console.log("cgggcgg");
-          console.log("value"+response.data.firstname)
-          self.setState({firstname: response.data.firstname})
-                    // console.log(msg);
-          }).catch(function(err) {
-              // console.log(err);
-          })
+    componentDidMount() {
+        var self = this;
+        axios({url: ' http://localhost:8080/clientinformation', method: 'get'}).then(function(response) {
+            self.setState({firstname: response.data[0].firstname})
+            // console.log(msg);
+        }).catch(function(err) {
+            // console.log(err);
+        })
     }
     onSubmitEmail(){
     hashHistory.push('/profile')

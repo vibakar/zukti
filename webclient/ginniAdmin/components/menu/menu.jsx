@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react';
 import Content from '../sideBarPusherContent/content';
 //import TopMenuBot from './topmenubot';import ClientProfile from '../clientprofile/clientprofile';
@@ -24,53 +23,46 @@ import './menu.css';
 
 export default class SidebarBot extends Component {
 
-
     constructor() {
-      super();
-      this.state={
-        activeItem:'SetupAi',
-        details: '',
-        email:'',
-        firstname:'',
-        lastname:''
-      }
-      this.onSubmitEmail=this.onSubmitEmail.bind(this);
+        super();
+        this.state = {
+            activeItem: 'SetupAi',
+            details: '',
+            email: '',
+            firstname: '',
+            lastname: ''
+        }
+        this.onSubmitEmail = this.onSubmitEmail.bind(this);
 
     }
-    componentDidMount(){
-      var self=this;
-      axios({
-          url: ' http://localhost:8080/clientinformation',
-          method: 'get'
-        }).then(function(response) {
-          console.log(response.data);
-          self.setState({firstname: response.data.firstname})
-                    // console.log(msg);
-          }).catch(function(err) {
-              // console.log(err);
-          })
+    componentDidMount() {
+        var self = this;
+        axios({url: ' http://localhost:8080/clientinformation', method: 'get'}).then(function(response) {
+            self.setState({firstname: response.data[0].firstname})
+            // console.log(msg);
+        }).catch(function(err) {
+            // console.log(err);
+        })
     }
-    onSubmitEmail(){
-
-    hashHistory.push('/adminprofile');
+    onSubmitEmail() {
+        hashHistory.push('/adminprofile');
     }
-
-
 
     handleItemClick = (e, {name}) => this.setState({activeItem: name})
     render() {
+
         const activeItem = this.state.activeItem;
-        const customername =  this.state.firstname;
-                const trigger = (
-          <span>
-          <Image avatar src='http://semantic-ui.com/images/avatar2/large/patrick.png'/> {name=customername}
-          </span>
+        const customername = this.state.firstname;
+        const trigger = (
+            <span>
+                <Image avatar src='http://semantic-ui.com/images/avatar2/large/patrick.png'/> {name = customername}
+            </span>
         );
         return (
-          <div  id="leftbarmenu">
+            <div id="leftbarmenu">
                 <Sidebar as={Menu} className='fixed' animation='slide along' width='thin' visible={true} icon='labeled' vertical inverted>
                     <Menu.Item name='Genie'>
-                        <a href="/home"><Image src='../../images/ginianim.gif'  size='tiny' avatar/></a>
+                        <a href="/home"><Image src='../../images/ginianim.gif' size='tiny' avatar/></a>
                     </Menu.Item>
                     <Menu.Item name='SetupAi' active={activeItem === 'SetupAi'} onClick={this.handleItemClick}>
                         <Icon name='book' color='teal'/>
@@ -97,12 +89,12 @@ export default class SidebarBot extends Component {
                         TrainBot
                     </Menu.Item><br/><br/><br/><br/>
                     <Menu.Item name='UseTheBot'>
-                          <a href='#/log'><Icon name='sign out' color='teal'/>
-                      Logout</a>
+                        <a href='#/log'><Icon name='sign out' color='teal'/>
+                            Logout</a>
                     </Menu.Item>
-                  </Sidebar>
-                  <Sidebar.Pusher id="sidebarpusher">
-                      <Segment id="segmentleftbar">
+                </Sidebar>
+                <Sidebar.Pusher id="sidebarpusher">
+                    <Segment id="segmentleftbar">
                         <div id='topmenudiv'>
                             <Menu secondary>
                                 <Menu.Item>
@@ -126,13 +118,12 @@ export default class SidebarBot extends Component {
                             </Menu>
                         </div>
 
-
                         <div id='leftmenucontentdiv'>
-                              <Content sidebarItemSelected={activeItem}/>
+                            <Content sidebarItemSelected={activeItem}/>
                         </div>
-                      </Segment>
-                      </Sidebar.Pusher>
-                </div>
-              );
-            }
-          }
+                    </Segment>
+                </Sidebar.Pusher>
+            </div>
+        );
+    }
+}

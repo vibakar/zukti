@@ -29,15 +29,15 @@ export default class ClientProfile extends React.Component
         hashHistory.push('/chat')
     }
     componentDidMount() {
-      var self=this;
+      const self=this;
         axios({
             url: ' http://localhost:8080/clientinformation',
             method: 'get'
         }).then(function(response) {
-            console.log(response.data);
-            self.setState({email:response.data.email});
-            self.setState({firstname:response.data.firstname});
-            self.setState({lastname:response.data.lastname});
+            console.log("email"+response.data[0].email);
+            self.setState({email:response.data[0].email});
+            self.setState({firstname:response.data[0].firstname});
+            self.setState({lastname:response.data[0].lastname});
 
         }).catch(function(err) {
             // alert("bjhbj"+err);

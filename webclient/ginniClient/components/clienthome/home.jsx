@@ -40,14 +40,9 @@ export default class ClientHome extends React.Component {
             dataType: 'json',
             success: function(response) {
                 localStorage.setItem('token', response.token);
-                // console.log("success");
-                // console.log(response);
             },
             error: function(err) {
                 localStorage.setItem('token', 'Error');
-                // console.log(localStorage.getItem('token'));
-                // console.log("error");
-                // console.log(err);
             }
         });
     }

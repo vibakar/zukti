@@ -35,10 +35,10 @@ export default class AdminProfilePage extends React.Component
             url: ' http://localhost:8080/clientinformation',
             method: 'get'
         }).then(function(response) {
-            console.log("email"+response.data);
-            self.setState({email:response.data.email});
-            self.setState({firstname:response.data.firstname});
-            self.setState({lastname:response.data.lastname});
+            console.log("email"+response.data[0].email);
+            self.setState({email:response.data[0].email});
+            self.setState({firstname:response.data[0].firstname});
+            self.setState({lastname:response.data[0].lastname});
 
         }).catch(function(err) {
             // alert("bjhbj"+err);
