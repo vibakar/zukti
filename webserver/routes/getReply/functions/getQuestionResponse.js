@@ -31,22 +31,20 @@ module.exports = function(intents, keywords, questionResultCallback, noAnswerFou
             console.log(result);
             if (result.records[0]._fields[0].length === 0) {
                 noAnswerFoundCallback();
-            }
-            else{
-              let properties = result.records[0]._fields[0][0].properties;
-              let resultObj = {
-                textAnswer: properties.textAnswer,
-                otherResult: {
-                  textAnswer: properties.textAnswer,
-                  videoUrl: properties.videoAnswer,
-                  blogUrl: properties.blogAnswer
-                }
-              };
-              questionResultCallback(resultObj);
+            } else {
+                let properties = result.records[0]._fields[0][0].properties;
+                let resultObj = {
+                    textAnswer: properties.textAnswer,
+                    otherResult: {
+                        textAnswer: properties.textAnswer,
+                        videoUrl: properties.videoAnswer,
+                        blogUrl: properties.blogAnswer
+                    }
+                };
+                questionResultCallback(resultObj);
             }
         })
         .catch(function(error) {
             console.log(error);
         });
-
-}
+};
