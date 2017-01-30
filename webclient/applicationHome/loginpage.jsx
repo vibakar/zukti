@@ -19,8 +19,8 @@ export default class LoginPage extends React.Component
         super(props);
         this.state = {
             open: true,
-            openSnackbar:false,
-            snackbarMsg: "",
+            openSnackbar: false,
+            snackbarMsg: '',
             erroremail: false,
             errormessageemail: '',
             email: ''
@@ -43,7 +43,7 @@ export default class LoginPage extends React.Component
             alert("bbhvbj");
               hashHistory.push('/clienthome?email=' + value.formData.userName)
             }).catch(function(err) {
-              //  alert(err.responseText);
+               alert(err.responseText);
                 console.log(err);
                 self.setState({openSnackbar: true, snackbarMsg: err.responseText});
         })

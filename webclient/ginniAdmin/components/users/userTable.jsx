@@ -1,7 +1,6 @@
-import React from 'react'
-import { Icon, Table,Grid,Image ,Header,Card} from 'semantic-ui-react';
-import {Scrollbars} from 'react-custom-scrollbars';
-import { Button, Modal,Rating ,Menu, Comment, Popup,List} from 'semantic-ui-react';
+import React from 'react';
+import {Grid, Image, Card} from 'semantic-ui-react';
+import { Button} from 'semantic-ui-react';
 import axios from 'axios';
 import './usertable.css';
 export default class UserTable extends React.Component
@@ -9,31 +8,30 @@ export default class UserTable extends React.Component
   constructor() {
       super();
       this.state = {
-        name:[],
-        email:[],
-        userinformation:[]
+        name : [],
+        email: [],
+        userinformation: []
       };
     }
     componentWillMount() {
       axios({
-      url:'http://localhost:8080/view',
+      url: 'http://localhost:8080/view',
       method: 'GET'
     }).then(function(msg) {
-    this.setState({userinformation:msg.data});
+    this.setState({ userinformation: msg.data});
     console.log(this.state.userinformation);
 
 }.bind(this)).
     catch(function(err) {
-        console.log("hi"+err);
+        console.log(err);
         });
     }
 
   render() {
-    var user=this.state.userinformation.map(function(newsdata){
+    var user=this.state.userinformation.map(function(newsdata) {
 return (
   <div id='eachcardstyle'>
-
-    <Card >
+    <Card id='parentcard'>
       <Card.Content>
         <Image floated='right' size='mini' src='http://semantic-ui.com/images/avatar/large/steve.jpg' />
         <Card.Header>
@@ -49,13 +47,12 @@ return (
         </div>
       </Card.Content>
     </Card>
-
     </div>
   );
 }.bind(this));
 return(
-<div style={{backgroundImage:"url('../../images/wall.jpg')",height:'100%',marginTop:'1%'}}>
-  <Grid divided="vertically">
+<div style={{ backgroundImage: "url('../../images/wall.jpg')", height: '100%', marginTop: '1%'}}>
+  <Grid divided='vertically'>
     <Grid.Row columns={3}>
     <Grid.Column width={1}/>
     <Grid.Column width={14} id='cardlayoutstyle'>

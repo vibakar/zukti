@@ -62,7 +62,11 @@ export default class SidebarBot extends Component {
                     <Menu.Item name='TrainBot' active={activeItem === 'UseTheBot'} onClick={this.handleItemClick}>
                         <Icon name='child' color='teal'/>
                         TrainBot
-                    </Menu.Item><br/><br/><br/><br/>
+                    </Menu.Item>
+                    <Menu.Item name='Unanswered Queries' active={activeItem === 'Unanswered Queries'} onClick={this.handleItemClick}>
+                        <Icon name='help' color='teal'/>
+                      Unanswered Queries
+                    </Menu.Item>
                     <Menu.Item name='UseTheBot'>
                           <a href='#/log'><Icon name='sign out' color='teal'/>
                       Logout</a>

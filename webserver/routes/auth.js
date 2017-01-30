@@ -1,4 +1,3 @@
-
 var RegisteredUser = require('../models/tempUserModel');
 var nodemailer = require('nodemailer');
 var rand,
@@ -25,10 +24,24 @@ module.exports = function(app, passport) {
     });
     //logout
     app.get('/signout', function(req, res) {
-        req.logout();
-        res.send('Successfully Logged out');
-    });
 
+       request=req.user.email;
+        //newUser.loggedinStatus = false;
+        RegisteredUser.update({
+            'email':request
+        }, {
+            $set: {
+                'loggedinStatus': false
+            }
+        }, function(err) {
+            if (err) {
+                console.log("status not updated");
+            } else {
+                res.send('Successfully Logged out');
+                  req.logout();
+            }
+        });
+    });
     /*LOCAL SIGNUP*/
     // local sign up route
     app.post('/signup', function(req, res) {
@@ -47,6 +60,7 @@ module.exports = function(app, passport) {
             newUser.type = 'Customer';
         }
         newUser.verified = false;
+        newUser.loggedinStatus = false;
         newUser.save(function(err) {
             if (err) {
                 res.send('Error in registration');

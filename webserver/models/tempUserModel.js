@@ -11,7 +11,8 @@ const userSchema = new Schema({
     firstname: String,
     lastname: String,
     verified: Boolean,
-    verificationID: String
+    verificationID: String,
+    loggedinStatus:Boolean
 })
 userSchema.statics.generateToken = function(email) {
     let token = jwt.sign({

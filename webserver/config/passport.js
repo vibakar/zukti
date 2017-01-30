@@ -47,6 +47,19 @@ module.exports = function(passport) {
                     let userData = {};
                     userData.email = user.email;
                     userData.token = RegisteredUser.generateToken(userData.email);
+                    RegisteredUser.update({
+                        email: userData.email
+                    }, {
+                        $set: {
+                            loggedinStatus: true
+                        }
+                    }, function(err) {
+                        if (err) {
+                            console.log("status not updated");
+                        } else {
+                            console.log("LoginStatus updated Successfully");
+                        }
+                    });
                     return done(null, userData);
                 }
             });
