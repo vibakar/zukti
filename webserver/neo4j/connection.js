@@ -1,6 +1,5 @@
 module.exports = function() {
     let neo4j = require('neo4j-driver').v1;
-    let driver = neo4j.driver("bolt://192.168.1.106", neo4j.auth.basic("neo4j", "Karthimuthu1."));
-    console.log(driver);
+    let driver = neo4j.driver("bolt://192.168.0.35", neo4j.auth.basic("neo4j", "Wilkinson"));
     return driver;
 };

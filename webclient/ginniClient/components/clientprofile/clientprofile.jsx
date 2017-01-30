@@ -100,11 +100,14 @@ export default class ClientProfile extends React.Component
                             <Form.Field>
                                 <label>Email</label>
                                 <Form.Input placeholder='email' name="email1" value={this.props.location.query.email} disabled/>
-                            </Form.Field>
-                            <Button onClick={this.show('small')} color='blue' type='submit'>Save</Button>
-                        </Form>
+
                         <Divider/>
-                        <Button onClick={this.show('small')} color='blue'>Save</Button>
+                      </Form.Field>
+                      <Button onClick={this.show('small')} color='blue' type='submit'>Save</Button>
+                      <a href="#/chat">
+                          <Button color='red'>cancel</Button>
+                      </a>
+                  </Form>
                         <Modal size={size} open={open}>
                             <Modal.Header id="updateheader">
                                 <h2>
@@ -116,9 +119,7 @@ export default class ClientProfile extends React.Component
                                 </Button>
                             </Modal.Actions>
                         </Modal>
-                        <a href="#/chat">
-                            <Button color='red'>cancel</Button>
-                        </a>
+
 
                     </Modal.Description>
                 </Modal.Content>

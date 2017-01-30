@@ -23,7 +23,7 @@ export default class InputUserMesaage extends React.Component {
         message.user = 'Zen';
         this.props.handlerUserReply(message);
         ReactDOM.findDOMNode(this.refs.userInput).value = ''
-        let url = Config.url + '/askQuestion';
+        let url = Config.url + '/question/askQuestion';
         Axios.post(url, {question: message}).then((response) => {
             console.log(response);
             if (response.data.result) {

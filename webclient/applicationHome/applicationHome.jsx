@@ -1,44 +1,45 @@
 import React from 'react';
-import {Card, Rating, Grid,  List, Image, Header,Menu,Button,Divider,Icon,Modal,Input} from 'semantic-ui-react';
+import { Grid, Button } from 'semantic-ui-react';
 import './applicationHome.css';
-import {Scrollbars} from 'react-custom-Scrollbars';
 import {Link} from 'react-router';
 
 export default class AdminWelcomePage extends React.Component {
-  constructor(){
+  constructor() {
     super();
   }
 
 render(){
-    return(
+      return(
 <div style={{ backgroundImage: "url('../../images/homes.jpg')"}} >
 
 <Grid container={'true'} centered={'true'}>
-<Grid.Row></Grid.Row>
+<Grid.Row/>
   <Grid.Row>
     <Grid.Column width={2}>
       <h1 id="genie">GENIE</h1>
     </Grid.Column>
-    <Grid.Column width={9} ></Grid.Column>
+    <Grid.Column width={9} />
     <Grid.Column width={5}>
+
 
       <h2>
       <Button className="buttonlogin" circular style={{backgroundColor:'white'}} ><a href="#/login" id="head" style={{color:'black'}}>LOGIN</a></Button>
             &nbsp;&nbsp;<Button  className="buttonsignin" circular style={{backgroundColor:'white'}} ><a href="#/signup" id="head" style={{color:'black'}}>SIGNUP</a></Button></h2>
 
-     
+
   </Grid.Column>
   </Grid.Row>
-  <Grid.Row></Grid.Row>
-  <Grid.Row></Grid.Row>
-  <Grid.Row></Grid.Row>
-<Grid.Row></Grid.Row>
+  <Grid.Row/>
+  <Grid.Row/>
+  <Grid.Row/>
+<Grid.Row/>
 
 
 
  <Grid.Row>
 
-   <Grid.Column style={{textAlign:'center'}}>
+    <Grid.Column style={{textAlign: 'center'}}>
+
 
      <p id='head1'>HERE COMES YOUR GENIE<br/>
 
@@ -52,28 +53,27 @@ render(){
 </Grid.Column>
 </Grid.Row>
 
- <Grid.Row></Grid.Row>
+ <Grid.Row/>
 
-  <Grid.Row></Grid.Row>
-  <Grid.Row></Grid.Row>
-  <Grid.Row></Grid.Row>
-  <Grid.Row></Grid.Row>
-  <Grid.Row></Grid.Row>
+  <Grid.Row/>
+  <Grid.Row/>
+  <Grid.Row/>
+  <Grid.Row/>
+  <Grid.Row/>
 
-  <Grid.Row></Grid.Row>
-  <Grid.Row></Grid.Row>
+  <Grid.Row/>
+  <Grid.Row/>
 
   <Grid.Row><a href="http://www.pcadvisor.co.uk/feature/software/what-are-bots-facebook-messenger-skype-skyscanner-3638979/" id="head" style={{color:'black'}}><Button className="buttonlogin" circular style={{backgroundColor:'white'}} >EXPLORE</Button></a></Grid.Row>
 
-  <Grid.Row></Grid.Row>
-  <Grid.Row></Grid.Row>
-  <Grid.Row></Grid.Row>
-  <Grid.Row></Grid.Row>
-  <Grid.Row></Grid.Row>
-  <Grid.Row></Grid.Row>
-  <Grid.Row></Grid.Row>
-  <Grid.Row></Grid.Row>
-
+  <Grid.Row/>
+  <Grid.Row/>
+  <Grid.Row/>
+  <Grid.Row/>
+  <Grid.Row/>
+  <Grid.Row/>
+  <Grid.Row/>
+  <Grid.Row/>
 
 
 </Grid>

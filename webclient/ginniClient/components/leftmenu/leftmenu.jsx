@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import LeftMenuContent from '../leftmenuPusherContent/leftmenuContent';
 import ClientProfile from '../clientprofile/clientprofile';
 import ChangePassword from '../changepassword/changepassword';
-import TopMenu from './topmenu';
+
 import {
     Sidebar,
     Segment,
@@ -34,7 +34,6 @@ export default class LeftMenu extends Component {
 
 
       this.onSubmitEmail=this.onSubmitEmail.bind(this);
-        this.passwordchange=this.passwordchange.bind(this);
     }
     componentDidMount(){
       var self=this;
@@ -59,13 +58,7 @@ export default class LeftMenu extends Component {
       </div>*/
     hashHistory.push('/profile?email=' + this.props.location.query.email)
     }
-    passwordchange(){
-      /*<div>
-        <ChangePassword email={this.state.email}/>
-      </div>*/
-      hashHistory.push('/change?email=' + this.props.location.query.email)
 
-    }
 handleItemClick = (e, {name}) => this.setState({activeItem: name})
     render() {
         const activeItem = this.state.activeItem;
@@ -112,14 +105,14 @@ handleItemClick = (e, {name}) => this.setState({activeItem: name})
                                       <Popup trigger={< Icon name = "arrow circle left" size = "large" circular color = 'teal' />} content='Back' size='mini'/>
                                   </a>
                               </Menu.Item>
+                              <Menu.Item position='right'></Menu.Item>
                               <Menu.Item>
-                                  <Input transparent className='icon' icon='search' placeholder='Search your content'/>
+                                  <h3>THE CODE AESSISTANT/GENIE</h3>
                               </Menu.Item>
                               <Menu.Item position='right'>
                                   <Dropdown trigger={trigger} pointing='top right' icon={null}>
                                       <Dropdown.Menu >
                                           <Dropdown.Item text='My Profile' icon='user' onClick={this.onSubmitEmail}/>
-                                              <Dropdown.Item text='ChangePassword' icon='key' onClick={this.passwordchange}/>
                                           <Dropdown.Item text='Settings' icon='settings'/>
                                           <Dropdown.Item text='Help' icon='help'/>
                                       </Dropdown.Menu>
@@ -127,7 +120,7 @@ handleItemClick = (e, {name}) => this.setState({activeItem: name})
                               </Menu.Item>
                           </Menu>
                       </div>
-                    <TopMenu/>
+
 
                       <div id='leftmenucontentdiv'>
                             <LeftMenuContent sidebarItemSelected={activeItem}/>

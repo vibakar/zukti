@@ -1,3 +1,4 @@
+
 var RegisteredUser = require('../models/tempUserModel');
 var nodemailer = require('nodemailer');
 var rand,
@@ -58,6 +59,19 @@ module.exports = function(app, passport) {
             }
         });
     });
+
+    app.get('/view', function(req, res, next) {
+      RegisteredUser.find({},function(err,alldetails){
+      if(err) {
+        res.send(err);
+        console.log('error ocuured');
+      }
+      else {
+         res.send(alldetails);
+      }
+    });
+    });
+
 
     app.get('/', function(req, res) {
         res.sendfile('index.html');

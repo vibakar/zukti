@@ -64,7 +64,7 @@ export default class AssistantChatContainer extends React.Component {
 
         return (
             <div className='formstyle' style={{
-                backgroundImage: "url('../../images/chatbot.png')",
+                backgroundImage: "url('../../images/wall14.jpg')",
                 height: '100%'
             }}>
                 <Menu secondary>

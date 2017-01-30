@@ -19,7 +19,7 @@ export default class TopMenuBot extends React.Component {
     render() {
         return (
 
-            <div style={{  width:"89%",
+            <div style={{  width:"99%",
               backgroundColor:"#f3f2f2"}}>
                 <Menu secondary>
                     <Menu.Item>

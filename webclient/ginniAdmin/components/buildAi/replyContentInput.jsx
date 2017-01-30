@@ -18,10 +18,12 @@ export default class ReplyContentInput extends React.Component {
       // endpoint to add answer to a specific questionsAnswerSet
       let url=Config.url+'/qa/addAnswer';
       // node id where the answer will be saved
-      let questionsAnswerSetID=this.props.questionsAnswerSetID;
+      let answerID=this.props.answerID;
+      console.log(answerID);
+      console.log('aaaaaaaaaaaaaaaaaaaaa');
       //ajax call to above endpoint
       //type variable to indentify text video blog code snippet answer
-      Axios.post(url,{id:questionsAnswerSetID, answer:answer,type:type}).
+      Axios.post(url,{answerID:answerID, answer:answer,type:type}).
       then((response)=>{
         alert('Answer added succesfully');
       }).

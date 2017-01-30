@@ -6,6 +6,7 @@
   position: absolute;
   bottom: 0;
   max-height: 519px;
+  margin-left: 30px;
 }
 #ginniview {
     margin-left: 2%;
@@ -20,15 +21,6 @@
     margin-left: 2%;
     margin-top: 0px;
     margin-bottom: 0px;
-}
-#textinput {
-    border-color: teal;
-    margin-top: 6%;
-    background-color: gray;
-}
-
-#chatheading {
-    text-align: center;
 }
 
 #textinput {

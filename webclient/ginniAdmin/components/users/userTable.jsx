@@ -2,7 +2,6 @@ import React from 'react'
 import { Icon, Table,Grid,Image ,Header,Card} from 'semantic-ui-react';
 import {Scrollbars} from 'react-custom-scrollbars';
 import { Button, Modal,Rating ,Menu, Comment, Popup,List} from 'semantic-ui-react';
-
 import axios from 'axios';
 import './usertable.css';
 export default class UserTable extends React.Component
@@ -32,7 +31,7 @@ export default class UserTable extends React.Component
   render() {
     var user=this.state.userinformation.map(function(newsdata){
 return (
-  <div id="fullbackground">
+  <div id='eachcardstyle'>
 
     <Card >
       <Card.Content>
@@ -55,12 +54,12 @@ return (
   );
 }.bind(this));
 return(
-<div>
+<div style={{backgroundImage:"url('../../images/wall.jpg')",height:'100%',marginTop:'1%'}}>
   <Grid divided="vertically">
     <Grid.Row columns={3}>
     <Grid.Column width={1}/>
-    <Grid.Column width={14}>
-        <Card.Group>
+    <Grid.Column width={14} id='cardlayoutstyle'>
+        <Card.Group id='cardgrouplayout'>
   {user}
 </Card.Group>
 </Grid.Column>
@@ -68,6 +67,5 @@ return(
 </Grid>
 </div>
 );
-
 }
 }

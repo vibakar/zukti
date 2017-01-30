@@ -1,6 +1,4 @@
-
 import React from 'react';
-import AddQuestionCategory from '../QuestionCategory/addQuestionCategory';
 import BuildAi from '../buildAi/questionSetDisplay'
 import UserTable from '../users/usertable';
 import Analytics from '../Analytics/info';
@@ -14,7 +12,7 @@ export default class Content extends React.Component {
         switch (this.props.sidebarItemSelected) {
             case 'SetupAi':
                 {
-                    return <AddQuestionCategory/>
+                    return <BuildAi/>
                 }
             case 'BroadCast':
                 {

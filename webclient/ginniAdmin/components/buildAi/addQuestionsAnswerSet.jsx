@@ -10,19 +10,19 @@ export default class AddQuestionsAnswerSet extends React.Component {
     }
     createQuestionSetBlock() {
         let url = Config.url + '/qa/addQuestionAnswerSet';
-        console.log(url);
         Axios.post(url).then((response) => {
-            this.props.handlerNewQuestionsAnswerSet(response.data.id)
+            let qaID = response.data.id;
+            this.props.handlerAddQASet(qaID);
         }).catch((error) => {
-            alert(error)
+          alert(error);
         });
-        //      this.state.questionSetBlock.push(<QuestionsAnswer questionSetID={this.state.questionSetBlock.index} removeRuleBlockHandler={this.removeQuestionSetBlock}/>);
-        //      this.setState({rulesBLock: this.state.rulesBlock});
+
+
     }
     render() {
         return (
             <div >
-                <Button onClick={this.createQuestionSetBlock} color='red'><Icon name='plus'/>Add Questions Answer Set</Button>
+                <Button onClick={this.createQuestionSetBlock} color='red'><Icon name='plus'/>Add Question Answer Set</Button>
             </div>
         );
     }
