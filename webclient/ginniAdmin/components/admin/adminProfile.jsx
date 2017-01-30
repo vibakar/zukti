@@ -1,117 +1,133 @@
 import React from 'react';
 import {
-    Grid,
-    List,
-    Image,
-    Header,
-    Icon,
     Button,
+    Image,
     Modal,
-    Form
+    Divider,
+    Form,
+    Icon
 } from 'semantic-ui-react';
+import {hashHistory} from 'react-router';
+import Dropzone from 'react-dropzone';
+import axios from 'axios';
+import './adminprofile.css';
+export default class AdminProfilePage extends React.Component
+{
+    constructor(props) {
+        super(props);
+        this.state = {
+            file: [],
+            email: '',
+            firstname:'',
+            lastname:'',
+            newsdetails: ''
+        };
+        this.OnSubmitData = this.OnSubmitData.bind(this);
+        this.show = this.show.bind(this);
+    };
+    profile()
+    {
+        hashHistory.push('/react');
+    }
+    componentDidMount() {
+      const self=this;
+        axios({
+            url: ' http://localhost:8080/clientinformation',
+            method: 'get'
+        }).then(function(response) {
+            console.log("email"+response.data);
+            self.setState({email:response.data.email});
+            self.setState({firstname:response.data.firstname});
+            self.setState({lastname:response.data.lastname});
 
-export default class AdminProfilePage extends React.Component {
+        }).catch(function(err) {
+            // alert("bjhbj"+err);
+        });
+    }
+    OnSubmitData(e, value) {
+        const self = this;
+        e.preventDefault();
+        axios({
+            url: ' http://localhost:8080/updateprofile',
+            method: 'put',
+            data: {
+                email: this.state.email,
+                firstname: value.formData.firstname,
+                lastname: value.formData.lastname
+            }
+        }).then(function(msg) {
+            show('small');
+        }).catch(function(err) {
+            // alert("update"+err);
+        })
+    }
+    show = (size) => () => this.setState({size, open: true})
+    onOpenClick = () => {
+        this.refs.dropzone.open();
+    }
+    /* function to attach the file to the server*/
+    dropHandler = (file) => {
+        let photo = new FormData();
+        photo.append('IMG', file[0]);
+        this.setState({file: file});
+    }
+    close = () => hashHistory.push('/react');
     render() {
+        const {open, size} = this.state;
         return (
-            <div>
-                <Grid divided="vertically">
-                    <Grid.Column width={2}></Grid.Column>
-                    <Grid.Column width={14}>
-                        <br/><br/>
-                        <Grid divided='vertically'>
-                            <Grid.Row columns={4}>
-                                <Grid.Column>
-                                    <Header><h2>Admin Details</h2></Header>
-                                    <Image src='http://semantic-ui.com/images/avatar2/small/rachel.png' size='small'/>
-                                    <br/>
-                                    <Modal trigger={< Button > Edit Profile < /Button>} closeIcon='close'>
-                                        <Modal.Header>Edit Profile</Modal.Header>
-                                        <Modal.Content image>
-                                            <Image wrapped size='medium' src='http://semantic-ui.com/images/avatar2/large/rachel.png'/>
-                                            <Modal.Description>
-                                                <Form>
-                                                    <Form.Field>
-                                                        <label> Name</label>
-                                                        <input placeholder=' Name'/>
-                                                    </Form.Field>
-                                                    <Form.Field>
-                                                        <label>Password</label>
-                                                        <input placeholder='Password' type='password'/>
-                                                    </Form.Field>
-                                                    <Form.Field>
-                                                        <label>Confirm Password</label>
-                                                        <input placeholder='Confirm Password' type='password'/>
-                                                    </Form.Field>
-                                                    <Form.Field>
-                                                        <label>E-Mail</label>
-                                                        <input placeholder='E-Mail' />
-                                                    </Form.Field>
-                                                    <Form.Field>
-                                                        <label>Phone Number</label>
-                                                        <input placeholder='Phone Number'/>
-                                                    </Form.Field>
-                                                    <Button type='submit' positive>Save</Button>
-                                                    <Button type='submit' negative>Cancel</Button>
-                                                </Form>
+            <Modal size='small' open={true} onClose={this.close} closeOnRootNodeClick={false} closeIcon='close'>
+                <Modal.Header id="updateheader"><Icon name='user'/>Edit Profile</Modal.Header>
+                <Modal.Content image>
+                    <Image wrapped size='medium'>
+                        <Dropzone ref='dropzone' multiple={false} accept={'image/*'} onDrop={this.dropHandler}>
+                            <div>
+                                <div>{this.state.file.map((file) => <img src={file.preview} style={{
+                                        height: 204,
+                                        width: 204
+                                    }}/>)}</div>
+                            </div>
+                        </Dropzone><br/>
+                        <button size="small" color="teal" type="button" onClick={this.onOpenClick}>
+                            Change Photo
+                        </button>
+                    </Image>
+                    <Modal.Description id="clientmodal">
+                        <Form onSubmit={this.OnSubmitData}>
+                            <Form.Field>
+                                <label>First Name</label>
+                            </Form.Field>
+                            <Form.Input name="firstname" placeholder='First Name'/>
+                            <Form.Field>
+                            </Form.Field>
+                                <label>Last Name</label>
+                                <Form.Input name="lastname" placeholder='Last Name' />
+                            <Form.Field>
+                                <label>Email</label>
+                                <Form.Input placeholder='email' name="email1" value={this.state.email} disabled/>
 
-                                            </Modal.Description>
-                                        </Modal.Content>
-                                    </Modal>
-                                </Grid.Column>
-                                <Grid.Column>
+                        <Divider/>
+                      </Form.Field>
+                      <Button onClick={this.show('small')} color='blue' type='submit'>Save</Button>
+                      <a href="#/react">
+                          <Button color='red'>cancel</Button>
+                      </a>
+                  </Form>
+                        <Modal size={size} open={open}>
+                            <Modal.Header id="updateheader">
+                                <h2>
+                                    <Image src='../../images/thumb.gif' size="small" avatar/>Updated Suceessfully</h2>
+                            </Modal.Header>
+                            <Modal.Actions>
+                                <Button color='gray' onClick={this.profile.bind(this)}>
+                                    <Button.Content visible><Icon name='thumbs up'/>Ok</Button.Content>
+                                </Button>
+                            </Modal.Actions>
+                        </Modal>
 
-                                    <List>
 
-                                        <Header><h2>General Information</h2></Header>
-                                        <List.Item>
-                                            <h4>Name:
-                                            Patrick</h4>
-                                        </List.Item>
-                                        <List.Item>
-                                            <h4>Date Of Birth:
-                                            31 December</h4>
-                                        </List.Item>
-                                        <List.Item>
-                                            <h4>Location:
-                                            India</h4>
-                                        </List.Item>
-                                    </List>
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <List>
-
-                                        <List.Item>
-                                            <Header><h2>Contact Information</h2></Header>
-                                            <h4>
-                                                <Icon name="envelope"></Icon>E-Mail:admin@gmail.com
-                                            </h4>
-                                        </List.Item>
-                                        <List.Item>
-                                            <h4>
-                                                <Icon name="call"></Icon>Phone:9988776655
-                                            </h4>
-                                        </List.Item>
-
-                                    </List>
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <List>
-
-                                        <Header><h2>
-                                            <Icon name="bar chart"></Icon>Statistics</h2></Header>
-                                        <List.Item><h4>
-                                            Number of Queries Added:487
-                                          </h4>
-                                        </List.Item>
-                                        <List.Item><h4>Number of Bots Trained:5</h4>
-                                        </List.Item>
-                                        </List>
-                                </Grid.Column>
-                            </Grid.Row>
-                        </Grid>
-                    </Grid.Column>
-                </Grid>
-            </div>
+                    </Modal.Description>
+                </Modal.Content>
+            </Modal>
         );
     }
 }

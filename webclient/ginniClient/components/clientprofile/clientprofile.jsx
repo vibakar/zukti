@@ -17,25 +17,28 @@ export default class ClientProfile extends React.Component
         super(props);
         this.state = {
             file: [],
-            email: "jhjh ",
-            newsdetails: ''
+            email: '',
+            firstname: '',
+            lastname:''
         };
         this.OnSubmitData = this.OnSubmitData.bind(this);
         this.show = this.show.bind(this);
     };
     profile()
     {
-        hashHistory.push('/chat?email=' + this.props.location.query.email)
+        hashHistory.push('/chat')
     }
     componentDidMount() {
+      var self=this;
         axios({
             url: ' http://localhost:8080/clientinformation',
-            method: 'post',
-            data: {
-                email: this.props.location.query.email
-            }
+            method: 'get'
         }).then(function(response) {
-            console.log(response.name);
+            console.log(response.data);
+            self.setState({email:response.data.email});
+            self.setState({firstname:response.data.firstname});
+            self.setState({lastname:response.data.lastname});
+
         }).catch(function(err) {
             // alert("bjhbj"+err);
         });
@@ -47,7 +50,7 @@ export default class ClientProfile extends React.Component
             url: ' http://localhost:8080/updateprofile',
             method: 'put',
             data: {
-                email: this.props.location.query.email,
+                email: this.state.email,
                 firstname: value.formData.firstname,
                 lastname: value.formData.lastname
             }
@@ -99,7 +102,7 @@ export default class ClientProfile extends React.Component
                             </Form.Field>
                             <Form.Field>
                                 <label>Email</label>
-                                <Form.Input placeholder='email' name="email1" value={this.props.location.query.email} disabled/>
+                                <Form.Input placeholder='email' name="email1" value={this.state.email} disabled/>
 
                         <Divider/>
                       </Form.Field>

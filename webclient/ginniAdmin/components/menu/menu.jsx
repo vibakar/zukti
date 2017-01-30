@@ -1,7 +1,8 @@
 
 import React, {Component} from 'react';
 import Content from '../sideBarPusherContent/content';
-import TopMenuBot from './topmenubot';
+//import TopMenuBot from './topmenubot';import ClientProfile from '../clientprofile/clientprofile';
+import adminProfile from '../admin/adminprofile';
 import {
     Sidebar,
     Segment,
@@ -13,28 +14,60 @@ import {
     Grid,
     Divider,
     Dropdown,
+    Popup,
     Card,
     Feed
 } from 'semantic-ui-react';
+import axios from 'axios';
+import {hashHistory} from 'react-router';
+import './menu.css';
 
 export default class SidebarBot extends Component {
 
 
-    constructor(){
+    constructor() {
       super();
       this.state={
-        activeItem:'SetupAi'
+        activeItem:'SetupAi',
+        details: '',
+        email:'',
+        firstname:'',
+        lastname:''
       }
+      this.onSubmitEmail=this.onSubmitEmail.bind(this);
+
     }
+    componentDidMount(){
+      var self=this;
+      axios({
+          url: ' http://localhost:8080/clientinformation',
+          method: 'get'
+        }).then(function(response) {
+          console.log(response.data);
+          self.setState({firstname: response.data.firstname})
+                    // console.log(msg);
+          }).catch(function(err) {
+              // console.log(err);
+          })
+    }
+    onSubmitEmail(){
+
+    hashHistory.push('/adminprofile');
+    }
+
 
 
     handleItemClick = (e, {name}) => this.setState({activeItem: name})
     render() {
         const activeItem = this.state.activeItem;
+        const customername =  this.state.firstname;
+                const trigger = (
+          <span>
+          <Image avatar src='http://semantic-ui.com/images/avatar2/large/patrick.png'/> {name=customername}
+          </span>
+        );
         return (
-            <div style={{
-                height: '100%'
-            }}>
+          <div  id="leftbarmenu">
                 <Sidebar as={Menu} className='fixed' animation='slide along' width='thin' visible={true} icon='labeled' vertical inverted>
                     <Menu.Item name='Genie'>
                         <a href="/home"><Image src='../../images/ginianim.gif'  size='tiny' avatar/></a>
@@ -68,21 +101,37 @@ export default class SidebarBot extends Component {
                       Logout</a>
                     </Menu.Item>
                   </Sidebar>
-                <Sidebar.Pusher className='container' style={{
-                    width: '90%',
-                    height:'100%'
-                }}>
-                    <Segment style={{
-                        'margin-top': '0px',
-                        'padding': '0px',
-                        height:'100%'
-                    }}>
-                      <TopMenuBot/>
-                      <div style={{'background-color':'#f3f2f2',height:'100%'}}>
-                            <Content sidebarItemSelected={activeItem}/>
-                      </div>
-                        </Segment>
-                    </Sidebar.Pusher>
+                  <Sidebar.Pusher id="sidebarpusher">
+                      <Segment id="segmentleftbar">
+                        <div id='topmenudiv'>
+                            <Menu secondary>
+                                <Menu.Item>
+                                    <a href="#/adminhome">
+                                        <Popup trigger={< Icon name = "arrow circle left" size = "large" circular color = 'teal' />} content='Back' size='mini'/>
+                                    </a>
+                                </Menu.Item>
+                                <Menu.Item position='right'></Menu.Item>
+                                <Menu.Item>
+                                    <h3>THE CODE AESSISTANT/GENIE</h3>
+                                </Menu.Item>
+                                <Menu.Item position='right'>
+                                    <Dropdown trigger={trigger} pointing='top right' icon={null}>
+                                        <Dropdown.Menu >
+                                            <Dropdown.Item text='My Profile' icon='user' onClick={this.onSubmitEmail}/>
+                                            <Dropdown.Item text='Settings' icon='settings'/>
+                                            <Dropdown.Item text='Help' icon='help'/>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </Menu.Item>
+                            </Menu>
+                        </div>
+
+
+                        <div id='leftmenucontentdiv'>
+                              <Content sidebarItemSelected={activeItem}/>
+                        </div>
+                      </Segment>
+                      </Sidebar.Pusher>
                 </div>
               );
             }

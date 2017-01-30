@@ -21,10 +21,14 @@ module.exports = function(app, passport) {
 
     // local login route
     app.post('/login', passport.authenticate('local'), function(req, res) {
-        res.send("Welcome")
+      console.log(req.user);
+          res.send(req.user)
+
     });
     //logout
     app.get('/signout', function(req, res) {
+        console.log('**********************************');
+        console.log(req.user);
         req.logout();
         res.send('Successfully Logged out');
     });
@@ -41,17 +45,38 @@ module.exports = function(app, passport) {
         newUser.password = req.body.password;
         newUser.firstname = req.body.firstName;
         newUser.lastname = req.body.lastName;
+
         if (req.body.userType) {
             newUser.type = 'Admin';
         } else {
             newUser.type = 'Customer';
         }
-        newUser.verified = false;
+        newUser.isEmailVerified = false;
         newUser.save(function(err) {
             if (err) {
                 res.send('Error in registration');
             } else {
-                res.send(req.body.firstName);
+                res.send("Successfully registered");
+                //res.send('registered');
+            }
+        });
+    });
+    app.post('/adminsignup', function(req, res) {
+        var newUser = new RegisteredUser();
+        rand = Math.floor((Math.random() * 100) + 54);
+        newUser.name = req.body.firstName + " " + req.body.lastName;
+        newUser.email = req.body.email;
+        newUser.password = req.body.password;
+        newUser.firstname = req.body.firstName;
+        newUser.lastname = req.body.lastName;
+        newUser.type = req.body.type
+        newUser.isEmailVerified = true;
+        newUser.verificationID = rand;
+        newUser.save(function(err) {
+            if (err) {
+                res.send('Error in registration');
+            } else {
+                res.send("Successfully registered");
                 //res.send('registered');
             }
         });
@@ -148,7 +173,7 @@ module.exports = function(app, passport) {
                             email: req.query.email
                         }, {
                             $set: {
-                                verified: true,
+                                isEmailVerified: true,
                                 verificationID: 0
                             }
                         }, function(err) {
@@ -355,15 +380,9 @@ module.exports = function(app, passport) {
         }
     });
     // customer Information
-    app.post('/clientinformation', function(req, res) {
-        RegisteredUser.find({
-            'email': req.body.email
-        }, function(err, profile) {
-            res.send(profile);
-            if (err) {
-                res.send(err);
-            }
-        });
+    app.get('/clientinformation', function(req, res) {
+      console.log(req.user.email);
+      res.send(req.user);
     });
 
     // *******************************************

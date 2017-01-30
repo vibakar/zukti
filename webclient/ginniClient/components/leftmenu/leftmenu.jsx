@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
 import LeftMenuContent from '../leftmenuPusherContent/leftmenuContent';
-import ClientProfile from '../clientprofile/clientprofile';
-import ChangePassword from '../changepassword/changepassword';
-
 import {
     Sidebar,
     Segment,
@@ -20,7 +17,6 @@ import {
 import axios from 'axios';
 import {hashHistory} from 'react-router';
 import './leftmenu.css';
-var emailId;
 export default class LeftMenu extends Component {
     constructor(props){
       super(props);
@@ -31,44 +27,35 @@ export default class LeftMenu extends Component {
         firstname:'',
         lastname:''
       }
-
-
       this.onSubmitEmail=this.onSubmitEmail.bind(this);
     }
     componentDidMount(){
       var self=this;
       axios({
           url: ' http://localhost:8080/clientinformation',
-          method: 'post',
-          data: {
-              email: this.props.location.query.email
-          }
-        }).then(function(msg) {
-          console.log(msg.data);
-          self.setState({firstname: msg.data[0].name})
+          method: 'get'
+        }).then(function(response) {
+          console.log("cgggcgg");
+          console.log("value"+response.data.firstname)
+          self.setState({firstname: response.data.firstname})
                     // console.log(msg);
           }).catch(function(err) {
               // console.log(err);
           })
     }
     onSubmitEmail(){
-
-    /*  <div>
-        <ClientProfile email={this.state.email}/>
-      </div>*/
-    hashHistory.push('/profile?email=' + this.props.location.query.email)
+    hashHistory.push('/profile')
     }
 
 handleItemClick = (e, {name}) => this.setState({activeItem: name})
     render() {
         const activeItem = this.state.activeItem;
-        const customername =  this.state.firstname;
-        console.log("hhhh"+this.state.firstname);
+        const customername = this.state.firstname;
                 const trigger = (
           <span>
           <Image avatar src='http://semantic-ui.com/images/avatar2/large/patrick.png'/> {name=customername}
           </span>
-        )
+        );
         return (
             <div  id="leftbarmenu">
                 <Sidebar as={Menu} className='fixed' animation='slide along' width='thin' visible={true} icon='labeled' vertical inverted>

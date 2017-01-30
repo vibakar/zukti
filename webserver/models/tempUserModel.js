@@ -10,8 +10,10 @@ const userSchema = new Schema({
     type: String,
     firstname: String,
     lastname: String,
-    verified: Boolean,
-    verificationID: String
+    isEmailVerified: Boolean,
+    verificationID: Number,
+    joiningdate : { type : Date, default: new Date().toISOString() },
+    token: String
 })
 userSchema.statics.generateToken = function(email) {
     let token = jwt.sign({

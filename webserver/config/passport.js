@@ -33,9 +33,10 @@ module.exports = function(passport) {
                     const error = new Error('Your Email ID is not registered');
                     error.name = 'You have not Register Yet ! Please SignUp first :)';
                     return done(error.name);
-                } else if (!user.verified) {
+                } else if (!user.isEmailVerified) {
                     console.log(user);
                     const error = new Error('Email ID is not Verified');
+                    console.log(user.isEmailVerified+"fhf")
                     error.name = 'Check your email for Login Verification !';
                     return done(error.name);
                 } else if (!(user.password === password)) {
@@ -43,9 +44,14 @@ module.exports = function(passport) {
                     const error = new Error('Incorrect password');
                     error.name = 'You Have Entered Incorrect password !';
                     return done(error.name);
-                } else {
+                } else  {
+                  console.log(user);
                     let userData = {};
                     userData.email = user.email;
+                    userData.type = user.type;
+                    userData.firstname = user.firstname;
+                    userData.lastname = user.lastname;
+                    userData.name = user.name;
                     userData.token = RegisteredUser.generateToken(userData.email);
                     return done(null, userData);
                 }
