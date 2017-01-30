@@ -1,13 +1,32 @@
 import React from 'react';
 import {
     Divider,
-    Grid
+    Grid,
+    Dropdown,
+    Input,
+    Icon,
+    Radio,
+    Button
   } from 'semantic-ui-react';
 import QuestionAnswer from './questionsAnswer';
 import AddQuestionAnswerSet from './addQuestionsAnswerSet';
-
+const intentoptions = [
+  { key: 'What', text: 'What', value: 'What' },
+  { key: 'Implement', text: 'Implement', value: 'Implement' },
+  { key: 'Difference', text: 'Difference', value: 'Difference' },
+  { key: 'Advantage', text: 'Advantage', value: 'Advantage' },
+  { key: 'Disadvantage', text: 'Disadvantage', value: 'Disadvantage' },
+]
+const conceptoptions = [
+  { key: 'React', text: 'React', value: 'React' },
+  { key: 'Router', text: 'Router', value: 'Router' },
+  { key: 'Lifecycle', text: 'Lifecycle', value: 'Lifecycle' },
+  { key: 'Components', text: 'Components', value: 'Components' },
+  { key: 'Events', text: 'Events', value: 'Events' },
+]
 export default class QuestionSetDisplay extends React.Component {
-
+  state = {}
+ handleChange = (e, { value }) => this.setState({ value })
     constructor() {
         super();
         this.addQuestionAnswerSet = this.addQuestionAnswerSet.bind(this);
@@ -21,6 +40,7 @@ export default class QuestionSetDisplay extends React.Component {
         this.setState({questionAnswerSet: this.state.questionAnswerSet});
     }
     render() {
+      const { value } = this.state
         return (
             <div style={{
                 backgroundImage: "url('../../images/wall.jpg')"
@@ -40,10 +60,44 @@ export default class QuestionSetDisplay extends React.Component {
                         </div>
                     </Grid.Row>
                     <Grid.Row>
-                        <AddQuestionAnswerSet handlerAddQASet={this.addQuestionAnswerSet}/>
+                      <Grid.Column width={4}>
+                      Select Intent
+                      <Dropdown placeholder='Select intent' fluid  selection options={intentoptions} />
+                    </Grid.Column>
+                    <Grid.Column width={4}/>
+                      <Grid.Column width={4}>
+                      Select Concept
+                      <Dropdown placeholder='Select concept' fluid selection options={conceptoptions} />
+                    </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
-                      {this.state.questionAnswerSet}
+                      <Grid.Column width={16}>
+                      <Input fluid icon='question circle' iconPosition='left' placeholder='Enter Query...' fluid/>
+                    </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row>
+                      <Grid.Column width={16}>
+                       <Input  fluid icon='edit' iconPosition='left' placeholder='Enter Answer...' />
+                     </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row>
+                      <Grid.Column width={2}>
+                        <Radio label='Text' name='plan' value='a' checked={value === 'a'} onChange={this.handleChange} />
+                   </Grid.Column>
+                    <Grid.Column width={2}>
+                      <Radio label='Video' name='plan' value='b' checked={value === 'b'} onChange={this.handleChange} />
+                    </Grid.Column>
+                    <Grid.Column width={2}>
+                      <Radio label='Blogs' name='plan' value='c' checked={value === 'c'} onChange={this.handleChange} />
+                    </Grid.Column>
+                    <Grid.Column width={2}>
+                      <Radio label='Code Snippet' name='plan' value='d' checked={value === 'd'} onChange={this.handleChange} />
+                    </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row>
+                      <Grid.Column>
+                      <Button color='teal'>ADD QUERY</Button>
+                    </Grid.Column>
                     </Grid.Row>
                 </Grid>
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, Grid} from 'semantic-ui-react';
-import './defaultpageclient.css'
+import './defaultpageclient.css';
 export default class Defaultpage extends React.Component {
 
     constructor() {

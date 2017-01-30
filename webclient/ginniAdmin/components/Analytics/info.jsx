@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
 import {
     Message,
     Grid,
@@ -11,16 +12,54 @@ import {
     Accordion
 } from 'semantic-ui-react'
 import GraphData from './graphData';
-
+var count=0;
+var count1=0;
 export default class Info extends React.Component {
+  constructor() {
+      super();
+      this.state = {
+        name:[],
+        email:[],detail:' ',
+        userinformation:[],
+        countvalue:' ',
+        countonline:' '
+      };
+    }
+  componentWillMount() {
+    var self=this;
+axios({
+  url:'http://localhost:8080/view',
+  method: 'GET'
+}).then(function(msg) {
+  console.log(msg.data);
+var detailNew=msg.data.map(function(fulldetail){
+console.log(fulldetail);
+  count++;
+  self.setState({countvalue:count});
+  if(fulldetail.loggedinStatus== true)
+  {
+    count1++;
+    self.setState({countonline:count1});
+  }
+  console.log(fulldetail);
+  console.log(count);
+console.log(count1);
+      return fulldetail;
+});
+this.setState({userinformation:detailNew});
+console.log(this.setState({userinformation:detailNew}));
+}).
+catch(function(err) {
+    console.log(err);
+    alert(err + 'check the details');
+  });
+}
     render() {
         return (
-          <div  style={{backgroundImage: "url('../../images/wall.jpg')"}}>
             <Grid style={{
                 width: '95%',
                 margin: 'auto',
-               'background-color':'#f3f2f2',
-               backgroundImage: "url('../../images/wall.jpg')"
+               'background-color':'#f3f2f2'
             }}>
                 <Grid.Row>
                       <Card.Group className='container' stackable itemsPerRow={3}>
@@ -38,7 +77,7 @@ export default class Info extends React.Component {
                                               <Statistic>
                                                   <Statistic.Value>
                                                           <i className="inverted circular teal users icon"></i>
-                                                          <a>5000</a>
+                                                          <a>{this.state.countvalue}</a>
                                                   </Statistic.Value>
                                                   <Statistic.Label>Members</Statistic.Label>
                                               </Statistic>
@@ -62,7 +101,7 @@ export default class Info extends React.Component {
                                               <Statistic>
                                                   <Statistic.Value>
                                                           <i className="inverted circular green users icon"></i>
-                                                          <a>1890</a>
+                                                          <a>{this.state.countonline}</a>
                                                   </Statistic.Value>
                                                   <Statistic.Label>Members</Statistic.Label>
                                               </Statistic>
@@ -101,9 +140,7 @@ export default class Info extends React.Component {
                 <Grid.Row>
                   <GraphData/>
                 </Grid.Row>
-                <Grid.Row></Grid.Row>
             </Grid>
-            </div>
         )
     }
 }
