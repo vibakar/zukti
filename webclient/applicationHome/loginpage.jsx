@@ -20,7 +20,7 @@ export default class LoginPage extends React.Component
         this.state = {
             open: true,
             openSnackbar:false,
-            snackbarMsg: "",
+            snackbarMsg: '',
             erroremail: false,
             errormessageemail: '',
             email: ''
@@ -40,10 +40,10 @@ export default class LoginPage extends React.Component
                 password: value.formData.password
             }
           }).then(function(response) {
-            alert("bbhvbj");
+            alert("welcome");
               hashHistory.push('/clienthome?email=' + value.formData.userName)
             }).catch(function(err) {
-              //  alert(err.responseText);
+               alert(err);
                 console.log(err);
                 self.setState({openSnackbar: true, snackbarMsg: err.responseText});
         })
@@ -129,7 +129,7 @@ export default class LoginPage extends React.Component
             </Modal.Description>
             </Modal.Content>
             </Modal>
-            <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>-
+            <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
             </div>
             );
 }

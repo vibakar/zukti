@@ -89,16 +89,10 @@ export default class ForgotPassword extends React.Component
                             </Menu.Item>
                             <Menu.Menu position='right'>
                                 <Menu.Item>
-                                    <Button circular style={{
-                                        background: 'transparent'
-
-                                    }}>
+                                    <Button circular id='loginsignup'>
                                         <a href="#/login" style={{color:'black'}}>Login</a>
                                     </Button>
-                                    &nbsp;&nbsp;<Button circular style={{
-                background: 'transparent'
-
-            }}>
+                                    &nbsp;&nbsp;<Button circular id='loginsignup'>
                                         <a href="#/signup" style={{color:'black'}}>Signup</a>
                                     </Button>
                                 </Menu.Item>

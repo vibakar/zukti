@@ -31,9 +31,9 @@ export default class UserTable extends React.Component
   render() {
     var user=this.state.userinformation.map(function(newsdata){
 return (
-  <div id='eachcardstyle'>
+  <div id='eachcardstyle' >
 
-    <Card >
+    <Card id='parentcard'>
       <Card.Content>
         <Image floated='right' size='mini' src='http://semantic-ui.com/images/avatar/large/steve.jpg' />
         <Card.Header>

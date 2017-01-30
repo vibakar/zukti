@@ -34,26 +34,26 @@ export default class TrainBot extends React.Component {
                 <Grid >
                     <Grid.Row></Grid.Row>
                     <Grid.Row textAlign='center'>
-                        <Grid.Column width={8}>
-                            <h2>Add Intent</h2>
+                        <Grid.Column width={5}>
+                            <h2><i>Add Intent:</i></h2>
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
-                        <Grid.Column width={1}></Grid.Column>
+                        <Grid.Column width={5}></Grid.Column>
                         <Grid.Column width={6}>
                             <IntentDropDown handlerForSameAsIntents={this.setSameAsIntents}/>
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
-                        <Grid.Column width={1}></Grid.Column>
+                        <Grid.Column width={5}></Grid.Column>
                         <Grid.Column width={6}>
                             <InputNewSameAsIntent baseIntent={this.state.baseIntent} handlerAddNewIntent={this.addNewSameAsIntent}/>
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
                         <Grid.Column width={5}></Grid.Column>
-                        <Grid.Column width={3}>
-                            <Button color="blue" fluid>
+                        <Grid.Column width={6} >
+                            <Button color="teal" fluid>
                                 <Icon name='plus circle'>Add
                                 </Icon>
                             </Button>
@@ -61,7 +61,7 @@ export default class TrainBot extends React.Component {
                     </Grid.Row>
                     <Grid.Row></Grid.Row>
                     <Grid.Row>
-                        <Grid.Column width={1}></Grid.Column>
+                        <Grid.Column width={5}></Grid.Column>
                         <Grid.Column width={6}>
                             <Card fluid color="teal">
                                 <Card.Content>

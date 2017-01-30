@@ -31,9 +31,11 @@
 }
 .buttonlogin{
   font-family:'sans-serif';
-  color:white;
   margin-left: 600px;
-
+}
+#head
+{
+  color:black;
 }
 .buttonsignin{
 font-family:'sans-serif';
