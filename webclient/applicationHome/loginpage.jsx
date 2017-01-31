@@ -32,7 +32,7 @@ export default class LoginPage extends React.Component
     onSubmitLoginData(e, value) {
         // console.log(value.formData);
         e.preventDefault();
-        var self=this;
+      /*  var self=this;
         axios({
             url: 'http://localhost:8080/login',
             method: 'post',
@@ -50,6 +50,29 @@ export default class LoginPage extends React.Component
             }).catch(function(err) {
                 console.log(err);
                 self.setState({openSnackbar: true, snackbarMsg: err.responseText});
+        });
+}*/
+$.ajax({
+            url: 'http://localhost:8080/login',
+            type: 'POST',
+            data: {
+                email: value.formData.userName,
+                password: value.formData.password
+            },
+            success: function(response) {
+              console.log(response);
+              if(response.type==='Admin') {
+                 hashHistory.push('/adminHome');
+              }
+              else{
+                hashHistory.push('/clienthome');
+              }
+            },
+            error: function(err) {
+              //  alert(err.responseText);
+                console.log(err.data);
+                this.setState({openSnackbar: true, snackbarMsg: err.responseText});
+            }.bind(this)
         });
 }
         handleRequestClose = () => {
@@ -93,7 +116,6 @@ export default class LoginPage extends React.Component
             <Form onSubmit={this.onSubmitLoginData}>
             <Form.Field id="formfieldlogin">
             <Form.Input name= "userName" placeholder= 'username or email id' icon='user' iconPosition='left' id="formstyle" onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required />
-
             <p style={{color: '#a54f4f'}}>{this.state.errormessageemail}</p>
             </Form.Field>
             <Form.Field id="formfieldlogin"><br/>
@@ -115,13 +137,11 @@ export default class LoginPage extends React.Component
             <Segment id='buttonsegment' basic>
             <Modal.Actions>
             <a href='/auth/facebook'>
-
             <Button color='blue' id='buttonwidthfacebook' circular>
             <Button.Content visible><Icon name='facebook'/>Sign Up With Facebook</Button.Content>
             </Button>
             </a>
             <a href='/auth/google'>
-
             <Button color='red' id='buttonwidthgoogle' circular>
             <Button.Content visible><Icon name='google'/>Sign Up With Google</Button.Content>
             </Button>
