@@ -13,6 +13,7 @@ let getLexicon = require('./webserver/lexicon/getLexicon');
 let intent = require('./webserver/routes/intent/intent');
 let addKnowledge = require('./webserver/routes/addKnowledge/question');
 let askQuestion = require('./webserver/routes/getReply/reply');
+let getAdmin = require('./webserver/routes/getAdmin/getadminUser');
 let app = express();
 let compiler = webpack(config);
 const configDB = require('./webserver/config/database');
@@ -66,6 +67,7 @@ require('./webserver/routes/auth.js')(app, passport);
 
 
 //Ruotes
+app.use('/getadmin',getAdmin);
 app.use('/intent',intent);
 app.use('/qa', addKnowledge);
 app.use('/question', askQuestion)

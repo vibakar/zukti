@@ -12,7 +12,7 @@ export default class ContentType extends React.Component{
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
     handlertext = (text) => {
-      
+
       this.props.handlercontent(text);
     }
 
@@ -36,23 +36,4 @@ export default class ContentType extends React.Component{
     }
   }
 
-    // return(
-    //     <Table celled>
-    //       <Table.Body>
-    //         <Table.Row>
-    //           <Table.Cell>
-    //             <Icon color='red' name='image'/>
-    //             <span color='orange'>Image</span>
-    //           </Table.Cell>
-    //           <Table.Cell>
-    //             <Icon color='red' name='video'/>
-    //             <span color='orange'>Video</span>
-    //           </Table.Cell>
-    //           <Table.Cell>
-    //             <Icon color='red' name='paragraph'/>
-    //             <span color='orange'>Text</span>
-    //           </Table.Cell>
-    //         </Table.Row>
-    //       </Table.Body>
-    //     </Table>
-    //
+  
