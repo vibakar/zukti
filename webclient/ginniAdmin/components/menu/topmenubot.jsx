@@ -1,5 +1,5 @@
 import React from 'react';
-
+import axios from 'axios';
 import {
     Grid,
     Menu,
@@ -9,14 +9,31 @@ import {
     Icon,
     Popup
 } from 'semantic-ui-react';
-const trigger = (
-    <span>
-        <Image avatar src='http://semantic-ui.com/images/avatar2/large/patrick.png'/> {name = "jimmy"}
-    </span>
-)
+
 
 export default class TopMenuBot extends React.Component {
+  constructor(){
+    super();
+    this.state={
+      firstname:''
+    }
+  }
+  componentDidMount() {
+      var self = this;
+      axios({url: ' http://localhost:8080/clientinformation', method: 'get'}).then(function(response) {
+          self.setState({firstname: response.data[0].firstname})
+          // console.log(msg);
+      }).catch(function(err) {
+          // console.log(err);
+      })
+  }
     render() {
+      const customername =  this.state.firstname;
+            const trigger = (
+      <span>
+      <Image avatar src='http://semantic-ui.com/images/avatar2/large/patrick.png'/> {name=customername}
+      </span>
+    )
         return (
 
             <div style={{  width:"99%",
@@ -35,10 +52,8 @@ export default class TopMenuBot extends React.Component {
                     <Menu.Item position='right'>
                         <Dropdown trigger={trigger} pointing='top right' icon={null}>
                             <Dropdown.Menu >
-                              <a href='#/profile'>
-                                <Dropdown.Item text='My Profile' icon='user'/></a>
-                                <a href="#/change">
-                                    <Dropdown.Item text='ChangePassword' icon='key'/></a>
+                              <a href='#/adminprofile'>
+                                <Dropdown.Item text='Edit Profile' icon='user'/></a>
                                 <Dropdown.Item text='Settings' icon='settings'/>
                                 <Dropdown.Item text='Help' icon='help'/>
                             </Dropdown.Menu>

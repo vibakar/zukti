@@ -30,19 +30,10 @@ export default class SidebarBot extends Component {
         activeItem:'SetupAi'
       }
     }
-    componentDidMount() {
-        var self = this;
-        axios({url: ' http://localhost:8080/clientinformation', method: 'get'}).then(function(response) {
-            self.setState({firstname: response.data[0].firstname})
-            // console.log(msg);
-        }).catch(function(err) {
-            // console.log(err);
-        })
-    }
+
     onSubmitEmail() {
         hashHistory.push('/adminprofile');
     }
-
 
     handleItemClick = (e, {name}) => this.setState({activeItem: name})
     render() {

@@ -6,9 +6,17 @@ const CONFIG = require('../config/auth');
 const userSchema = mongoose.Schema({
 
     local: {
-        username:String,
-        email: String,
-        password: String
+      name: String,
+      email: String,
+      password: String,
+      type: String,
+      firstname: String,
+      lastname: String,
+      loggedinStatus:Boolean,
+      isEmailVerified: Boolean,
+      verificationID: Number,
+      joiningdate : { type : Date, default: new Date().toISOString() },
+      token: String
     },
     facebook: {
         id: String,
