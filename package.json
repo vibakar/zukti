@@ -25,6 +25,7 @@
     "natural": "^0.4.0",
     "neo4j": "^2.0.0-RC2",
     "neo4j-driver": "^1.0.5",
+    "nlp_compromise": "^6.5.3",
     "nodemailer": "^2.7.0",
     "nuka-carousel": "^2.0.4",
     "passport": "^0.3.2",

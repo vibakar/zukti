@@ -21,7 +21,7 @@ module.exports = function(intents, keywords, questionResultCallback, noAnswerFou
                  MATCH (keywords)<-[r]-(a:answer)
                  WHERE TYPE(r)=intent
                  RETURN COLLECT(a)`;
-
+    
     let session = getNeo4jDriver().session();
     session
         .run(query)

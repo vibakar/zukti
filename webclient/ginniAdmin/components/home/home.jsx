@@ -70,7 +70,7 @@ export default class FrontPage extends React.Component {
             <Grid.Column width={4} centered={'true'}>
             <Grid.Row>
             <center>
-            <Image src='../../images/react.jpg' size='small' avatar onclick={this.onSubmitEmail.bind(this)}/>
+            <Image src='../../images/react.jpg' size='small' avatar onclick={this.onSubmitEmail.bind(this)} />
             </center>
             </Grid.Row>
             <Grid.Row>

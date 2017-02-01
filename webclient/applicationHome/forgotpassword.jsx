@@ -8,7 +8,8 @@ import {
     Divider,
     Menu,
     Dimmer,
-    Loader
+    Loader,
+    Image
 } from 'semantic-ui-react';
 import validator from 'validator';
 import {hashHistory} from 'react-router';
@@ -116,8 +117,8 @@ export default class ForgotPassword extends React.Component
                         <Form onSubmit={this.onSubmitData}>
                             <Form.Field id="forgotfield">
                         <Form.Input placeholder= 'email id' name= "email" icon='mail outline' iconPosition='left' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
-                                <p style={{color: 'green'}}>{this.state.userexists}</p>
-                                <p style={{color: '#a54f4f'}}>{this.state.errormessageemail}</p>
+                                <p style={{color: 'green',textAlign:'center'}}>{this.state.userexists}</p>
+                                <p style={{color: '#a54f4f',textAlign:'center'}}>{this.state.errormessageemail}</p>
                             </Form.Field>
                             <Button type='submit' id='buttonstylefor' onClick={this.handleOpen} circular  disabled={(!this.state.email) || (!this.state.checkmail)}>Send</Button>
                             <Dimmer
@@ -126,10 +127,9 @@ export default class ForgotPassword extends React.Component
                                      page>
 
                                     <Header as='h2' icon inverted>
-                                      <Loader>
-                                       Sending Mail!!!!!!!!<br/><br/>
+                                      <Image src='../images/mail.gif' size='small'/><br/><br/>
+                                       Sending Mail..!!<br/><br/>
                                        <Header.Subheader>It may take few minutes</Header.Subheader>
-                                     </Loader>
                                      </Header>
                             </Dimmer>
                         </Form>
