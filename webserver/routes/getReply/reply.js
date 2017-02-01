@@ -2,6 +2,8 @@ let express = require('express');
 let router = express.Router();
 let processQuestion = require('./functions/processQuestion');
 let getQuestionResponse = require('./functions/getQuestionResponse');
+let commonReply = require('./../../config/commonReply');
+let answerFoundReply = require('./../../config/answerFoundReply');
 // let saveNotAnsweredQuestion = require('./functions/saveNotAnsweredQuestion');
 router.post('/askQuestion', function(req, res) {
     let question = req.body.question;
@@ -16,13 +18,13 @@ router.post('/askQuestion', function(req, res) {
     };
     let noAnswerFoundCallback = function() {
         res.json({
-            answer: 'Here is what i have for you',
+            answer: answerFoundReply[Math.floor(Math.random() * answerFoundReply.length)],
             keywords: keywords
         });
     };
     if (keywords.length === 0) {
         res.json({
-            answer: 'I am not able to understand you'
+            answer: commonReply[Math.floor(Math.random() * commonReply.length)]
         });
     } else {
         getQuestionResponse(intents, keywords, questionResultCallback, noAnswerFoundCallback);
