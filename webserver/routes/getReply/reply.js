@@ -4,7 +4,8 @@ let processQuestion = require('./functions/processQuestion');
 let getQuestionResponse = require('./functions/getQuestionResponse');
 let commonReply = require('./../../config/commonReply');
 let answerFoundReply = require('./../../config/answerFoundReply');
-// let saveNotAnsweredQuestion = require('./functions/saveNotAnsweredQuestion');
+let saveUnansweredQuery = require('./functions/saveUnansweredQuery');
+
 router.post('/askQuestion', function(req, res) {
     let question = req.body.question;
     let query = processQuestion(question.value.toLowerCase());
@@ -17,12 +18,14 @@ router.post('/askQuestion', function(req, res) {
         });
     };
     let noAnswerFoundCallback = function() {
+        saveUnansweredQuery('v', question.value, keywords, intents);
         res.json({
             answer: answerFoundReply[Math.floor(Math.random() * answerFoundReply.length)],
             keywords: keywords
         });
     };
     if (keywords.length === 0) {
+        saveUnansweredQuery('v', question.value);
         res.json({
             answer: commonReply[Math.floor(Math.random() * commonReply.length)]
         });

@@ -1,8 +1,16 @@
 let nlp = require('nlp_compromise');
-let keywordLexicon = require('../../../lexicon/keywordLexicon.json');
-let intentLexicon = require('../../../lexicon/intentLexicon.json');
-
+let readJSON = require('read-json');
 module.exports = function(sentence) {
+    let keywordLexicon = require('../../../lexicon/keywordLexicon.json');
+    let intentLexicon = require('../../../lexicon/intentLexicon.json');
+    readJSON('../../../lexicon/intentLexicon.json', function(error, manifest) {
+
+         intentLexicon = manifest
+        // => 'read-json'
+
+    })
+
+    //  console.log(intentLexicon);
     let str = nlp.text(sentence);
     // split str into individual words
     let tokens = str.root().split(' ');
@@ -34,7 +42,7 @@ module.exports = function(sentence) {
         if (intent.length !== 0) {
             i = i + intent.length - 1;
             intents.push(intent.join(' '));
-            // if intent found continue
+            // if intent found skip this iteration
             continue;
         }
         for (let j = 0; j < keywordLexicon.length; j = j + 1) {
