@@ -64,7 +64,7 @@ export default class AssistantChatContainer extends React.Component {
 
         return (
             <div className='formstyle' style={{
-                backgroundImage: "url('http://2.bp.blogspot.com/-z2Y8NGvFy0Y/UopcYhUqS8I/AAAAAAAAAE0/s_HUMmpigj4/s1600/freeios7.com_apple_wallpaper_first-love-is_iphone4.jpg')",
+                backgroundImage: "url('http://exploretheme.com/wp-content/uploads/2015/03/restaurant-icons.jpg')",
                 height: '100%'
             }}>
                 <Menu secondary>
@@ -76,8 +76,8 @@ export default class AssistantChatContainer extends React.Component {
                 <Scrollbars id='ginni' renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
                     display: "none",
                     position: "right",
-                    minHeight: "519px"
-                }}/>} autoHeight autoHeightMin={519}>
+                    minHeight: "516px"
+                }}/>} autoHeight autoHeightMin={508}>
                     <div id='messagechat'>
                         {this.state.messages}
                     </div>

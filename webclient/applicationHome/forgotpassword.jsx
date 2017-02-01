@@ -6,7 +6,9 @@ import {
     Form,
     Grid,
     Divider,
-    Menu
+    Menu,
+    Dimmer,
+    Loader
 } from 'semantic-ui-react';
 import validator from 'validator';
 import {hashHistory} from 'react-router';
@@ -18,12 +20,15 @@ export default class ForgotPassword extends React.Component
         super();
         this.state = {
             email: ' ',
+            checkmail:false,
             erroremail: false,
             errormessageemail: '',
               userexists: ''
         };
         this.onSubmitData = this.onSubmitData.bind(this);
     }
+    handleOpen = () => this.setState({ active: true })
+    handleClose = () => this.setState({ active: false })
     // sending the email verification for reset password
     onSubmitData(e, value) {
         e.preventDefault();
@@ -73,6 +78,7 @@ export default class ForgotPassword extends React.Component
         }
     }
     render() {
+      const {active} = this.state;
         return (
             <div style={{backgroundImage: "url('../../images/wall.jpg')", height: '100%'}}>
                 <br/><br/>
@@ -113,8 +119,19 @@ export default class ForgotPassword extends React.Component
                                 <p style={{color: 'green'}}>{this.state.userexists}</p>
                                 <p style={{color: '#a54f4f'}}>{this.state.errormessageemail}</p>
                             </Form.Field>
-                            <Button id="buttonstylefor" type="submit" circular>Send
-                            </Button>
+                            <Button type='submit' id='buttonstylefor' onClick={this.handleOpen} circular  disabled={(!this.state.email) || (!this.state.checkmail)}>Send</Button>
+                            <Dimmer
+                                     active={active}
+                                     onClickOutside={this.handleClose}
+                                     page>
+
+                                    <Header as='h2' icon inverted>
+                                      <Loader>
+                                       Sending Mail!!!!!!!!<br/><br/>
+                                       <Header.Subheader>It may take few minutes</Header.Subheader>
+                                     </Loader>
+                                     </Header>
+                            </Dimmer>
                         </Form>
                    </Grid.Column>
                     <Grid.Column width={5}/>
