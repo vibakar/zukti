@@ -108,9 +108,6 @@ export default class AdminProfilePage extends React.Component
                         <Divider/>
                       </Form.Field>
                       <Button onClick={this.show('small')} color='blue' type='submit'>Save</Button>
-                      <a href="#/react">
-                          <Button color='red'>cancel</Button>
-                      </a>
                   </Form>
                         <Modal size={size} open={open}>
                             <Modal.Header id="updateheader">

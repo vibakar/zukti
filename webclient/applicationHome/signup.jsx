@@ -159,10 +159,10 @@ render() {
     const {open, dimmer} = this.state;
     return (
         <div>
-        <Modal id="modelwindow" dimmer={dimmer} open={open} onClose={this.close} size="small" closeIcon="close">
+        <Modal  dimmer={dimmer} open={open} onClose={this.close} size="small" closeIcon="close">
         <Modal.Header id="signup"><Image src="../../images/ginianim.gif" avatar/>Sign Up</Modal.Header>
         <Modal.Content>
-        <Form size="small" id="formfield" onSubmit={this.onRegisterUser}>
+        <Form id="formfield" onSubmit={this.onRegisterUser}>
         <Form.Field id="formfield">
         <Form.Input label='First Name' name='firstName' placeholder='First Name' type='text' onChange={this.ChangeFirst} error={this.state.errorfirst} required/>
         <p id="textcolor">{this.state.errormessagefirst}</p>
@@ -184,7 +184,7 @@ render() {
         <Form.Input label='Confirm Password' id="input" name="repassword" type='password' placeholder='Confirm Password' onChange={this.ChangeRepassword.bind(this)} error={this.state.errorrepassword} required/>
         <p id="textcolor">{this.state.errormessage}</p>
         </Form.Field>
-        <Button type='submit' id='send_email' disabled={(!this.state.firstname) || (!this.state.lastname) || (!this.state.email) || (!this.state.password) || (!this.state.repassword) || (!this.state.mailexists) || (!this.state.verifypassword) || (!this.state.confirmpassword)}>SET UP YOUR ACCOUNT</Button>
+        <Button type='submit' id='buttonstyle' circular disabled={(!this.state.firstname) || (!this.state.lastname) || (!this.state.email) || (!this.state.password) || (!this.state.repassword) || (!this.state.mailexists) || (!this.state.verifypassword) || (!this.state.confirmpassword)}>SET UP YOUR ACCOUNT</Button>
         <span id="message"/>
         <h4 id="text">Already a Genie member?<a href='#/login'>
         Sign in here</a>

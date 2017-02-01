@@ -23,8 +23,8 @@ render(){
 
 
       <h2>
-      <Button className="buttonlogin" circular style={{backgroundColor:'white'}} ><a href="#/login" id="head" style={{color:'black'}}>LOGIN</a></Button>
-            &nbsp;&nbsp;<Button  className="buttonsignin" circular style={{backgroundColor:'white'}} ><a href="#/signup" id="head" style={{color:'black'}}>SIGNUP</a></Button></h2>
+      <Button className="buttonlogin" circular style={{backgroundColor:'white'}}><a href="#/login" id="head" >LOGIN</a></Button>
+            &nbsp;&nbsp;<Button  className="buttonsignin" circular style={{backgroundColor:'white'}} ><a href="#/signup" id="head" >SIGNUP</a></Button></h2>
 
 
   </Grid.Column>

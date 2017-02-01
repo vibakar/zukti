@@ -41,8 +41,6 @@ export default class LoginPage extends React.Component
                 password: value.formData.password
             }
           }).then(function(response) {
-            // alert("bbhvbj");
-            console.log(response.data.type);
             if(response.data.type==='Admin') {
                hashHistory.push('/adminHome');
             }
@@ -50,7 +48,6 @@ export default class LoginPage extends React.Component
               hashHistory.push('/clienthome');
             }
             }).catch(function(err) {
-               alert(err.responseText);
                 console.log(err);
                 self.setState({openSnackbar: true, snackbarMsg: err.responseText});
         });
@@ -136,7 +133,7 @@ export default class LoginPage extends React.Component
             </Modal.Description>
             </Modal.Content>
             </Modal>
-            <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>-
+            <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
             </div>
             );
 }

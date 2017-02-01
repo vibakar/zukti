@@ -94,7 +94,7 @@ handleItemClick = (e, {name}) => this.setState({activeItem: name})
                               <Menu.Item position='right'>
                                   <Dropdown trigger={trigger} pointing='top right' icon={null}>
                                       <Dropdown.Menu >
-                                          <Dropdown.Item text='My Profile' icon='user' onClick={this.onSubmitEmail}/>
+                                          <Dropdown.Item text='Edit Profile' icon='user' onClick={this.onSubmitEmail}/>
                                           <Dropdown.Item text='Settings' icon='settings'/>
                                           <Dropdown.Item text='Help' icon='help'/>
                                       </Dropdown.Menu>

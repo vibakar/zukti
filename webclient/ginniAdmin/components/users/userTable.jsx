@@ -15,12 +15,11 @@ export default class UserTable extends React.Component
     }
     componentWillMount() {
       axios({
-      url: 'http://localhost:8080/view',
+      url: 'http://localhost:8080/viewall',
       method: 'GET'
     }).then(function(msg) {
     this.setState({ userinformation: msg.data});
     console.log(this.state.userinformation);
-
 }.bind(this)).
     catch(function(err) {
         console.log(err);
@@ -30,6 +29,7 @@ export default class UserTable extends React.Component
   render() {
     var user=this.state.userinformation.map(function(newsdata) {
 return (
+
   <div id='eachcardstyle'>
     <Card id='parentcard'>
       <Card.Content>

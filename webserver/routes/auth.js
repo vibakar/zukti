@@ -93,9 +93,20 @@ module.exports = function(app, passport) {
             }
         });
     });
-
-    app.get('/view', function(req, res, next) {
+    app.get('/view', function(req, res) {
         RegisteredUser.find({}, function(err, alldetails) {
+            if (err) {
+                res.send(err);
+                console.log('error ocuured');
+            } else {
+                res.send(alldetails);
+            }
+        });
+    });
+    //admin view the users
+    app.get('/viewall', function(req, res) {
+        RegisteredUser.find(
+          {'type':'Customer'}, function(err, alldetails) {
             if (err) {
                 res.send(err);
                 console.log('error ocuured');
@@ -193,7 +204,7 @@ module.exports = function(app, passport) {
                                 console.log("Account Verified and Changed to true");
                             }
                         });
-                        res.redirect('/#/clienthome?email=' + req.query.email);
+                        res.redirect('/#/clienthome');
                     } else {
                         console.log("email is not verified");
                         //res.end("<h1>Link expired</h1>");
