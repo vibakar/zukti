@@ -21,7 +21,7 @@ export default class AssistantGinniConfusedReply extends React.Component {
         return (
             <Feed id="ginniview">
                 <Feed.Event>
-                    <Feed.Label image='../../images/user2.jpg'/>
+                    <Feed.Label image='https://unnecessarynewsfromearth.files.wordpress.com/2016/11/computer-bot.jpg?w=700'/>
                     <Feed.Content>
                         <Feed.Summary date={new Date().toLocaleString()} user='Genie'/>
                           <Feed.Extra>

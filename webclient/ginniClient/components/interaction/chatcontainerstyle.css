@@ -12,6 +12,10 @@
     margin-left: 2%;
     margin-top: 0px;
     margin-bottom: 0px;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 15px;
+    width: 600px;
 }
 
 #geniestyle {
@@ -21,19 +25,27 @@
     margin-left: 2%;
     margin-top: 0px;
     margin-bottom: 0px;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 15px;
+    width: 600px;
 }
 
 #textinput {
     border-color: teal;
     width: 98%;
     margin-left: 1%;
-    background-color: #688fba;
+    border-width: medium;
+    border-style: double;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 17px;
 }
 #messagechat
 {
     position: absolute;
     bottom: 0;
-    max-height: 519px;
+    max-height: 516px;
 
 }
 #chatheading {

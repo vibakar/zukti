@@ -9,9 +9,9 @@ text-align: center;
 {
    background-color: teal;
     color:white;
-    margin-left: 82px;
+    margin-left: 125px;
     margin-top: 15px;
-    width: 350px;
+    width: 250px;
 }
 #buttonstyle:hover
 {
@@ -31,7 +31,7 @@ text-align: center;
 
 #text
 {
-  margin-left: 105px;
+  margin-left: 125px;
   width:250px;
 }
 #textcolor

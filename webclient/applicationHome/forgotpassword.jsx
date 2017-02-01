@@ -6,7 +6,10 @@ import {
     Form,
     Grid,
     Divider,
-    Menu
+    Menu,
+    Dimmer,
+    Loader,
+    Image
 } from 'semantic-ui-react';
 import validator from 'validator';
 import {hashHistory} from 'react-router';
@@ -18,12 +21,15 @@ export default class ForgotPassword extends React.Component
         super();
         this.state = {
             email: ' ',
+            checkmail:false,
             erroremail: false,
             errormessageemail: '',
               userexists: ''
         };
         this.onSubmitData = this.onSubmitData.bind(this);
     }
+    handleOpen = () => this.setState({ active: true })
+    handleClose = () => this.setState({ active: false })
     // sending the email verification for reset password
     onSubmitData(e, value) {
         e.preventDefault();
@@ -73,6 +79,7 @@ export default class ForgotPassword extends React.Component
         }
     }
     render() {
+      const {active} = this.state;
         return (
             <div style={{backgroundImage: "url('../../images/wall.jpg')", height: '100%'}}>
                 <br/><br/>
@@ -110,11 +117,21 @@ export default class ForgotPassword extends React.Component
                         <Form onSubmit={this.onSubmitData}>
                             <Form.Field id="forgotfield">
                         <Form.Input placeholder= 'email id' name= "email" icon='mail outline' iconPosition='left' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
-                                <p style={{color: 'green'}}>{this.state.userexists}</p>
-                                <p style={{color: '#a54f4f'}}>{this.state.errormessageemail}</p>
+                                <p style={{color: 'green',textAlign:'center'}}>{this.state.userexists}</p>
+                                <p style={{color: '#a54f4f',textAlign:'center'}}>{this.state.errormessageemail}</p>
                             </Form.Field>
-                            <Button id="buttonstylefor" type="submit" circular>Send
-                            </Button>
+                            <Button type='submit' id='buttonstylefor' onClick={this.handleOpen} circular  disabled={(!this.state.email) || (!this.state.checkmail)}>Send</Button>
+                            <Dimmer
+                                     active={active}
+                                     onClickOutside={this.handleClose}
+                                     page>
+
+                                    <Header as='h2' icon inverted>
+                                      <Image src='../images/mail.gif' size='small'/><br/><br/>
+                                       Sending Mail..!!<br/><br/>
+                                       <Header.Subheader>It may take few minutes</Header.Subheader>
+                                     </Header>
+                            </Dimmer>
                         </Form>
                    </Grid.Column>
                     <Grid.Column width={5}/>

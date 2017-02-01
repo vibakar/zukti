@@ -2,7 +2,7 @@ import validator from 'validator';
 import React from 'react';
 import axios from 'axios';
 import {hashHistory} from 'react-router';
-import {Button, Form, Divider, Icon} from 'semantic-ui-react';
+import {Button, Form, Divider, Icon,Dimmer,Header,Loader,Image} from 'semantic-ui-react';
 import './newpassword.css';
 
 export default class NewPassword extends React.Component {
@@ -19,6 +19,8 @@ export default class NewPassword extends React.Component {
         };
         this.onSubmitData = this.onSubmitData.bind(this);
     }
+    handleOpen = () => this.setState({ active: true })
+    handleClose = () => this.setState({ active: false })
     // update the password in database
     onSubmitData(e, value) {
       e.preventDefault();
@@ -67,6 +69,7 @@ export default class NewPassword extends React.Component {
         }
     }
     render() {
+      const {active} = this.state;
         return (
             <div id='newpassword' style={{backgroundImage:"url('../../images/wall.jpg')"}}>
                 <br/><br/><br/><br/><br/><br/><br/>
@@ -78,7 +81,18 @@ export default class NewPassword extends React.Component {
                         <p style={{color: '#a54f4f'}}>{this.state.errormessagepassword}</p>
                         <Form.Input type= 'password' placeholder='confirm password' id='fields' icon='key' iconPosition='left' name="repassword" onChange={this.ChangeRepassword.bind(this)} error={this.state.errorrepassword} required/><br/>
                         <p style={{color: '#a54f4f'}}>{this.state.errormessage}</p>
-                        <Button size='small' id='submit' type='submit' circular>submit</Button>
+                        <Button type='submit' id='submit' onClick={this.handleOpen} circular disabled={(!this.state.repassword) || (!this.state.password) || (this.state.errorrepassword)}>submit</Button>
+                        <Dimmer
+                                 active={active}
+                                 onClickOutside={this.handleClose}
+                                 page>
+
+                                <Header as='h2' icon inverted>
+                                <Image src='../images/mail.gif' size='small'/><br/><br/>
+                                   Redirecting to our Genie!!!<br/><br/>
+                                   <Header.Subheader>It may take few minutes</Header.Subheader>
+                                 </Header>
+                        </Dimmer>
                     </Form.Field>
                 </Form>
 </div>
