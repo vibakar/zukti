@@ -70,7 +70,8 @@ require('./webserver/routes/auth.js')(app, passport);
 
 
 
-//Ruotes
+//Routes
+
 app.use('/savebroadcastmessage',savebroadcastmessage);
 app.use('/getbroadcastmessage',getbroadcastmessage);
 app.use('/getadmin',getAdmin);
