@@ -75,7 +75,7 @@ require('./webserver/routes/auth.js')(app, passport);
 
 
 
-//Ruotes
+//Routes
 app.use('/getadmin',getAdmin);
 app.use('/intent',intent);
 app.use('/qa', addKnowledge);
