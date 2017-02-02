@@ -7,28 +7,36 @@ let router = express.Router();
 // add a question to the database
 router.post('/addQuestion', function(req, res) {
     let question = req.body.question;
-    console.log(question);
     let answerID = req.body.answerID;
     let questionInfo = processQuestion(question);
+    if (questionInfo.keywords.length === 0) {
+        res.json({
+            hasKeywords: false
+        });
+    }
+    else if (questionInfo.intents.length === 0) {
+        res.json({
+            hasIntents: false
+        });
+    }
     let resultCallback = function(id) {
         res.json({
+            hasKeywords: true,
+            hasIntent: true,
             id: id
         });
     }
     addIntentQuestion(answerID, question, questionInfo.keywords, questionInfo.intents, resultCallback);
-
 });
-
 // router to add a question answer set to Ginni knowledge base
 router.post('/addQuestionAnswerSet', function(req, res) {
-
     // callback when a new question answet set will be created
     let questionsAnswerSetCreatedCallback = function(id) {
         // unique id given to each questionsAnswerSet
         res.json({
             id: id
         });
-    }
+    };
     AddQABlock(questionsAnswerSetCreatedCallback);
 });
 
@@ -42,8 +50,8 @@ router.post('/addAnswer', function(req, res) {
         res.json({
             saved: true
         });
-    }
-    saveAnswerToDB(answerID,answer,type,resultCallback)
+    };
+    saveAnswerToDB(answerID, answer, type, resultCallback)
     // function call to save answer to it answerID
 });
 

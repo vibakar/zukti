@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Axios from 'axios';
-import {Input, Form} from 'semantic-ui-react';
+import {Form} from 'semantic-ui-react';
 import Config from '../../../../config/url';
 
 export default class InputQuestion extends React.Component {
@@ -24,8 +24,13 @@ export default class InputQuestion extends React.Component {
             question: question,
             answerID: this.props.answerID
         }).then((response) => {
-            let questionID=response.data.id;
-            this.props.handlerAddQuestionToDisplay(questionID,question);
+            if (!response.data.hasKeywords) {
+                alert('The question must have keywords');
+            } else if (!response.data.hasIntents) {
+                alert('The question must have a predefined intent.');
+            } else {
+                this.props.handlerAddQuestionToDisplay(question);
+            }
         }).catch((error) => {
             alert('Error in AJAX call while saving question to the respective question set');
             console.log(error);

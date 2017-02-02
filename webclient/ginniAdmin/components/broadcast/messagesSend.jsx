@@ -1,3 +1,4 @@
+
 import React from 'react'
 import {Feed, Icon} from 'semantic-ui-react'
 import AdminFeed from './AdminFeed'
@@ -25,13 +26,14 @@ export default class Messages extends React.Component {
                 }
             })
           }).catch((error) => {
-            alert(error);
+            console.log(error);
         });
     }
     render() {
         let feed = this.props.send.map((msg) =>< AdminFeed text = {
-            msg
+            msg.split("-")[0]
         }
+        type = {msg.split("-")[1]}
         name = {
             this.state.admin
         } />)

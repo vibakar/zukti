@@ -1,3 +1,4 @@
+
 import React from 'react'
 import {Feed, Icon} from 'semantic-ui-react'
 
@@ -14,9 +15,12 @@ export default class AdminFeed extends React.Component {
             <Feed>
                 <Feed.Label image='http://semantic-ui.com/images/avatar/small/joe.jpg'/>
                 <Feed.Content>
-                    <Feed.Summary>
+                <Feed.Summary date={new Date().toLocaleString()}/>
+                    <Feed.Summary  >
                         <a>{this.props.name}</a>
-                        
+                        <Feed.Extra text>
+                            added {this.props.type}
+                        </Feed.Extra>
                     </Feed.Summary>
                     <Feed.Extra text>
                         {this.props.text}

@@ -14,19 +14,14 @@ let intent = require('./webserver/routes/intent/intent');
 let addKnowledge = require('./webserver/routes/addKnowledge/question');
 let askQuestion = require('./webserver/routes/getReply/reply');
 let getAdmin = require('./webserver/routes/getAdmin/getadminUser');
+let savebroadcastmessage = require('./webserver/routes/broadcastmessage/broadcastmessage');
+let getbroadcastmessage = require('./webserver/routes/broadcastmessage/getbroadcastmessage');
 let app = express();
 let compiler = webpack(config);
 const configDB = require('./webserver/config/database');
 const requestAuthenticate = require('./webserver/middleware/requestAuthenticate');
-let io = require('socket.io')(server);
-
-//////////////
 
 
-
-
-
-//////
 
 // Mongoose
 // pass passport for configuration
@@ -76,6 +71,10 @@ require('./webserver/routes/auth.js')(app, passport);
 
 
 //Routes
+
+app.use('/savebroadcastmessage',savebroadcastmessage);
+app.use('/getbroadcastmessage',getbroadcastmessage);
+>>>>>>> 2df6a641ef16603255bb9ce4deb256a02245464c
 app.use('/getadmin',getAdmin);
 app.use('/intent',intent);
 app.use('/qa', addKnowledge);
@@ -106,7 +105,7 @@ var server=app.listen(8080, '0.0.0.0', function(err, result) {
 
 
 
-
+let io = require('socket.io')(server);
 // socket.io demo
 io.on('connection', function (socket) {
   socket.emit('server event', { foo: 'bar' });
