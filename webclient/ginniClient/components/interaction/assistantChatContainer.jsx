@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import AssistantUserView from './assistantUserView';
 import {Scrollbars} from 'react-custom-scrollbars';
 import InputUserMessage from './inputUserMessage';
-import {Menu, Icon, Input} from 'semantic-ui-react';
+import {Menu, Input} from 'semantic-ui-react';
 import './chatcontainerstyle.css';
 export default class AssistantChatContainer extends React.Component {
 

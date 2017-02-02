@@ -1,10 +1,8 @@
 import React from 'react';
-import {Card, Label, Icon, Radio} from 'semantic-ui-react';
+import {Card, Label, Radio} from 'semantic-ui-react';
 import InputQuestion from './inputQuestion';
 import ReplyContentInput from './replyContentInput';
 
-//will recieve two props questionAnswerSetID
-//will also send questionAnswerSetID to replyContentType
 export default class QuestionsAnswer extends React.Component {
 
     constructor(props) {
@@ -15,9 +13,8 @@ export default class QuestionsAnswer extends React.Component {
             value: 'text'
         }
     }
-
     handleChange = (e, {value}) => this.setState({value});
-    addQuestionToDisplay(questionID,question) {
+    addQuestionToDisplay(question) {
         this.setState({question: question});
     }
     render() {
@@ -35,7 +32,7 @@ export default class QuestionsAnswer extends React.Component {
                             If the user asks something similar to
                         </Card.Meta>
                         <Card.Description>
-                            <InputQuestion handlerAddQuestionToDisplay={this.addQuestionToDisplay} answerID={this.props.answerID}/>
+                            <InputQuestion  handlerAddQuestionToDisplay={this.addQuestionToDisplay} answerID={this.props.answerID}/>
                             <div>
                                 <Label color='teal' style={{
                                     'margin-top': '5px'
