@@ -39,9 +39,9 @@ export default class IntentDropDown extends React.Component {
             <Form>
                 <Form.Field >
                     <label>
-                        <h3>Select Intent</h3>
+                        <h4>Select Intent</h4>
                     </label>
-                    <Input >
+                    <Input>
                         <Dropdown fluid options={this.state.options} placeholder='Intent'
                         search selection onChange={this.handleDropdownChange}/>
                     </Input>

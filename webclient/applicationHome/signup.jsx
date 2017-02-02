@@ -1,6 +1,6 @@
 import React from 'react';
 import {hashHistory} from 'react-router';
-import {Button, Image, Modal} from 'semantic-ui-react';
+import {Button, Image, Modal,Dimmer,Header,Loader} from 'semantic-ui-react';
 import {Form} from 'semantic-ui-react';
 import validator from 'validator';
 import axios from 'axios';
@@ -36,6 +36,9 @@ export default class Signup extends React.Component {
         };
         this.onRegisterUser = this.onRegisterUser.bind(this);
     }
+    handleOpen = () => this.setState({ active: true })
+    handleClose = () => this.setState({ active: false })
+
     show = (dimmer) => () => this.setState({dimmer, open: true})
     close = () => hashHistory.push('/');
     // email verification link
@@ -156,7 +159,7 @@ export default class Signup extends React.Component {
     }
 }
 render() {
-    const {open, dimmer} = this.state;
+    const {open, dimmer,active} = this.state;
     return (
         <div>
         <Modal  dimmer={dimmer} open={open} onClose={this.close} size="small" closeIcon="close">
@@ -184,7 +187,19 @@ render() {
         <Form.Input label='Confirm Password' id="input" name="repassword" type='password' placeholder='Confirm Password' onChange={this.ChangeRepassword.bind(this)} error={this.state.errorrepassword} required/>
         <p id="textcolor">{this.state.errormessage}</p>
         </Form.Field>
-        <Button type='submit' id='buttonstyle' circular disabled={(!this.state.firstname) || (!this.state.lastname) || (!this.state.email) || (!this.state.password) || (!this.state.repassword) || (!this.state.mailexists) || (!this.state.verifypassword) || (!this.state.confirmpassword)}>SET UP YOUR ACCOUNT</Button>
+        <Button type='submit' id='buttonstyle' onClick={this.handleOpen} circular disabled={(!this.state.firstname) || (!this.state.lastname) || (!this.state.email) || (!this.state.password) || (!this.state.repassword) || (!this.state.mailexists) || (!this.state.verifypassword) || (!this.state.confirmpassword)}>SET UP YOUR ACCOUNT</Button>
+        <Dimmer
+                 active={active}
+                 onClickOutside={this.handleClose}
+                 page>
+
+                <Header as='h2' icon inverted>
+                  <Loader>
+                   Sending Mail!!!!!!!!<br/><br/>
+                   <Header.Subheader>It may take few minutes</Header.Subheader>
+                 </Loader>
+                 </Header>
+        </Dimmer>
         <span id="message"/>
         <h4 id="text">Already a Genie member?<a href='#/login'>
         Sign in here</a>

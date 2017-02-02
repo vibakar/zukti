@@ -13,7 +13,7 @@ export default class AssistantView extends React.Component {
 
             <Feed id='assistantView'>
                 <Feed.Event>
-                    <Feed.Label image='../../images/avatar.png'/>
+                    <Feed.Label image='https://chapters.theiia.org/northwest-ohio/About/ChapterOfficers/Larounis,%20John.png'/>
                     <Feed.Content>
                         <Feed.Summary date={this.props.msgDate} user={this.props.userName}/>
                         <Feed.Extra text>
