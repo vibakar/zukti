@@ -24,9 +24,9 @@ export default class InputQuestion extends React.Component {
             question: question,
             answerID: this.props.answerID
         }).then((response) => {
-            if (!response.data.hasKeywords) {
+            if (response.data.hasKeywords === false) {
                 alert('The question must have keywords');
-            } else if (!response.data.hasIntents) {
+            } else if (!response.data.hasIntents === false) {
                 alert('The question must have a predefined intent.');
             } else {
                 this.props.handlerAddQuestionToDisplay(question);
