@@ -1,8 +1,8 @@
 let natural = require('natural');
-let keywordLexicon = require('./../../lexicon/keywordLexicon.json');
-let intentLexicon = require('./../../lexicon/intentLexicon.json');
 
 module.exports = function(question) {
+    let keywordLexicon = require('./../../lexicon/keywordLexicon.json');
+    let intentLexicon = require('./../../lexicon/intentLexicon.json');
     let tokenizer = new natural.WordTokenizer();
     let keywords = [];
     let intents = [];
