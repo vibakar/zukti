@@ -10,20 +10,56 @@ import {
 import {hashHistory} from 'react-router';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
+import validator from 'validator';
 import './clientprofile.css';
+var request = require('superagent');
+
 export default class ClientProfile extends React.Component
 {
     constructor(props) {
         super(props);
         this.state = {
-            file: [],
+            allFiles: [],
             email: '',
             firstname: '',
             lastname:''
         };
         this.OnSubmitData = this.OnSubmitData.bind(this);
         this.show = this.show.bind(this);
+        this.onDrop = this.onDrop.bind(this);
+        this.uploadImage = this.uploadImage.bind(this);
     };
+onDrop(files)
+      {
+          files.forEach((file)=> {
+                      this.state.allFiles.push(file);
+              });
+
+       this.setState({ allFiles: this.state.allFiles});
+        console.log(this.state.allFiles);
+    }
+
+     uploadImage()
+      {
+        console.log(this.state.allFiles);
+        var photo = new FormData();
+          this.state.allFiles.forEach((file)=> {
+              photo.append('IMG',file);
+          });
+          console.log(photo);
+        request.post('/upload').send(photo).end(function(err, resp) {
+        console.log('save')
+            if (err)
+                  {
+                  console.error(err);
+                  }
+                  else
+                  {
+                      //this.setState({ allFiles:[]});
+                return resp;
+                  }
+          }.bind(this));
+      }
     profile()
     {
         hashHistory.push('/chat')
@@ -34,10 +70,9 @@ export default class ClientProfile extends React.Component
             url: ' http://localhost:8080/clientinformation',
             method: 'get'
         }).then(function(response) {
-            console.log("email"+response.data[0].email);
-            self.setState({email:response.data[0].email});
-            self.setState({firstname:response.data[0].firstname});
-            self.setState({lastname:response.data[0].lastname});
+          console.log(response.data[0].local);
+            console.log("email"+response.data[0].local.email);
+            self.setState({email:response.data[0].local.email});
 
         }).catch(function(err) {
             // alert("bjhbj"+err);
@@ -51,8 +86,8 @@ export default class ClientProfile extends React.Component
             method: 'put',
             data: {
                 email: this.state.email,
-                firstname: value.formData.firstname,
-                lastname: value.formData.lastname
+                firstname: value.formData.firstName,
+                lastname: value.formData.lastName
             }
         }).then(function(msg) {
             show('small');
@@ -71,6 +106,28 @@ export default class ClientProfile extends React.Component
         this.setState({file: file});
     }
     close = () => hashHistory.push('/chat');
+    // validation for firstname
+    ChangeFirst = (event) => {
+        this.setState({firstname: event.target.value});
+        if (validator.isAlpha(event.target.value)) {
+            this.setState({errorfirst: false});
+            this.setState({errormessagefirst: false});
+        } else {
+            this.setState({errorfirst: true});
+            this.setState({errormessagefirst: 'Enter a valid name'});
+        }
+    }
+    // validation for lastname
+    ChangeLast = (event) => {
+        this.setState({lastname: event.target.value});
+        if (validator.isAlpha(event.target.value)) {
+            this.setState({errorlast: false});
+            this.setState({errormessagelast: false});
+        } else {
+            this.setState({errorlast: true});
+            this.setState({errormessagelast: 'Enter a valid name'});
+        }
+    }
     render() {
         const {open, size} = this.state;
         return (
@@ -78,27 +135,27 @@ export default class ClientProfile extends React.Component
                 <Modal.Header id="updateheader"><Icon name='user'/>Edit Profile</Modal.Header>
                 <Modal.Content image>
                     <Image wrapped size='medium'>
-                        <Dropzone ref='dropzone' multiple={false} accept={'image/*'} onDrop={this.dropHandler}>
+                        <Dropzone ref='dropzone' multiple={true} accept={'image/*'} onDrop={this.onDrop}>
                             <div>
-                                <div>{this.state.file.map((file) => <img src={file.preview} style={{
+                                <div>{this.state.allFiles.map((file) => <img src={file.preview} style={{
                                         height: 204,
                                         width: 204
                                     }}/>)}</div>
                             </div>
                         </Dropzone><br/>
-                        <button size="small" color="teal" type="button" onClick={this.onOpenClick}>
+                        <Button primary onClick={this.uploadImage}>
                             Change Photo
-                        </button>
+                        </Button>
                     </Image>
                     <Modal.Description id="clientmodal">
                         <Form onSubmit={this.OnSubmitData}>
                             <Form.Field>
                                 <label>First Name</label>
                             </Form.Field>
-                            <Form.Input name="firstname" placeholder='First Name'/>
+                            <Form.Input name="firstName" onChange={this.ChangeFirst} placeholder='First Name'/>
                             <Form.Field>
                                 <label>Last Name</label>
-                                <Form.Input name="lastname" placeholder='Last Name'/>
+                                <Form.Input name="lastName" onChange={this.ChangeLast.bind(this)} placeholder='Last Name'/>
                             </Form.Field>
                             <Form.Field>
                                 <label>Email</label>
@@ -106,7 +163,7 @@ export default class ClientProfile extends React.Component
 
                         <Divider/>
                       </Form.Field>
-                      <Button onClick={this.show('small')} color='blue' type='submit'>Save</Button>
+                      <Button onClick={this.show('small')} disabled={(!this.state.firstname) || (!this.state.lastname)} color='blue' type='submit'>Save</Button>
                   </Form>
                         <Modal size={size} open={open}>
                             <Modal.Header id="updateheader">

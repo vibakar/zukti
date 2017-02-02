@@ -18,6 +18,7 @@ let app = express();
 let compiler = webpack(config);
 const configDB = require('./webserver/config/database');
 const requestAuthenticate = require('./webserver/middleware/requestAuthenticate');
+const uploadimage = require('./webserver/routes/uploadimage');
 
 // Mongoose
 // pass passport for configuration
@@ -67,10 +68,12 @@ require('./webserver/routes/auth.js')(app, passport);
 
 
 //Ruotes
+app.use('/', uploadimage);
 app.use('/getadmin',getAdmin);
 app.use('/intent',intent);
 app.use('/qa', addKnowledge);
-app.use('/question', askQuestion)
+app.use('/question', askQuestion);
+
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     publicPath: config.output.publicPath,

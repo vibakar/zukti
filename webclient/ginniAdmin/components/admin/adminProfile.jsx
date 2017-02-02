@@ -10,6 +10,7 @@ import {
 import {hashHistory} from 'react-router';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
+import validator from 'validator';
 import './adminprofile.css';
 export default class AdminProfilePage extends React.Component
 {
@@ -35,10 +36,9 @@ export default class AdminProfilePage extends React.Component
             url: ' http://localhost:8080/clientinformation',
             method: 'get'
         }).then(function(response) {
-            console.log("email"+response.data[0].email);
-            self.setState({email:response.data[0].email});
-            self.setState({firstname:response.data[0].firstname});
-            self.setState({lastname:response.data[0].lastname});
+          console.log(response.data[0].local);
+            console.log("email"+response.data[0].local.email);
+            self.setState({email:response.data[0].local.email});
 
         }).catch(function(err) {
             // alert("bjhbj"+err);
@@ -52,8 +52,8 @@ export default class AdminProfilePage extends React.Component
             method: 'put',
             data: {
                 email: this.state.email,
-                firstname: value.formData.firstname,
-                lastname: value.formData.lastname
+                firstname: value.formData.firstName,
+                lastname: value.formData.lastName
             }
         }).then(function(msg) {
             show('small');
@@ -72,6 +72,28 @@ export default class AdminProfilePage extends React.Component
         this.setState({file: file});
     }
     close = () => hashHistory.push('/react');
+    // validation for firstname
+    ChangeFirst = (event) => {
+        this.setState({firstname: event.target.value});
+        if (validator.isAlpha(event.target.value)) {
+            this.setState({errorfirst: false});
+            this.setState({errormessagefirst: false});
+        } else {
+            this.setState({errorfirst: true});
+            this.setState({errormessagefirst: 'Enter a valid name'});
+        }
+    }
+    // validation for lastname
+    ChangeLast = (event) => {
+        this.setState({lastname: event.target.value});
+        if (validator.isAlpha(event.target.value)) {
+            this.setState({errorlast: false});
+            this.setState({errormessagelast: false});
+        } else {
+            this.setState({errorlast: true});
+            this.setState({errormessagelast: 'Enter a valid name'});
+        }
+    }
     render() {
         const {open, size} = this.state;
         return (
@@ -96,18 +118,18 @@ export default class AdminProfilePage extends React.Component
                             <Form.Field>
                                 <label>First Name</label>
                             </Form.Field>
-                            <Form.Input name="firstname" placeholder='First Name'/>
+                            <Form.Input name="firstName" placeholder='First Name' onChange={this.ChangeFirst}/>
                             <Form.Field>
                             </Form.Field>
                                 <label>Last Name</label>
-                                <Form.Input name="lastname" placeholder='Last Name' />
+                                <Form.Input name="lastName" placeholder='Last Name' onChange={this.ChangeLast.bind(this)}/>
                             <Form.Field>
                                 <label>Email</label>
                                 <Form.Input placeholder='email' name="email1" value={this.state.email} disabled/>
 
                         <Divider/>
                       </Form.Field>
-                      <Button onClick={this.show('small')} color='blue' type='submit'>Save</Button>
+                      <Button onClick={this.show('small')} disabled={(!this.state.firstname) || (!this.state.lastname)} color='blue' type='submit'>Save</Button>
                   </Form>
                         <Modal size={size} open={open}>
                             <Modal.Header id="updateheader">

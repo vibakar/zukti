@@ -30,23 +30,17 @@ export default class Info extends React.Component {
         var self = this;
         count=0;
         count1=0;
-        axios({url: 'http://localhost:8080/view', method: 'GET'}).then(function(msg) {
-            console.log(msg.data);
-            var detailNew = msg.data.map(function(fulldetail) {
-                console.log(fulldetail);
+        axios({url: 'http://localhost:8080/viewall', method: 'GET'}).then(function(response) {
+            var detailNew = response.data.map((fulldetail)=> {
                 count++;
                 self.setState({countvalue: count});
-                if (fulldetail.loggedinStatus == true) {
+                if (fulldetail.local.loggedinStatus) {
                     count1++;
                     self.setState({countonline: count1});
                 }
-                console.log(fulldetail);
-                console.log(count);
-                console.log(count1);
                 return fulldetail;
             });
             this.setState({userinformation: detailNew});
-            console.log(this.setState({userinformation: detailNew}));
         }).catch(function(err) {
             console.log(err);
         });

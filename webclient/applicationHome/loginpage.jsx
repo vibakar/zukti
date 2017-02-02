@@ -60,8 +60,8 @@ $.ajax({
                 password: value.formData.password
             },
             success: function(response) {
-              console.log(response);
-              if(response.type==='Admin') {
+              console.log(response)
+              if(response.localType ==='Admin') {
                  hashHistory.push('/adminHome');
               }
               else{

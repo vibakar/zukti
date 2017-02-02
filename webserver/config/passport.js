@@ -3,18 +3,21 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 // loading up the configuration file containing facebook and goole authentication configuration
-var configAuth = require('./auth');
+const configAuth = require('./auth');
 // load up the user model
 const User = require('../models/user');
-const RegisteredUser = require('../models/tempUserModel');
+//const RegisteredUser = require('../models/tempUserModel');
 module.exports = function(passport) {
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
         done(null, user);
     });
     // used to deserialize the user
-    passport.deserializeUser(function(user, done) {
-        done(null, user);
+    passport.deserializeUser(function(id, done) {
+      console.log("deserializeUser");
+        User.findById(id, function(err, user) {
+            done(err, user);
+        });
     });
     passport.use(new LocalStrategy({
         usernameField: 'email',
@@ -23,8 +26,8 @@ module.exports = function(passport) {
         passReqToCallback: true
     }, function(req, email, password, done) {
         process.nextTick(function() {
-            RegisteredUser.findOne({
-                'email': email
+            User.findOne({
+                'local.email': email
             }, function(err, user) {
                 if (err) {
                     return done(err);
@@ -33,13 +36,13 @@ module.exports = function(passport) {
                     const error = new Error('Your Email ID is not registered');
                     error.name = 'You have not Register Yet ! Please SignUp first :)';
                     return done(error.name);
-                } else if (!user.isEmailVerified) {
+                } else if (!user.local.isEmailVerified) {
                     console.log(user);
                     const error = new Error('Email ID is not Verified');
-                    console.log(user.isEmailVerified+"fhf")
+                    console.log(user.local.isEmailVerified+"fhf")
                     error.name = 'Check your email for Login Verification !';
                     return done(error.name);
-                } else if (!(user.password === password)) {
+                } else if (!(user.local.password === password)) {
                     console.log(user);
                     const error = new Error('Incorrect password');
                     error.name = 'You Have Entered Incorrect password !';
@@ -47,17 +50,20 @@ module.exports = function(passport) {
                 } else  {
                   console.log(user);
                     let userData = {};
-                    userData.email = user.email;
-                    userData.type = user.type;
-                    userData.firstname = user.firstname;
-                    userData.lastname = user.lastname;
-                    userData.name = user.name;
-                    userData.token = RegisteredUser.generateToken(userData.email);
-                    RegisteredUser.update({
-                        email: userData.email
+                    userData._id = user._id;
+                    userData.email = user.local.email;
+                    userData.firstname = user.local.firstname;
+                    userData.lastname = user.local.lastname;
+                    userData.name = user.local.name;
+                    userData.authType = user.local.authType;
+                      userData.localType = user.local.localType;
+                    userData.token = User.generateToken(userData.email);
+                    console.log(userData._id);
+                    User.update({
+                        'local.email': userData.email
                     }, {
                         $set: {
-                            loggedinStatus: true
+                            'local.loggedinStatus': true
                         }
                     }, function(err) {
                         if (err) {
@@ -89,10 +95,12 @@ module.exports = function(passport) {
                     if (user) {
                         // if there is a user id already but no token (user was linked at one point and then removed)
                         if (!user.facebook.token) {
-                            user.facebook.token = token;
-                            user.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
+                          user.facebook.token = token;
+                            user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
                             user.facebook.email = (profile.emails[0].value || '').toLowerCase();
-                            user.facebook.photo = profile.photo;
+                            user.facebook.displayName = profile.displayName;
+                            user.facebook.photos = profile.photos[0].value;
+                            user.facebook.authType = "facebook";
                             user.save(function(err) {
                                 if (err)
                                     return done(err);
@@ -103,11 +111,16 @@ module.exports = function(passport) {
                     } else {
                         // if there is no user, create them
                         var newUser = new User();
+                        console.log(newUser);
+                        console.log(User.local+"vy");
+                        console.log(newUser.local);
                         newUser.facebook.id = profile.id;
                         newUser.facebook.token = token;
-                        newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
+                          newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
                         newUser.facebook.email = (profile.emails[0].value || '').toLowerCase();
-                        newUser.facebook.photo = profile.photo;
+                          newUser.facebook.displayName = profile.displayName;
+                          newUser.facebook.photos = profile.photos[0].value;
+                          newUser.facebook.authType = "facebook";
                         newUser.save(function(err) {
                             if (err)
                                 return done(err);
@@ -120,9 +133,11 @@ module.exports = function(passport) {
                 var user = req.user; // pull the user out of the session
                 user.facebook.id = profile.id;
                 user.facebook.token = token;
-                user.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
-                user.facebook.email = (profile.emails[0].value || '').toLowerCase();
-                user.facebook.photo = profile.photo;
+                  user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
+                  user.facebook.email = (profile.emails[0].value || '').toLowerCase();
+                  user.facebook.displayName = profile.displayName;
+                  user.facebook.photos = profile.photos[0].value;
+                  user.facebook.authType = "facebook";
                 user.save(function(err) {
                     if (err)
                         return done(err);
@@ -133,76 +148,85 @@ module.exports = function(passport) {
     }));
     // Google
     passport.use(new GoogleStrategy({
-        clientID: configAuth.GOOGLE.clientID, clientSecret: configAuth.GOOGLE.clientSecret, callbackURL: configAuth.GOOGLE.callbackURL,
-        // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-        passReqToCallback: true
-    }, function(req, token, refreshToken, profile, done) {
-        // asynchronous
-        process.nextTick(function() {
-            // check if the user is already logged in
-            if (!req.user) {
-                User.findOne({
-                    'google.id': profile.id
-                }, function(err, user) {
-                    if (err) {
-                        return done(err);
-                    }
-                    if (user) {
-                        // if there is a user id already but no token (user was linked at one point and then removed)
-                        if (!user.google.token) {
-                            user.google.token = token;
-                            user.google.name = profile.displayName;
-                            // pull the first email
-                            user.google.email = (profile.emails[0].value || '').toLowerCase();
-                            user.save(function(error) {
-                                if (error) {
-                                    return done(err);
-                                }
-                                let userData = {};
-                                userData.email = user.google.email;
-                                userData.token = User.generateToken(userData.email);
-                                return done(null, userData);
-                            });
-                        }
-                        let userData = {};
-                        userData.email = user.google.email;
-                        userData.name = user.google.name;
-                        userData.token = User.generateToken(userData.email);
-                        return done(null, userData);
-                    } else {
-                        var newUser = new User();
-                        newUser.google.id = profile.id;
-                        newUser.google.token = token;
-                        newUser.google.name = profile.displayName;
-                        // pull the first email
-                        newUser.google.email = (profile.emails[0].value || '').toLowerCase();
-                        newUser.save(function(error) {
-                            if (error) {
+
+    clientID        : configAuth.GOOGLE.clientID,
+    clientSecret    : configAuth.GOOGLE.clientSecret,
+    callbackURL     : configAuth.GOOGLE.callbackURL,
+    passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+
+},
+function(req, token, refreshToken, profile, done) {
+
+    // asynchronous
+    console.log(profile);
+    process.nextTick(function() {
+
+        // check if the user is already logged in
+        if (!req.user) {
+
+            User.findOne({ 'google.id' : profile.id }, function(err, user) {
+                if (err)
+                    return done(err);
+
+                if (user) {
+
+                    // if there is a user id already but no token (user was linked at one point and then removed)
+                    if (!user.google.token) {
+                        user.google.token = token;
+                        user.google.name  = profile.displayName;
+                        user.google.photos = profile.photos[0].value;
+                        user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
+                        user.google.authType = "google";
+
+                        user.save(function(err) {
+                            if (err)
                                 return done(err);
-                            }
-                            let userData = {};
-                            userData.email = newUser.google.email;
-                            userData.token = User.generateToken(userData.email);
-                            return done(null, userData);
+                            return done(null, user);
                         });
                     }
-                });
-            } else {
-                // user already exists and is logged in, we have to link accounts
-                // pull the user out of the session
-                let user = req.user;
 
-                user.token = token;
-                user.name = profile.displayName;
-                // pull the first email
-                user.email = (profile.emails[0].value || '').toLowerCase();
+                    return done(null, user);
+                } else {
+                    var newUser          = new User();
 
-                let userData = {};
-                userData.email = user.email;
-                userData.token = User.generateToken(userData.email);
-                return done(null, userData);
+                    newUser.google.id    = profile.id;
+                    newUser.google.token = token;
+                    newUser.google.name  = profile.displayName;
+                    newUser.google.photos = profile.photos[0].value;
+                    newUser.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
+                    newUser.google.authType = "google";
 
-            }
-        });
-    }));
+                    newUser.save(function(err) {
+                        if (err)
+                            return done(err);
+
+                        return done(null, newUser);
+                    });
+                }
+            });
+
+        } else {
+            // user already exists and is logged in, we have to link accounts
+            var user               = req.user; // pull the user out of the session
+
+            user.google.id    = profile.id;
+            user.google.token = token;
+            user.google.name  = profile.displayName;
+            user.google.photos = profile.photos[0].value;
+            user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
+            user.google.authType = "google";
+
+            user.save(function(err) {
+                if (err)
+                    return done(err);
+
+                return done(null, user);
+            });
+
+        }
+
+    });
+
+}));
+
 };
