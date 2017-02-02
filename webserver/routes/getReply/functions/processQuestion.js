@@ -1,14 +1,8 @@
 let nlp = require('nlp_compromise');
-let readJSON = require('read-json');
 module.exports = function(sentence) {
     let keywordLexicon = require('../../../lexicon/keywordLexicon.json');
     let intentLexicon = require('../../../lexicon/intentLexicon.json');
-    readJSON('../../../lexicon/intentLexicon.json', function(error, manifest) {
 
-         intentLexicon = manifest
-        // => 'read-json'
-
-    })
 
     //  console.log(intentLexicon);
     let str = nlp.text(sentence);
