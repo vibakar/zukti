@@ -74,7 +74,6 @@ require('./webserver/routes/auth.js')(app, passport);
 
 app.use('/savebroadcastmessage',savebroadcastmessage);
 app.use('/getbroadcastmessage',getbroadcastmessage);
->>>>>>> 2df6a641ef16603255bb9ce4deb256a02245464c
 app.use('/getadmin',getAdmin);
 app.use('/intent',intent);
 app.use('/qa', addKnowledge);
