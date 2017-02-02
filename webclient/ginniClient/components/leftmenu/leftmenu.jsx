@@ -72,7 +72,12 @@ handleItemClick = (e, {name}) => this.setState({activeItem: name})
                     <Menu.Item name='Unanswered Queries' active={activeItem === 'Unanswered Queries'} onClick={this.handleItemClick}>
                         <Icon name='help' color='teal'/>
                       Unanswered Queries
-                    </Menu.Item><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    </Menu.Item>
+                    <Menu.Item name='notifications' active={activeItem === 'notifications'} onClick={this.handleItemClick}>
+                        <Icon name='help' color='teal'/>
+                      notifications
+                    </Menu.Item>
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
                     <Menu.Item name='LogOut' active={activeItem === 'LogOut'} onClick={this.handleItemClick}>
                         <a href='#/logout'><Icon name='sign out' color='teal'/>
                         LogOut</a>

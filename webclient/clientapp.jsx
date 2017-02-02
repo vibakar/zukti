@@ -23,6 +23,7 @@ import SentMailPage from './applicationHome/SentMailPage';
 import ExpiryLink from './applicationHome/expiryLink';
 import AdminProfilePage from './ginniAdmin/components/admin/adminprofile';
 
+
 injectTapEventPlugin();
 function loggedIn() {
     if (window.localStorage.getItem('token')) {
@@ -59,5 +60,7 @@ ReactDOM.render(
         <Route path='/logout' component={Logout} onEnter={requireAuth.bind(this)}/>
         <Route path='/log' component={LogoutAdmin} onEnter={requireAuth.bind(this)}/>
         <Route path='/expiryLink' component={ExpiryLink}/>
+        
+
     </Router>
 </MuiThemeProvider>, document.getElementById('mountapp'));

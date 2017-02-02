@@ -16,7 +16,7 @@ export default class AdminFeed extends React.Component {
                 <Feed.Content>
                     <Feed.Summary>
                         <a>{this.props.name}</a>
-                        <Feed.Date>3 days ago</Feed.Date>
+                        
                     </Feed.Summary>
                     <Feed.Extra text>
                         {this.props.text}

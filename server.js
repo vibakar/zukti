@@ -18,6 +18,15 @@ let app = express();
 let compiler = webpack(config);
 const configDB = require('./webserver/config/database');
 const requestAuthenticate = require('./webserver/middleware/requestAuthenticate');
+let io = require('socket.io')(server);
+
+//////////////
+
+
+
+
+
+//////
 
 // Mongoose
 // pass passport for configuration
@@ -87,10 +96,21 @@ app.use(webpackHotMiddleware(compiler));
 
 
 //Listening to port 8080
-app.listen(8080, '0.0.0.0', function(err, result) {
+var server=app.listen(8080, '0.0.0.0', function(err, result) {
     if (err) {
         console.error("Error ", err);
     }
 
     console.log("Server started at 8080");
+});
+
+
+
+
+// socket.io demo
+io.on('connection', function (socket) {
+  socket.emit('server event', { foo: 'bar' });
+  socket.on('client event', function (data) {
+    socket.broadcast.emit('update label', data);
+  });
 });
