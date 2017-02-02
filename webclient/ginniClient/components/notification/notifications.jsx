@@ -1,6 +1,7 @@
 import React from 'react'
-import {Feed, Icon} from 'semantic-ui-react'
 import Notificationfeed from './notificationfeed'
+import Config from '../../../../config/url';
+import axios from 'axios';
 
 export default class Notifications extends React.Component {
     constructor(props) {
@@ -8,22 +9,31 @@ export default class Notifications extends React.Component {
         this.state = {
             message: []
         }
-
     }
 
 
     componentDidMount() {
         let socket = io();
-
+        let url = Config.url + '/getbroadcastmessage';
+        axios.get(url).then((response)=>{
+          console.log(response);
+          this.state.message = response.data;
+          this.setState({message:this.state.message});
+        }).catch((error)=>{
+          console.log(error);
+        });
         socket.on('update label', (data)=> {
-          this.state.message.push(data.value);
+          let msg = {};
+          msg.type = data.type;
+          msg.text = data.value;
+          this.state.message.push(msg);
           this.setState({message:this.state.message});
         });
 
     }
     render() {
-      let messages = this.state.message.map((msg,index)=> <Notificationfeed key={index} feed={msg} />);
 
+      let messages = this.state.message.map((msg,index)=> <Notificationfeed key={index} feed={msg.text} type={msg.type} />);
       return (
         <div>
         {messages}
