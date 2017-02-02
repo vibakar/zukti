@@ -11,9 +11,9 @@ export default class ContentType extends React.Component{
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
-    handlertext = (text) => {
+    handlertext = (text,type) => {
 
-      this.props.handlercontent(text);
+      this.props.handlercontent(text,type);
     }
 
     render() {
@@ -35,5 +35,3 @@ export default class ContentType extends React.Component{
       )
     }
   }
-
-  
