@@ -18,6 +18,7 @@ import {
     Dropdown
 } from 'semantic-ui-react';
 import axios from 'axios';
+import $ from 'jquery';
 import Cookie from 'react-cookie';
 import {hashHistory} from 'react-router';
 import './leftmenu.css';

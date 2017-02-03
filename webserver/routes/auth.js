@@ -425,7 +425,6 @@ module.exports = function(app, passport) {
               });
 
           app.get('/userProfile',function(req, res){
-            console.log("Hema");
             console.log(req.user);
             res.json({user:req.user});
           });
