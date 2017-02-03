@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
 import react from './ginniAdmin/components/menu/menu';
 import AdminHome from './ginniAdmin/components/home/home';
 import App1 from './ginniAdmin/components/app/app';

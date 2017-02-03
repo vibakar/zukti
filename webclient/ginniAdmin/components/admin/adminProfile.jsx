@@ -11,24 +11,79 @@ import {hashHistory} from 'react-router';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import validator from 'validator';
-import './adminprofile.css';
-export default class AdminProfilePage extends React.Component
+import './adminProfile.css';
+//import $ from 'jquery';
+const request = require('superagent');
+
+export default class ClientProfile extends React.Component
 {
     constructor(props) {
         super(props);
         this.state = {
-            file: [],
+            allFiles: [],
             email: '',
-            firstname:'',
+            firstname: '',
             lastname:'',
-            newsdetails: ''
+            photo:''
         };
         this.OnSubmitData = this.OnSubmitData.bind(this);
         this.show = this.show.bind(this);
+        this.onDrop = this.onDrop.bind(this);
+        this.saveImage=this.saveImage.bind(this);
+        this.uploadImage = this.uploadImage.bind(this);
     };
+onDrop(files)
+      {
+          files.forEach((file)=> {
+                      this.state.allFiles.push(file);
+              });
+
+       this.setState({ allFiles: this.state.allFiles});
+        console.log(this.state.allFiles[0].name);
+    }
+
+     uploadImage()
+      {
+        console.log("Image"+this.state.allFiles[0].name);
+        var photo = new FormData();
+          this.state.allFiles.forEach((file)=> {
+              photo.append('IMG',file);
+          });
+          var self=this;
+        request.post('/upload').send(photo).end(function(err, resp) {
+        console.log('save')
+            if (err)
+                  {
+                  console.error(err);
+                  }
+                  else
+                  {
+                    console.log("success");
+                    console.log(self.state.allFiles);
+                      self.saveImage(self.state.allFiles[0].preview);
+                      //this.setState({ allFiles:[]});
+                return resp;
+                  }
+          });
+
+      }
+      saveImage(image){
+        console.log("hello entered"+image);
+        $.ajax({
+              type: 'POST',
+              url:"http://localhost:8080/uploadImage",
+              data: {data :image},
+              success: function(res) {
+               console.log("Image Stored");
+              }.bind(this),
+              error: function(err){
+                console.log("error",err);
+              }
+              });
+      }
     profile()
     {
-        hashHistory.push('/react');
+        hashHistory.push('/chat')
     }
     componentDidMount() {
       const self=this;
@@ -71,7 +126,7 @@ export default class AdminProfilePage extends React.Component
         photo.append('IMG', file[0]);
         this.setState({file: file});
     }
-    close = () => hashHistory.push('/react');
+    close = () => hashHistory.push('/chat');
     // validation for firstname
     ChangeFirst = (event) => {
         this.setState({firstname: event.target.value});
@@ -101,31 +156,31 @@ export default class AdminProfilePage extends React.Component
                 <Modal.Header id="updateheader"><Icon name='user'/>Edit Profile</Modal.Header>
                 <Modal.Content image>
                     <Image wrapped size='medium'>
-                        <Dropzone ref='dropzone' multiple={false} accept={'image/*'} onDrop={this.dropHandler}>
+                        <Dropzone ref='dropzone' multiple={false} accept={'image/*'} onDrop={this.onDrop}>
                             <div>
-                                <div>{this.state.file.map((file) => <img src={file.preview} style={{
+                                <div>{this.state.allFiles.map((file) => <img src={file.preview} style={{
                                         height: 204,
                                         width: 204
                                     }}/>)}</div>
                             </div>
                         </Dropzone><br/>
-                        <button size="small" color="teal" type="button" onClick={this.onOpenClick}>
+                        <Button primary onClick={this.uploadImage}>
                             Change Photo
-                        </button>
+                        </Button>
                     </Image>
                     <Modal.Description id="clientmodal">
                         <Form onSubmit={this.OnSubmitData}>
                             <Form.Field>
                                 <label>First Name</label>
                             </Form.Field>
-                            <Form.Input name="firstName" placeholder='First Name' onChange={this.ChangeFirst}/>
+                            <Form.Input name="firstName" onChange={this.ChangeFirst} placeholder='First Name'/>
                             <Form.Field>
-                            </Form.Field>
                                 <label>Last Name</label>
-                                <Form.Input name="lastName" placeholder='Last Name' onChange={this.ChangeLast.bind(this)}/>
+                                <Form.Input name="lastName" onChange={this.ChangeLast.bind(this)} placeholder='Last Name'/>
+                            </Form.Field>
                             <Form.Field>
                                 <label>Email</label>
-                                <Form.Input placeholder='email' name="email1" value={this.state.email} disabled/>
+                                <Form.Input placeholder='email' name="email" value={this.state.email} disabled/>
 
                         <Divider/>
                       </Form.Field>

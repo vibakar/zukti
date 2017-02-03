@@ -16,8 +16,8 @@ const userSchema = mongoose.Schema({
         name: String,
         loggedinStatus: Boolean,
         isEmailVerified: Boolean,
-        verificationID: Number
-
+        verificationID: Number,
+        photos: String
     },
     facebook: {
       id           : String,
