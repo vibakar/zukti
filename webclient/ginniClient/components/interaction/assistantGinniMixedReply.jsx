@@ -8,7 +8,7 @@ export default class AssistantGinniMixedReply extends React.Component {
     // props validation
     static propTypes = {
         handleGinniReply: React.PropTypes.func.isRequired,
-        data: React.PropTypes.object.isRequired
+        data: React.PropTypes.object
     };
     constructor(props) {
         super(props);
@@ -25,10 +25,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.props.handleGinniReply(ginniReply);
     }
     render() {
-        console.log(this.props.data);
         let text = this.props.data.textAnswer;
-        console.log(text);
-        console.log(this.props.data.textAnswer);
         return (
             <Feed id="ginniview">
                 <Feed.Event>

@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AssistantUserView from './assistantUserView';
 import {Scrollbars} from 'react-custom-scrollbars';
 import InputUserMessage from './inputUserMessage';
-import {Menu, Icon, Input} from 'semantic-ui-react';
+import {Menu, Icon, Input, Dimmer, Loader} from 'semantic-ui-react';
 import Cookie from 'react-cookie';
 import Axios from 'axios';
 import AssistantGinniMixedReply from './assistantGinniMixedReply';
+import AssistantUserView from './assistantUserView';
 import Config from '../../../../config/url';
 import './chatcontainerstyle.css';
 export default class AssistantChatContainer extends React.Component {
@@ -15,7 +15,8 @@ export default class AssistantChatContainer extends React.Component {
         super();
         this.state = {
             messages: [],
-            username:'User'
+            username: 'User',
+            loaderActive: true
         };
         this.retriveChat = this.retriveChat.bind(this);
         // to display ginni messages
@@ -26,46 +27,55 @@ export default class AssistantChatContainer extends React.Component {
     componentDidMount() {
         // Scroll to the bottom on initialization
         let username = Cookie.load('username');
-        if(username){
-          this.state.username=username;
+        if (username) {
+            this.state.username = username;
         }
-        console.log(username);
-        var len = this.state.messages.length - 2;
-        const node = ReactDOM.findDOMNode(this['_div' + len]);
-        if (node) {
-            node.scrollIntoView();
-        }
-
+        this.retriveChat();
     }
-
     componentDidUpdate() {
         // Scroll as new elements come along
-        var len = this.state.messages.length - 2;
+        console.log('IN componentDidUpdate');
+        var len = this.state.messages.length - 1;
+        console.log(len);
         const node = ReactDOM.findDOMNode(this['_div' + len]);
+        console.log(node);
         if (node) {
             node.scrollIntoView();
         }
     }
-    retriveChat(){
-      let url = Config.url+'/retriveChat';
-      Axios.get(url).
-      then((response)=>{
-        console.log(response.data);
-        return(response.data);
-      }).
-      catch((err)=>{
-        alert('ERROR IN FETCHING CHATS')
-        console.log(err);
-      });
+    retriveChat() {
+        let url = Config.url + '/retriveChat';
+        Axios.get(url).then((response) => {
+            response.data.chats.forEach((chat) => {
+                let length = this.state.messages.length;
+                this.state.messages.push(
+                    <div ref={(ref) => this['_div' + length] = ref} key={length}>
+                        <AssistantUserView msgDate={chat.question.time} userName={this.state.username} userMessage={chat.question.value}/>
+                    </div>
+                );
+                chat.resultArray.forEach((reply) => {
+                    let length = this.state.messages.length;
+                    this.state.messages.push(
+                        <div ref={(ref) => this['_div' + length] = ref} key={length}>
+                            <AssistantGinniMixedReply data={reply}/>
+                        </div>
+                    );
+                });
+            });
+            this.setState({messages: this.state.messages, loaderActive: false});
+        }).catch((err) => {
+            alert('ERROR IN FETCHING CHATS')
+        });
     }
     pushGinniMessages(ginniReply) {
 
         ginniReply.forEach((reply) => {
-            let index = this.state.messages.length - 1;
+            let length = this.state.messages.length;
+            console.log(index + 'gin reply');
             let displayItem = (
-                <div ref={(ref) => this['_div' + index] = ref} key={index}>
+                <div ref={(ref) => this['_div' + length] = ref} key={length}>
                     {reply}
-                </div>
+                </div >
             );
             this.state.messages.push(displayItem);
         });
@@ -73,9 +83,9 @@ export default class AssistantChatContainer extends React.Component {
     }
     pushUserMessages(message) {
         console.log(message);
-        let index = this.state.messages.length - 1;
+        let length = this.state.messages.length;
         let userMessageDisplay = (
-            <div key={index}>
+            <div ref={(ref) => this['_div' + length] = ref} key={length}>
                 <AssistantUserView msgDate={message.time} userName={this.state.username} userMessage={message.value}/>
             </div>
         );
@@ -90,6 +100,9 @@ export default class AssistantChatContainer extends React.Component {
                 backgroundImage: "url('http://exploretheme.com/wp-content/uploads/2015/03/restaurant-icons.jpg')",
                 height: '100%'
             }}>
+                <Dimmer active={this.state.loaderActive} inverted>
+                    <Loader size='huge'>Loading previous chat history</Loader>
+                </Dimmer>
                 <Menu secondary>
                     <Menu.Item secondary position='right'/>
                     <Menu.Item position='left'>
