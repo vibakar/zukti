@@ -1,8 +1,10 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 import react from './ginniAdmin/components/menu/menu';
 import AdminHome from './ginniAdmin/components/home/home';
 import App1 from './ginniAdmin/components/app/app';
@@ -26,6 +28,7 @@ import ExpiryLink from './applicationHome/expiryLink';
 import SuccessfullyRegistered from './applicationHome/successfullyregistered';
 import AdminProfilePage from './ginniAdmin/components/admin/adminprofile';
 import Cookie from 'react-cookie';
+import Addnode from './ginniAdmin/components/buildNodeAndRelationship/createNodeAndRelation.jsx';
 
 
 injectTapEventPlugin();
@@ -67,5 +70,7 @@ ReactDOM.render(
         <Route path='/log' component={LogoutAdmin} onEnter={requireAuth.bind(this)}/>
         <Route path='/expiryLink' component={ExpiryLink}/>
           <Route path='/successfullyregistered' component={SuccessfullyRegistered}/>
+          <Route path='/addnode' component={Addnode}/>
+
     </Router>
 </MuiThemeProvider>, document.getElementById('mountapp'));

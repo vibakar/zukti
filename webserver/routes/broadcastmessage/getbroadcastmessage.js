@@ -1,9 +1,8 @@
 let express = require('express');
 let router = express.Router();
-let mongoose = require('mongoose');
 let Broadcast = require('../../models/broadcast');
 
-//save broadcast message
+//get broadcast messages saved in mongodb
 router.get('/', function(req, res) {
 
 

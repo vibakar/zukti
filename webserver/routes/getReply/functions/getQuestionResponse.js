@@ -21,7 +21,7 @@ module.exports = function(intents, keywords, questionResultCallback, noAnswerFou
                  MATCH (keywords)<-[r]-(a:answer)
                  WHERE TYPE(r)=intent
                  RETURN COLLECT(a)`;
-    
+
     let session = getNeo4jDriver().session();
     session
         .run(query)
@@ -32,7 +32,15 @@ module.exports = function(intents, keywords, questionResultCallback, noAnswerFou
             if (result.records[0]._fields[0].length === 0) {
                 noAnswerFoundCallback();
             } else {
-                let properties = result.records[0]._fields[0][0].properties;
+                let resultArray = result.records[0]._fields[0].map((field)=>{
+                    let answerObj = {};
+                    answerObj.textAnswer=field.properties.textAnswer;
+                    answerObj.videoUrl=field.properties.videoAnswer;
+                    answerObj.blogAnswer=field.properties.blogAnswer;
+                    return answerObj;
+                }
+                )
+        /*        let properties = result.records[0]._fields[0][0].properties;
                 let resultObj = {
                     textAnswer: properties.textAnswer,
                     otherResult: {
@@ -41,7 +49,8 @@ module.exports = function(intents, keywords, questionResultCallback, noAnswerFou
                         blogUrl: properties.blogAnswer
                     }
                 };
-                questionResultCallback(resultObj);
+                */
+                questionResultCallback(resultArray);
             }
         })
         .catch(function(error) {

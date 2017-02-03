@@ -18,6 +18,8 @@ let savebroadcastmessage = require('./webserver/routes/broadcastmessage/broadcas
 let getbroadcastmessage = require('./webserver/routes/broadcastmessage/getbroadcastmessage');
 let app = express();
 let compiler = webpack(config);
+let addnode=require('./webserver/routes/addNodeAndRelations/addNode');
+
 const configDB = require('./webserver/config/database');
 const requestAuthenticate = require('./webserver/middleware/requestAuthenticate');
 const uploadimage = require('./webserver/routes/uploadimage');
@@ -94,6 +96,7 @@ app.use(webpackDevMiddleware(compiler, {
 }));
 
 app.use(webpackHotMiddleware(compiler));
+app.use('/cn', addnode);
 
 
 //Listening to port 8080

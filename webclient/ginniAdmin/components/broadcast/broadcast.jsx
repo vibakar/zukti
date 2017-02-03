@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {
     Grid,
@@ -15,11 +16,13 @@ export default class BroadCast extends React.Component {
         super(props);
         this.state = {
             content: []
+
         }
     }
-    handlerfrom = (text) => {
-        this.state.content.push(text);
-        this.setState({content:  this.state.content});
+    handlerfrom = (text,type) => {
+        this.state.content.push(text+"-"+type);
+
+        this.setState({content:  this.state.content });
 
     }
     render() {
@@ -39,7 +42,7 @@ export default class BroadCast extends React.Component {
 
                         </Grid.Column>
                         <Grid.Column width={10}>
-                            <MessagesSend send={this.state.content}/>
+                            <MessagesSend send={this.state.content} />
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
