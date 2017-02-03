@@ -6,29 +6,37 @@ const CONFIG = require('../config/auth');
 const userSchema = mongoose.Schema({
 
     local: {
-      name: String,
-      email: String,
-      password: String,
-      type: String,
-      firstname: String,
-      lastname: String,
-      loggedinStatus:Boolean,
-      isEmailVerified: Boolean,
-      verificationID: Number,
-      joiningdate : { type : Date, default: new Date().toISOString() },
-      token: String
+        token: String,
+        firstname: String,
+        lastname: String,
+        email: String,
+        password: String,
+        authType: String,
+        localType: String,
+        name: String,
+        loggedinStatus: Boolean,
+        isEmailVerified: Boolean,
+        verificationID: Number
+
     },
     facebook: {
-        id: String,
-        token: String,
-        email: String,
-        name: String
+      id           : String,
+      token        : String,
+      email        : String,
+      name         : String,
+      displayName  : String,
+      photos       : String,
+      authType     : String
+
     },
     google: {
-        id: String,
-        token: String,
-        email: String,
-        name: String
+      id           : String,
+      token        : String,
+      email        : String,
+      name         : String,
+      displayName  : String,
+      photos       : String,
+      authType     : String
     }
 
 });

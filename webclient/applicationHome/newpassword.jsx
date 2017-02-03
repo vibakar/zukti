@@ -71,12 +71,12 @@ export default class NewPassword extends React.Component {
     render() {
       const {active} = this.state;
         return (
-            <div id='newpassword' style={{backgroundImage:"url('../../images/wall.jpg')"}}>
+            <div id='newpassword' style={{backgroundImage:"url('../../images/intro-bg.jpg')"}}>
                 <br/><br/><br/><br/><br/><br/><br/>
                   <Form onSubmit={this.onSubmitData} >
                     <Form.Field >
                         <h3 id='heading'><Icon name='lock' id='icon'/>Reset your new password</h3><Divider id='divider'/>
-                        <h3>Keep your credential secure by changing it </h3><br/>
+                        <h3 style={{color:'white'}}>Keep your credential secure by changing it </h3><br/>
                         <Form.Input type='password' placeholder='new password' circular id='fields' icon='key' iconPosition='left' name="password" onChange={this.ChangePassword.bind(this)} error={this.state.errorpassword} required/><br/>
                         <p style={{color: '#a54f4f'}}>{this.state.errormessagepassword}</p>
                         <Form.Input type= 'password' placeholder='confirm password' id='fields' icon='key' iconPosition='left' name="repassword" onChange={this.ChangeRepassword.bind(this)} error={this.state.errorrepassword} required/><br/>

@@ -6,47 +6,35 @@ import {
     Grid
 } from 'semantic-ui-react';
 import {hashHistory} from 'react-router';
+import $ from 'jquery';
+import Cookie from 'react-cookie';
 import './homestyle.css';
 export default class FrontPage extends React.Component {
     componentDidMount()
     {
         this.getUserProfile();
     }
-    logout() {
-      $.ajax({
-      url: 'http://localhost:8080/signout',
-      type: 'GET',
-      dataType:'text',
-      success: function(response) {
-          window.localStorage.removeItem('token');
-              hashHistory.push('/');
-      }.bind(this),
-      error: function(err) {
-        console.log(err);
-      }
-  });
-   }
+    handleLogout()
+  {
+
+  $.ajax({
+        type: 'GET',
+        url:"http://localhost:8080/signout",
+        dataType: 'json',
+        success: function(res) {
+         Cookie.remove("authType");
+         Cookie.remove("token");
+         hashHistory.push('/');
+        }.bind(this),
+        error: function(err){
+          console.log("error",err);
+        }.bind(this)
+     });
+
+  }
    onSubmitEmail() {
        hashHistory.push('/react')
    }
-    getUserProfile() {
-        $.ajax({
-            url: 'http://localhost:8080/userinfo',
-            type: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                localStorage.setItem('token', response.token);
-                // console.log("success");
-                // console.log(response);
-            },
-            error: function(err) {
-                localStorage.setItem('token', 'Error');
-                // console.log(localStorage.getItem('token'));
-                // console.log("error");
-                // console.log(err);
-            }
-        });
-    }
     render() {
         return (
             <div style={{
@@ -58,7 +46,7 @@ export default class FrontPage extends React.Component {
             <Grid.Column width={2}/>
             <Grid.Column width={10}/>
             <Grid.Column width={4}>
-            <center><Icon name='sign out' size='large' inverted id='iconstyle' onClick={this.logout.bind(this)}/></center>
+            <center><Icon name='sign out' size='large' inverted id='iconstyle' onClick={this.handleLogout.bind(this)}/></center>
             </Grid.Column>
             </Grid.Row>
             <Divider horizontal inverted>

@@ -194,10 +194,9 @@ render() {
                  page>
 
                 <Header as='h2' icon inverted>
-                  <Loader>
+                  <Image src='../images/mail.gif'/>
                    Sending Mail!!!!!!!!<br/><br/>
                    <Header.Subheader>It may take few minutes</Header.Subheader>
-                 </Loader>
                  </Header>
         </Dimmer>
         <span id="message"/>

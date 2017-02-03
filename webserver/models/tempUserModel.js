@@ -13,7 +13,6 @@ const userSchema = new Schema({
     loggedinStatus:Boolean,
     isEmailVerified: Boolean,
     verificationID: Number,
-    joiningdate : { type : Date, default: new Date().toISOString() },
     token: String
 })
 userSchema.statics.generateToken = function(email) {
