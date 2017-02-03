@@ -11,6 +11,7 @@ let webpackHotMiddleware = require('webpack-hot-middleware');
 let config = require('./webpack.config');
 let getLexicon = require('./webserver/lexicon/getLexicon');
 let intent = require('./webserver/routes/intent/intent');
+let concept = require('./webserver/routes/addnodeAndRelations/fetchConcepts');
 let addKnowledge = require('./webserver/routes/addKnowledge/question');
 let askQuestion = require('./webserver/routes/getReply/reply');
 let savequery = require('./webserver/routes/getReply/functions/saveanswer');
@@ -81,6 +82,8 @@ app.use('/savebroadcastmessage',savebroadcastmessage);
 app.use('/getbroadcastmessage',getbroadcastmessage);
 app.use('/getadmin',getAdmin);
 app.use('/intent',intent);
+app.use('/concept',concept);
+
 app.use('/qa', addKnowledge);
 app.use('/question', askQuestion);
 app.use('/savequery', savequery);
