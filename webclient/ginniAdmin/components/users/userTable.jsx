@@ -19,6 +19,7 @@ export default class UserTable extends React.Component
       method: 'GET'
     }).then(function(response) {
     this.setState({ userinformation: response.data});
+    console.log(response.data);
 }.bind(this)).
     catch(function(err) {
         console.log(err);

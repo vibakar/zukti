@@ -4,7 +4,6 @@ import {Form} from 'semantic-ui-react';
 import Axios from 'axios';
 import AssistantGinniTextReply from './assisantGinniTextReply';
 import AssistantGinniMixedReply from './assistantGinniMixedReply';
-import AssistantGinniKeywordReply from './assistantGinniKeywordReply';
 import Config from '../../../../config/url';
 export default class InputUserMesaage extends React.Component {
     constructor(props) {
@@ -23,23 +22,18 @@ export default class InputUserMesaage extends React.Component {
         ReactDOM.findDOMNode(this.refs.userInput).value = ''
         let url = Config.url + '/question/askQuestion';
         Axios.post(url, {question: message}).then((response) => {
-            if (response.data.result) {
-                ginniReply = [< AssistantGinniMixedReply handleGinniReply = {
-                        this.props.handleGinniReply
-                    }
-                    data = {
-                        response.data.result
-                    } />];
-            } else if (response.data.keywords) {
-                ginniReply.push(< AssistantGinniTextReply text = {
-                    response.data.answer
-                } />);
-
-                ginniReply.push(<AssistantGinniKeywordReply handleGinniReply={this.props.handleGinniReply} data={response.data.keywords}/>)
-            } else {
-                ginniReply.push([< AssistantGinniTextReply text = {
-                        response.data.answer
-                    } />]);
+            if (response.data.resultArray) {
+                response.data.resultArray.forEach((item)=>{
+                  ginniReply.push(<AssistantGinniMixedReply handleGinniReply = {
+                    this.props.handleGinniReply
+                  }
+                  data = {
+                    item
+                  } />);
+                })
+            }
+            else if(response.data.foundNoAnswer){
+              ginniReply.push(<AssistantGinniTextReply text={response.data.foundNoAnswer}/>);
             }
             this.props.handleGinniReply(ginniReply);
         }).catch((error) => {

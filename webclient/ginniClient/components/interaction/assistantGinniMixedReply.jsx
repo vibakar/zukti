@@ -25,8 +25,10 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.props.handleGinniReply(ginniReply);
     }
     render() {
+        console.log(this.props.data);
         let text = this.props.data.textAnswer;
-
+        console.log(text);
+        console.log(this.props.data.textAnswer);
         return (
             <Feed id="ginniview">
                 <Feed.Event>
@@ -38,8 +40,8 @@ export default class AssistantGinniMixedReply extends React.Component {
                         </Feed.Extra>
                         <Feed.Extra>
                             <Label.Group color='blue'>
-                                <Label onClick={this.displayVideoUrl}>Videos</Label>
-                                <Label onClick={this.displayBlogUrl}>Blogs</Label>
+                                {this.props.data.videoUrl?<Label onClick={this.displayVideoUrl}>Videos</Label>:''}
+                                {this.props.data.blogUrl?<Label onClick={this.displayBlogUrl}>Blogs</Label>:''}
                             </Label.Group>
                         </Feed.Extra>
                         <Feed.Meta>
