@@ -30,10 +30,8 @@ import Cookie from 'react-cookie';
 
 injectTapEventPlugin();
 var requireAuth = function (nextState, replace) {
-
 var token = Cookie.load('token');
 console.log(token);
-console.log("Hello123");
   if (!token) {
     console.log("Hello");
     replace({

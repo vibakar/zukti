@@ -18,6 +18,7 @@ $.ajax({
       dataType: 'json',
       success: function(res) {
        Cookie.remove('authType');
+       Cookie.remove('username');
        Cookie.remove('token');
        hashHistory.push('/');
       }.bind(this),

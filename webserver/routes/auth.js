@@ -18,13 +18,18 @@ module.exports = function(app, passport) {
       failureRedirect : '/'
     }), (req, res)=> {
       res.cookie('token', req.user.token);
+      res.cookie('username',req.user.name);
       res.cookie('authType', req.user.authType);
       res.send(req.user)
     });
     //logout
     app.get('/signout', function(req, res) {
-       request=req.user.local.email;
+       //request=req.user.email;
         //newUser.loggedinStatus = false;
+        res.clearCookie('token');
+        res.clearCookie('authType');
+        res.clearCookie('username');
+        res.json({logout:"Successfully LogOut"});
         RegisteredUser.update({
             'local.email':req.user.local.email
         }, {
@@ -36,9 +41,6 @@ module.exports = function(app, passport) {
                 console.log("status not updated");
             } else {
               req.logout();
-        res.clearCookie('token');
-        res.clearCookie('authType');
-        res.json({logout:"Successfully LogOut"});
 
                 // res.send('Successfully Logged out');
             }
