@@ -12,8 +12,10 @@ let config = require('./webpack.config');
 let retriveChat = require('./webserver/routes/retriveChats/chats');
 let getLexicon = require('./webserver/lexicon/getLexicon');
 let intent = require('./webserver/routes/intent/intent');
+let concept = require('./webserver/routes/addnodeAndRelations/fetchConcepts');
 let addKnowledge = require('./webserver/routes/addKnowledge/question');
 let askQuestion = require('./webserver/routes/getReply/reply');
+let savequery = require('./webserver/routes/getReply/functions/saveanswer');
 let getAdmin = require('./webserver/routes/getAdmin/getadminUser');
 let savebroadcastmessage = require('./webserver/routes/broadcastmessage/broadcastmessage');
 let getbroadcastmessage = require('./webserver/routes/broadcastmessage/getbroadcastmessage');
@@ -81,9 +83,15 @@ app.use('/savebroadcastmessage',savebroadcastmessage);
 app.use('/getbroadcastmessage',getbroadcastmessage);
 app.use('/getadmin',getAdmin);
 app.use('/intent',intent);
+app.use('/concept',concept);
+
 app.use('/qa', addKnowledge);
 app.use('/question', askQuestion);
+
 app.use('/retriveChat',retriveChat)
+app.use('/savequery', savequery);
+
+
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     publicPath: config.output.publicPath,

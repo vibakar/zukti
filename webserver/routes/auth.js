@@ -17,7 +17,7 @@ module.exports = function(app, passport) {
     app.post('/login', passport.authenticate('local',{
       failureRedirect : '/'
     }), (req, res)=> {
-      res.cookie('token', req.user.token);
+      res.cookie('token', req.user);
       res.cookie('username',req.user.name);
       res.cookie('authType', req.user.authType);
       res.send(req.user)
@@ -400,6 +400,27 @@ module.exports = function(app, passport) {
                 }
             });
         }
+    });
+    //image for localstratergy
+    app.post('/uploadImage', function(req, res) {
+      console.log("vtg hjk")
+              imagename= req.body.data;
+              console.log(req.body.data);
+              console.log(req.user.local.email)
+            RegisteredUser.update({
+                'local.email': req.user.local.email
+            }, {
+                $set: {
+                    'local.photos': imagename
+                }
+            }, function(err) {
+                if (err) {
+                    res.send(err);
+                } else {
+                    res.send("Password changed Successfully");
+                }
+            });
+
     });
     // customer Information
     app.get('/clientinformation', function(req, res) {
