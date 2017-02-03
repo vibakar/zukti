@@ -11,11 +11,13 @@ router.post('/addQuestion', function(req, res) {
     let questionInfo = processQuestion(question);
     if (questionInfo.keywords.length === 0) {
         res.json({
-            hasKeywords: false
+            hasKeywords: false,
+            hasIntents: true
         });
     }
     else if (questionInfo.intents.length === 0) {
         res.json({
+            hasKeywords: true,
             hasIntents: false
         });
     }

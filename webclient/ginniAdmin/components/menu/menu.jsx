@@ -30,11 +30,6 @@ export default class SidebarBot extends Component {
         activeItem:'SetupAi'
       }
     }
-
-    onSubmitEmail() {
-        hashHistory.push('/adminprofile');
-    }
-
     handleItemClick = (e, {name}) => this.setState({activeItem: name})
     render() {
         const activeItem = this.state.activeItem;

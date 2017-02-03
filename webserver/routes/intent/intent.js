@@ -2,7 +2,7 @@ let express = require('express');
 let fetchBaseIntents = require('./functions/fetchBaseIntents');
 let fetchSameAsIntents = require('./functions/fetchSameAsIntents');
 let addNewSameAsIntent = require('./functions/addNewSameAsIntent');
-let CreateIntent=require('./functions/CreateIntent');
+let CreateIntent = require('./functions/CreateIntent');
 let router = express.Router();
 
 // route to all base intents e.g what why
@@ -31,12 +31,12 @@ router.post('/addNewSameAsIntent', function(req, res) {
     };
     addNewSameAsIntent(baseIntent, newSameAsIntent, resultCallback);
 });
-router.post('/createIntent',function(req,res){
-  let NewIntent=req.body.NewIntent;
-  let resultCallback=function(result){
-    res.json(result);
-  };
-  CreateIntent(NewIntent,resultCallback);
+router.post('/createIntent', function(req, res) {
+    let NewIntent = req.body.NewIntent;
+    let resultCallback = function(result) {
+        res.json(result);
+    };
+    CreateIntent(NewIntent, resultCallback);
 });
 
 

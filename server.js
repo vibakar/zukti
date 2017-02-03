@@ -22,6 +22,7 @@ let addnode=require('./webserver/routes/addNodeAndRelations/addNode');
 
 const configDB = require('./webserver/config/database');
 const requestAuthenticate = require('./webserver/middleware/requestAuthenticate');
+const uploadimage = require('./webserver/routes/uploadimage');
 
 
 
@@ -70,7 +71,8 @@ require('./webserver/routes/auth.js')(app, passport);
 // our routes will be given here
 // login routes
 
-
+//Ruotes
+app.use('/', uploadimage);
 
 //Routes
 
@@ -79,7 +81,8 @@ app.use('/getbroadcastmessage',getbroadcastmessage);
 app.use('/getadmin',getAdmin);
 app.use('/intent',intent);
 app.use('/qa', addKnowledge);
-app.use('/question', askQuestion)
+app.use('/question', askQuestion);
+
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     publicPath: config.output.publicPath,

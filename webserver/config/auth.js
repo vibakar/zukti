@@ -10,11 +10,12 @@ module.exports = {
         // your App Secret
         clientSecret: 'd67a4885fb5432cde046ed20d4921330',
         callbackURL: 'http://localhost:8080/auth/facebook/callback',
-        profileURL: 'https://graph.facebook.com/v2.5/me?fields=first_name,last_name,email'
+        profileFields:   ['id','displayName','photos','profileUrl','email']
     },
     GOOGLE: {
         clientID: '817685374121-vgaavs7b50glm4ggbbagi7nr3mmmkq2j.apps.googleusercontent.com',
         clientSecret: 'B4RT2VBrzThNLx7QCBtZg3ky',
-        callbackURL: 'http://localhost:8080/auth/google/callback'
+        callbackURL: 'http://localhost:8080/auth/google/callback',
+        profileFields:   ['id','displayName','photos','profileUrl','email']
     }
 };

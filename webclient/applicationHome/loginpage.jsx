@@ -13,6 +13,7 @@ import {hashHistory} from 'react-router';
 import './loginpage.css';
 import validator from 'validator';
 import FrontPage from '../ginniAdmin/components/home/home';
+import $ from 'jquery';
 import axios from 'axios';
 export default class LoginPage extends React.Component
 {
@@ -30,28 +31,8 @@ export default class LoginPage extends React.Component
     }
     // function to post login data to Server
     onSubmitLoginData(e, value) {
-        // console.log(value.formData);
+        console.log(value.formData);
         e.preventDefault();
-      /*  var self=this;
-        axios({
-            url: 'http://localhost:8080/login',
-            method: 'post',
-            data: {
-                email: value.formData.userName,
-                password: value.formData.password
-            }
-          }).then(function(response) {
-            if(response.data.type==='Admin') {
-               hashHistory.push('/adminHome');
-            }
-            else{
-              hashHistory.push('/clienthome');
-            }
-            }).catch(function(err) {
-                console.log(err);
-                self.setState({openSnackbar: true, snackbarMsg: err.responseText});
-        });
-}*/
 $.ajax({
             url: 'http://localhost:8080/login',
             type: 'POST',
@@ -60,8 +41,9 @@ $.ajax({
                 password: value.formData.password
             },
             success: function(response) {
-              console.log(response);
-              if(response.type==='Admin') {
+              console.log(":gcvg")
+              console.log(response)
+              if(response.localType ==='Admin') {
                  hashHistory.push('/adminHome');
               }
               else{

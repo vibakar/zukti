@@ -81,7 +81,7 @@ export default class ForgotPassword extends React.Component
     render() {
       const {active} = this.state;
         return (
-            <div style={{backgroundImage: "url('../../images/wall.jpg')", height: '100%'}}>
+            <div style={{backgroundImage: "url('../../images/intro-bg.jpg')", height: '100%'}}>
                 <br/><br/>
                 <Grid columns={3}>
                     <Grid.Column width={5}>
@@ -90,17 +90,17 @@ export default class ForgotPassword extends React.Component
                         }} secondary>
                             <Menu.Item>
                                 <h1 style={{
-                                    fontFamily: 'monospace'
-
+                                    fontFamily: 'monospace',
+                                    color:'white'
                                 }}>GENIE</h1>
                             </Menu.Item>
                             <Menu.Menu position='right'>
                                 <Menu.Item>
                                     <Button circular id='loginsignup'>
-                                        <a href="#/login" style={{color:'black'}}>Login</a>
+                                        <a href="#/login" style={{color:'white'}}>Login</a>
                                     </Button>
                                     &nbsp;&nbsp;<Button circular id='loginsignup'>
-                                        <a href="#/signup" style={{color:'black'}}>Signup</a>
+                                        <a href="#/signup" style={{color:'white'}}>Signup</a>
                                    </Button>
                                 </Menu.Item>
                             </Menu.Menu>
@@ -112,7 +112,7 @@ export default class ForgotPassword extends React.Component
                         </Header>
                         <Divider/>
                         <p id="textstyle">
-                            <h4>Just fill in your email and we'll help you reset your password.</h4>
+                            <h4 style={{color:'white'}}>Just fill in your email and we'll help you reset your password.</h4>
                         </p>
                         <Form onSubmit={this.onSubmitData}>
                             <Form.Field id="forgotfield">
