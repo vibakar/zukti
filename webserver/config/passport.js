@@ -56,7 +56,8 @@ module.exports = function(passport) {
                     userData.lastname = user.local.lastname;
                     userData.name = user.local.name;
                     userData.authType = user.local.authType;
-                      userData.localType = user.local.localType;
+                    userData.localType = user.local.localType;
+                    //userData.photos = user.local.photos.value;
                     userData.token = User.generateToken(userData.email);
                     console.log(userData._id);
                     User.update({
