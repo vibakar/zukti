@@ -9,7 +9,8 @@ import {
     Radio,
     Card,
     Grid,
-    Checkbox
+    Checkbox,
+    Dropdown,
 } from 'semantic-ui-react'
 
 import {Button, Icon} from 'semantic-ui-react';
@@ -23,12 +24,24 @@ export default class CreateNodeAndRelation extends React.Component {
 
     }
     state = {
+        options: [],
         node1val: '',
         node2val: '',
         relationval: ''
+
     }
 
-
+    componentDidMount() {
+        let url = Config.url + '/concept/baseConcepts';
+        Axios.get(url).then((response) => {
+            let baseConcepts = response.data.baseConcepts;
+            baseConcepts.forEach((baseConcept) => {
+                this.state.options.push({text: baseConcept, value: baseConcept});
+            });
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 
     createNodeAndRelation() {
         let node1 = ReactDOM.findDOMNode(this.refs.node1).value;
@@ -70,6 +83,10 @@ export default class CreateNodeAndRelation extends React.Component {
 
                                         <Card.Content><Card.Description>
                                             <input placeholder='Node Name' ref='node1'/>
+                                            <Input>
+                                                <Dropdown fluid options={this.state.options} placeholder='Concept'
+                                                search selection/>
+                                            </Input>
                                         </Card.Description></Card.Content>
 
 
