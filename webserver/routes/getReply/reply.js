@@ -3,7 +3,7 @@ let router = express.Router();
 let processQuestion = require('./functions/processQuestion');
 let getQuestionResponse = require('./functions/getQuestionResponse');
 let commonReply = require('./../../config/commonReply');
-let answerFoundReply = require('./../../config/answerFoundReply');
+let answerNotFoundReply = require('./../../config/answerNotFoundReply');
 let saveUnansweredQuery = require('./functions/saveUnansweredQuery');
 
 router.post('/askQuestion', function(req, res) {
@@ -11,23 +11,22 @@ router.post('/askQuestion', function(req, res) {
     let query = processQuestion(question.value.toLowerCase());
     let keywords = query.keywords;
     let intents = query.intents;
-    let questionResultCallback = function(finalResult) {
+    console.log(keywords);
+    let questionResultCallback = function(resultArray) {
         res.json({
-            answer: finalResult.textAnswer,
-            result: finalResult.otherResult
+            resultArray
         });
     };
     let noAnswerFoundCallback = function() {
         saveUnansweredQuery('v', question.value, keywords, intents);
         res.json({
-            answer: answerFoundReply[Math.floor(Math.random() * answerFoundReply.length)],
-            keywords: keywords
+            foundNoAnswer: answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)],
         });
     };
     if (keywords.length === 0) {
         saveUnansweredQuery('v', question.value);
         res.json({
-            answer: commonReply[Math.floor(Math.random() * commonReply.length)]
+            foundNoAnswer: commonReply[Math.floor(Math.random() * commonReply.length)]
         });
     } else {
         getQuestionResponse(intents, keywords, questionResultCallback, noAnswerFoundCallback);
