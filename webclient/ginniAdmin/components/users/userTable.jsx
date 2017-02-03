@@ -17,9 +17,8 @@ export default class UserTable extends React.Component
       axios({
       url: 'http://localhost:8080/viewall',
       method: 'GET'
-    }).then(function(msg) {
-    this.setState({ userinformation: msg.data});
-    console.log(this.state.userinformation);
+    }).then(function(response) {
+    this.setState({ userinformation: response.data});
 }.bind(this)).
     catch(function(err) {
         console.log(err);
@@ -35,10 +34,10 @@ return (
       <Card.Content>
         <Image floated='right' size='mini' src='http://semantic-ui.com/images/avatar/large/steve.jpg' />
         <Card.Header>
-        {newsdata.name}
+        {newsdata.local.name}
         </Card.Header>
         <Card.Meta>
-        {newsdata.email}
+        {newsdata.local.email}
         </Card.Meta>
       </Card.Content>
       <Card.Content extra>

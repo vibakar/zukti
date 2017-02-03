@@ -1,7 +1,7 @@
 module.exports = function(node1,node2,relation,propertykeynode1,propertyvaluenode1,propertykeynode2,propertyvaluenode2,propertykeyrelation,propertyvaluerelation,node1detail,node1propdetail,relationdetail,relationpropdetail,node2detail,node2propdetail,relationChecked) {
 
     var neo4j = require('neo4j-driver').v1;
-    var driver = neo4j.driver("bolt://192.168.1.207", neo4j.auth.basic("neo4j", "neo4js"));
+    var driver = neo4j.driver("bolt://192.168.56.1", neo4j.auth.basic("neo4j", "neo4js"));
     var query;
     var node1property;
     var node2property;

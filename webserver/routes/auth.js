@@ -1,45 +1,46 @@
-var RegisteredUser = require('../models/tempUserModel');
+var RegisteredUser = require('../models/user');
+var UnansweredQuery = require('../models/unansweredQuery');
 var nodemailer = require('nodemailer');
-var rand,
-    mailOptions,
-    host,
-    link;
+
 module.exports = function(app, passport) {
-    function isLoggedIn(req, res, next) {
+  var rand,
+      mailOptions,
+      host,
+      link;
 
-        // if user is authenticated in the session, carry on
-        if (req.isAuthenticated()) {
-            console.log("req is authenticated!");
-            return next();
-        }
-        console.log("not authen");
-        res.json({'logged': false});
-        // if they aren't redirect them to the home page
-        // res.redirect('/');
-    }
+      function isLoggedIn(req, res, next) {
+      if (req.isAuthenticated())
+          return next();
+      res.redirect('/#/');
+  }
 
-    // local login route
-    app.post('/login', passport.authenticate('local'), function(req, res) {
-        console.log(req.user);
-        res.send(req.user)
-
+    app.post('/login', passport.authenticate('local',{
+      failureRedirect : '/'
+    }), (req, res)=> {
+      res.cookie('token', req.user.token);
+      res.cookie('authType', req.user.authType);
+      res.send(req.user)
     });
     //logout
     app.get('/signout', function(req, res) {
-       request=req.user.email;
+       request=req.user.local.email;
         //newUser.loggedinStatus = false;
         RegisteredUser.update({
-            'email':request
+            'local.email':req.user.local.email
         }, {
             $set: {
-                'loggedinStatus': false
+                'local.loggedinStatus': false
             }
         }, function(err) {
             if (err) {
                 console.log("status not updated");
             } else {
-                res.send('Successfully Logged out');
-                  req.logout();
+              req.logout();
+        res.clearCookie('token');
+        res.clearCookie('authType');
+        res.json({logout:"Successfully LogOut"});
+
+                // res.send('Successfully Logged out');
             }
         });
     });
@@ -48,22 +49,21 @@ module.exports = function(app, passport) {
     app.post('/signup', function(req, res) {
         var newUser = new RegisteredUser();
         rand = Math.floor((Math.random() * 100) + 54);
-        newUser.verificationID = rand;
-        console.log(rand + '' + newUser.verificationID);
-        newUser.name = req.body.firstName + " " + req.body.lastName;
-        newUser.email = req.body.email;
-        newUser.password = req.body.password;
-        newUser.firstname = req.body.firstName;
-        newUser.lastname = req.body.lastName;
-
-        if (req.body.userType) {
-            newUser.type = 'Admin';
-        } else {
-            newUser.type = 'Customer';
-        }
-        newUser.verified = false;
-        newUser.loggedinStatus = false;
-        newUser.isEmailVerified = false;
+        console.log(rand);
+        console.log(req.body);
+        //console.log(RegisteredUser.local+"Registered");
+        //console.log(newUser.facebook.name+"newUser112121221");
+        newUser.local.verificationID = rand;
+        newUser.local.name = req.body.firstName + " " + req.body.lastName;
+        newUser.local.email = req.body.email;
+        newUser.local.password = req.body.password;
+        newUser.local.firstname = req.body.firstName;
+        newUser.local.lastname = req.body.lastName;
+        newUser.local.localType = 'Customer';
+        newUser.local.authType = 'local';
+        //console.log(newUser.local.type);
+        newUser.local.loggedinStatus = false;
+        newUser.local.isEmailVerified = false;
         newUser.save(function(err) {
             if (err) {
                 res.send('Error in registration');
@@ -76,37 +76,41 @@ module.exports = function(app, passport) {
     app.post('/adminsignup', function(req, res) {
         var newUser = new RegisteredUser();
         rand = Math.floor((Math.random() * 100) + 54);
-        newUser.name = req.body.firstName + " " + req.body.lastName;
-        newUser.email = req.body.email;
-        newUser.password = req.body.password;
-        newUser.firstname = req.body.firstName;
-        newUser.lastname = req.body.lastName;
-        newUser.type = req.body.type
-        newUser.isEmailVerified = true;
-        newUser.verificationID = rand;
+        newUser.local.name = req.body.firstName + " " + req.body.lastName;
+        newUser.local.email = req.body.email;
+        newUser.local.password = req.body.password;
+        newUser.local.firstname = req.body.firstName;
+        newUser.local.lastname = req.body.lastName;
+        newUser.local.localType = 'Admin';
+        newUser.local.isEmailVerified = true;
+        newUser.local.verificationID = rand;
+        newUser.local.authType = 'local';
         newUser.save(function(err) {
             if (err) {
                 res.send('Error in registration');
             } else {
-                res.send("Successfully registered");
+                res.send(newUser.local.email+"jjjjj"+newUser.local.type+" "+newUser.local.verificationID);
+                console.log(newUser.local.email+"jjjjj");
                 //res.send('registered');
-            }
-        });
-    });
-    app.get('/view', function(req, res) {
-        RegisteredUser.find({}, function(err, alldetails) {
-            if (err) {
-                res.send(err);
-                console.log('error ocuured');
-            } else {
-                res.send(alldetails);
             }
         });
     });
     //admin view the users
     app.get('/viewall', function(req, res) {
         RegisteredUser.find(
-          {'type':'Customer'}, function(err, alldetails) {
+          {'local.localType': 'Customer'}, function(err, alldetails) {
+            if (err) {
+                res.send(err);
+                console.log('error ocuured');
+            } else {
+              console.log(alldetails);
+                res.send(alldetails);
+            }
+        });
+    });
+    //view unanswered query
+    app.get('/viewquery', function(req, res) {
+        UnansweredQuery.find({}, function(err, alldetails) {
             if (err) {
                 res.send(err);
                 console.log('error ocuured');
@@ -114,12 +118,7 @@ module.exports = function(app, passport) {
                 res.send(alldetails);
             }
         });
-    });
-
-    app.get('/', function(req, res) {
-        res.sendfile('index.html');
-    });
-
+      });
     /*------------------Routing Started ------------------------*/
     /*------------------Verifiocation Mail send to the mail------------------------*/
     var host,
@@ -128,7 +127,7 @@ module.exports = function(app, passport) {
     app.post('/send', function handleSayHello(req, res) {
         console.log(req.body.data);
         RegisteredUser.find({
-            email: req.body.data
+            'local.email': req.body.data
         }, function(err, profile) {
 
             if (err) {
@@ -150,11 +149,11 @@ module.exports = function(app, passport) {
 
                 host = req.get('host');
                 console.log(profile);
-                link = "http://" + req.get('host') + "/verify?id=" + profile[0].verificationID + "&email=" + profile[0].email;
+                link = "http://" + req.get('host') + "/verify?id=" + profile[0].local.verificationID + "&email=" + profile[0].local.email;
                 var text = 'Hello from \n\n' + req.body.data;
                 mailOptions = {
                     from: 'geniegenie0001@gmail.com', // sender address
-                    to: profile[0].email, // list of receivers
+                    to: profile[0].local.email, // list of receivers
                     subject: 'Verification Email', // Subject line
                     text: text,
                     html: "Welcome to Genie ,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
@@ -178,7 +177,7 @@ module.exports = function(app, passport) {
     /*verify the link which sent to  user email*/
     app.get('/verify', function(req, res) {
         RegisteredUser.find({
-            email: req.query.email
+            'local.email': req.query.email
         }, function(err, profile) {
 
             if (err) {
@@ -188,14 +187,14 @@ module.exports = function(app, passport) {
                 console.log(req.protocol + ":/" + req.get('host') + ":" + ("http://" + host));
                 if ((req.protocol + "://" + req.get('host')) == ("http://" + host)) {
                     console.log("Domain is matched. Information is from Authentic email");
-                    if (req.query.id == profile[0].verificationID) {
+                    if (req.query.id == profile[0].local.verificationID) {
                         console.log("email is verified");
                         RegisteredUser.update({
-                            email: req.query.email
+                            'local.email': req.query.email
                         }, {
                             $set: {
-                                isEmailVerified: true,
-                                verificationID: 0
+                                'local.isEmailVerified': true,
+                                'local.verificationID': 0
                             }
                         }, function(err) {
                             if (err) {
@@ -204,7 +203,7 @@ module.exports = function(app, passport) {
                                 console.log("Account Verified and Changed to true");
                             }
                         });
-                        res.redirect('/#/clienthome');
+                        res.redirect('/#/successfullyregistered');
                     } else {
                         console.log("email is not verified");
                         //res.end("<h1>Link expired</h1>");
@@ -220,10 +219,10 @@ module.exports = function(app, passport) {
     app.post('/forgetpassword', function password(req, res) {
         rand = Math.floor((Math.random() * 100) + 54);
         RegisteredUser.update({
-            email: req.body.email
+            'local.email': req.body.email
         }, {
             $set: {
-                verificationID: rand
+                'local.verificationID': rand
             }
         }, function(err) {
             if (err) {
@@ -235,7 +234,7 @@ module.exports = function(app, passport) {
         });
         console.log(req.body.email);
         RegisteredUser.find({
-            email: req.body.email
+            'local.email': req.body.email
         }, function(err, profile) {
             if (err) {
                 res.send(err);
@@ -254,10 +253,10 @@ module.exports = function(app, passport) {
                     }
                 });
                 host = req.get('host');
-                link = "http://" + req.get('host') + "/newPassword?id=" + rand + "&email=" + profile[0].email;
+                link = "http://" + req.get('host') + "/newPassword?id=" + rand + "&email=" + profile[0].local.email;
                 mailOptions = {
                     from: 'geniegenie0001@gmail.com', // sender address
-                    to: profile[0].email, // list of receivers
+                    to: profile[0].local.email, // list of receivers
                     subject: 'Verification Email from Genie', // Subject line
                     html: "Forgot Password,<br> Please Click on the link to set new password.<br><a href=" + link + ">Click here to change password</a>"
                 };
@@ -279,13 +278,13 @@ module.exports = function(app, passport) {
     /*verify the link which sent to  user email for forgotpassword*/
     app.get('/newPassword', function(req, res) {
         RegisteredUser.find({
-            email: req.query.email
+            'local.email': req.query.email
         }, function(err, profile) {
             if (err) {
                 res.send(err);
                 console.log('error occured');
             } else {
-                if (profile[0].verificationID != 0) {
+                if (profile[0].local.verificationID != 0) {
                     res.redirect('/#/newpassword?id=' + req.query.id);
                 } else {
                     console.log("email is not verified");
@@ -297,7 +296,7 @@ module.exports = function(app, passport) {
     });
     app.post('/updatepassword', function(req, res) {
         RegisteredUser.find({
-            verificationID: req.body.id
+            'local.verificationID': req.body.id
         }, function(err, profile) {
             if (err) {
                 res.send(err);
@@ -307,15 +306,15 @@ module.exports = function(app, passport) {
                 if ((req.protocol + "://" + req.get('host')) == ("http://" + host)) {
                     console.log("Domain is matched. Information is from Authentic email");
                     console.log("req.body.id" + req.body.id);
-                    console.log("verificationId" + profile[0].verificationID);
-                    if (profile[0].verificationID != 0) {
+                    console.log("verificationId" + profile[0].local.verificationID);
+                    if (profile[0].local.verificationID != 0) {
                         console.log("email is verified");
                         RegisteredUser.update({
-                            verificationID: req.body.id
+                            'local.verificationID': req.body.id
                         }, {
                             $set: {
-                                password: req.body.pass,
-                                verificationID: 0
+                                'local.password': req.body.pass,
+                                'local.verificationID': 0
                             }
                         }, function(err) {
                             if (err) {
@@ -339,7 +338,7 @@ module.exports = function(app, passport) {
     //check whether the user already exists or not during signup
     app.post('/checkuser', function(req, res) {
         RegisteredUser.find({
-            email: req.body.email
+            'local.email': req.body.email
         }, function(err, profile) {
             if (profile.length) {
                 console.log(req.body.email);
@@ -364,12 +363,12 @@ module.exports = function(app, passport) {
             request3 = req.body.firstname;
             request4 = req.body.lastname;
             RegisteredUser.update({
-                'email': request1
+                'local.email': request1
             }, {
                 $set: {
-                    'name': request2,
-                    'firstname': request3,
-                    'lastname': request4
+                    'local.name': request2,
+                    'local.firstname': request3,
+                    'local.lastname': request4
                 }
             }, function(err) {
                 if (err) {
@@ -386,10 +385,10 @@ module.exports = function(app, passport) {
             request1 = req.body.email;
             request2 = req.body.password;
             RegisteredUser.update({
-                'email': request1
+                'local.email': request1
             }, {
                 $set: {
-                    'password': request2
+                    'local.password': request2
                 }
             }, function(err) {
                 if (err) {
@@ -402,10 +401,12 @@ module.exports = function(app, passport) {
     });
     // customer Information
     app.get('/clientinformation', function(req, res) {
-        let email = req.user.email;
+        let email = req.user.local.email;
+        console.log(email);
         RegisteredUser.find({
-            'email': email
+            'local.email': email
         }, function(err, profile) {
+          console.log(profile)
             res.send(profile);
             if (err) {
                 res.send(err);
@@ -418,33 +419,41 @@ module.exports = function(app, passport) {
     // *******************************************
     // send to facebook to do the authentication
 
-    app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
+    app.get('/auth/facebook', passport.authenticate('facebook', { session: false, scope : 'email' }),(req, res) =>
+      {
+            res.json(req.user);
+      });
 
-    // handle the callback after facebook has authenticated the user
-    app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-        successRedirect: '/#/clienthome',
-        failureRedirect: '/#/'
-    }));
+      // handle the callback after facebook has authenticated the user
+          app.get('/auth/facebook/callback',
+              passport.authenticate('facebook', {
+                  failureRedirect : '/#/'
+              }), (req, res) => {
+                res.cookie('token', req.user.facebook.token);
+                res.cookie('authType', req.user.facebook.authType);
+                res.redirect('/#/clienthome');
+              });
 
-    app.get('/userinfo', function(req, res) {
-        res.send({displayName: req.user.facebook.name, email: req.user.facebook.email, token: req.user.facebook.token})
-    });
-
+          app.get('/userProfile',function(req, res){
+            console.log(req.user);
+            res.json({user:req.user});
+          });
     // *******************************************
     // Google authentication routes
     // *******************************************
     //  send to google to do the authentication
-    app.get('/auth/google', passport.authorize('google', {
-        scope: ['profile', 'email']
-    }));
+    app.get('/auth/google', passport.authenticate('google', { session: false, scope : [ 'email'] }),(req, res) =>
+      {
+            res.json(req.user);
+      });
 
     // the callback after google has authorized the user
-    app.get('/auth/google/callback', passport.authenticate('google', {
-        successRedirect: '/#/clienthome',
-        failureRedirect: '/#/'
-    }));
-    /*    app.get('/userinformation', function(req, res) {
-      console.log(req.user);
-        res.send({displayName: req.user.name, email: req.user.email})
-    }); */
-}
+    app.get('/auth/google/callback',
+              passport.authenticate('google', {
+                  failureRedirect : '/#/'
+              }), (req, res) => {
+                res.cookie('token', req.user.google.token);
+                res.cookie('authType', req.user.google.authType);
+                res.redirect('/#/clienthome');
+              });
+};
