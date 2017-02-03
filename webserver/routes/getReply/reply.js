@@ -12,7 +12,7 @@ router.post('/askQuestion', function(req, res) {
     let keywords = query.keywords;
     let intents = query.intents;
     console.log(keywords);
-    let questionResultCallback = function(resultArray) {
+    let answerFoundCallback = function(resultArray) {
         res.json({
             resultArray
         });
@@ -29,7 +29,7 @@ router.post('/askQuestion', function(req, res) {
             foundNoAnswer: commonReply[Math.floor(Math.random() * commonReply.length)]
         });
     } else {
-        getQuestionResponse(intents, keywords, questionResultCallback, noAnswerFoundCallback);
+        getQuestionResponse(intents, keywords, answerFoundCallback, noAnswerFoundCallback);
     }
 });
 
