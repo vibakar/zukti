@@ -1,4 +1,5 @@
 var RegisteredUser = require('../models/user');
+var UnansweredQuery = require('../models/unansweredQuery');
 var nodemailer = require('nodemailer');
 
 module.exports = function(app, passport) {
@@ -16,11 +17,9 @@ module.exports = function(app, passport) {
     app.post('/login', passport.authenticate('local',{
       failureRedirect : '/'
     }), (req, res)=> {
-      console.log(req.user.token);
-      console.log(req.user.authType);
       res.cookie('token', req.user.token);
       res.cookie('authType', req.user.authType);
-        res.send(req.user)
+      res.send(req.user)
     });
     //logout
     app.get('/signout', function(req, res) {
@@ -109,6 +108,17 @@ module.exports = function(app, passport) {
             }
         });
     });
+    //view unanswered query
+    app.get('/viewquery', function(req, res) {
+        UnansweredQuery.find({}, function(err, alldetails) {
+            if (err) {
+                res.send(err);
+                console.log('error ocuured');
+            } else {
+                res.send(alldetails);
+            }
+        });
+      });
     /*------------------Routing Started ------------------------*/
     /*------------------Verifiocation Mail send to the mail------------------------*/
     var host,

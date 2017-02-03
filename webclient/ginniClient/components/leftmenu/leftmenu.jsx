@@ -98,8 +98,13 @@ export default class LeftMenu extends Component {
                     </Menu.Item>
                     <Menu.Item name='Unanswered Queries' active={activeItem === 'Unanswered Queries'} onClick={this.handleItemClick}>
                         <Icon name='help' color='teal'/>
-                        Unanswered Queries
-                    </Menu.Item><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                      Unanswered Queries
+                    </Menu.Item>
+                    <Menu.Item name='notifications' active={activeItem === 'notifications'} onClick={this.handleItemClick}>
+                        <Icon name='help' color='teal'/>
+                      notifications
+                    </Menu.Item>
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
                     <Menu.Item name='LogOut' active={activeItem === 'LogOut'} onClick={this.handleItemClick}>
                         <a href='#/logout'><Icon name='sign out' color='teal'/>
                             LogOut</a>

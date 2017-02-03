@@ -53,6 +53,7 @@
     "semantic-ui": "^2.2.7",
     "semantic-ui-css": "^2.2.4",
     "semantic-ui-react": "^0.63.5",
+    "socket.io": "^1.7.2",
     "tinyreq": "^3.2.0",
     "validator": "^6.2.1"
   },

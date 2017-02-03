@@ -72,6 +72,7 @@ module.exports = function(passport) {
                             console.log("LoginStatus updated Successfully");
                         }
                     });
+                    console.log(userData);
                     return done(null, userData);
                 }
             });

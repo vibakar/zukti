@@ -14,11 +14,15 @@ let intent = require('./webserver/routes/intent/intent');
 let addKnowledge = require('./webserver/routes/addKnowledge/question');
 let askQuestion = require('./webserver/routes/getReply/reply');
 let getAdmin = require('./webserver/routes/getAdmin/getadminUser');
+let savebroadcastmessage = require('./webserver/routes/broadcastmessage/broadcastmessage');
+let getbroadcastmessage = require('./webserver/routes/broadcastmessage/getbroadcastmessage');
 let app = express();
 let compiler = webpack(config);
 const configDB = require('./webserver/config/database');
 const requestAuthenticate = require('./webserver/middleware/requestAuthenticate');
 const uploadimage = require('./webserver/routes/uploadimage');
+
+
 
 // Mongoose
 // pass passport for configuration
@@ -65,10 +69,13 @@ require('./webserver/routes/auth.js')(app, passport);
 // our routes will be given here
 // login routes
 
-
-
 //Ruotes
 app.use('/', uploadimage);
+
+//Routes
+
+app.use('/savebroadcastmessage',savebroadcastmessage);
+app.use('/getbroadcastmessage',getbroadcastmessage);
 app.use('/getadmin',getAdmin);
 app.use('/intent',intent);
 app.use('/qa', addKnowledge);
@@ -90,10 +97,21 @@ app.use(webpackHotMiddleware(compiler));
 
 
 //Listening to port 8080
-app.listen(8080, '0.0.0.0', function(err, result) {
+var server=app.listen(8080, '0.0.0.0', function(err, result) {
     if (err) {
         console.error("Error ", err);
     }
 
     console.log("Server started at 8080");
+});
+
+
+
+let io = require('socket.io')(server);
+// socket.io demo
+io.on('connection', function (socket) {
+  socket.emit('server event', { foo: 'bar' });
+  socket.on('client event', function (data) {
+    socket.broadcast.emit('update label', data);
+  });
 });

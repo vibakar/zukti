@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const unansweredQuerySchema = mongoose.Schema({
     user: String,
-    question: String,
+    question:{type: String, required: true, unique: true},
     keywords: Array,
     intents: Array
 });
