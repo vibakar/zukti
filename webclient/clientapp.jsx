@@ -22,6 +22,7 @@ import ForgetpasswordEmail from './applicationHome/forgetpasswordEmail';
 import SentMailPage from './applicationHome/SentMailPage';
 import ExpiryLink from './applicationHome/expiryLink';
 import AdminProfilePage from './ginniAdmin/components/admin/adminprofile';
+import Addnode from './ginniAdmin/components/buildNodeAndRelationship/createNodeAndRelation.jsx';
 
 
 injectTapEventPlugin();
@@ -60,7 +61,8 @@ ReactDOM.render(
         <Route path='/logout' component={Logout} onEnter={requireAuth.bind(this)}/>
         <Route path='/log' component={LogoutAdmin} onEnter={requireAuth.bind(this)}/>
         <Route path='/expiryLink' component={ExpiryLink}/>
-        
+        <Route path='/addnode' component={Addnode}/>
+
 
     </Router>
 </MuiThemeProvider>, document.getElementById('mountapp'));
