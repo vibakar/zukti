@@ -26,6 +26,7 @@ export default class Notifications extends React.Component {
           let msg = {};
           msg.type = data.type;
           msg.text = data.value;
+          msg.date = new Date().toLocaleString();
           this.state.message.push(msg);
           this.setState({message:this.state.message});
         });
@@ -33,7 +34,7 @@ export default class Notifications extends React.Component {
     }
     render() {
 
-      let messages = this.state.message.map((msg,index)=> <Notificationfeed key={index} feed={msg.text} type={msg.type} />);
+      let messages = this.state.message.reverse().map((msg,index)=> <Notificationfeed key={index} feed={msg.text} type={msg.type} date={msg.date}/>);
       return (
         <div>
         {messages}

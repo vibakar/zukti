@@ -16,7 +16,7 @@ export default class Notificationfeed extends React.Component {
             <Feed>
                 <Feed.Label image='http://semantic-ui.com/images/avatar/small/joe.jpg'/>
                 <Feed.Content>
-                <Feed.Summary date={new Date().toLocaleString()}/>
+                <Feed.Summary date={this.props.date}/>
                     <Feed.Summary>
                         <a>Arpit</a>
                         <Feed.Extra text>
