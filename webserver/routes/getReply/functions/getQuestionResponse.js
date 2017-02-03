@@ -37,7 +37,7 @@ module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundC
                     answerObj.time = new Date().toLocaleString();
                     answerObj.textAnswer=field.properties.textAnswer;
                     answerObj.videoUrl=field.properties.videoAnswer;
-                    answerObj.blogAnswer=field.properties.blogAnswer;
+                    answerObj.blogUrl=field.properties.blogAnswer;
                     return answerObj;
                 }
               );

@@ -8,7 +8,7 @@ export default class AssistantGinniMixedReply extends React.Component {
     // props validation
     static propTypes = {
         handleGinniReply: React.PropTypes.func.isRequired,
-        data: React.PropTypes.object
+        data: React.PropTypes.object.isRequired
     };
     constructor(props) {
         super(props);
@@ -17,6 +17,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.displayBlogUrl = this.displayBlogUrl.bind(this);
     }
     displayVideoUrl() {
+        console.log(this.props.data);
         let ginniReply = [<AssistantGinniVideoDisplay message='Here are some videos' url={this.props.data.videoUrl}/>];
         this.props.handleGinniReply(ginniReply);
     }
@@ -37,8 +38,8 @@ export default class AssistantGinniMixedReply extends React.Component {
                         </Feed.Extra>
                         <Feed.Extra>
                             <Label.Group color='blue'>
-                                {this.props.data.videoUrl?<Label onClick={this.displayVideoUrl}>Videos</Label>:''}
                                 {this.props.data.blogUrl?<Label onClick={this.displayBlogUrl}>Blogs</Label>:''}
+                                {this.props.data.videoUrl?<Label onClick={this.displayVideoUrl}>Videos</Label>:''}
                             </Label.Group>
                         </Feed.Extra>
                         <Feed.Meta>

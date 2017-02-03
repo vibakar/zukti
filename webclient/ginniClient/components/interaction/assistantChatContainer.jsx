@@ -57,7 +57,7 @@ export default class AssistantChatContainer extends React.Component {
                     let length = this.state.messages.length;
                     this.state.messages.push(
                         <div ref={(ref) => this['_div' + length] = ref} key={length}>
-                            <AssistantGinniMixedReply data={reply}/>
+                            <AssistantGinniMixedReply data={reply} handleGinniReply={this.pushGinniMessages}/>
                         </div>
                     );
                 });
@@ -68,10 +68,8 @@ export default class AssistantChatContainer extends React.Component {
         });
     }
     pushGinniMessages(ginniReply) {
-
         ginniReply.forEach((reply) => {
             let length = this.state.messages.length;
-            console.log(index + 'gin reply');
             let displayItem = (
                 <div ref={(ref) => this['_div' + length] = ref} key={length}>
                     {reply}
@@ -82,7 +80,6 @@ export default class AssistantChatContainer extends React.Component {
         this.setState({messages: this.state.messages});
     }
     pushUserMessages(message) {
-        console.log(message);
         let length = this.state.messages.length;
         let userMessageDisplay = (
             <div ref={(ref) => this['_div' + length] = ref} key={length}>
