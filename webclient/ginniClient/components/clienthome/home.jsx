@@ -8,7 +8,6 @@ export default class ClientHome extends React.Component {
 
     handleLogout()
     {
-
       $.ajax({
             type: 'GET',
             url:"http://localhost:8080/signout",
@@ -22,7 +21,6 @@ export default class ClientHome extends React.Component {
               console.log("error",err);
             }.bind(this)
          });
-
     }
     onSubmitEmail() {
         hashHistory.push('/chat')

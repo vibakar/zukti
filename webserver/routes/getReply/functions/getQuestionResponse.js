@@ -34,6 +34,7 @@ module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundC
             } else {
                 let resultArray = result.records[0]._fields[0].map((field)=>{
                     let answerObj = {};
+                    answerObj.time = new Date().toLocaleString();
                     answerObj.textAnswer=field.properties.textAnswer;
                     answerObj.videoUrl=field.properties.videoAnswer;
                     answerObj.blogAnswer=field.properties.blogAnswer;

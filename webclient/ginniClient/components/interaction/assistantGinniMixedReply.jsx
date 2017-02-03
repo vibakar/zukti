@@ -34,7 +34,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                 <Feed.Event>
                     <Feed.Label image='https://unnecessarynewsfromearth.files.wordpress.com/2016/11/computer-bot.jpg?w=700'/>
                     <Feed.Content>
-                        <Feed.Summary date={new Date().toLocaleString()} user='Genie'/>
+                        <Feed.Summary date={this.props.data.time} user='Genie'/>
                         <Feed.Extra text>
                             {text}
                         </Feed.Extra>

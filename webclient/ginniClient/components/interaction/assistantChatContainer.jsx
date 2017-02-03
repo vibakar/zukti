@@ -4,27 +4,38 @@ import AssistantUserView from './assistantUserView';
 import {Scrollbars} from 'react-custom-scrollbars';
 import InputUserMessage from './inputUserMessage';
 import {Menu, Icon, Input} from 'semantic-ui-react';
+import Cookie from 'react-cookie';
+import Axios from 'axios';
+import AssistantGinniMixedReply from './assistantGinniMixedReply';
+import Config from '../../../../config/url';
 import './chatcontainerstyle.css';
 export default class AssistantChatContainer extends React.Component {
 
     constructor() {
         super();
         this.state = {
-            messages: []
+            messages: [],
+            username:'User'
         };
+        this.retriveChat = this.retriveChat.bind(this);
         // to display ginni messages
         this.pushGinniMessages = this.pushGinniMessages.bind(this);
         // to display user messages
         this.pushUserMessages = this.pushUserMessages.bind(this);
     }
     componentDidMount() {
-
         // Scroll to the bottom on initialization
+        let username = Cookie.load('username');
+        if(username){
+          this.state.username=username;
+        }
+        console.log(username);
         var len = this.state.messages.length - 2;
         const node = ReactDOM.findDOMNode(this['_div' + len]);
         if (node) {
             node.scrollIntoView();
         }
+
     }
 
     componentDidUpdate() {
@@ -34,6 +45,18 @@ export default class AssistantChatContainer extends React.Component {
         if (node) {
             node.scrollIntoView();
         }
+    }
+    retriveChat(){
+      let url = Config.url+'/retriveChat';
+      Axios.get(url).
+      then((response)=>{
+        console.log(response.data);
+        return(response.data);
+      }).
+      catch((err)=>{
+        alert('ERROR IN FETCHING CHATS')
+        console.log(err);
+      });
     }
     pushGinniMessages(ginniReply) {
 
@@ -53,7 +76,7 @@ export default class AssistantChatContainer extends React.Component {
         let index = this.state.messages.length - 1;
         let userMessageDisplay = (
             <div key={index}>
-                <AssistantUserView msgDate={message.date} userName={message.user} userMessage={message.value}/>
+                <AssistantUserView msgDate={message.time} userName={this.state.username} userMessage={message.value}/>
             </div>
         );
         this.state.messages.push(userMessageDisplay);
