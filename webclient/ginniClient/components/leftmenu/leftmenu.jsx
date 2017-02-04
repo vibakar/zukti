@@ -18,10 +18,11 @@ import {
     Label,
     Dropdown
 } from 'semantic-ui-react';
-import axios from 'axios';
+import Axios from 'axios';
 import $ from 'jquery';
 import Cookie from 'react-cookie';
 import {hashHistory} from 'react-router';
+import Config from '../../../../config/url';
 import './leftmenu.css';
 export default class LeftMenu extends Component {
     constructor(props) {
@@ -36,17 +37,32 @@ export default class LeftMenu extends Component {
             counter: 0
         }
         this.onSubmitEmail = this.onSubmitEmail.bind(this);
+        this.getNotificationCount = this.getNotificationCount.bind(this);
         this.getUserInformation = this.getUserInformation.bind(this);
     }
     componentDidMount() {
         this.getUserInformation();
+        this.getNotificationCount();
         let socket = io();
         console.log('Hiiii');
         socket.on('update label', (data) => {
             console.log(data);
-            this.state.counter = data.notificationcount;
+            this.state.counter = this.state.counter + 1;
             this.setState({counter: this.state.counter});
         });
+    }
+    getNotificationCount(){
+      let url =Config.url+'/getbroadcastmessage/count';
+      console.log(url);
+      Axios.get(url).
+      then((response)=>{
+        console.log(response);
+        this.setState({counter:response.data.count});
+      }).
+      catch((error)=>{
+        console.log(error);
+        alert('error in getting notification count');
+      })
     }
     getUserInformation() {
         $.ajax({
