@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import Content from '../sideBarPusherContent/content';
-//import TopMenuBot from './topmenubot';import ClientProfile from '../clientprofile/clientprofile';
-import adminProfile from '../admin/adminprofile';
 import {
     Sidebar,
     Segment,
@@ -17,8 +15,6 @@ import {
     Card,
     Feed
 } from 'semantic-ui-react';
-import axios from 'axios';
-import {hashHistory} from 'react-router';
 import './menu.css';
 import TopMenuBot from './topmenubot';
 export default class SidebarBot extends Component {

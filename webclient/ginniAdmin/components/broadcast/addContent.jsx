@@ -10,7 +10,6 @@ export default class AddContent extends React.Component {
   };
     constructor(props) {
         super(props);
-
     }
 
     //to handle text data
@@ -62,7 +61,6 @@ export default class AddContent extends React.Component {
         ReactDOM.findDOMNode(this.refs.blog).value = '';
         var socket = io();
         socket.emit('client event', { value: blogUrl,type :type, notificationcount: this.state.counter});
-
 
         let url = Config.url + '/savebroadcastmessage';
         axios.post(url,{message:blogUrl,type:type,date:(new Date().toLocaleString())}).then((response)=>{

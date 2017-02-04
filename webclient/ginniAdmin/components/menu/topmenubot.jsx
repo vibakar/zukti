@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import Axios from 'axios';
 import $ from 'jquery';
 import Cookie from 'react-cookie';
 import {hashHistory} from 'react-router';
@@ -23,21 +23,20 @@ export default class TopMenuBot extends React.Component {
     }
   }
   componentDidMount() {
-    $.ajax({
+    let self=this;
+    Axios({
         url: "http://localhost:8080/userProfile",
-        type: 'GET',
-        dataType: 'json',
-        success: function(res) {
-            var authType = Cookie.load("authType");
-            console.log(authType+"hv");
-            if (authType == "local") {
-                this.setState({name: res.user.local.name, email: res.user.local.email, photo: res.user.local.photos, usertype: true});
-            }
-        }.bind(this),
-        error: function(err) {
-            console.log("error", err);
-        }.bind(this)
-    });
+        method: 'GET',
+        data: 'json'
+      }).then(function (response) {
+        let authType = Cookie.load("authType");
+        if (authType == "local") {
+            self.setState({name: response.data.user.local.name, email: response.data.user.local.email, photo: response.data.user.local.photos, usertype: true});
+        }
+      })
+       .catch(function (error) {
+            console.log("error", error);
+      });
   }
   onSubmitEmail() {
       hashHistory.push('/adminprofile')

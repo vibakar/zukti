@@ -1,8 +1,8 @@
 import validator from 'validator';
 import React from 'react';
-import axios from 'axios';
+import Axios from 'axios';
 import {hashHistory} from 'react-router';
-import {Button, Form, Divider, Icon,Dimmer,Header,Loader,Image} from 'semantic-ui-react';
+import {Button, Form, Divider, Icon, Dimmer, Header, Image} from 'semantic-ui-react';
 import './newpassword.css';
 
 export default class NewPassword extends React.Component {
@@ -24,17 +24,17 @@ export default class NewPassword extends React.Component {
     // update the password in database
     onSubmitData(e, value) {
       e.preventDefault();
-        axios({
+        Axios({
             url: ' http://localhost:8080/updatepassword',
             method: 'post',
             data: {
                 id: this.props.location.query.id,
                 pass: value.formData.password
             }
-          }).then(function(msg) {
+          }).then(function(response) {
                 hashHistory.push('/login');
             }).
-            catch(function(err) {
+            catch(function(error) {
                 // alert('check the details');
             });
     }
@@ -42,11 +42,11 @@ export default class NewPassword extends React.Component {
     ChangePassword = (event) => {
         this.setState({password: event.target.value});
         // console.log(event.target.value);
-        var points = event.target.value.length;
-        var password_info = event.target.value;
-        var has_letter = new RegExp('[a-z]');
-        var has_caps = new RegExp('[A-Z]');
-        var has_numbers = new RegExp('[0-9]');
+        let points = event.target.value.length;
+        let password_info = event.target.value;
+        let has_letter = new RegExp('[a-z]');
+        let has_caps = new RegExp('[A-Z]');
+        let has_numbers = new RegExp('[0-9]');
         if (has_letter.test(password_info) && points >= 6 && has_caps.test(password_info) && has_numbers.test(password_info)) {
             this.setState({errorpassword: false});
             this.setState({errormessagepassword: false});
@@ -71,7 +71,7 @@ export default class NewPassword extends React.Component {
     render() {
       const {active} = this.state;
         return (
-            <div id='newpassword' style={{backgroundImage:"url('../../images/intro-bg.jpg')"}}>
+            <div id='newpassword' style={{backgroundImage: "url ('../../images/intro-bg.jpg')"}}>
                 <br/><br/><br/><br/><br/><br/><br/>
                   <Form onSubmit={this.onSubmitData} >
                     <Form.Field >
