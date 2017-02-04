@@ -1,10 +1,8 @@
 let nlp = require('nlp_compromise');
-
+let fs = require('fs');
 module.exports = function(sentence) {
     let keywordLexicon = require('../../../lexicon/keywordLexicon.json');
     let intentLexicon = require('../../../lexicon/intentLexicon.json');
-
-
     //  console.log(intentLexicon);
     let str = nlp.text(sentence);
     // split str into individual words

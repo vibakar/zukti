@@ -4,6 +4,7 @@ import TopMenu from '../leftmenu/topmenu';
 import DefaultPage from './defaultpageclient';
 import AssistanView from '../interaction/assistantChatContainer';
 import Notifications from '../notification/notifications';
+import SavedQuery from '../savedquery/savedquery';
 export default class LeftMenuContent extends React.Component {
     constructor(props) {
         super(props);
@@ -25,7 +26,7 @@ export default class LeftMenuContent extends React.Component {
 
             case 'SavedQueries':
                 {
-                    return <TopMenu/>
+                    return <SavedQuery/>
                 }
             case 'Unanswered Queries':
                 {

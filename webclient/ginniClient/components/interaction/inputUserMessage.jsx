@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Form} from 'semantic-ui-react';
 import Axios from 'axios';
-import AssistantGinniTextReply from './assisantGinniTextReply';
 import AssistantGinniMixedReply from './assistantGinniMixedReply';
 import Config from '../../../../config/url';
 export default class InputUserMesaage extends React.Component {
@@ -16,14 +15,14 @@ export default class InputUserMesaage extends React.Component {
         let message = {};
         let ginniReply = [];
         message.value = ReactDOM.findDOMNode(this.refs.userInput).value;
-        message.date = new Date().toLocaleString();
-        message.user = 'Zen';
+        message.time = new Date().toLocaleString();
         this.props.handlerUserReply(message);
         ReactDOM.findDOMNode(this.refs.userInput).value = ''
         let url = Config.url + '/question/askQuestion';
         Axios.post(url, {question: message}).then((response) => {
-            if (response.data.resultArray) {
-                response.data.resultArray.forEach((item)=>{
+            console.log(response);
+            if (response.data) {
+                response.data.forEach((item)=>{
                   ginniReply.push(<AssistantGinniMixedReply handleGinniReply = {
                     this.props.handleGinniReply
                   }
@@ -32,10 +31,7 @@ export default class InputUserMesaage extends React.Component {
                   } />);
                 })
             }
-            else if(response.data.foundNoAnswer){
-              ginniReply.push(<AssistantGinniTextReply text={response.data.foundNoAnswer}/>);
-            }
-            this.props.handleGinniReply(ginniReply);
+          this.props.handleGinniReply(ginniReply);
         }).catch((error) => {
             console.log(error);
         });

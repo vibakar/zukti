@@ -12,7 +12,8 @@ import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import validator from 'validator';
 import './clientprofile.css';
-var request = require('superagent');
+//import $ from 'jquery';
+const request = require('superagent');
 
 export default class ClientProfile extends React.Component
 {
@@ -22,11 +23,13 @@ export default class ClientProfile extends React.Component
             allFiles: [],
             email: '',
             firstname: '',
-            lastname:''
+            lastname:'',
+            photo:''
         };
         this.OnSubmitData = this.OnSubmitData.bind(this);
         this.show = this.show.bind(this);
         this.onDrop = this.onDrop.bind(this);
+        this.saveImage=this.saveImage.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
     };
 onDrop(files)
@@ -36,17 +39,17 @@ onDrop(files)
               });
 
        this.setState({ allFiles: this.state.allFiles});
-        console.log(this.state.allFiles);
+        console.log(this.state.allFiles[0].name);
     }
 
      uploadImage()
       {
-        console.log(this.state.allFiles);
+        console.log("Image"+this.state.allFiles[0].name);
         var photo = new FormData();
           this.state.allFiles.forEach((file)=> {
               photo.append('IMG',file);
           });
-          console.log(photo);
+          var self=this;
         request.post('/upload').send(photo).end(function(err, resp) {
         console.log('save')
             if (err)
@@ -55,10 +58,28 @@ onDrop(files)
                   }
                   else
                   {
+                    console.log("success");
+                    console.log(self.state.allFiles);
+                      self.saveImage(self.state.allFiles[0].preview);
                       //this.setState({ allFiles:[]});
                 return resp;
                   }
-          }.bind(this));
+          });
+
+      }
+      saveImage(image){
+        console.log("hello entered"+image);
+        $.ajax({
+              type: 'POST',
+              url:"http://localhost:8080/uploadImage",
+              data: {data :image},
+              success: function(res) {
+               console.log("Image Stored");
+              }.bind(this),
+              error: function(err){
+                console.log("error",err);
+              }
+              });
       }
     profile()
     {
@@ -135,7 +156,7 @@ onDrop(files)
                 <Modal.Header id="updateheader"><Icon name='user'/>Edit Profile</Modal.Header>
                 <Modal.Content image>
                     <Image wrapped size='medium'>
-                        <Dropzone ref='dropzone' multiple={true} accept={'image/*'} onDrop={this.onDrop}>
+                        <Dropzone ref='dropzone' multiple={false} accept={'image/*'} onDrop={this.onDrop}>
                             <div>
                                 <div>{this.state.allFiles.map((file) => <img src={file.preview} style={{
                                         height: 204,
@@ -159,7 +180,7 @@ onDrop(files)
                             </Form.Field>
                             <Form.Field>
                                 <label>Email</label>
-                                <Form.Input placeholder='email' name="email1" value={this.state.email} disabled/>
+                                <Form.Input placeholder='email' name="email" value={this.state.email} disabled/>
 
                         <Divider/>
                       </Form.Field>
