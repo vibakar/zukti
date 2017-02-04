@@ -106,14 +106,16 @@ export default class SavedQuery extends React.Component{
       <Grid.Column width={12}>
 
 <Card fluid>
+  <div style={{ backgroundImage: "url('../../images/wall.jpg')",height:'100%'}}>
         <Scrollbars renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
             display: "none",
             position: "right"
         }}/>} autoHeight autoHeightMin={555}>
-            <div >
+            <div>
 
                     {user}
-</div></Scrollbars>  </Card>
+</div></Scrollbars> </div> </Card>
+
           </Grid.Column>
 
           <Grid.Column width={3}></Grid.Column>
