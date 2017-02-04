@@ -51,9 +51,7 @@ export default class LeftMenu extends Component {
             this.setState({counter: this.state.counter});
         });
 
-        //get notification count of user
-        let url = "http://localhost:8080/userProfile";
-        axios.get(url)
+
     }
     getNotificationCount(){
       let url =Config.url+'/getbroadcastmessage/count';
@@ -65,7 +63,7 @@ export default class LeftMenu extends Component {
       }).
       catch((error)=>{
         console.log(error);
-        alert('error in getting notification count');
+      //  alert('error in getting notification count');
       })
     }
     getUserInformation() {
