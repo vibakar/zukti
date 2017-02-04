@@ -454,6 +454,7 @@ module.exports = function(app, passport) {
               }), (req, res) => {
                 res.cookie('token', req.user.facebook.token);
                 res.cookie('authType', req.user.facebook.authType);
+                res.cookie('username',req.user.facebook.displayName);
                 res.redirect('/#/clienthome');
               });
 
@@ -476,6 +477,7 @@ module.exports = function(app, passport) {
                   failureRedirect : '/#/'
               }), (req, res) => {
                 res.cookie('token', req.user.google.token);
+                res.cookie('username',req.user.google.name);
                 res.cookie('authType', req.user.google.authType);
                 res.redirect('/#/clienthome');
               });

@@ -9,6 +9,7 @@ const session = require('express-session');
 let webpackDevMiddleware = require('webpack-dev-middleware');
 let webpackHotMiddleware = require('webpack-hot-middleware');
 let config = require('./webpack.config');
+let retriveChat = require('./webserver/routes/retriveChats/chats');
 let getLexicon = require('./webserver/lexicon/getLexicon');
 let intent = require('./webserver/routes/intent/intent');
 let concept = require('./webserver/routes/addnodeAndRelations/fetchConcepts');
@@ -86,7 +87,10 @@ app.use('/concept',concept);
 
 app.use('/qa', addKnowledge);
 app.use('/question', askQuestion);
+
+app.use('/retriveChat',retriveChat)
 app.use('/savequery', savequery);
+
 
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
