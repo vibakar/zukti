@@ -29,40 +29,43 @@ export default class LoginPage extends React.Component
     }
     // function to post login data to Server
     onSubmitLoginData(e, value) {
+        console.log(value.formData);
         e.preventDefault();
         $.ajax({
-                    url: 'http://localhost:8080/login',
-                    type: 'POST',
-                    data: {
-                        email: value.formData.userName,
-                        password: value.formData.password
-                    },
-                    success: function(response) {
-                      if(response.localType === 'Admin') {
-                         hashHistory.push('/adminHome');
-                      }
-                      else{
-                         hashHistory.push('/clienthome');
-                      }
-                    },
-                    error: function(err) {
-                        this.setState({openSnackbar: true, snackbarMsg: err.responseText});
-                    }.bind(this)
-                });
-        }
-                handleRequestClose = () => {
-                    this.setState({openSnackbar: false});
-                };
+                url: 'http://localhost:8080/login',
+                type: 'POST',
+                data: {
+                    email: value.formData.userName,
+                    password: value.formData.password
+                },
+                success: function(response) {
+                  if(response.localType ==='Admin') {
+                     hashHistory.push('/adminHome');
+                  }
+                  else{
+                    hashHistory.push('/clienthome');
+                  }
+                },
+                error: function(err) {
+                  //  alert(err.responseText);
+                    console.log(err.data);
+                    this.setState({openSnackbar: true, snackbarMsg: err.responseText});
+                }.bind(this)
+            });
+    }
+        handleRequestClose = () => {
+            this.setState({openSnackbar: false});
+        };
     // validation for email
     ChangeEmail = (event) => {
         this.setState({email: event.target.value});
-        // console.log(event.target.value);
+        // check whether the user is alreay exists or not
         if (validator.isEmail(event.target.value)) {
             this.setState({erroremail: false});
             this.setState({errormessageemail: false});
         } else {
             this.setState({erroremail: true});
-            this.setState({errormessageemail: 'Enter your full email address '});
+            this.setState({errormessageemail: 'Enter your full email address, including the \@\ '});
         }
     }
     show = (dimmer) => () => this.setState({dimmer, open: true})
@@ -90,8 +93,8 @@ export default class LoginPage extends React.Component
             <Segment basic>
             <Form onSubmit={this.onSubmitLoginData}>
             <Form.Field id="formfieldlogin">
-            <Form.Input name= "userName" placeholder= 'username or email id' icon='user' iconPosition='left' id="formstyle" onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required />
-            <p style={{color: '#a54f4f', textAlign: 'center'}}>{this.state.errormessageemail}</p>
+            <Form.Input name= "userName" placeholder= 'Email id' icon='user' iconPosition='left' id="formstyle" onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required />
+            <p style={{color: '#a54f4f',textAlign:'center'}}>{this.state.checkmail}</p>
             </Form.Field>
             <Form.Field id="formfieldlogin"><br/>
             <Form.Input type='password' name="password" placeholder='password' icon='lock' iconPosition='left' id="formstyle" required/>
@@ -99,7 +102,7 @@ export default class LoginPage extends React.Component
             </Form.Field><br/><br/><br/>
             <Modal.Actions>
             <Button color='teal' id="buttonwidth1" circular>
-            <Button.Content visible type='submit' ><Icon name='sign in'/>Login</Button.Content>
+            <Button.Content type='submit' ><Icon name='sign in'/>Login</Button.Content>
             </Button><br/><br/>
             <p id="footer">New Here?
             <a href="#/signup">Create an Genie Account</a>

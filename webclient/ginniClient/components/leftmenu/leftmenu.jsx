@@ -97,15 +97,11 @@ export default class LeftMenu extends Component {
                         <Icon name='star' color='teal'/>
                         SavedQueries
                     </Menu.Item>
-                    <Menu.Item name='Unanswered Queries' active={activeItem === 'Unanswered Queries'} onClick={this.handleItemClick}>
-                        <Icon name='help' color='teal'/>
-                      Unanswered Queries
-                    </Menu.Item>
                     <Menu.Item name='notifications' active={activeItem === 'notifications'} onClick={this.handleItemClick}>
                         <Icon name='help' color='teal'/>
                       notifications
                     </Menu.Item>
-                    <br/><br/><br/><br/><br/><br/><br/>
+                    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
                     <Menu.Item name='LogOut' active={activeItem === 'LogOut'} onClick={this.handleItemClick}>
                         <a href='#/logout'><Icon name='sign out' color='teal'/>
                             LogOut</a>
@@ -130,8 +126,6 @@ export default class LeftMenu extends Component {
                                         <Dropdown.Menu >
                                             <Dropdown.Item text='Edit Profile' icon='user' disabled={(!this.state.usertype)} onClick={this.onSubmitEmail}/>
                                             <Dropdown.Item text='Change Password' icon='lock' disabled={(!this.state.usertype)} onClick={this.onChangePassword}/>
-                                            <Dropdown.Item text='Settings' icon='settings'/>
-                                            <Dropdown.Item text='Help' icon='help'/>
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </Menu.Item>

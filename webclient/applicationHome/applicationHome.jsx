@@ -1,15 +1,14 @@
 import React from 'react';
 import { Grid, Button } from 'semantic-ui-react';
 import './applicationHome.css';
-import {Link} from 'react-router';
 
 export default class AdminWelcomePage extends React.Component {
   constructor() {
     super();
   }
 
-render(){
-      return(
+render() {
+      return (
 <div style={{ backgroundImage: "url('../../images/homes.jpg')"}} >
 
 <Grid container={'true'} centered={'true'}>
@@ -33,9 +32,6 @@ render(){
   <Grid.Row/>
   <Grid.Row/>
 <Grid.Row/>
-
-
-
  <Grid.Row>
 
     <Grid.Column style={{textAlign: 'center'}}>
@@ -47,9 +43,6 @@ render(){
       <h5 id='head3'>"TO ITERATE IS HUMAN, TO RECURSE DIVINE "</h5>
 
  </p>
-
-
-
 </Grid.Column>
 </Grid.Row>
 

@@ -31,7 +31,6 @@ export default class UserTable extends React.Component
     history(email){
 console.log(email);
     }
-
   render() {
     let user=this.state.userinformation.map(function(newsdata) {
 return (

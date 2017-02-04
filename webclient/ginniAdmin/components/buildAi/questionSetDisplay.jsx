@@ -23,7 +23,7 @@ export default class QuestionSetDisplay extends React.Component {
     render() {
         return (
             <div style={{
-                backgroundImage: "url('../../images/wall.jpg')"
+                backgroundImage: "url('../../images/wall.jpg')",height: '100%'
             }}>
                 <Grid style={{
                     width: '95%',

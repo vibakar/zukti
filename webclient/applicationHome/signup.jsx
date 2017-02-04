@@ -175,7 +175,7 @@ render() {
         <p id="textcolor">{this.state.errormessagelast}</p>
         </Form.Field>
         <Form.Field id="formfield">
-        <Form.Input label='email' id="to" name="email" placeholder='User Name or Email-ID' type='text' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
+        <Form.Input label='Email' id="to" name="email" placeholder='Email-ID' type='text' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
         <p id="textcolor">{this.state.errormessageemail}</p>
         <p id="textcolor">{this.state.userexists}</p>
         </Form.Field>
