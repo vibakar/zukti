@@ -3,6 +3,7 @@ import {Feed, Icon, Label} from 'semantic-ui-react';
 import {Popup, Comment} from 'semantic-ui-react';
 import AssistantGinniUrlDisplay from './assistantGinniUrlDisplay';
 import AssistantGinniVideoDisplay from './assistantGinniVideoDisplay';
+import axios from 'axios';
 
 export default class AssistantGinniMixedReply extends React.Component {
     // props validation
@@ -15,7 +16,35 @@ export default class AssistantGinniMixedReply extends React.Component {
         // function to show videos url feteched from response
         this.displayVideoUrl = this.displayVideoUrl.bind(this);
         this.displayBlogUrl = this.displayBlogUrl.bind(this);
+          this.savedquery=this.savedquery.bind(this);
     }
+    savedquery(message)
+      {
+          alert(message);
+            console.log(message);
+
+            axios({
+                url: ' http://localhost:8080/clientinformation',
+                method: 'get'
+            }).then(function(response) {
+                console.log("email"+response.data[0].local.email);
+                      axios({
+                        url: 'http://localhost:8080/savequery/answeredquery',
+                        method:'POST',
+                        data: {email:response.data[0].local.email,
+                              savedquery:{question:"",answer:message}}
+                      }).then(function(msg) {
+                          console.log(msg);
+                      }).catch(function(err) {
+                          console.log(err);
+                      });
+
+            }).catch(function(err) {
+                // alert("bjhbj"+err);
+            });
+          }
+
+
     displayVideoUrl() {
         console.log(this.props.data);
         let ginniReply = [<AssistantGinniVideoDisplay message='Here are some videos' url={this.props.data.videoUrl}/>];
@@ -44,7 +73,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                         </Feed.Extra>
                         <Feed.Meta>
                             <Popup trigger={< Icon circular name = 'flag' color = 'green' />} content='Flag' size='mini'/>
-                            <Popup trigger={< Icon circular name = 'star' color = 'yellow' />} content='star this message' size='mini'/>
+                          <Popup trigger={< Icon circular name = 'star' color = 'yellow' onClick={()=>{this.savedquery(this.props.data.textAnswer)}}/>} content='star this message' size='mini'/>
                             <Popup trigger={< Icon circular name = 'like outline' color = 'blue' />} content='Like' size='mini'/>
                             <Popup trigger={< Icon circular name = 'dislike outline' color = 'blue' />} content='Dislike' size='mini'/>
                             <Popup trigger={< Icon circular name = 'delete' color = 'red' />} content='Delete' size='mini'/>
