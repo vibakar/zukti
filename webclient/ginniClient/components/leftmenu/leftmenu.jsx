@@ -15,6 +15,7 @@ import {
     Feed,
     Link,
     Input,
+    Label,
     Dropdown
 } from 'semantic-ui-react';
 import axios from 'axios';
@@ -101,10 +102,11 @@ export default class LeftMenu extends Component {
                       Unanswered Queries
                     </Menu.Item>
                     <Menu.Item name='notifications' active={activeItem === 'notifications'} onClick={this.handleItemClick}>
-                        <Icon name='help' color='teal'/>
+                      <Label color='red' floating>22</Label>
+                        <Icon name='alarm' color='teal'/>
+
                       notifications
                     </Menu.Item>
-                    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
                     <Menu.Item name='LogOut' active={activeItem === 'LogOut'} onClick={this.handleItemClick}>
                         <a href='#/logout'><Icon name='sign out' color='teal'/>
                             LogOut</a>
