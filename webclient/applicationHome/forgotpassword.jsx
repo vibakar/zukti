@@ -108,17 +108,17 @@ export default class ForgotPassword extends React.Component
                     </Grid.Column>
                     <Grid.Column Width={6} id="gridstyle">
                        <Header id="headerstylefor">
-                            <h2><Icon name='mail' id='mailicon'/>Request a Password Reset</h2>
+                            <h2 id='request'><Icon name='mail' id='mailicon'/>Request a Password Reset</h2>
                         </Header>
                         <Divider/>
                         <p id="textstyle">
-                            <h4 style={{color:'white'}}>Just fill in your email and we'll help you reset your password.</h4>
+                            <h4 style={{color:'white',fontStyle:'italic'}}>Just fill in your email and we'll help you reset your password.</h4>
                         </p>
                         <Form onSubmit={this.onSubmitData}>
                             <Form.Field id="forgotfield">
                         <Form.Input placeholder= 'email id' name= "email" icon='mail outline' iconPosition='left' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
-                                <p style={{color: 'green',textAlign:'center'}}>{this.state.userexists}</p>
-                                <p style={{color: '#a54f4f',textAlign:'center'}}>{this.state.errormessageemail}</p>
+                                <p style={{color: 'white',textAlign:'center'}}>{this.state.userexists}</p>
+                                <p style={{color: 'white',textAlign:'center'}}>{this.state.errormessageemail}</p>
                             </Form.Field>
                             <Button type='submit' id='buttonstylefor' onClick={this.handleOpen} circular  disabled={(!this.state.email) || (!this.state.checkmail)}>Send</Button>
                             <Dimmer

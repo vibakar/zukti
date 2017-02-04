@@ -10,7 +10,7 @@ export default class AdminWelcomePage extends React.Component {
 
 render(){
       return(
-<div style={{ backgroundImage: "url('../../images/homes.jpg')"}} >
+<div style={{ backgroundImage: "url('../../images/intro-bg.jpg')"}} >
 
 <Grid container={'true'} centered={'true'}>
 <Grid.Row/>
