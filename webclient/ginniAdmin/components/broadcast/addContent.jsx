@@ -28,7 +28,7 @@ export default class AddContent extends React.Component {
         ReactDOM.findDOMNode(this.refs.text).value = '';
 
       let url = Config.url + '/savebroadcastmessage';
-      axios.post(url,{message:text,type:type,date:(new Date().toLocaleString())}).then((response)=>{
+      axios.post(url,{message:text,type:type,date:(new Date().toLocaleString()),notificationCount:this.state.counter}).then((response)=>{
         console.log(response);
       }).catch((error)=>{
         console.log(error);
@@ -47,7 +47,7 @@ export default class AddContent extends React.Component {
 
 
         let url = Config.url + '/savebroadcastmessage';
-        axios.post(url,{message:videoUrl,type:type,date:(new Date().toLocaleString())}).then((response)=>{
+        axios.post(url,{message:videoUrl,type:type,date:(new Date().toLocaleString()),notificationCount:this.state.counter}).then((response)=>{
           console.log(response);
         }).catch((error)=>{
           console.log(error);
@@ -68,7 +68,7 @@ export default class AddContent extends React.Component {
 
 
         let url = Config.url + '/savebroadcastmessage';
-        axios.post(url,{message:blogUrl,type:type,date:(new Date().toLocaleString())}).then((response)=>{
+        axios.post(url,{message:blogUrl,type:type,date:(new Date().toLocaleString()),notificationCount:this.state.counter}).then((response)=>{
           console.log(response);
         }).catch((error)=>{
           console.log(error);

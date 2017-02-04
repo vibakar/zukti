@@ -47,6 +47,10 @@ export default class LeftMenu extends Component {
             this.state.counter = data.notificationcount;
             this.setState({counter: this.state.counter});
         });
+
+        //get notification count of user
+        let url = "http://localhost:8080/userProfile";
+        axios.get(url)
     }
     getUserInformation() {
         $.ajax({
