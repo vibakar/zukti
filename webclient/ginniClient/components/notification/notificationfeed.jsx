@@ -1,5 +1,5 @@
 import React from 'react'
-import {Feed, Icon,Grid,Card} from 'semantic-ui-react';
+import {Feed, Icon,Grid,Card,Divider} from 'semantic-ui-react';
 import {Scrollbars} from 'react-custom-scrollbars';
 export default class Notificationfeed extends React.Component {
     constructor(props) {
@@ -7,16 +7,16 @@ export default class Notificationfeed extends React.Component {
     }
   render() {
         return (
-          <div style={{ backgroundImage: "url('../../images/wall.jpg')", marginTop: '1%',height:'100%'}}>
+          <div style={{ backgroundImage: "url('http://supernovathemes.com/wp-content/themes/supernovathemes/images/bg/b18.png')", marginTop: '1%',height:'100%'}}>
               <Grid divided="vertically">
             <Grid.Row columns={3}>
-              <Grid.Column width={3}></Grid.Column>
-              <Grid.Column width={10}>
-                <Card fluid color="black">
+              <Grid.Column width={1}></Grid.Column>
+              <Grid.Column width={12}>
                   <Grid divided="vertically">
                 <Grid.Row columns={3}>
                   <Grid.Column width={1}></Grid.Column>
                   <Grid.Column width={13}>
+                    <Grid.Row></Grid.Row>
                     <Feed>
               <Feed.Event>
                 <Feed.Label image='http://semantic-ui.com/images/avatar/small/joe.jpg'/>
@@ -34,17 +34,17 @@ export default class Notificationfeed extends React.Component {
                 </Feed.Content>
               </Feed.Event>
             </Feed>
-            </Grid.Column>
+              </Grid.Column>
             <Grid.Column width={2}></Grid.Column>
             </Grid.Row>
           </Grid>
-         </Card>
-            </Grid.Column>
+                    </Grid.Column>
             <Grid.Column width={3}></Grid.Column>
-          </Grid.Row>
 
+         </Grid.Row>
+  <Divider/>
           </Grid>
-      </div>
+                </div>
         );
     }
 }

@@ -3,7 +3,8 @@ import {Feed, Icon, Label} from 'semantic-ui-react';
 import {Popup, Comment} from 'semantic-ui-react';
 import AssistantGinniUrlDisplay from './assistantGinniUrlDisplay';
 import AssistantGinniVideoDisplay from './assistantGinniVideoDisplay';
-import axios from 'axios';
+import Axios from 'axios';
+import Snackbar from 'material-ui/Snackbar';
 
 export default class AssistantGinniMixedReply extends React.Component {
     // props validation
@@ -13,22 +14,31 @@ export default class AssistantGinniMixedReply extends React.Component {
     };
     constructor(props) {
         super(props);
+        this.state={
+          openSnackbar: false,
+          snackbarMsg: ''
+
+        }
         // function to show videos url feteched from response
         this.displayVideoUrl = this.displayVideoUrl.bind(this);
         this.displayBlogUrl = this.displayBlogUrl.bind(this);
           this.savedquery=this.savedquery.bind(this);
     }
+    handleRequestClose = () => {
+        this.setState({openSnackbar: false});
+    };
+
     savedquery(message)
       {
-          alert(message);
+        this.setState({openSnackbar: true, snackbarMsg:"saved for reference"});
             console.log(message);
 
-            axios({
+            Axios({
                 url: ' http://localhost:8080/clientinformation',
                 method: 'get'
             }).then(function(response) {
                 console.log("email"+response.data[0].local.email);
-                      axios({
+                      Axios({
                         url: 'http://localhost:8080/savequery/answeredquery',
                         method:'POST',
                         data: {email:response.data[0].local.email,
@@ -55,6 +65,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.props.handleGinniReply(ginniReply);
     }
     render() {
+      const {open} = this.state;
         let text = this.props.data.textAnswer;
         return (
             <Feed id="ginniview">
@@ -81,6 +92,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                         </Feed.Meta>
                     </Feed.Content>
                 </Feed.Event>
+                <Snackbar  open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={1000} onRequestClose={this.handleRequestClose}/>
             </Feed>
         );
     }

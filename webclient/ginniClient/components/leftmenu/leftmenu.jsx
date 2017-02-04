@@ -104,7 +104,7 @@ export default class LeftMenu extends Component {
                         <Icon name='help' color='teal'/>
                       notifications
                     </Menu.Item>
-                    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    <br/><br/><br/><br/><br/><br/><br/>
                     <Menu.Item name='LogOut' active={activeItem === 'LogOut'} onClick={this.handleItemClick}>
                         <a href='#/logout'><Icon name='sign out' color='teal'/>
                             LogOut</a>
@@ -119,9 +119,10 @@ export default class LeftMenu extends Component {
                                         <Popup trigger={< Icon name = "arrow circle left" size = "large" circular color = 'teal' />} content='Back' size='mini'/>
                                     </a>
                                 </Menu.Item>
+                              <Menu.Item/>  <Menu.Item/>  <Menu.Item/>
                                 <Menu.Item position='right'></Menu.Item>
                                 <Menu.Item>
-                                    <h3>THE CODE AESSISTANT/GENIE</h3>
+                                    <h3>GENIE</h3>
                                 </Menu.Item>
                                 <Menu.Item position='right'>
                                     <Dropdown trigger={trigger} pointing='top right' icon={null}>

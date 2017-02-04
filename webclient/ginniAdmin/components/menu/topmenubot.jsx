@@ -61,8 +61,9 @@ export default class TopMenuBot extends React.Component {
                     </Menu.Item>
                       <Menu.Item position='right'>
                       </Menu.Item>
-                        <Menu.Item>
-                          <h3>THE CODE AESSISTANT/GENIE</h3>
+                      <Menu.Item/>  <Menu.Item/>   <Menu.Item/>
+                        <Menu.Item >
+                          <h3>GENIE</h3>
                         </Menu.Item>
                     <Menu.Item position='right'>
                         <Dropdown trigger={trigger} pointing='top right' icon={null}>

@@ -7,9 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import react from './ginniAdmin/components/menu/menu';
 import AdminHome from './ginniAdmin/components/home/home';
 import App1 from './ginniAdmin/components/app/app';
-import adminProfile from './ginniAdmin/components/admin/adminProfile'
 import ApplicationHome from './applicationHome/applicationHome';
-import FrontPage from './ginniClient/components/clienthome/home';
 import NewPassword from './applicationHome/newpassword';
 import LoginPage from './applicationHome/loginpage';
 import ForgotPassword from './applicationHome/forgotpassword.jsx';

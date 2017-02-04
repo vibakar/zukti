@@ -2,7 +2,7 @@ import React from 'react';
 import {Feed, Icon} from 'semantic-ui-react';
 import {Popup, Comment} from 'semantic-ui-react';
 import ReactPlayer from 'react-player';
-import axios from 'axios';
+import Axios from 'axios';
 
 export default class AssistantGinniMixedReply extends React.Component {
   constructor(props) {
@@ -14,12 +14,12 @@ export default class AssistantGinniMixedReply extends React.Component {
         alert(message);
           console.log(message);
 
-          axios({
+          Axios({
               url: ' http://localhost:8080/clientinformation',
               method: 'get'
           }).then(function(response) {
               console.log("email"+response.data[0].local.email);
-                    axios({
+                    Axios({
                       url: 'http://localhost:8080/savequery/answeredquery',
                       method:'POST',
                       data: {email:response.data[0].local.email,
