@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Image, Modal} from 'semantic-ui-react';
 import {hashHistory} from 'react-router';
 import './logout.css';
-import $ from 'jquery';
+import Axios from 'axios';
 import Cookie from 'react-cookie';
 export default class LogoutAdmin extends React.Component
 {
@@ -12,20 +12,18 @@ export default class LogoutAdmin extends React.Component
   handleLogout()
 {
 console.log("logout")
-$.ajax({
-      type: 'GET',
-      url:"http://localhost:8080/signout",
-      dataType: 'json',
-      success: function(res) {
-       Cookie.remove('authType');
-       Cookie.remove('username');
-       Cookie.remove('token');
-       hashHistory.push('/');
-      }.bind(this),
-      error: function(err){
-        console.log("error",err);
-      }.bind(this)
-   });
+Axios({
+        method: 'GET',
+        url: 'http://localhost:8080/signout',
+        data: 'json'
+      }).then(function (response) {
+        Cookie.remove("authType");
+        Cookie.remove("token");
+        hashHistory.push('/');
+      })
+       .catch(function (error) {
+       });
+           console.log("error",err);
  }
   render() {
     const { open} = this.state;

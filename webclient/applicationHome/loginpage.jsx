@@ -12,9 +12,7 @@ import {
 import {hashHistory} from 'react-router';
 import './loginpage.css';
 import validator from 'validator';
-import FrontPage from '../ginniAdmin/components/home/home';
 import $ from 'jquery';
-import axios from 'axios';
 export default class LoginPage extends React.Component
 {
     constructor(props) {
@@ -31,35 +29,30 @@ export default class LoginPage extends React.Component
     }
     // function to post login data to Server
     onSubmitLoginData(e, value) {
-        console.log(value.formData);
         e.preventDefault();
-$.ajax({
-            url: 'http://localhost:8080/login',
-            type: 'POST',
-            data: {
-                email: value.formData.userName,
-                password: value.formData.password
-            },
-            success: function(response) {
-              console.log(":gcvg")
-              console.log(response)
-              if(response.localType ==='Admin') {
-                 hashHistory.push('/adminHome');
-              }
-              else{
-                hashHistory.push('/clienthome');
-              }
-            },
-            error: function(err) {
-              //  alert(err.responseText);
-                console.log(err.data);
-                this.setState({openSnackbar: true, snackbarMsg: err.responseText});
-            }.bind(this)
-        });
-}
-        handleRequestClose = () => {
-            this.setState({openSnackbar: false});
-        };
+        $.ajax({
+                    url: 'http://localhost:8080/login',
+                    type: 'POST',
+                    data: {
+                        email: value.formData.userName,
+                        password: value.formData.password
+                    },
+                    success: function(response) {
+                      if(response.localType === 'Admin') {
+                         hashHistory.push('/adminHome');
+                      }
+                      else{
+                         hashHistory.push('/clienthome');
+                      }
+                    },
+                    error: function(err) {
+                        this.setState({openSnackbar: true, snackbarMsg: err.responseText});
+                    }.bind(this)
+                });
+        }
+                handleRequestClose = () => {
+                    this.setState({openSnackbar: false});
+                };
     // validation for email
     ChangeEmail = (event) => {
         this.setState({email: event.target.value});
@@ -98,7 +91,7 @@ $.ajax({
             <Form onSubmit={this.onSubmitLoginData}>
             <Form.Field id="formfieldlogin">
             <Form.Input name= "userName" placeholder= 'username or email id' icon='user' iconPosition='left' id="formstyle" onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required />
-            <p style={{color: '#a54f4f',textAlign:'center'}}>{this.state.errormessageemail}</p>
+            <p style={{color: '#a54f4f', textAlign: 'center'}}>{this.state.errormessageemail}</p>
             </Form.Field>
             <Form.Field id="formfieldlogin"><br/>
             <Form.Input type='password' name="password" placeholder='password' icon='lock' iconPosition='left' id="formstyle" required/>

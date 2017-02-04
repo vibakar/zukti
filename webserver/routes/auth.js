@@ -1,37 +1,35 @@
-var RegisteredUser = require('../models/user');
-var UnansweredQuery = require('../models/unansweredQuery');
-var nodemailer = require('nodemailer');
+const RegisteredUser = require('../models/user');
+const UnansweredQuery = require('../models/unansweredQuery');
+const nodemailer = require('nodemailer');
 
 module.exports = function(app, passport) {
   var rand,
       mailOptions,
       host,
       link;
-
-      function isLoggedIn(req, res, next) {
-      if (req.isAuthenticated())
-          return next();
+      function isLoggedIn (req, res, next) {
+      if(req.isAuthenticated()) {
+   return next();
+}
       res.redirect('/#/');
   }
 
-    app.post('/login', passport.authenticate('local',{
-      failureRedirect : '/'
+    app.post('/login', passport.authenticate('local', {
+      failureRedirect: '/'
     }), (req, res)=> {
       res.cookie('token', req.user);
-      res.cookie('username',req.user.name);
+      res.cookie('username', req.user.name);
       res.cookie('authType', req.user.authType);
-      res.send(req.user)
+      res.send(req.user);
     });
     //logout
     app.get('/signout', function(req, res) {
-       //request=req.user.email;
-        //newUser.loggedinStatus = false;
         res.clearCookie('token');
         res.clearCookie('authType');
         res.clearCookie('username');
-        res.json({logout:"Successfully LogOut"});
+        res.json({logout: 'Successfully LogOut'});
         RegisteredUser.update({
-            'local.email':req.user.local.email
+            'local.email': req.user.local.email
         }, {
             $set: {
                 'local.loggedinStatus': false
@@ -46,24 +44,19 @@ module.exports = function(app, passport) {
             }
         });
     });
-    /*LOCAL SIGNUP*/
+    /* LOCAL SIGNUP*/
     // local sign up route
     app.post('/signup', function(req, res) {
-        var newUser = new RegisteredUser();
+        let newUser = new RegisteredUser();
         rand = Math.floor((Math.random() * 100) + 54);
-        console.log(rand);
-        console.log(req.body);
-        //console.log(RegisteredUser.local+"Registered");
-        //console.log(newUser.facebook.name+"newUser112121221");
         newUser.local.verificationID = rand;
-        newUser.local.name = req.body.firstName + " " + req.body.lastName;
+        newUser.local.name = req.body.firstName + ' ' + req.body.lastName;
         newUser.local.email = req.body.email;
         newUser.local.password = req.body.password;
         newUser.local.firstname = req.body.firstName;
         newUser.local.lastname = req.body.lastName;
         newUser.local.localType = 'Customer';
         newUser.local.authType = 'local';
-        //console.log(newUser.local.type);
         newUser.local.loggedinStatus = false;
         newUser.local.isEmailVerified = false;
         newUser.save(function(err) {
@@ -383,25 +376,23 @@ module.exports = function(app, passport) {
     });
     //reset password
     app.put('/resetpassword', function(req, res) {
-        if (req.body) {
-            request1 = req.body.email;
-            request2 = req.body.password;
-            RegisteredUser.update({
-                'local.email': request1
-            }, {
-                $set: {
-                    'local.password': request2
-                }
-            }, function(err) {
-                if (err) {
-                    res.send(err);
-                } else {
-                    res.send("Password changed Successfully");
-                }
-            });
-        }
-    });
-    //image for localstratergy
+          if (req.body) {
+              request1 = req.body.password;
+              RegisteredUser.update({
+                  'local.email': req.user.local.email
+              }, {
+                  $set: {
+                      'local.password': request1
+                  }
+              }, function(err) {
+                  if (err) {
+                      res.send(err);
+                  } else {
+                      res.send("Password changed Successfully");
+                  }
+              });
+          }
+      });  //image for localstratergy
     app.post('/uploadImage', function(req, res) {
       console.log("vtg hjk")
               imagename= req.body.data;

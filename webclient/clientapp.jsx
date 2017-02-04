@@ -7,9 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import react from './ginniAdmin/components/menu/menu';
 import AdminHome from './ginniAdmin/components/home/home';
 import App1 from './ginniAdmin/components/app/app';
-import adminProfile from './ginniAdmin/components/admin/adminProfile'
 import ApplicationHome from './applicationHome/applicationHome';
-import FrontPage from './ginniClient/components/clienthome/home';
 import NewPassword from './applicationHome/newpassword';
 import LoginPage from './applicationHome/loginpage';
 import ForgotPassword from './applicationHome/forgotpassword.jsx';
@@ -31,11 +29,9 @@ import Addnode from './ginniAdmin/components/buildNodeAndRelationship/createNode
 
 
 injectTapEventPlugin();
-var requireAuth = function (nextState, replace) {
-var token = Cookie.load('token');
-console.log(token);
+let requireAuth = function (nextState, replace) {
+let token = Cookie.load('token');
   if (!token) {
-    console.log("Hello");
     replace({
       pathname: '/',
       state: { nextPathname: nextState.location.pathname }
@@ -62,7 +58,7 @@ ReactDOM.render(
         <Route path='/mail' component={SentMailPage}/>
         <Route path='/chat' component={LeftMenu} onEnter={requireAuth.bind(this)}/>
         <Route path='/left' component={LeftMenu} onEnter={requireAuth.bind(this)}/>
-        <Route path='/change' component={ChangePassword}/>
+        <Route path='/change' component={ChangePassword} onEnter={requireAuth.bind(this)}/>
         <Route path='/profile' component={ClientProfile} />
         <Route path='/adminprofile' component={AdminProfilePage} onEnter={requireAuth.bind(this)}/>
         <Route path='/logout' component={Logout} onEnter={requireAuth.bind(this)}/>
