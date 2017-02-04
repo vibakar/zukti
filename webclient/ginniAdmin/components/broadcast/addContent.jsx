@@ -10,6 +10,7 @@ export default class AddContent extends React.Component {
   };
     constructor(props) {
         super(props);
+
     }
 
     //to handle text data
@@ -18,8 +19,8 @@ export default class AddContent extends React.Component {
         let type = 'text';
         let text = ReactDOM.findDOMNode(this.refs.text).value;
         this.props.handlertextinput(text,type);
-        var socket = io();
-        socket.emit('client event', { value: text,type :type });
+        let socket = io();
+        socket.emit('client event', { value: text,type :type});
 
         ReactDOM.findDOMNode(this.refs.text).value = '';
 
@@ -34,11 +35,12 @@ export default class AddContent extends React.Component {
     handleSubmitVideo = (e) => {
         e.preventDefault();
         let type = 'video';
+        this.state.counter = this.state.counter + 1;
         let videoUrl = ReactDOM.findDOMNode(this.refs.video).value;
         this.props.handlertextinput(videoUrl,type);
         ReactDOM.findDOMNode(this.refs.video).value = '';
         var socket = io();
-        socket.emit('client event', { value: videoUrl,type :type });
+        socket.emit('client event', { value: videoUrl,type :type});
 
 
         let url = Config.url + '/savebroadcastmessage';
@@ -53,12 +55,13 @@ export default class AddContent extends React.Component {
     //to handle blog data
     handleSubmitBlog = (e) => {
         e.preventDefault();
+        this.state.counter = this.state.counter + 1;
         let blogUrl = ReactDOM.findDOMNode(this.refs.blog).value;
         let type = 'blog';
         this.props.handlertextinput(blogUrl,type);
         ReactDOM.findDOMNode(this.refs.blog).value = '';
         var socket = io();
-        socket.emit('client event', { value: blogUrl,type :type });
+        socket.emit('client event', { value: blogUrl,type :type, notificationcount: this.state.counter});
 
 
         let url = Config.url + '/savebroadcastmessage';
