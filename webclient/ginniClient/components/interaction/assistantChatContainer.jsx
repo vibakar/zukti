@@ -46,24 +46,29 @@ export default class AssistantChatContainer extends React.Component {
     retriveChat() {
         let url = Config.url + '/retriveChat';
         Axios.get(url).then((response) => {
-            response.data.chats.forEach((chat) => {
+            console.log(response);
+            if(response.data){
+              console.log('Inside then');
+              response.data.chats.forEach((chat) => {
                 let length = this.state.messages.length;
                 this.state.messages.push(
-                    <div ref={(ref) => this['_div' + length] = ref} key={length}>
-                        <AssistantUserView msgDate={chat.question.time} userName={this.state.username} userMessage={chat.question.value}/>
-                    </div>
+                  <div ref={(ref) => this['_div' + length] = ref} key={length}>
+                    <AssistantUserView msgDate={chat.question.time} userName={this.state.username} userMessage={chat.question.value}/>
+                  </div>
                 );
                 chat.resultArray.forEach((reply) => {
-                    let length = this.state.messages.length;
-                    this.state.messages.push(
-                        <div ref={(ref) => this['_div' + length] = ref} key={length}>
-                            <AssistantGinniMixedReply data={reply} handleGinniReply={this.pushGinniMessages}/>
-                        </div>
-                    );
+                  let length = this.state.messages.length;
+                  this.state.messages.push(
+                    <div ref={(ref) => this['_div' + length] = ref} key={length}>
+                      <AssistantGinniMixedReply data={reply} handleGinniReply={this.pushGinniMessages}/>
+                    </div>
+                  );
                 });
-            });
+              });
+            }
             this.setState({messages: this.state.messages, loaderActive: false});
         }).catch((err) => {
+            console.log(err);
             alert('ERROR IN FETCHING CHATS')
         });
     }
