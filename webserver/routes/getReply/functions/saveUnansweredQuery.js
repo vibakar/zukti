@@ -3,7 +3,7 @@ module.exports = function(user, question, keywords, intents) {
     let unansweredQuery = new UnansweredQuery();
     console.log(intents);
     console.log(keywords);
-    unansweredQuery.user = 'vishal7201@gmail.com';
+    unansweredQuery.user = user;
     unansweredQuery.question = question;
     unansweredQuery.keywords = keywords;
     unansweredQuery.intents = intents;

@@ -10,20 +10,17 @@ export default class AddContent extends React.Component {
   };
     constructor(props) {
         super(props);
-        this.state = {
-          counter :0
-        }
+
     }
 
     //to handle text data
     handleSubmitText = (e) => {
         e.preventDefault();
-        this.state.counter = this.state.counter + 1;
         let type = 'text';
         let text = ReactDOM.findDOMNode(this.refs.text).value;
         this.props.handlertextinput(text,type);
         let socket = io();
-        socket.emit('client event', { value: text,type :type, notificationcount: this.state.counter });
+        socket.emit('client event', { value: text,type :type});
 
         ReactDOM.findDOMNode(this.refs.text).value = '';
 
@@ -43,7 +40,7 @@ export default class AddContent extends React.Component {
         this.props.handlertextinput(videoUrl,type);
         ReactDOM.findDOMNode(this.refs.video).value = '';
         var socket = io();
-        socket.emit('client event', { value: videoUrl,type :type ,notificationcount: this.state.counter});
+        socket.emit('client event', { value: videoUrl,type :type});
 
 
         let url = Config.url + '/savebroadcastmessage';
