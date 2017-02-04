@@ -77,7 +77,7 @@ export default class AddContent extends React.Component {
                         <div>
                             <h1>Enter text for react</h1>
                             <Form onSubmit={this.handleSubmitText}>
-                                <TextArea placeholder='Tell us more' autoHeight name='text' ref='text'/>
+                                <TextArea placeholder='Tell us more' autoHeight name='text' ref='text'/><br/><br/>
                                 <Button color='red' type='submit' animated>
                                     <Button.Content visible>Submit</Button.Content>
                                     <Button.Content hidden>
@@ -94,7 +94,7 @@ export default class AddContent extends React.Component {
                         <div>
                             <h1>Enter videoUrl for react</h1>
                             <Form onSubmit={this.handleSubmitVideo}>
-                                <TextArea placeholder='enter url' autoHeight name='video' ref='video'/>
+                                <TextArea placeholder='enter url' autoHeight name='video' ref='video'/><br/><br/>
                                 <Button color='red' type='submit' animated>
                                     <Button.Content visible>Submit</Button.Content>
                                     <Button.Content hidden>
@@ -111,7 +111,7 @@ export default class AddContent extends React.Component {
                         <div>
                             <h1>Enter BlogUrl for react</h1>
                             <Form onSubmit={this.handleSubmitBlog}>
-                                <TextArea placeholder='enter url' autoHeight name='blog' ref='blog'/>
+                                <TextArea placeholder='enter url' autoHeight name='blog' ref='blog'/><br/><br/>
                                 <Button color='red' type='submit' animated>
                                     <Button.Content visible>Submit</Button.Content>
                                     <Button.Content hidden>
