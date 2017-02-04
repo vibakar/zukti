@@ -14,7 +14,7 @@ import {
 import validator from 'validator';
 import {hashHistory} from 'react-router';
 import './forgotpassword.css';
-import axios from 'axios';
+import Axios from 'axios';
 export default class ForgotPassword extends React.Component
 {
     constructor() {
@@ -33,7 +33,7 @@ export default class ForgotPassword extends React.Component
     // sending the email verification for reset password
     onSubmitData(e, value) {
         e.preventDefault();
-        axios({
+        Axios({
             url: ' http://localhost:8080/forgetpassword',
             method: 'post',
             data: {
@@ -51,8 +51,8 @@ export default class ForgotPassword extends React.Component
         // console.log(event.target.value);
         // check whether the user is alreay exists or not
         if (validator.isEmail(event.target.value)) {
-          var self = this;
-            axios({
+          let self = this;
+            Axios({
                 url: ' http://localhost:8080/checkuser',
                 method: 'POST',
                 data: {
@@ -68,7 +68,7 @@ export default class ForgotPassword extends React.Component
                       self.setState({userexists: 'No such email exists in Genie. Please sign up'});
                       self.setState({checkmail: false});
                       }
-                }).catch(function(err) {
+                }).catch(function(error) {
                     // console.log(err);
                 });
             this.setState({erroremail: false});

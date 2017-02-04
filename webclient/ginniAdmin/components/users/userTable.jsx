@@ -1,7 +1,7 @@
 import React from 'react';
 import {Grid, Image, Card} from 'semantic-ui-react';
 import { Button} from 'semantic-ui-react';
-import axios from 'axios';
+import Axios from 'axios';
 import './usertable.css';
 export default class UserTable extends React.Component
 {
@@ -13,12 +13,13 @@ export default class UserTable extends React.Component
         userinformation: []
       };
     }
-    componentWillMount() {
-      axios({
+    componentDidMount() {
+      var self=this;
+      Axios({
       url: 'http://localhost:8080/viewall',
       method: 'GET'
     }).then(function(response) {
-    this.setState({ userinformation: response.data});
+    self.setState({ userinformation: response.data});
     console.log(response.data);
 }.bind(this)).
     catch(function(err) {
@@ -27,7 +28,7 @@ export default class UserTable extends React.Component
     }
 
   render() {
-    var user=this.state.userinformation.map(function(newsdata) {
+    let user=this.state.userinformation.map(function(newsdata) {
 return (
 
   <div id='eachcardstyle'>

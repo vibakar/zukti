@@ -6,7 +6,7 @@ import {
     Grid
 } from 'semantic-ui-react';
 import {hashHistory} from 'react-router';
-import $ from 'jquery';
+import Axios from 'axios';
 import Cookie from 'react-cookie';
 import './homestyle.css';
 export default class FrontPage extends React.Component {
@@ -16,21 +16,18 @@ export default class FrontPage extends React.Component {
     }
     handleLogout()
   {
-
-  $.ajax({
-        type: 'GET',
-        url:"http://localhost:8080/signout",
-        dataType: 'json',
-        success: function(res) {
-         Cookie.remove("authType");
-         Cookie.remove("token");
-         hashHistory.push('/');
-        }.bind(this),
-        error: function(err){
-          console.log("error",err);
-        }.bind(this)
-     });
-
+Axios({
+        method: 'GET',
+        url: 'http://localhost:8080/signout',
+        data: 'json'
+      }).then(function (response) {
+        Cookie.remove("authType");
+        Cookie.remove("token");
+        hashHistory.push('/');
+      })
+       .catch(function (error) {
+           console.log("error",err);
+      });
   }
    onSubmitEmail() {
        hashHistory.push('/react')

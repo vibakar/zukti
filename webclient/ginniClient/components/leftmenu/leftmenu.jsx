@@ -17,8 +17,7 @@ import {
     Input,
     Dropdown
 } from 'semantic-ui-react';
-import axios from 'axios';
-import $ from 'jquery';
+import Axios from 'axios';
 import Cookie from 'react-cookie';
 import {hashHistory} from 'react-router';
 import './leftmenu.css';
@@ -34,40 +33,42 @@ export default class LeftMenu extends Component {
             usertype: false
         }
         this.onSubmitEmail = this.onSubmitEmail.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
         this.getUserInformation = this.getUserInformation.bind(this);
     }
     componentDidMount() {
         this.getUserInformation();
     }
     getUserInformation() {
-        $.ajax({
-            url: "http://localhost:8080/userProfile",
-            type: 'GET',
-            dataType: 'json',
-            success: function(res) {
-                var authType = Cookie.load("authType");
-                if (authType == "facebook") {
-                    console.log(res.user.facebook.displayName);
-                    this.setState({name: res.user.facebook.displayName, email: res.user.facebook.email, photo: res.user.facebook.photos, usertype: false});
-                }
-                if (authType == "google") {
-                    this.setState({name: res.user.google.name, email: res.user.google.email, photo: res.user.google.photos, usertype: false});
-                }
-                if (authType == "local") {
-                  console.log("hello");
-                  console.log(res.user.local.name);
-                    this.setState({name: res.user.local.name, email: res.user.local.email, photo: res.user.local.photos, usertype: true});
-                }
-            }.bind(this),
-            error: function(err) {
-                console.log("error", err);
-            }.bind(this)
+      let self=this;
+      Axios({
+          url: "http://localhost:8080/userProfile",
+          method: 'GET',
+          data: 'json'
+        }).then(function (response) {
+          let authType = Cookie.load("authType");
+          console.log(authType);
+          if (authType == "facebook") {
+              console.log(response.data.user.facebook.displayName);
+              self.setState({name: response.data.user.facebook.displayName, email: response.data.user.facebook.email, photo: response.data.user.facebook.photos, usertype: false});
+          }
+          else if (authType == "google") {
+              self.setState({name: response.data.user.google.name, email: response.data.user.google.email, photo: response.data.user.google.photos, usertype: false});
+          }
+          else if (authType == "local") {
+              self.setState({name: response.data.user.local.name, email: response.data.user.local.email, photo: response.data.user.local.photos, usertype: true});
+          }
+        })
+         .catch(function (error) {
+              console.log("error", error);
         });
     }
     onSubmitEmail() {
         hashHistory.push('/profile')
     }
-
+    onChangePassword() {
+        hashHistory.push('/change')
+    }
     handleItemClick = (e, {name}) => this.setState({activeItem: name})
     render() {
         const activeItem = this.state.activeItem;
@@ -127,6 +128,7 @@ export default class LeftMenu extends Component {
                                     <Dropdown trigger={trigger} pointing='top right' icon={null}>
                                         <Dropdown.Menu >
                                             <Dropdown.Item text='Edit Profile' icon='user' disabled={(!this.state.usertype)} onClick={this.onSubmitEmail}/>
+                                            <Dropdown.Item text='Change Password' icon='lock' disabled={(!this.state.usertype)} onClick={this.onChangePassword}/>
                                             <Dropdown.Item text='Settings' icon='settings'/>
                                             <Dropdown.Item text='Help' icon='help'/>
                                         </Dropdown.Menu>

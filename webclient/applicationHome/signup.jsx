@@ -1,9 +1,9 @@
 import React from 'react';
 import {hashHistory} from 'react-router';
-import {Button, Image, Modal,Dimmer,Header,Loader} from 'semantic-ui-react';
+import {Button, Image, Modal, Dimmer, Header} from 'semantic-ui-react';
 import {Form} from 'semantic-ui-react';
 import validator from 'validator';
-import axios from 'axios';
+import Axios from 'axios';
 import './signup.css';
 export default class Signup extends React.Component {
     constructor()
@@ -43,7 +43,7 @@ export default class Signup extends React.Component {
     close = () => hashHistory.push('/');
     // email verification link
     sentemail(email) {
-        axios({
+        Axios({
             url: ' http://localhost:8080/send',
             method: 'post',
             data: {
@@ -58,7 +58,7 @@ export default class Signup extends React.Component {
     // new user signup
     onRegisterUser(e, value) {
       e.preventDefault();
-      axios({
+      Axios({
         url: 'http://localhost:8080/signup',
         method: 'post',
         data: value.formData
@@ -98,8 +98,8 @@ export default class Signup extends React.Component {
         // console.log(event.target.value);
         // check whether the user is alreay exists or not
         if (validator.isEmail(event.target.value)) {
-          var self=this;
-            axios({
+          let self = this;
+            Axios({
                 url: ' http://localhost:8080/checkuser',
                 method: 'POST',
                 data: {
