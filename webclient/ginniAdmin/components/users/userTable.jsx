@@ -2,6 +2,7 @@ import React from 'react';
 import {Grid, Image, Card} from 'semantic-ui-react';
 import { Button} from 'semantic-ui-react';
 import Axios from 'axios';
+import ViewUserChat from './viewUserChat';
 import './usertable.css';
 export default class UserTable extends React.Component
 {
@@ -15,6 +16,7 @@ export default class UserTable extends React.Component
     }
     componentDidMount() {
       var self=this;
+
       Axios({
       url: 'http://localhost:8080/viewall',
       method: 'GET'
@@ -26,11 +28,13 @@ export default class UserTable extends React.Component
         console.log(err);
         });
     }
+    history(email){
+console.log(email);
+    }
 
   render() {
     let user=this.state.userinformation.map(function(newsdata) {
 return (
-
   <div id='eachcardstyle'>
     <Card id='parentcard'>
       <Card.Content>
@@ -44,7 +48,7 @@ return (
       </Card.Content>
       <Card.Content extra>
         <div>
-          <Button basic color='green'>ViewMore</Button>
+          <ViewUserChat userEmail={newsdata.local.email}/>
         </div>
       </Card.Content>
     </Card>

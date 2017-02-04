@@ -2,6 +2,8 @@ import React from 'react'
 import Notificationfeed from './notificationfeed'
 import Config from '../../../../config/url';
 import axios from 'axios';
+import {Scrollbars} from 'react-custom-scrollbars';
+import {Feed, Icon,Grid,Card} from 'semantic-ui-react';
 
 export default class Notifications extends React.Component {
     constructor(props) {
@@ -10,8 +12,6 @@ export default class Notifications extends React.Component {
             message: []
         }
     }
-
-
     componentDidMount() {
         let socket = io();
         let url = Config.url + '/getbroadcastmessage';
@@ -31,14 +31,31 @@ export default class Notifications extends React.Component {
           this.setState({message:this.state.message});
         });
 
-    }
+   }
     render() {
 
-      let messages = this.state.message.reverse().map((msg,index)=> <Notificationfeed key={index} feed={msg.text} type={msg.type} date={msg.date}/>);
+     let messages = this.state.message.reverse().map((msg,index)=>
+          <Notificationfeed key={index} feed={msg.text} type={msg.type} date={msg.date}/>);
       return (
-        <div>
-        {messages}
-        </div>
-      );
+        <div style={{backgroundImage: "url('../../images/wall.jpg')", marginTop: '1%',height:'100%'}}>
+              <Grid divided='vertically'>
+          <Grid.Row columns={3}>
+            <Grid.Column width={1}></Grid.Column>
+                  <Grid.Column width={13}>
+            <Card fluid>
+              <Scrollbars renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
+                  display: "none",
+                  position: "right"
+              }}/>} autoHeight autoHeightMin={555}>
+                  <div style={{width:'100%'}} >
+                                {messages}
+      </div></Scrollbars>  </Card>
+                  </Grid.Column>
+        </Grid.Row>
+        </Grid>
+          </div>
+
+
+        );
     }
 }

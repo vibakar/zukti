@@ -22,7 +22,7 @@ router.post('/askQuestion', function(req, res) {
         sendResponse(resultArray);
     };
     let noAnswerFoundCallback = function() {
-        saveUnansweredQuery('v', question.value, keywords, intents);
+        saveUnansweredQuery(email, question.value, keywords, intents);
         let foundNoAnswer=answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
         resultArray=[];
         let resultObj={};
@@ -32,7 +32,7 @@ router.post('/askQuestion', function(req, res) {
         sendResponse(resultArray);
     };
     if (keywords.length === 0) {
-        saveUnansweredQuery('v', question.value);
+        saveUnansweredQuery(email, question.value);
         let foundNoAnswer = commonReply[Math.floor(Math.random() * commonReply.length)]
         resultArray=[];
         let resultObj={};

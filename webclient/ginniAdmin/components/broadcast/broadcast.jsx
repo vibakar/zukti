@@ -36,12 +36,12 @@ export default class BroadCast extends React.Component {
                     margin: 'auto'
                 }} divided>
                     <Grid.Row>
-                        <Grid.Column width={6}>
+                        <Grid.Column width={8}>
                             <Header as='h1' color='blue'>Send Message</Header>
                             <ContentType handlercontent={this.handlerfrom}/>
 
                         </Grid.Column>
-                        <Grid.Column width={10}>
+                        <Grid.Column width={8}>
                             <MessagesSend send={this.state.content} />
                         </Grid.Column>
                     </Grid.Row>

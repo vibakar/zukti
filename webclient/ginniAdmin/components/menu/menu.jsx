@@ -53,10 +53,6 @@ export default class SidebarBot extends Component {
                         <Icon name='spy' color='teal'/>
                         Analyze
                     </Menu.Item>
-                    <Menu.Item name='UseTheBot' active={activeItem === 'UseTheBot'} onClick={this.handleItemClick}>
-                        <Icon name='book' color='teal'/>
-                        Use the bot
-                    </Menu.Item>
                     <Menu.Item name='TrainBot' active={activeItem === 'UseTheBot'} onClick={this.handleItemClick}>
                         <Icon name='child' color='teal'/>
                         TrainBot
@@ -65,7 +61,7 @@ export default class SidebarBot extends Component {
                         <Icon name='help' color='teal'/>
                       Unanswered Queries
                     </Menu.Item>
-                    <Menu.Item name='UseTheBot'>
+                    <Menu.Item name='LogOut'>
                           <a href='#/log'><Icon name='sign out' color='teal'/>
                       Logout</a>
                     </Menu.Item>

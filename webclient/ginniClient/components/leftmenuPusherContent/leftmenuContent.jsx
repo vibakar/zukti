@@ -1,6 +1,4 @@
 import React from 'react';
-import HomeClient from '../clienthome/home';
-import TopMenu from '../leftmenu/topmenu';
 import DefaultPage from './defaultpageclient';
 import AssistanView from '../interaction/assistantChatContainer';
 import Notifications from '../notification/notifications';
@@ -30,7 +28,7 @@ export default class LeftMenuContent extends React.Component {
                 }
             case 'Unanswered Queries':
                 {
-                    return <TopMenu/>
+                    return null;
                 }
             case 'notifications':
                 {
