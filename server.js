@@ -13,6 +13,7 @@ let getLexicon = require('./webserver/lexicon/getLexicon');
 let intent = require('./webserver/routes/intent/intent');
 let addKnowledge = require('./webserver/routes/addKnowledge/question');
 let askQuestion = require('./webserver/routes/getReply/reply');
+let savequery = require('./webserver/routes/getReply/functions/saveanswer');
 let getAdmin = require('./webserver/routes/getAdmin/getadminUser');
 let savebroadcastmessage = require('./webserver/routes/broadcastmessage/broadcastmessage');
 let getbroadcastmessage = require('./webserver/routes/broadcastmessage/getbroadcastmessage');
@@ -82,6 +83,7 @@ app.use('/getadmin',getAdmin);
 app.use('/intent',intent);
 app.use('/qa', addKnowledge);
 app.use('/question', askQuestion);
+app.use('/savequery', savequery);
 
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
