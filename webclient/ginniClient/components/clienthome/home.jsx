@@ -8,20 +8,19 @@ export default class ClientHome extends React.Component {
 
     handleLogout()
     {
-        $.ajax({
+      $.ajax({
             type: 'GET',
-            url: 'http://localhost:8080/signout',
+            url:"http://localhost:8080/signout",
             dataType: 'json',
             success: function(res) {
-                Cookie.remove('authType');
-                Cookie.remove('token');
-                hashHistory.push('/');
-            },
-            error: function(err) {
-                console.log('error', err);
-            }
-        });
-
+             Cookie.remove("authType");
+             Cookie.remove("token");
+             hashHistory.push('/');
+            }.bind(this),
+            error: function(err){
+              console.log("error",err);
+            }.bind(this)
+         });
     }
     onSubmitEmail() {
         hashHistory.push('/chat')

@@ -1,16 +1,13 @@
-
 import React from 'react';
 import {Feed, Icon} from 'semantic-ui-react';
 import './chatcontainerstyle.css';
 
 export default class AssistantView extends React.Component {
-
     constructor(props) {
         super(props);
     }
     render() {
         return (
-
             <Feed id='assistantView'>
                 <Feed.Event>
                     <Feed.Label image='https://chapters.theiia.org/northwest-ohio/About/ChapterOfficers/Larounis,%20John.png'/>

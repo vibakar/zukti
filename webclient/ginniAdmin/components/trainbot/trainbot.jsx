@@ -24,7 +24,7 @@ export default class TrainBot extends React.Component {
         this.setState({sameAsIntentsDisplay: sameAsIntentsDisplay, baseIntent: baseIntent});
     }
     addNewSameAsIntent(intent){
-      let length = this.state.baseIntent.length;
+      let length = this.state.sameAsIntentsDisplay.length;
       this.state.sameAsIntentsDisplay.push(<SameAsIntents key={length} intent={intent}/>);
       this.setState({sameAsIntentsDisplay: this.state.sameAsIntentsDisplay});
     }

@@ -17,6 +17,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.displayBlogUrl = this.displayBlogUrl.bind(this);
     }
     displayVideoUrl() {
+        console.log(this.props.data);
         let ginniReply = [<AssistantGinniVideoDisplay message='Here are some videos' url={this.props.data.videoUrl}/>];
         this.props.handleGinniReply(ginniReply);
     }
@@ -25,23 +26,20 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.props.handleGinniReply(ginniReply);
     }
     render() {
-        console.log(this.props.data);
         let text = this.props.data.textAnswer;
-        console.log(text);
-        console.log(this.props.data.textAnswer);
         return (
             <Feed id="ginniview">
                 <Feed.Event>
                     <Feed.Label image='https://unnecessarynewsfromearth.files.wordpress.com/2016/11/computer-bot.jpg?w=700'/>
                     <Feed.Content>
-                        <Feed.Summary date={new Date().toLocaleString()} user='Genie'/>
+                        <Feed.Summary date={this.props.data.time} user='Genie'/>
                         <Feed.Extra text>
                             {text}
                         </Feed.Extra>
                         <Feed.Extra>
                             <Label.Group color='blue'>
-                                {this.props.data.videoUrl?<Label onClick={this.displayVideoUrl}>Videos</Label>:''}
                                 {this.props.data.blogUrl?<Label onClick={this.displayBlogUrl}>Blogs</Label>:''}
+                                {this.props.data.videoUrl?<Label onClick={this.displayVideoUrl}>Videos</Label>:''}
                             </Label.Group>
                         </Feed.Extra>
                         <Feed.Meta>
