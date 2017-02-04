@@ -9,7 +9,7 @@ export default class Defaultpage extends React.Component {
     render() {
         return (
             <Grid id="defaultgrid" style={{
-                backgroundImage: "url('../../images/wall8.jpg')"
+                backgroundImage: "url('../../images/background.jpg')"
             }}>
                 <Grid.Row columns={1}>
                     <div id="defaultdiv">

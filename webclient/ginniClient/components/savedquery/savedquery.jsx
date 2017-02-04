@@ -96,7 +96,7 @@ export default class SavedQuery extends React.Component{
   );
   }.bind(this));
   return(
-  <div style={{ backgroundImage: "url('../../images/wall.jpg')", marginTop: '1%',height:'100%'}}>
+  <div style={{ backgroundImage: "url('../../images/background.jpg')", marginTop: '1%',height:'100%'}}>
 
   <Grid divided='vertically'>
     <Grid.Row columns={3}>
