@@ -454,7 +454,7 @@ module.exports = function(app, passport) {
               }), (req, res) => {
                 res.cookie('token', req.user.facebook.token);
                 res.cookie('authType', req.user.facebook.authType);
-                res.cookie('username',req.user.facebook.name);
+                res.cookie('username',req.user.facebook.displayName);
                 res.redirect('/#/clienthome');
               });
 
