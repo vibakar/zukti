@@ -30,14 +30,12 @@ export default class Notifications extends React.Component {
           this.state.message.push(msg);
           this.setState({message:this.state.message});
         });
-
    }
     render() {
-
      let messages = this.state.message.reverse().map((msg,index)=>
           <Notificationfeed key={index} feed={msg.text} type={msg.type} date={msg.date}/>);
       return (
-        <div style={{backgroundImage: "url('../../images/background.jpg')", marginTop: '1%',height:'100%'}}>
+        <div style={{backgroundImage: "url('../../images/wall.jpg')", marginTop: '1%',height:'100%'}}>
               <Grid divided='vertically'>
           <Grid.Row columns={3}>
             <Grid.Column width={1}></Grid.Column>
@@ -54,8 +52,6 @@ export default class Notifications extends React.Component {
         </Grid.Row>
         </Grid>
           </div>
-
-
         );
     }
 }

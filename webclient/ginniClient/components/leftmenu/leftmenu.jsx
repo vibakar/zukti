@@ -19,6 +19,7 @@ import {
     Dropdown
 } from 'semantic-ui-react';
 import Axios from 'axios';
+import $ from 'jquery';
 import Cookie from 'react-cookie';
 import {hashHistory} from 'react-router';
 import Config from '../../../../config/url';
@@ -67,39 +68,36 @@ export default class LeftMenu extends Component {
             this.setState({counter: response.data.count});
         }).catch((error) => {
             console.log(error);
-            alert('error in getting notification count');
         })
     }
     getUserInformation() {
-      let self=this;
-      Axios({
-          url: "http://localhost:8080/userProfile",
-          method: 'GET',
-          data: 'json'
-        }).then(function (response) {
-          let authType = Cookie.load("authType");
-          console.log(authType);
-          if (authType == "facebook") {
-              console.log(response.data.user.facebook.displayName);
-              self.setState({name: response.data.user.facebook.displayName, email: response.data.user.facebook.email, photo: response.data.user.facebook.photos, usertype: false});
-          }
-          else if (authType == "google") {
-              self.setState({name: response.data.user.google.name, email: response.data.user.google.email, photo: response.data.user.google.photos, usertype: false});
-          }
-          else if (authType == "local") {
-              self.setState({name: response.data.user.local.name, email: response.data.user.local.email, photo: response.data.user.local.photos, usertype: true});
-          }
-        })
-         .catch(function (error) {
-              console.log("error", error);
-        });
-    }
-    onSubmitEmail() {
+    let self=this;
+    Axios({
+        url: "http://localhost:8080/userProfile",
+        method: 'GET',
+        data: 'json'
+      }).then(function (response) {
+        let authType = Cookie.load("authType");
+        console.log(authType);
+        if (authType == "facebook") {
+            console.log(response.data.user.facebook.displayName);
+            self.setState({name: response.data.user.facebook.displayName, email: response.data.user.facebook.email, photo: response.data.user.facebook.photos, usertype: false});
+        }
+        else if (authType == "google") {
+            self.setState({name: response.data.user.google.name, email: response.data.user.google.email, photo: response.data.user.google.photos, usertype: false});
+        }
+        else if (authType == "local") {
+            self.setState({name: response.data.user.local.name, email: response.data.user.local.email, photo: response.data.user.local.photos, usertype: true});
+        }
+      })
+       .catch(function (error) {
+            console.log("error", error);
+      });
+  }
+        onSubmitEmail() {
         hashHistory.push('/profile')
     }
-    onChangePassword() {
-        hashHistory.push('/change')
-    }
+
     render() {
         const activeItem = this.state.activeItem;
         const customername = this.state.name;
@@ -152,13 +150,14 @@ export default class LeftMenu extends Component {
                                 </Menu.Item>
                                 <Menu.Item position='right'></Menu.Item>
                                 <Menu.Item>
-                                    <h2>GENIE</h2>
+                                    <h3>THE CODE AESSISTANT/GENIE</h3>
                                 </Menu.Item>
                                 <Menu.Item position='right'>
                                     <Dropdown trigger={trigger} pointing='top right' icon={null}>
                                         <Dropdown.Menu >
                                             <Dropdown.Item text='Edit Profile' icon='user' disabled={(!this.state.usertype)} onClick={this.onSubmitEmail}/>
-                                            <Dropdown.Item text='Change Password' icon='lock' disabled={(!this.state.usertype)} onClick={this.onChangePassword}/>
+                                            <Dropdown.Item text='Settings' icon='settings'/>
+                                            <Dropdown.Item text='Help' icon='help'/>
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </Menu.Item>
