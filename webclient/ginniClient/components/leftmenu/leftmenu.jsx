@@ -32,13 +32,21 @@ export default class LeftMenu extends Component {
             email: '',
             firstname: '',
             lastname: '',
-            usertype: false
+            usertype: false,
+            counter: 0
         }
         this.onSubmitEmail = this.onSubmitEmail.bind(this);
         this.getUserInformation = this.getUserInformation.bind(this);
     }
     componentDidMount() {
         this.getUserInformation();
+        let socket = io();
+        console.log('Hiiii');
+        socket.on('update label', (data) => {
+            console.log(data);
+            this.state.counter = data.notificationcount;
+            this.setState({counter: this.state.counter});
+        });
     }
     getUserInformation() {
         $.ajax({
@@ -55,8 +63,8 @@ export default class LeftMenu extends Component {
                     this.setState({name: res.user.google.name, email: res.user.google.email, photo: res.user.google.photos, usertype: false});
                 }
                 if (authType == "local") {
-                  console.log("hello");
-                  console.log(res.user.local.name);
+                    console.log("hello");
+                    console.log(res.user.local.name);
                     this.setState({name: res.user.local.name, email: res.user.local.email, photo: res.user.local.photos, usertype: true});
                 }
             }.bind(this),
@@ -99,13 +107,13 @@ export default class LeftMenu extends Component {
                     </Menu.Item>
                     <Menu.Item name='Unanswered Queries' active={activeItem === 'Unanswered Queries'} onClick={this.handleItemClick}>
                         <Icon name='help' color='teal'/>
-                      Unanswered Queries
+                        Unanswered Queries
                     </Menu.Item>
                     <Menu.Item name='notifications' active={activeItem === 'notifications'} onClick={this.handleItemClick}>
-                      <Label color='red' floating>22</Label>
+                        <Label color='red' floating-left>{this.state.counter}</Label>
                         <Icon name='alarm' color='teal'/>
 
-                      notifications
+                        notifications
                     </Menu.Item>
                     <Menu.Item name='LogOut' active={activeItem === 'LogOut'} onClick={this.handleItemClick}>
                         <a href='#/logout'><Icon name='sign out' color='teal'/>
