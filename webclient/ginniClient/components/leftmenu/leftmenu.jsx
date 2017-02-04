@@ -40,6 +40,15 @@ export default class LeftMenu extends Component {
         this.getNotificationCount = this.getNotificationCount.bind(this);
         this.getUserInformation = this.getUserInformation.bind(this);
     }
+
+    handleItemClick = ((e, {name}) => {
+        if (this.state.activeItem == 'notifications') {
+            let url = Config.url + '/getbroadcastmessage/updateCount'
+            this.state.counter = 0;
+            Axios.post(url).then((response) => {}).catch((error) => {console.log(error);});
+        }
+        this.setState({activeItem: name,counter:this.state.counter});
+    });
     componentDidMount() {
         this.getUserInformation();
         this.getNotificationCount();
@@ -51,18 +60,16 @@ export default class LeftMenu extends Component {
             this.setState({counter: this.state.counter});
         });
     }
-    getNotificationCount(){
-      let url =Config.url+'/getbroadcastmessage/count';
-      console.log(url);
-      Axios.get(url).
-      then((response)=>{
-        console.log(response);
-        this.setState({counter:response.data.count});
-      }).
-      catch((error)=>{
-        console.log(error);
-        alert('error in getting notification count');
-      })
+    getNotificationCount() {
+        let url = Config.url + '/getbroadcastmessage/count';
+        console.log(url);
+        Axios.get(url).then((response) => {
+            console.log(response);
+            this.setState({counter: response.data.count});
+        }).catch((error) => {
+            console.log(error);
+            alert('error in getting notification count');
+        })
     }
     getUserInformation() {
         $.ajax({
@@ -93,7 +100,6 @@ export default class LeftMenu extends Component {
         hashHistory.push('/profile')
     }
 
-    handleItemClick = (e, {name}) => this.setState({activeItem: name})
     render() {
         const activeItem = this.state.activeItem;
         const customername = this.state.name;
@@ -128,7 +134,6 @@ export default class LeftMenu extends Component {
                     <Menu.Item name='notifications' active={activeItem === 'notifications'} onClick={this.handleItemClick}>
                         <Label color='red' floating-left>{this.state.counter}</Label>
                         <Icon name='alarm' color='teal'/>
-
                         notifications
                     </Menu.Item>
                     <Menu.Item name='LogOut' active={activeItem === 'LogOut'} onClick={this.handleItemClick}>
