@@ -48,7 +48,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         return (
             <Feed id="ginniview">
                 <Feed.Event>
-                    <Feed.Label image='../../images/geniebot.jpg'/>
+                    <Feed.Label image='../../images/user2.jpg'/>
                     <Feed.Content>
                         <Feed.Summary date={new Date().toLocaleString()} user='Genie'/>
                         <Feed.Extra text>

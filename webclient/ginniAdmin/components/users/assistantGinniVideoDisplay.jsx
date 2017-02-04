@@ -1,7 +1,7 @@
 import React from 'react';
 import {Feed, Icon} from 'semantic-ui-react';
 import {Popup, Comment} from 'semantic-ui-react';
-import Embedly from 'react-embedly';
+import ReactPlayer from 'react-player';
 import Snackbar from 'material-ui/Snackbar';
 import Axios from 'axios';
 
@@ -44,18 +44,18 @@ export default class AssistantGinniMixedReply extends React.Component {
         }
 
     render() {
-      const {open} = this.state;
+      const {open} = this.state
         return (
             <Feed id="ginniview">
                 <Feed.Event>
-                    <Feed.Label image='../../images/geniebot.jpg'/>
+                    <Feed.Label image='../../images/user2.jpg'/>
                     <Feed.Content>
                         <Feed.Summary date={new Date().toLocaleString()} user='Genie'/>
                         <Feed.Extra text>
                             {this.props.message}
                         </Feed.Extra>
                         <Feed.Extra images>
-                            <Embedly url={this.props.url} apiKey="73f538bb83f94560a044bc6f0f33c5f6"/>
+                                <ReactPlayer url={this.props.url} playing={false} controls={true}/>
                         </Feed.Extra>
                         <Feed.Meta>
                             <Popup trigger={< Icon circular name = 'flag' color = 'green' />} content='Flag' size='mini'/>

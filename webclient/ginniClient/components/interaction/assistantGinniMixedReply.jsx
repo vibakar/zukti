@@ -70,7 +70,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         return (
             <Feed id="ginniview">
                 <Feed.Event>
-                    <Feed.Label image='https://unnecessarynewsfromearth.files.wordpress.com/2016/11/computer-bot.jpg?w=700'/>
+                    <Feed.Label image='../../images/geniebot.jpg'/>
                     <Feed.Content>
                         <Feed.Summary date={this.props.data.time} user='Genie'/>
                         <Feed.Extra text>

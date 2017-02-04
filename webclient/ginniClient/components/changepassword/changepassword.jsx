@@ -57,7 +57,7 @@ export default class ChangePassword extends React.Component {
       this.setState({errormessage: 'Not matched'});
   }
 }
- close = () => hashHistory.push ('/left');
+ close = () => hashHistory.push ('/chat');
 passwordchange(e, value) {
   let self= this;
   e.preventDefault();

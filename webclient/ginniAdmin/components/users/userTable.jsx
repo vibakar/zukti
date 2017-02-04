@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Image, Card} from 'semantic-ui-react';
+import {Grid, Image,Feed,Icon} from 'semantic-ui-react';
 import { Button} from 'semantic-ui-react';
 import Axios from 'axios';
 import ViewUserChat from './viewUserChat';
@@ -16,56 +16,55 @@ export default class UserTable extends React.Component
     }
     componentDidMount() {
       var self=this;
-
       Axios({
       url: 'http://localhost:8080/viewall',
       method: 'GET'
     }).then(function(response) {
     self.setState({ userinformation: response.data});
     console.log(response.data);
-}.bind(this)).
+}).
     catch(function(err) {
         console.log(err);
         });
     }
     history(email){
-console.log(email);
+alert(email);
     }
-  render() {
+
+ render() {
     let user=this.state.userinformation.map(function(newsdata) {
 return (
   <div id='eachcardstyle'>
-    <Card id='parentcard'>
-      <Card.Content>
-        <Image floated='right' size='mini' src='http://semantic-ui.com/images/avatar/large/steve.jpg' />
-        <Card.Header>
-        {newsdata.local.name}
-        </Card.Header>
-        <Card.Meta>
-        {newsdata.local.email}
-        </Card.Meta>
-      </Card.Content>
-      <Card.Content extra>
-        <div>
-          <ViewUserChat userEmail={newsdata.local.email}/>
-        </div>
-      </Card.Content>
-    </Card>
+    <Grid>
+      <Grid.Row>
+        <Grid.Column width={1} />
+      <Grid.Column width={3}>
+        <center>{/*<Image size='mini' src={newsdata.local.photos}*/}
+<Image src='https://chapters.theiia.org/northwest-ohio/About/ChapterOfficers/Larounis,%20John.png' size='mini' avatar/>
+      </center>
+    </Grid.Column>
+          <Grid.Column width={3}>
+          <b>{newsdata.local.name}</b>
+        </Grid.Column>
+        <Grid.Column width={5}>
+          <b>{newsdata.local.email}</b>
+        </Grid.Column>
+<Grid.Column width={2}>
+          <div>
+            <ViewUserChat userEmail={newsdata.local.email}/>
+          </div>
+        </Grid.Column>
+        <Grid.Column width={1} />
+</Grid.Row>
+</Grid>
     </div>
   );
 }.bind(this));
 return(
 <div style={{ backgroundImage: "url('../../images/wall.jpg')", height: '100%', marginTop: '1%'}}>
-  <Grid divided='vertically'>
-    <Grid.Row columns={3}>
-    <Grid.Column width={1}/>
-    <Grid.Column width={14} id='cardlayoutstyle'>
-        <Card.Group id='cardgrouplayout'>
-  {user}
-</Card.Group>
-</Grid.Column>
-</Grid.Row>
-</Grid>
+
+ {user}
+
 </div>
 );
 }

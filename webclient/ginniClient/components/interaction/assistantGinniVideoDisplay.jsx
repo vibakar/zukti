@@ -2,16 +2,24 @@ import React from 'react';
 import {Feed, Icon} from 'semantic-ui-react';
 import {Popup, Comment} from 'semantic-ui-react';
 import ReactPlayer from 'react-player';
+import Snackbar from 'material-ui/Snackbar';
 import Axios from 'axios';
 
 export default class AssistantGinniMixedReply extends React.Component {
   constructor(props) {
       super(props);
+      this.state={
+        openSnackbar: false,
+        snackbarMsg: ''
+      }
         this.savedquery=this.savedquery.bind(this);
   }
+  handleRequestClose = () => {
+      this.setState({openSnackbar: false});
+  };
   savedquery(message)
     {
-        alert(message);
+      this.setState({openSnackbar: true, snackbarMsg:"saved for reference"});
           console.log(message);
 
           Axios({
@@ -36,10 +44,11 @@ export default class AssistantGinniMixedReply extends React.Component {
         }
 
     render() {
+      const {open} = this.state
         return (
             <Feed id="ginniview">
                 <Feed.Event>
-                    <Feed.Label image='../../images/user2.jpg'/>
+                    <Feed.Label image='../../images/geniebot.jpg'/>
                     <Feed.Content>
                         <Feed.Summary date={new Date().toLocaleString()} user='Genie'/>
                         <Feed.Extra text>
@@ -58,6 +67,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                         </Feed.Meta>
                     </Feed.Content>
                 </Feed.Event>
+                <Snackbar  open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={1000} onRequestClose={this.handleRequestClose}/>
             </Feed>
         );
     }

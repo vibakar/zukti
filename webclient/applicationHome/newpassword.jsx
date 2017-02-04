@@ -71,16 +71,16 @@ export default class NewPassword extends React.Component {
     render() {
       const {active} = this.state;
         return (
-            <div id='newpassword' style={{backgroundImage: "url ('../../images/intro-bg.jpg')"}}>
+            <div id="newpassword" style={{ backgroundImage: "url('../../images/intro-bg.jpg')"}} >
                 <br/><br/><br/><br/><br/><br/><br/>
                   <Form onSubmit={this.onSubmitData} >
                     <Form.Field >
                         <h3 id='heading'><Icon name='lock' id='icon'/>Reset your new password</h3><Divider id='divider'/>
-                        <h3 style={{color:'white'}}>Keep your credential secure by changing it </h3><br/>
+                        <h3 style={{color:'white',fontStyle:'italic'}}>Keep your credential secure by changing it </h3><br/>
                         <Form.Input type='password' placeholder='new password' circular id='fields' icon='key' iconPosition='left' name="password" onChange={this.ChangePassword.bind(this)} error={this.state.errorpassword} required/><br/>
-                        <p style={{color: '#a54f4f'}}>{this.state.errormessagepassword}</p>
+                        <p style={{color: 'white'}}>{this.state.errormessagepassword}</p>
                         <Form.Input type= 'password' placeholder='confirm password' id='fields' icon='key' iconPosition='left' name="repassword" onChange={this.ChangeRepassword.bind(this)} error={this.state.errorrepassword} required/><br/>
-                        <p style={{color: '#a54f4f'}}>{this.state.errormessage}</p>
+                        <p style={{color: 'white'}}>{this.state.errormessage}</p>
                         <Button type='submit' id='submit' onClick={this.handleOpen} circular disabled={(!this.state.repassword) || (!this.state.password) || (this.state.errorrepassword)}>submit</Button>
                         <Dimmer
                                  active={active}

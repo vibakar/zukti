@@ -15,11 +15,13 @@ import {
     Feed,
     Link,
     Input,
+    Label,
     Dropdown
 } from 'semantic-ui-react';
 import Axios from 'axios';
 import Cookie from 'react-cookie';
 import {hashHistory} from 'react-router';
+import Config from '../../../../config/url';
 import './leftmenu.css';
 export default class LeftMenu extends Component {
     constructor(props) {
@@ -30,14 +32,43 @@ export default class LeftMenu extends Component {
             email: '',
             firstname: '',
             lastname: '',
-            usertype: false
+            usertype: false,
+            counter: 0
         }
         this.onSubmitEmail = this.onSubmitEmail.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
+        this.getNotificationCount = this.getNotificationCount.bind(this);
         this.getUserInformation = this.getUserInformation.bind(this);
     }
+
+    handleItemClick = ((e, {name}) => {
+        if (this.state.activeItem == 'notifications') {
+            let url = Config.url + '/getbroadcastmessage/updateCount'
+            this.state.counter = 0;
+            Axios.post(url).then((response) => {}).catch((error) => {console.log(error);});
+        }
+        this.setState({activeItem: name,counter:this.state.counter});
+    });
     componentDidMount() {
         this.getUserInformation();
+        this.getNotificationCount();
+        let socket = io();
+        console.log('Hiiii');
+        socket.on('update label', (data) => {
+            console.log(data);
+            this.state.counter = this.state.counter + 1;
+            this.setState({counter: this.state.counter});
+        });
+    }
+    getNotificationCount() {
+        let url = Config.url + '/getbroadcastmessage/count';
+        console.log(url);
+        Axios.get(url).then((response) => {
+            console.log(response);
+            this.setState({counter: response.data.count});
+        }).catch((error) => {
+            console.log(error);
+            alert('error in getting notification count');
+        })
     }
     getUserInformation() {
       let self=this;
@@ -69,7 +100,6 @@ export default class LeftMenu extends Component {
     onChangePassword() {
         hashHistory.push('/change')
     }
-    handleItemClick = (e, {name}) => this.setState({activeItem: name})
     render() {
         const activeItem = this.state.activeItem;
         const customername = this.state.name;
@@ -97,11 +127,15 @@ export default class LeftMenu extends Component {
                         <Icon name='star' color='teal'/>
                         SavedQueries
                     </Menu.Item>
-                    <Menu.Item name='notifications' active={activeItem === 'notifications'} onClick={this.handleItemClick}>
+                    <Menu.Item name='Unanswered Queries' active={activeItem === 'Unanswered Queries'} onClick={this.handleItemClick}>
                         <Icon name='help' color='teal'/>
-                      notifications
+                        Unanswered Queries
                     </Menu.Item>
-                    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    <Menu.Item name='notifications' active={activeItem === 'notifications'} onClick={this.handleItemClick}>
+                        <Label color='red' floating-left>{this.state.counter}</Label>
+                        <Icon name='alarm' color='teal'/>
+                        notifications
+                    </Menu.Item>
                     <Menu.Item name='LogOut' active={activeItem === 'LogOut'} onClick={this.handleItemClick}>
                         <a href='#/logout'><Icon name='sign out' color='teal'/>
                             LogOut</a>
@@ -116,10 +150,9 @@ export default class LeftMenu extends Component {
                                         <Popup trigger={< Icon name = "arrow circle left" size = "large" circular color = 'teal' />} content='Back' size='mini'/>
                                     </a>
                                 </Menu.Item>
-                              <Menu.Item/>  <Menu.Item/>  <Menu.Item/>
                                 <Menu.Item position='right'></Menu.Item>
                                 <Menu.Item>
-                                    <h3>GENIE</h3>
+                                    <h2>GENIE</h2>
                                 </Menu.Item>
                                 <Menu.Item position='right'>
                                     <Dropdown trigger={trigger} pointing='top right' icon={null}>

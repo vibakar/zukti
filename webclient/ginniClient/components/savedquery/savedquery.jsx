@@ -3,6 +3,7 @@ import {Feed, Icon} from 'semantic-ui-react';
 import {Menu, Segment, Card, Popup, Comment} from 'semantic-ui-react';
 import {Grid, Image, Button, Label} from 'semantic-ui-react';
 import {Scrollbars} from 'react-custom-scrollbars';
+import Snackbar from 'material-ui/Snackbar';
 import Axios from 'axios';
 export default class SavedQuery extends React.Component{
   constructor(props) {
@@ -11,10 +12,15 @@ export default class SavedQuery extends React.Component{
         name : [],
         email: [],
         userinformation: [],
-        message:[]
+        message:[],
+        openSnackbar: false,
+        snackbarMsg: ''
       };
       this.deletesavequery=this.deletesavequery.bind(this);
     }
+    handleRequestClose = () => {
+        this.setState({openSnackbar: false});
+    };
       componentDidMount()
       {
         let self=this;
@@ -41,7 +47,7 @@ export default class SavedQuery extends React.Component{
     }
   deletesavequery(queries)
         {
-          console.log(queries);
+          this.setState({openSnackbar: true, snackbarMsg:"Deleted"});
           let self=this;
           Axios({
               url: ' http://localhost:8080/clientinformation',
@@ -69,6 +75,7 @@ export default class SavedQuery extends React.Component{
 
     }
   render() {
+    const {open} = this.state
     var user=this.state.userinformation.map(function(newsdata) {
   return (
 
@@ -89,7 +96,7 @@ export default class SavedQuery extends React.Component{
   );
   }.bind(this));
   return(
-  <div style={{ backgroundImage: "url('../../images/wall.jpg')", marginTop: '1%',height:'100%'}}>
+  <div style={{ backgroundImage: "url('../../images/background.jpg')", marginTop: '1%',height:'100%'}}>
 
   <Grid divided='vertically'>
     <Grid.Row columns={3}>
@@ -106,6 +113,7 @@ export default class SavedQuery extends React.Component{
 </Scrollbars>
           </Grid.Column>
   </Grid.Row>
+  <Snackbar  open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={1200} onRequestClose={this.handleRequestClose}/>
   </Grid>
 
   </div>

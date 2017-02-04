@@ -6,10 +6,9 @@ export default class AdminWelcomePage extends React.Component {
   constructor() {
     super();
   }
-
-render() {
-      return (
-<div style={{ backgroundImage: "url('../../images/homes.jpg')"}} >
+render(){
+      return(
+<div style={{ backgroundImage: "url('../../images/intro-bg.jpg')"}} >
 
 <Grid container={'true'} centered={'true'}>
 <Grid.Row/>
