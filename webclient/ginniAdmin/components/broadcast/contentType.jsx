@@ -1,28 +1,39 @@
 import React from 'react';
-import { Icon, Label, Menu, Input, Segment } from 'semantic-ui-react'
+import { Icon, Label, Menu, Input, Segment,Feed } from 'semantic-ui-react'
 import AddContent from './addContent';
+import Embedly from 'react-embedly';
 
 export default class ContentType extends React.Component{
   constructor(props){
     super(props);
-    this.state = { activeItem: 'text' };
   }
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-    handlertext = (text,type) => {
-      this.props.handlercontent(text,type);
-    }
+    handleAdminInput = (text,type) => {
+      var urlRegex =/(\b(?:(https?|ftp):\/\/)?((?:www\d{0,3}\.)?([a-z0-9.-]+\.(?:[a-z]{2,4}|museum|travel)(?:\/[^\/\s]+)*))\b)/gi;
+      var match = text.match(urlRegex);
+      var inputTokens = text.split(' ');
+      var str=[];
+      var match =match||[];
+      inputTokens.forEach((item)=>{
+          if(match.indexOf(item)>-1){
+            str.push(<div>
+                <Embedly url={item} apiKey="73f538bb83f94560a044bc6f0f33c5f6"/><a>{item}</a>
+            </div>);
+          }
+          else{
+            str.push(item+' ');
+          }
+        })
+        this.props.handlercontent(str);
+      }
     render() {
-      const  activeItem  = this.state.activeItem;
       return (
         <div>
           <Menu attached='top' tabular>
-            <Menu.Item name='text' active={activeItem === 'text'} onClick={this.handleItemClick} />
-            <Menu.Item name='video' active={activeItem === 'video'} onClick={this.handleItemClick} />
-            <Menu.Item name='blog' active={activeItem === 'blog'} onClick={this.handleItemClick} />
-          </Menu>
-
+            <Menu.Item name='Message' active='Message' onClick={this.handleItemClick} />
+            </Menu>
           <Segment attached='bottom'>
-            <AddContent name = {this.state.activeItem} handlertextinput ={this.handlertext}/>
+            <AddContent handleAdminInput ={this.handleAdminInput}/>
           </Segment>
         </div>
       )

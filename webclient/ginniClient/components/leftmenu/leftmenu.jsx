@@ -19,7 +19,6 @@ import {
     Dropdown
 } from 'semantic-ui-react';
 import Axios from 'axios';
-import $ from 'jquery';
 import Cookie from 'react-cookie';
 import {hashHistory} from 'react-router';
 import Config from '../../../../config/url';
