@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const CONFIG = require('../config/auth');
 // define the schema for our user model
+//let imgPath = '../../webclient/images/user.png';
+
 const userSchema = mongoose.Schema({
 
     local: {
@@ -39,8 +41,8 @@ const userSchema = mongoose.Schema({
       authType     : String
     }
 
-});
 
+});
 userSchema.statics.generateToken = function(email) {
     let token = jwt.sign({
         id: email

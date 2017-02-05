@@ -39,6 +39,7 @@ onDrop(files)
               });
 
        this.setState({ allFiles: this.state.allFiles});
+       console.log(this.state.allFiles[0])
         console.log(this.state.allFiles[0].name);
     }
 
@@ -47,7 +48,8 @@ onDrop(files)
         console.log("Image"+this.state.allFiles[0].name);
         let photo = new FormData();
           this.state.allFiles.forEach((file)=> {
-              photo.append('IMG',file);
+              photo.append(file.name,file);
+              //console.log(file.name);
           });
           let self=this;
         request.post('/upload').send(photo).end(function(err, resp) {
@@ -58,7 +60,7 @@ onDrop(files)
                   }
                   else
                   {
-                    console.log(self.state.allFiles);
+                    console.log(self.state.allFiles[0].name);
                       self.saveImage(self.state.allFiles[0].preview);
                       //this.setState({ allFiles:[]});
                 return resp;

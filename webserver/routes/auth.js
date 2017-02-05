@@ -1,6 +1,7 @@
 const RegisteredUser = require('../models/user');
 const UnansweredQuery = require('../models/unansweredQuery');
 const nodemailer = require('nodemailer');
+const fs= require('fs');
 
 module.exports = function(app, passport) {
   var rand,
@@ -48,9 +49,13 @@ module.exports = function(app, passport) {
     // local sign up route
     app.post('/signup', function(req, res) {
         let newUser = new RegisteredUser();
+        //let imgPath = '../../webclient/images/user.png';
+        //let imageupload = fs.readFileSync(imgPath);
+        //console.log(imgPath);
+        //console.log(imageupload);
         rand = Math.floor((Math.random() * 100) + 54);
         newUser.local.verificationID = rand;
-        newUser.local.name = req.body.firstName + ' ' + req.body.lastName;
+        newUser.local.name = (req.body.firstName + ' ' + req.body.lastName).toLowerCase();
         newUser.local.email = req.body.email;
         newUser.local.password = req.body.password;
         newUser.local.firstname = req.body.firstName;
@@ -59,6 +64,7 @@ module.exports = function(app, passport) {
         newUser.local.authType = 'local';
         newUser.local.loggedinStatus = false;
         newUser.local.isEmailVerified = false;
+        //newUser.local.photos= imageupload.value;
         newUser.save(function(err) {
             if (err) {
                 res.send('Error in registration');
@@ -69,8 +75,11 @@ module.exports = function(app, passport) {
         });
     });
     app.post('/adminsignup', function(req, res) {
-        var newUser = new RegisteredUser();
+        let newUser = new RegisteredUser();
         rand = Math.floor((Math.random() * 100) + 54);
+     //let imageupload = fs.readFileSync('../images/IMG_1486181808021.jpeg');
+      //  console.log(imgPath);
+      //  console.log(imageupload);
         newUser.local.name = req.body.firstName + " " + req.body.lastName;
         newUser.local.email = req.body.email;
         newUser.local.password = req.body.password;
@@ -80,6 +89,7 @@ module.exports = function(app, passport) {
         newUser.local.isEmailVerified = true;
         newUser.local.verificationID = rand;
         newUser.local.authType = 'local';
+     //newUser.local.photos= imageupload.value;
         newUser.save(function(err) {
             if (err) {
                 res.send('Error in registration');

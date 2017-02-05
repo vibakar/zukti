@@ -34,6 +34,8 @@ export default class LeftMenu extends Component {
             firstname: '',
             lastname: '',
             usertype: false,
+            name:'',
+            photo:'',
             counter: 0
         }
         this.onSubmitEmail = this.onSubmitEmail.bind(this);

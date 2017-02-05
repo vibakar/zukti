@@ -10,7 +10,7 @@ let storage = multer.diskStorage({
     filename: function(req, file, cb) {
         let extArray = file.mimetype.split("/");
         let extension = extArray[extArray.length - 1];
-        cb(null, file.fieldname + '_' + Date.now() + '.' + extension)
+        cb(null, file.fieldname)
         console.log(Date.now());
     }
 });
