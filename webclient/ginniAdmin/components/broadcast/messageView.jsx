@@ -15,7 +15,7 @@ export default class MessageView extends React.Component {
                     <Feed.Content>
                         <Feed.Summary>
                             <Feed.User>{this.props.username}</Feed.User>
-                            <Feed.Date>12 jan</Feed.Date>
+                            <Feed.Date>{this.props.date}</Feed.Date>
                         </Feed.Summary>
                         <Feed.Extra text>
                             {this.props.dispData}
