@@ -2,6 +2,7 @@ import React from 'react';
 import {Form, Input, TextArea, Button, Icon} from 'semantic-ui-react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import Cookie from 'react-cookie';
 import Config from '../../../../config/url';
 export default class AddContent extends React.Component {
     static propTypes = {
@@ -9,23 +10,35 @@ export default class AddContent extends React.Component {
     };
     constructor(props) {
         super(props);
+        this.state = {
+            username: 'Admin'
+        }
+    }
+    componentDidMount() {
+        let username = Cookie.load('username');
+        if (username) {
+            console.log(username);
+            this.state.username = username;
+        }
     }
     //to handle text data
     handleSubmitText = (e) => {
         e.preventDefault();
         let text = ReactDOM.findDOMNode(this.refs.text).value;
-        this.props.handleAdminInput(text);
+        let date = new Date().toLocaleString();
+        this.props.handleAdminInput(this.state.username, text, date);
         let socket = io();
         socket.emit('client event', {
+            username: this.state.username,
             value: text,
-            type: 'text'
+            date: date
         });
         ReactDOM.findDOMNode(this.refs.text).value = '';
         let url = Config.url + '/savebroadcastmessage';
         axios.post(url, {
+            username: this.state.username,
             message: text,
-            type: type,
-            date: (new Date().toLocaleString())
+            date: date
         }).then((response) => {
             console.log(response);
         }).catch((error) => {

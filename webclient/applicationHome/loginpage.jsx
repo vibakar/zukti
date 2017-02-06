@@ -74,7 +74,7 @@ export default class LoginPage extends React.Component
         const {open, dimmer} = this.state;
         return (
             <div>
-            <Modal dimmer={dimmer} open={open} onClose={this.close} closeOnRootNodeClick={false} size="small" closeIcon='close'>
+            <Modal dimmer={dimmer} open={open} onClose={this.close} closeOnRootNodeClick={false} size="small" closeIcon='close' id='modallogincss'>
             <Modal.Header id="headerstyle">
             <h1><Image src='../../images/ginianim.gif' avatar/>Welcome to Genie</h1>
             </Modal.Header>

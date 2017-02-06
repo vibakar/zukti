@@ -16,6 +16,15 @@
 .heading6{
   color:white;
 }
+#headsparkle
+{
+  font-size: 40px;
+    -webkit-text-fill-color: transparent;
+  background: -webkit-linear-gradient(teal, transparent),
+             url(http://www.myspacehippo.com/files/glitterbacks/bg345.gif) repeat;
+  background: -o-linear-gradient(transparent, transparent);
+  -webkit-background-clip: text;
+}
 @media only screen and (max-width: 700px) {
   .heading1{
     font-size: 20px;

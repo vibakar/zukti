@@ -68,7 +68,7 @@ export default class SidebarBot extends Component {
                   </Sidebar>
                 <Sidebar.Pusher className='container' style={{
                     width: '90%',
-                    height:'100%'
+                    height:'90%'
                 }}>
                     <Segment style={{
                         'margin-top': '0px',

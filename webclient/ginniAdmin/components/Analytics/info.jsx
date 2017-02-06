@@ -22,8 +22,8 @@ export default class Info extends React.Component {
             email: [],
             detail: ' ',
             userinformation: [],
-            countvalue: ' ',
-            countonline: ' '
+            countvalue: '0',
+            countonline: '0'
         };
     }
     componentDidMount() {

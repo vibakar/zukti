@@ -162,7 +162,7 @@ render() {
     const {open, dimmer,active} = this.state;
     return (
         <div>
-        <Modal  dimmer={dimmer} open={open} onClose={this.close} size="small" closeIcon="close">
+        <Modal  dimmer={dimmer} open={open} onClose={this.close} size="small" closeIcon="close" id='modalsignupcss'>
         <Modal.Header id="signup"><Image src="../../images/ginianim.gif" avatar/>Sign Up</Modal.Header>
         <Modal.Content>
         <Form id="formfield" onSubmit={this.onRegisterUser}>

@@ -25,4 +25,5 @@ background: -o-linear-gradient(transparent, transparent);
 #marquee
 {
   color: green;
+  height:55px;
 }

@@ -21,6 +21,15 @@
 {
   cursor: pointer;
 }
+#sparkleadmin
+{
+    font-size: 40px;
+    -webkit-text-fill-color: transparent;
+  background: -webkit-linear-gradient(green, transparent),
+             url(http://www.myspacehippo.com/files/glitterbacks/bg345.gif) repeat;
+  background: -o-linear-gradient(transparent, transparent);
+  -webkit-background-clip: text;
+}
 
 @media only screen and (max-width: 700px) {
   .heading1{

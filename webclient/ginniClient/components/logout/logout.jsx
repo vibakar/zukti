@@ -18,7 +18,7 @@ Axios({
       }).then(function (response) {
         Cookie.remove("authType");
         Cookie.remove("token");
-        hashHistory.push('/');
+        hashHistory.push('/logoutfile');
       })
        .catch(function (error) {
        });
@@ -34,7 +34,7 @@ Axios({
           </Modal.Header>
           <Modal.Content>
           <Modal.Description id="logoutdescription">
-            <a href="#/"><Button size="small" color='blue' onClick={this.handleLogout.bind(this)}>Yes</Button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#/logoutfile"><Button size="small" color='blue' onClick={this.handleLogout.bind(this)}>Yes</Button></a>&nbsp;&nbsp;&nbsp;&nbsp;
             <Button size="small" color='red' onClick={this.close} >No</Button>
           </Modal.Description>
          </Modal.Content>

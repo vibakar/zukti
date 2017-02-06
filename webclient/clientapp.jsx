@@ -8,6 +8,7 @@ import react from './ginniAdmin/components/menu/menu';
 import AdminHome from './ginniAdmin/components/home/home';
 import App1 from './ginniAdmin/components/app/app';
 import ApplicationHome from './applicationHome/applicationHome';
+import LogoutFile from './applicationHome/logoutfile';
 import NewPassword from './applicationHome/newpassword';
 import LoginPage from './applicationHome/loginpage';
 import ForgotPassword from './applicationHome/forgotpassword.jsx';
@@ -26,6 +27,7 @@ import SuccessfullyRegistered from './applicationHome/successfullyregistered';
 import AdminProfilePage from './ginniAdmin/components/admin/adminprofile';
 import Cookie from 'react-cookie';
 import Addnode from './ginniAdmin/components/buildNodeAndRelationship/createNodeAndRelation.jsx';
+
 
 
 injectTapEventPlugin();
@@ -52,19 +54,22 @@ ReactDOM.render(
         <Route path='/react' component={react} onEnter={requireAuth.bind(this)}/>
         <Route path='/newpassword' component={NewPassword} onEnter={requireAuth.bind(this)}/>
         <Route path='/login' component={LoginPage} />
-        <Route path='/forgotpassword' component={ForgotPassword} onEnter={requireAuth.bind(this)}/>
+        <Route path='/forgotpassword' component={ForgotPassword} />
         <Route path='/forgetmail' component={ForgetpasswordEmail} onEnter={requireAuth.bind(this)}/>
         <Route path='/signup' component={Signup}/>
-        <Route path='/mail' component={SentMailPage} onEnter={requireAuth.bind(this)}/>
+        <Route path='/mail' component={SentMailPage}/>
         <Route path='/chat' component={LeftMenu} onEnter={requireAuth.bind(this)}/>
         <Route path='/change' component={ChangePassword} onEnter={requireAuth.bind(this)}/>
         <Route path='/profile' component={ClientProfile} onEnter={requireAuth.bind(this)}/>
         <Route path='/adminprofile' component={AdminProfilePage} onEnter={requireAuth.bind(this)}/>
         <Route path='/logout' component={Logout} onEnter={requireAuth.bind(this)}/>
         <Route path='/log' component={LogoutAdmin} onEnter={requireAuth.bind(this)}/>
-        <Route path='/expiryLink' component={ExpiryLink} onEnter={requireAuth.bind(this)}/>
-          <Route path='/successfullyregistered' component={SuccessfullyRegistered} onEnter={requireAuth.bind(this)}/>
-          <Route path='/addnode' component={Addnode} onEnter={requireAuth.bind(this)}/>
+        <Route path='/expiryLink' component={ExpiryLink}/>
+        <Route path='/successfullyregistered' component={SuccessfullyRegistered}/>
+        <Route path='/addnode' component={Addnode} onEnter={requireAuth.bind(this)}/>
+        <Route path='/logoutfile' component={LogoutFile}/>
+
+
 
     </Router>
 </MuiThemeProvider>, document.getElementById('mountapp'));
