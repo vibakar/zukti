@@ -21,13 +21,20 @@ let savebroadcastmessage = require('./webserver/routes/broadcastmessage/broadcas
 let getbroadcastmessage = require('./webserver/routes/broadcastmessage/getbroadcastmessage');
 let app = express();
 let compiler = webpack(config);
-let addnode=require('./webserver/routes/addNodeAndRelations/addNode');
+let addnode = require('./webserver/routes/addNodeAndRelations/addNode');
 
 const configDB = require('./webserver/config/database');
 const requestAuthenticate = require('./webserver/middleware/requestAuthenticate');
 const uploadimage = require('./webserver/routes/uploadimage');
 
 
+let isAuthenticated = function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    console.log('Not authenticated');
+    res.redirect('/');
+};
 
 // Mongoose
 // pass passport for configuration
@@ -79,18 +86,18 @@ app.use('/', uploadimage);
 
 //Routes
 
-app.use('/savebroadcastmessage',savebroadcastmessage);
-app.use('/getbroadcastmessage',getbroadcastmessage);
-app.use('/getadmin',getAdmin);
-app.use('/intent',intent);
-app.use('/concept',concept);
+app.use('/savebroadcastmessage',isAuthenticated, savebroadcastmessage);
+app.use('/getbroadcastmessage',isAuthenticated, getbroadcastmessage);
+app.use('/getadmin',isAuthenticated, getAdmin);
+app.use('/intent',isAuthenticated, intent);
+app.use('/concept',isAuthenticated, concept);
 
-app.use('/qa', addKnowledge);
-app.use('/question', askQuestion);
-app.use('/savequery', savequery);
+app.use('/qa',isAuthenticated, addKnowledge);
+app.use('/question',isAuthenticated, askQuestion);
+app.use('/savequery',isAuthenticated, savequery);
 
-app.use('/retriveChat',retriveChat)
-app.use('/savequery', savequery);
+app.use('/retriveChat',isAuthenticated, retriveChat)
+app.use('/savequery',isAuthenticated, savequery);
 
 
 app.use(webpackDevMiddleware(compiler, {
@@ -110,7 +117,7 @@ app.use('/cn', addnode);
 
 
 //Listening to port 8080
-var server=app.listen(8080, '0.0.0.0', function(err, result) {
+var server = app.listen(8080, '0.0.0.0', function(err, result) {
     if (err) {
         console.error("Error ", err);
     }
@@ -122,9 +129,11 @@ var server=app.listen(8080, '0.0.0.0', function(err, result) {
 
 let io = require('socket.io')(server);
 // socket.io demo
-io.on('connection', function (socket) {
-  socket.emit('server event', { foo: 'bar' });
-  socket.on('client event', function (data) {
-    socket.broadcast.emit('update label', data);
-  });
+io.on('connection', function(socket) {
+    socket.emit('server event', {
+        foo: 'bar'
+    });
+    socket.on('client event', function(data) {
+        socket.broadcast.emit('update label', data);
+    });
 });

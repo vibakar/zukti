@@ -4,7 +4,8 @@ import Config from '../../../../config/url';
 import axios from 'axios';
 import Embedly from 'react-embedly';
 import {Feed, Icon, Grid, Card} from 'semantic-ui-react';
-
+import {Scrollbars} from 'react-custom-scrollbars';
+import './notifications.css';
 export default class Notifications extends React.Component {
     constructor(props) {
         super(props);
@@ -29,7 +30,6 @@ export default class Notifications extends React.Component {
         });
         socket.on('update label', (data) => {
             let msgContentView = this.processInputNotification(data.value);
-            console.log('Recieved a msg');
             this.state.messages.unshift(<Notificationfeed key={this.state.messages.length-1} date={data.date} msgSender={data.username} dispData={msgContentView}/>);
             this.setState({messages: this.state.messages});
         });
@@ -60,14 +60,27 @@ export default class Notifications extends React.Component {
                 marginTop: '1%',
                 height: '100%'
             }}>
-                <Grid style={{'margin':'auto','marginTop':'10px'}} divided='vertically'>
-                    <Grid.Row>
-                      <h2>Notifications from the Admin</h2>
-                    </Grid.Row>
-                    <Grid.Row>
-                      <Grid.Column width={16}>
-                        {this.state.messages}
+
+                <Grid divided='vertically'>
+
+                    <Grid.Row columns={3}>
+                      <Grid.Column width={1}></Grid.Column>
+
+                      <Grid.Column width={13}>
+
+
+
+              <Scrollbars renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
+                  display: "none",
+                  position: "right"
+              }}/>} autoHeight autoHeightMin={555}>
+                  <div style={{width:'98%',height:'50%'}} >
+                    <h3>NOTIFICATIONS FROM ADMIN</h3>
+                                {this.state.messages}
+      </div></Scrollbars>
                       </Grid.Column>
+
+
                     </Grid.Row>
                 </Grid>
             </div>

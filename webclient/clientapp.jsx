@@ -55,15 +55,15 @@ ReactDOM.render(
         <Route path='/forgotpassword' component={ForgotPassword} onEnter={requireAuth.bind(this)}/>
         <Route path='/forgetmail' component={ForgetpasswordEmail} onEnter={requireAuth.bind(this)}/>
         <Route path='/signup' component={Signup}/>
-        <Route path='/mail' component={SentMailPage} onEnter={requireAuth.bind(this)}/>
+        <Route path='/mail' component={SentMailPage}/>
         <Route path='/chat' component={LeftMenu} onEnter={requireAuth.bind(this)}/>
         <Route path='/change' component={ChangePassword} onEnter={requireAuth.bind(this)}/>
         <Route path='/profile' component={ClientProfile} onEnter={requireAuth.bind(this)}/>
         <Route path='/adminprofile' component={AdminProfilePage} onEnter={requireAuth.bind(this)}/>
         <Route path='/logout' component={Logout} onEnter={requireAuth.bind(this)}/>
         <Route path='/log' component={LogoutAdmin} onEnter={requireAuth.bind(this)}/>
-        <Route path='/expiryLink' component={ExpiryLink} onEnter={requireAuth.bind(this)}/>
-          <Route path='/successfullyregistered' component={SuccessfullyRegistered} onEnter={requireAuth.bind(this)}/>
+        <Route path='/expiryLink' component={ExpiryLink}/>
+          <Route path='/successfullyregistered' component={SuccessfullyRegistered}/>
           <Route path='/addnode' component={Addnode} onEnter={requireAuth.bind(this)}/>
 
     </Router>
