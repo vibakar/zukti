@@ -9,7 +9,7 @@ import {
 } from 'semantic-ui-react';
 import {hashHistory} from 'react-router';
 import Dropzone from 'react-dropzone';
-import axios from 'axios';
+import Axios from 'axios';
 import validator from 'validator';
 import './clientprofile.css';
 //import $ from 'jquery';
@@ -45,11 +45,11 @@ onDrop(files)
      uploadImage()
       {
         console.log("Image"+this.state.allFiles[0].name);
-        var photo = new FormData();
+        let photo = new FormData();
           this.state.allFiles.forEach((file)=> {
               photo.append('IMG',file);
           });
-          var self=this;
+          let self=this;
         request.post('/upload').send(photo).end(function(err, resp) {
         console.log('save')
             if (err)
@@ -58,8 +58,6 @@ onDrop(files)
                   }
                   else
                   {
-                    console.log("success");
-                    console.log(self.state.allFiles);
                       self.saveImage(self.state.allFiles[0].preview);
                       //this.setState({ allFiles:[]});
                 return resp;
@@ -68,18 +66,15 @@ onDrop(files)
 
       }
       saveImage(image){
-        console.log("hello entered"+image);
-        $.ajax({
-              type: 'POST',
+        Axios({
+              method: 'POST',
               url:"http://localhost:8080/uploadImage",
-              data: {data :image},
-              success: function(res) {
-               console.log("Image Stored");
-              }.bind(this),
-              error: function(err){
+              data: {data :image}
+          }).then(function(response) {
+            hashHistory.push('/chat');
+            }).catch(function(err) {
                 console.log("error",err);
-              }
-              });
+            });
       }
     profile()
     {
@@ -87,7 +82,7 @@ onDrop(files)
     }
     componentDidMount() {
       const self=this;
-        axios({
+        Axios({
             url: ' http://localhost:8080/clientinformation',
             method: 'get'
         }).then(function(response) {
@@ -102,7 +97,7 @@ onDrop(files)
     OnSubmitData(e, value) {
         const self = this;
         e.preventDefault();
-        axios({
+        Axios({
             url: ' http://localhost:8080/updateprofile',
             method: 'put',
             data: {

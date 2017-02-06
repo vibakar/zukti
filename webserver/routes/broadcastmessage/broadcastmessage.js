@@ -4,11 +4,14 @@ let Broadcast = require('../../models/broadcast');
 
 // save broadcast message in mongodb
 router.post('/', function(req, res) {
-      let message = req.body.message;
-      let type = req.body.type;
+      let username = req.body.username;
+      // admin can login using local login only
+      let email = req.user.local.email;
+      let value = req.body.message;
       let date = req.body.date;
-      let notificationcount = req.body.notificationcount;
-      let messages = new Broadcast({text: message, type: type, date: date, notificationcount:notificationcount});
+
+      let messages = new Broadcast({username:username,email:email,value: value,date: date});
+
       messages.save((error)=>{
     if(error) {
       res.json({'saved':false});

@@ -3,8 +3,9 @@ const Schema = mongoose.Schema;
 
 
 const broadcast = new Schema({
-    text: String,
-    type: String,
+    username:String,
+    value: String,
+    email: String,
     date: String
     })
 

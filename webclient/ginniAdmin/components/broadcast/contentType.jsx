@@ -1,28 +1,24 @@
 import React from 'react';
-import { Icon, Label, Menu, Input, Segment } from 'semantic-ui-react'
+import { Icon, Label, Menu, Input, Segment,Feed } from 'semantic-ui-react'
 import AddContent from './addContent';
+import Embedly from 'react-embedly';
 
 export default class ContentType extends React.Component{
   constructor(props){
     super(props);
-    this.state = { activeItem: 'text' };
   }
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-    handlertext = (text,type) => {
-      this.props.handlercontent(text,type);
-    }
+    handleAdminInput = (username,text,date) => {
+        this.props.handlercontent(username,text,date);
+      }
     render() {
-      const  activeItem  = this.state.activeItem;
       return (
         <div>
           <Menu attached='top' tabular>
-            <Menu.Item name='text' active={activeItem === 'text'} onClick={this.handleItemClick} />
-            <Menu.Item name='video' active={activeItem === 'video'} onClick={this.handleItemClick} />
-            <Menu.Item name='blog' active={activeItem === 'blog'} onClick={this.handleItemClick} />
-          </Menu>
-
+            <Menu.Item name='Message' active='Message' onClick={this.handleItemClick} />
+            </Menu>
           <Segment attached='bottom'>
-            <AddContent name = {this.state.activeItem} handlertextinput ={this.handlertext}/>
+            <AddContent handleAdminInput ={this.handleAdminInput}/>
           </Segment>
         </div>
       )

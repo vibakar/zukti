@@ -43,19 +43,33 @@ router.post('/viewanswer', function(req, res) {
         }
     });
 });
-router.delete('/deleteanswer', function(req, res) {
+router.post('/deleteanswer', function(req, res) {
   console.log(req.body.id);
   console.log(req.body.email);
-  AnsweredQuery.find({email:req.body.email}),function(err,details)
+  AnsweredQuery.findOne({email:req.body.email},function(err,details)
   {
-    console.log("jii");
+
     if (err) {
         res.send(err);
         console.log('error ocuured');
     } else {
-      console.log(details);
-      };
-    }
 
+      let queries=new Array(details.savedquery)
+      let deletedArray=queries[0].filter(function(detail){
+        if(detail._id+""!==req.body.id)
+           return details
+      })
+
+      AnsweredQuery.findOneAndUpdate({email:req.body.email}, { savedquery:deletedArray },{new: true},function (err,data) {
+        if(err){
+          res.send(err);
+          console.log('error ocuured');
+        }
+        console.log(data);
+          res.send({msg:deletedArray});
+      })
+      }
+    }
+)
 });
 module.exports = router;

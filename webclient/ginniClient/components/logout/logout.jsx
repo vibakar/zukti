@@ -2,8 +2,7 @@ import React from 'react';
 import { Button, Image, Modal} from 'semantic-ui-react';
 import {hashHistory} from 'react-router';
 import './logout.css';
-// import axios from 'axios';
-import $ from 'jquery';
+import Axios from 'axios';
 import Cookie from 'react-cookie';
 export default class Logout extends React.Component
 {
@@ -11,22 +10,20 @@ export default class Logout extends React.Component
   close=()=>hashHistory.push('/chat');
   handleLogout()
 {
-
-$.ajax({
-      type: 'GET',
-      url:"http://localhost:8080/signout",
-      dataType: 'json',
-      success: function(res) {
-       Cookie.remove("authType");
-       Cookie.remove("token");
-       hashHistory.push('/');
-      }.bind(this),
-      error: function(err){
-        console.log("error",err);
-      }.bind(this)
-   });
-
-}
+console.log("logout")
+Axios({
+        method: 'GET',
+        url: 'http://localhost:8080/signout',
+        data: 'json'
+      }).then(function (response) {
+        Cookie.remove("authType");
+        Cookie.remove("token");
+        hashHistory.push('/');
+      })
+       .catch(function (error) {
+       });
+           console.log("error",err);
+ }
   render() {
     const { open} = this.state;
     return(

@@ -89,6 +89,7 @@ app.use('/concept',concept);
 app.use('/qa', addKnowledge);
 app.use('/question', askQuestion);
 app.use('/getknowledge',getKnowledge);
+app.use('/savequery', savequery);
 app.use('/retriveChat',retriveChat)
 app.use('/savequery', savequery);
 

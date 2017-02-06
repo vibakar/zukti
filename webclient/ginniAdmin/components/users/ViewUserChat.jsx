@@ -1,24 +1,66 @@
 import React from 'react';
-import {Button} from 'semantic-ui-react';
+import {Button, Card, Modal,Divider,List,Icon} from 'semantic-ui-react';
 import Config from '../../../../config/url';
 import Axios from 'axios';
+import './viewuserchat.css';
+import Snackbar from 'material-ui/Snackbar';
 export default class ViewUserChat extends React.Component {
     constructor(props) {
         super(props);
-         // function to retrive chat of a given user
-         this.getUserChats = this.getUserChats.bind(this);
+        this.state = {
+            conversations: [],
+            open:false,
+            openSnackbar: false,
+            snackbarMsg: ''
+        }
+          // function to retrive chat of a given user
+        this.getUserChats = this.getUserChats.bind(this);
     }
-    getUserChats() {
+    show = (size) => () => this.setState({ size, open: true })
+    close = () => this.setState({ open: false })
+
+   getUserChats() {
         let url = Config.url + '/retriveChat?email=' + this.props.userEmail;
         Axios.get(url).then((response) => {
-            console.log(response);
+            //console.log(response.data);
+            this.setState({conversations: response.data.chats});
+            console.log(response.data.chats)
+            //console.log(response.data.chats[0].question)
+            this.setState({ open: true })
         }).catch((error) => {
-            console.log(error);
+              this.setState({openSnackbar: true, snackbarMsg: 'No chats available with this specific user'});
         });
     }
+    handleRequestClose = () => {
+            this.setState({openSnackbar: false});
+        };
     render() {
+      const { open, size } = this.state
+        let chats = this.state.conversations.map((conversation)=> {
+            console.log(conversation.question);
+            return (
+                <div>
+                  <List as='ol'>
+                            <List.Item as='li' value='*'>{conversation.question.value}&nbsp;&nbsp;&nbsp;{conversation.question.time}</List.Item>
+                            <Divider/>
+                          </List>
+        </div>
+            );
+          });
         return (
-            <Button basic color='green' onClick={this.getUserChats}>ViewMore</Button>
+            <div>
+                <Button  color='teal' onClick={this.getUserChats} circular><Icon name='history'/>CHATS</Button>
+                <Modal size={size} open={open} onClose={this.close}  closeIcon='close'>
+          <Modal.Header id='viewuserchat'>
+            <Icon name='tasks'/>
+          CHAT HISTORY
+          </Modal.Header>
+          <Modal.Content id='viewuserchatcontent'>
+            <b>{chats?chats:'hiiii '}</b>
+          </Modal.Content>
+        </Modal>
+        <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
+            </div>
         )
     }
 }

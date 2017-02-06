@@ -19,7 +19,6 @@ import {
     Dropdown
 } from 'semantic-ui-react';
 import Axios from 'axios';
-import $ from 'jquery';
 import Cookie from 'react-cookie';
 import {hashHistory} from 'react-router';
 import Config from '../../../../config/url';
@@ -40,6 +39,15 @@ export default class LeftMenu extends Component {
         this.getNotificationCount = this.getNotificationCount.bind(this);
         this.getUserInformation = this.getUserInformation.bind(this);
     }
+
+    handleItemClick = ((e, {name}) => {
+        if (this.state.activeItem == 'notifications') {
+            let url = Config.url + '/getbroadcastmessage/updateCount'
+            this.state.counter = 0;
+            Axios.post(url).then((response) => {}).catch((error) => {console.log(error);});
+        }
+        this.setState({activeItem: name,counter:this.state.counter});
+    });
     componentDidMount() {
         this.getUserInformation();
         this.getNotificationCount();
@@ -53,49 +61,44 @@ export default class LeftMenu extends Component {
 
 
     }
-    getNotificationCount(){
-      let url =Config.url+'/getbroadcastmessage/count';
-      console.log(url);
-      Axios.get(url).
-      then((response)=>{
-        console.log(response);
-        this.setState({counter:response.data.count});
-      }).
-      catch((error)=>{
-        console.log(error);
-      //  alert('error in getting notification count');
-      })
+    getNotificationCount() {
+        let url = Config.url + '/getbroadcastmessage/count';
+        console.log(url);
+        Axios.get(url).then((response) => {
+            console.log(response);
+            this.setState({counter: response.data.count});
+        }).catch((error) => {
+            console.log(error);
+        })
     }
     getUserInformation() {
-        $.ajax({
-            url: "http://localhost:8080/userProfile",
-            type: 'GET',
-            dataType: 'json',
-            success: function(res) {
-                var authType = Cookie.load("authType");
-                if (authType == "facebook") {
-                    console.log(res.user.facebook.displayName);
-                    this.setState({name: res.user.facebook.displayName, email: res.user.facebook.email, photo: res.user.facebook.photos, usertype: false});
-                }
-                if (authType == "google") {
-                    this.setState({name: res.user.google.name, email: res.user.google.email, photo: res.user.google.photos, usertype: false});
-                }
-                if (authType == "local") {
-                    console.log("hello");
-                    console.log(res.user.local.name);
-                    this.setState({name: res.user.local.name, email: res.user.local.email, photo: res.user.local.photos, usertype: true});
-                }
-            }.bind(this),
-            error: function(err) {
-                console.log("error", err);
-            }.bind(this)
-        });
-    }
-    onSubmitEmail() {
+    let self=this;
+    Axios({
+        url: "http://localhost:8080/userProfile",
+        method: 'GET',
+        data: 'json'
+      }).then(function (response) {
+        let authType = Cookie.load("authType");
+        console.log(authType);
+        if (authType == "facebook") {
+            console.log(response.data.user.facebook.displayName);
+            self.setState({name: response.data.user.facebook.displayName, email: response.data.user.facebook.email, photo: response.data.user.facebook.photos, usertype: false});
+        }
+        else if (authType == "google") {
+            self.setState({name: response.data.user.google.name, email: response.data.user.google.email, photo: response.data.user.google.photos, usertype: false});
+        }
+        else if (authType == "local") {
+            self.setState({name: response.data.user.local.name, email: response.data.user.local.email, photo: response.data.user.local.photos, usertype: true});
+        }
+      })
+       .catch(function (error) {
+            console.log("error", error);
+      });
+  }
+        onSubmitEmail() {
         hashHistory.push('/profile')
     }
 
-    handleItemClick = (e, {name}) => this.setState({activeItem: name})
     render() {
         const activeItem = this.state.activeItem;
         const customername = this.state.name;
@@ -130,7 +133,6 @@ export default class LeftMenu extends Component {
                     <Menu.Item name='notifications' active={activeItem === 'notifications'} onClick={this.handleItemClick}>
                         <Label color='red' floating-left>{this.state.counter}</Label>
                         <Icon name='alarm' color='teal'/>
-
                         notifications
                     </Menu.Item>
                     <Menu.Item name='LogOut' active={activeItem === 'LogOut'} onClick={this.handleItemClick}>

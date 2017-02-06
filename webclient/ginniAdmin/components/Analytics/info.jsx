@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import Axios from 'axios';
 import {
     Message,
     Grid,
@@ -27,11 +27,11 @@ export default class Info extends React.Component {
         };
     }
     componentDidMount() {
-        var self = this;
+        let self = this;
         count=0;
         count1=0;
-        axios({url: 'http://localhost:8080/viewall', method: 'GET'}).then(function(response) {
-            var detailNew = response.data.map((fulldetail)=> {
+        Axios({url: 'http://localhost:8080/viewall', method: 'GET'}).then(function(response) {
+            let detailNew = response.data.map((fulldetail)=> {
                 count++;
                 self.setState({countvalue: count});
                 if (fulldetail.local.loggedinStatus) {
