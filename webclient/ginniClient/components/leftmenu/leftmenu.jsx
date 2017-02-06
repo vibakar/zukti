@@ -38,6 +38,7 @@ export default class LeftMenu extends Component {
             counter: 0
         }
         this.onSubmitEmail = this.onSubmitEmail.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
         this.getNotificationCount = this.getNotificationCount.bind(this);
         this.getUserInformation = this.getUserInformation.bind(this);
     }
@@ -54,7 +55,6 @@ export default class LeftMenu extends Component {
         this.getUserInformation();
         this.getNotificationCount();
         let socket = io();
-        console.log('Hiiii');
         socket.on('update label', (data) => {
             console.log(data);
             this.state.counter = this.state.counter + 1;
@@ -98,6 +98,9 @@ export default class LeftMenu extends Component {
         onSubmitEmail() {
         hashHistory.push('/profile')
     }
+    onChangePassword() {
+    hashHistory.push('/change')
+}
 
     render() {
         const activeItem = this.state.activeItem;
@@ -126,10 +129,6 @@ export default class LeftMenu extends Component {
                         <Icon name='star' color='teal'/>
                         SavedQueries
                     </Menu.Item>
-                    <Menu.Item name='Unanswered Queries' active={activeItem === 'Unanswered Queries'} onClick={this.handleItemClick}>
-                        <Icon name='help' color='teal'/>
-                        Unanswered Queries
-                    </Menu.Item>
                     <Menu.Item name='notifications' active={activeItem === 'notifications'} onClick={this.handleItemClick}>
                         <Label color='red' floating-left>{this.state.counter}</Label>
                         <Icon name='alarm' color='teal'/>
@@ -151,14 +150,13 @@ export default class LeftMenu extends Component {
                                 </Menu.Item>
                                 <Menu.Item position='right'></Menu.Item>
                                 <Menu.Item>
-                                    <h3>THE CODE AESSISTANT/GENIE</h3>
+                                    <h3>GENIE</h3>
                                 </Menu.Item>
                                 <Menu.Item position='right'>
                                     <Dropdown trigger={trigger} pointing='top right' icon={null}>
                                         <Dropdown.Menu >
                                             <Dropdown.Item text='Edit Profile' icon='user' disabled={(!this.state.usertype)} onClick={this.onSubmitEmail}/>
-                                            <Dropdown.Item text='Settings' icon='settings'/>
-                                            <Dropdown.Item text='Help' icon='help'/>
+                                            <Dropdown.Item text='Change Password' icon='lock' disabled={(!this.state.usertype)} onClick={this.onChangePassword}/>
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </Menu.Item>

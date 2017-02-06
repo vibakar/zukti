@@ -64,6 +64,7 @@ module.exports = function(app, passport) {
         newUser.local.authType = 'local';
         newUser.local.loggedinStatus = false;
         newUser.local.isEmailVerified = false;
+        newUser.local.photos = 'https://image.freepik.com/free-icon/user-male-shape-in-a-circle-ios-7-interface-symbol_318-35357.jpg';
         //newUser.local.photos= imageupload.value;
         newUser.save(function(err) {
             if (err) {
@@ -89,13 +90,13 @@ module.exports = function(app, passport) {
         newUser.local.isEmailVerified = true;
         newUser.local.verificationID = rand;
         newUser.local.authType = 'local';
-     //newUser.local.photos= imageupload.value;
+        newUser.local.photos = 'https://image.freepik.com/free-icon/user-male-shape-in-a-circle-ios-7-interface-symbol_318-35357.jpg';
         newUser.save(function(err) {
             if (err) {
                 res.send('Error in registration');
             } else {
-                res.send(newUser.local.email+"jjjjj"+newUser.local.type+" "+newUser.local.verificationID);
-                console.log(newUser.local.email+"jjjjj");
+                res.send(newUser);
+                console.log("Successfully Registered");
                 //res.send('registered');
             }
         });
