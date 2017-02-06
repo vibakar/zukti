@@ -26,10 +26,6 @@ export default class LeftMenuContent extends React.Component {
                 {
                     return <SavedQuery/>
                 }
-            case 'Unanswered Queries':
-                {
-                    return null;
-                }
             case 'notifications':
                 {
                     return <Notifications/>

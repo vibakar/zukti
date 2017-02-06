@@ -13,3 +13,16 @@
 {
   color:brown;
 }
+#sparkle
+{
+  font-size: 70px;
+  -webkit-text-fill-color: transparent;
+background: -webkit-linear-gradient(transparent, transparent),
+           url(http://www.myspacehippo.com/files/glitterbacks/bg345.gif) repeat;
+background: -o-linear-gradient(transparent, transparent);
+-webkit-background-clip: text;
+}
+#marquee
+{
+  color: green;
+}

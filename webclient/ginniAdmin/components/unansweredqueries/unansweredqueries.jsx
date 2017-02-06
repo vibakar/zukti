@@ -46,8 +46,8 @@ export default class UnansweredQueries extends React.Component {
 }.bind(this));
 return(
 <div style={{
-    backgroundImage: 'url("../../images/wall.jpg")',
-    height: '300%'
+    backgroundImage: 'url("../../images/background.jpg")',
+    height: 'absolute'
 }}>
   <h4><b>
     Unanswered Queries :</b><br/><br/>

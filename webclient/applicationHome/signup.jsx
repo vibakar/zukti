@@ -200,7 +200,7 @@ render() {
                  </Header>
         </Dimmer>
         <span id="message"/>
-        <h4 id="text">Already a Genie member?<a href='#/login'>
+        <h4 id="text">Already a Genie member?<a href='#/login' id='space'>
         Sign in here</a>
         </h4>
         </Form>

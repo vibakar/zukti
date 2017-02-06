@@ -7,7 +7,7 @@ export default class Notificationfeed extends React.Component {
     }
   render() {
         return (
-          <div style={{backgroundImage:"url('./../images/background.jpg')",height:'100%'}}>
+          <div style={{backgroundImage:"url('../../images/background.jpg')",height:'fixed'}}>
               <Grid divided="vertically">
             <Grid.Row columns={3}>
               <Grid.Column width={1}></Grid.Column>

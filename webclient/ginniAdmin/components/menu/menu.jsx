@@ -62,8 +62,8 @@ export default class SidebarBot extends Component {
                       Unanswered Queries
                     </Menu.Item>
                     <Menu.Item name='LogOut'>
-                          <a href='#/log'><Icon name='sign out' color='teal'/>
-                      Logout</a>
+                        <Icon name='sign out' color='teal'/>
+                        <a href='#/log'>Logout</a>
                     </Menu.Item>
                   </Sidebar>
                 <Sidebar.Pusher className='container' style={{

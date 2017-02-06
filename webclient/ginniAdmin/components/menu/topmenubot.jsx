@@ -51,11 +51,11 @@ export default class TopMenuBot extends React.Component {
         return (
 
             <div style={{  width:"99%",
-              backgroundColor:"#f3f2f2"}}>
+              backgroundColor:"#4a8e9b"}}>
                 <Menu secondary>
                     <Menu.Item>
                         <a href="#/adminhome">
-                            <Popup trigger={< Icon name = "arrow circle left" size = "large" circular color = 'teal' />} content='Back' size='mini'/>
+                            <Popup trigger={< Icon name = "arrow circle left" size = "large" circular color = 'black' />} content='Back' size='mini'/>
                         </a>
                     </Menu.Item>
                       <Menu.Item position='right'>

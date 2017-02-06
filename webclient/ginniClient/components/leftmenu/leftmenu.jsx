@@ -124,18 +124,14 @@ export default class LeftMenu extends Component {
                         <Icon name='star' color='teal'/>
                         SavedQueries
                     </Menu.Item>
-                    <Menu.Item name='Unanswered Queries' active={activeItem === 'Unanswered Queries'} onClick={this.handleItemClick}>
-                        <Icon name='help' color='teal'/>
-                        Unanswered Queries
-                    </Menu.Item>
                     <Menu.Item name='notifications' active={activeItem === 'notifications'} onClick={this.handleItemClick}>
                         <Label color='red' floating-left>{this.state.counter}</Label>
                         <Icon name='alarm' color='teal'/>
                         notifications
                     </Menu.Item>
                     <Menu.Item name='LogOut' active={activeItem === 'LogOut'} onClick={this.handleItemClick}>
-                        <a href='#/logout'><Icon name='sign out' color='teal'/>
-                            LogOut</a>
+                        <Icon name='sign out' color='teal'/>
+                            <a href='#/logout'>LogOut</a>
                     </Menu.Item>
                 </Sidebar>
                 <Sidebar.Pusher id="sidebarpusher">
@@ -144,12 +140,13 @@ export default class LeftMenu extends Component {
                             <Menu secondary>
                                 <Menu.Item>
                                     <a href="#/clienthome">
-                                        <Popup trigger={< Icon name = "arrow circle left" size = "large" circular color = 'teal' />} content='Back' size='mini'/>
+                                        <Popup trigger={< Icon name = "arrow circle left" size = "large" circular color = 'black' />} content='Back' size='mini'/>
                                     </a>
                                 </Menu.Item>
                                 <Menu.Item position='right'></Menu.Item>
+                                <Menu.Item/><Menu.Item/>
                                 <Menu.Item>
-                                    <h3>THE CODE AESSISTANT/GENIE</h3>
+                                    <h3>GENIE</h3>
                                 </Menu.Item>
                                 <Menu.Item position='right'>
                                     <Dropdown trigger={trigger} pointing='top right' icon={null}>

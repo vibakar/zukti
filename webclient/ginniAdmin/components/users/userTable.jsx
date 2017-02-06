@@ -61,7 +61,7 @@ return (
   );
 }.bind(this));
 return(
-<div style={{ backgroundImage: "url('../../images/wall.jpg')", height: '100%', marginTop: '1%'}}>
+<div style={{ backgroundImage: "url('../../images/background.jpg')", height: '100%', marginTop: '1%'}}>
 
  {user}
 

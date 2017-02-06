@@ -47,10 +47,10 @@ export default class Info extends React.Component {
     }
     render() {
         return (
+          <div style={{background:"url('../../images/background.jpg')"}}>
             <Grid style={{
                 width: '95%',
-                margin: 'auto',
-                'background-color': '#f3f2f2'
+                margin: 'auto'
             }}>
                 <Grid.Row>
                     <Card.Group className='container' stackable itemsPerRow={3}>
@@ -132,6 +132,7 @@ export default class Info extends React.Component {
                     <GraphData/>
                 </Grid.Row>
             </Grid>
+          </div>
         )
     }
 }
