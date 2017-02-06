@@ -28,6 +28,7 @@ import Cookie from 'react-cookie';
 import Addnode from './ginniAdmin/components/buildNodeAndRelationship/createNodeAndRelation.jsx';
 
 
+
 injectTapEventPlugin();
 let requireAuth = function (nextState, replace) {
 let token = Cookie.load('token');
@@ -62,9 +63,10 @@ ReactDOM.render(
         <Route path='/adminprofile' component={AdminProfilePage} onEnter={requireAuth.bind(this)}/>
         <Route path='/logout' component={Logout} onEnter={requireAuth.bind(this)}/>
         <Route path='/log' component={LogoutAdmin} onEnter={requireAuth.bind(this)}/>
-        <Route path='/expiryLink' component={ExpiryLink} />
-          <Route path='/successfullyregistered' component={SuccessfullyRegistered} />
+        <Route path='/expiryLink' component={ExpiryLink}/>
+          <Route path='/successfullyregistered' component={SuccessfullyRegistered}/>
           <Route path='/addnode' component={Addnode} onEnter={requireAuth.bind(this)}/>
+
 
     </Router>
 </MuiThemeProvider>, document.getElementById('mountapp'));

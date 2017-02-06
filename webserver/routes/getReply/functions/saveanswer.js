@@ -3,8 +3,6 @@ var router=express.Router();
 let AnsweredQuery = require('../../../models/savedqueries');
 //let RegisteredUser = require('../models/tempUserModel');
 router.post('/answeredquery', function(req, res, next) {
-  console.log("i am reaching to save queries");
-  console.log(req.body);
    AnsweredQuery.find({ email: req.body.email }, function (err, docs) {
   if(docs.length===0)
   {

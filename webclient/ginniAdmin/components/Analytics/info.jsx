@@ -23,8 +23,8 @@ export default class Info extends React.Component {
     }
     componentDidMount() {
         let self = this;
-        count=0;
-        count1=0;
+        count = 0;
+        count1 = 0;
         Axios({url: 'http://localhost:8080/viewall', method: 'GET'}).then(function(response) {
             let detailNew = response.data.map((fulldetail)=> {
                 count++;
@@ -110,7 +110,7 @@ export default class Info extends React.Component {
                                             <Feed.Summary>
                                                 <Statistic>
                                                     <Statistic.Value>
-                                                        <i className="inverted circular red idea icon"></i>
+                                                        <i className="inverted circular red idea icon"/>
                                                         <a>18900</a>
                                                     </Statistic.Value>
                                                     <Statistic.Label>Members</Statistic.Label>

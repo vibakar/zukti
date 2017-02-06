@@ -26,6 +26,7 @@ export default class ReplyContentInput extends React.Component {
       Axios.post(url,{answerID:answerID, answer:answer,type:type}).
       then((response)=>{
         alert('Answer added succesfully');
+        this.props.showanswer(answer);
       }).
       catch((error)=>{
         alert(error);

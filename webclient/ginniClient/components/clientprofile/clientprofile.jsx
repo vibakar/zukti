@@ -59,7 +59,7 @@ onDrop(files)
                   else
                   {
                     console.log(self.state.allFiles[0])
-                      self.saveImage(self.state.allFiles[0].preview);
+                      self.saveImage(resp.text);
                       //this.setState({ allFiles:[]});
                 return resp;
                   }

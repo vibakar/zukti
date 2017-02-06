@@ -44,7 +44,7 @@ export default class LeftMenu extends Component {
     }
 
     handleItemClick = ((e, {name}) => {
-        if (this.state.activeItem == 'notifications') {
+        if (this.state.activeItem === 'notifications') {
             let url = Config.url + '/getbroadcastmessage/updateCount'
             this.state.counter = 0;
             Axios.post(url).then((response) => {}).catch((error) => {console.log(error);});
@@ -60,6 +60,8 @@ export default class LeftMenu extends Component {
             this.state.counter = this.state.counter + 1;
             this.setState({counter: this.state.counter});
         });
+
+
     }
     getNotificationCount() {
         let url = Config.url + '/getbroadcastmessage/count';
@@ -103,13 +105,35 @@ export default class LeftMenu extends Component {
 }
 
     render() {
-        const activeItem = this.state.activeItem;
-        const customername = this.state.name;
-        const trigger = (
-            <span>
-                <Image avatar src={this.state.photo}/> {name = customername}
-            </span>
-        );
+      const activeItem= this.state.activeItem;
+      const customername =  this.state.name;
+      var trigger;
+  let authType= Cookie.load("authType");
+        if(authType== "local"){
+          let profilepicture = Cookie.load("profilepicture");
+          console.log(profilepicture);
+            trigger = (
+      <span>
+      <Image avatar src={require('../../../../webserver/images/'+profilepicture)}/> {name=customername}
+      </span>
+    );
+  }else
+    if(authType == "facebook"){
+      console.log(authType);
+        trigger = (
+  <span>
+  <Image avatar src={this.state.photo}/> {name=customername}
+  </span>
+);
+}
+else
+  if(authType == "google"){
+      trigger = (
+<span>
+<Image avatar src={this.state.photo}/> {name=customername}
+</span>
+);
+}
         return (
             <div id="leftbarmenu">
                 <Sidebar as={Menu} className='fixed' animation='slide along' width='thin' visible={true} icon='labeled' vertical inverted>

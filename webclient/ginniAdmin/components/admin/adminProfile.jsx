@@ -48,7 +48,7 @@ onDrop(files)
         console.log("Image"+this.state.allFiles[0].name);
         let photo = new FormData();
           this.state.allFiles.forEach((file)=> {
-              photo.append(file.name,file);
+              photo.append('IMG',file);
               //console.log(file.name);
           });
           let self=this;
@@ -60,8 +60,9 @@ onDrop(files)
                   }
                   else
                   {
+                    console.log(resp.text);
                     console.log(self.state.allFiles[0].name);
-                      self.saveImage(self.state.allFiles[0].preview);
+                      self.saveImage(resp.text);
                       //this.setState({ allFiles:[]});
                 return resp;
                   }

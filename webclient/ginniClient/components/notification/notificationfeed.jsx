@@ -1,42 +1,62 @@
 import React from 'react'
-import {Feed, Icon,Grid,Card,Divider} from 'semantic-ui-react';
+import {Feed, Icon,Grid,Card,Divider, Image} from 'semantic-ui-react';
 import {Scrollbars} from 'react-custom-scrollbars';
+import './notifications.css';
+import Cookie from 'react-cookie';
+import Axios from 'axios';
 export default class Notificationfeed extends React.Component {
     constructor(props) {
         super(props);
+        this.state={
+          photo:'',
+          name:'',
+          email:''
+        }
+    }
+    componentDidMount(){
+      let self=this;
+      Axios({
+          url: "http://localhost:8080/userProfile",
+          method: 'GET',
+          data: 'json'
+        }).then(function (response) {
+          let authType = Cookie.load("authType");
+          console.log(authType);
+          if (authType == "facebook") {
+              console.log(response.data.user.facebook.displayName);
+              self.setState({name: response.data.user.facebook.displayName, email: response.data.user.facebook.email, photo: response.data.user.facebook.photos, usertype: false});
+          }
+          else if (authType == "google") {
+              self.setState({name: response.data.user.google.name, email: response.data.user.google.email, photo: response.data.user.google.photos, usertype: false});
+          }
+          else if (authType == "local") {
+              self.setState({name: response.data.user.local.name, email: response.data.user.local.email, photo: response.data.user.local.photos, usertype: true});
+          }
+        })
+         .catch(function (error) {
+              console.log("error", error);
+        });
     }
   render() {
         return (
-          <div style={{backgroundImage:"url('./../images/background.jpg')",height:'100%'}}>
-              <Grid divided="vertically">
-            <Grid.Row columns={3}>
-              <Grid.Column width={1}></Grid.Column>
-              <Grid.Column width={13}>
-                    <Feed>
-              <Feed.Event>
-                <Feed.Label image='../../images/user.png'/>
-                <Feed.Content>
-                <Feed.Summary date={this.props.date} user='Genie'/>
-                <Feed.Content>
-                    <Feed.Summary>
-                        <Feed.Extra text>
-                        <h3>Added  {this.props.type}</h3>
-                        </Feed.Extra>
-                    </Feed.Summary>
-                    </Feed.Content>
-                    <Feed.Extra text>
-                      <h4>{this.props.feed}</h4>
-                    </Feed.Extra>
-                </Feed.Content>
-              </Feed.Event>
-            </Feed>
-              </Grid.Column>
-            <Grid.Column width={2}></Grid.Column>
-            </Grid.Row>
-          </Grid>
-          <Divider/>
 
-                </div>
+
+            <Feed>
+                <Feed.Event>
+                    <Feed.Label>
+                        <Image avatar src={this.state.photo}/>
+                    </Feed.Label>
+                    <Feed.Content>
+                        <Feed.Summary>
+                            <Feed.User style={{color:'red'}}>{this.props.msgSender}</Feed.User>
+                            <Feed.Date>{this.props.date}</Feed.Date>
+                        </Feed.Summary>
+                        <Feed.Extra>
+                            {this.props.dispData}
+                        </Feed.Extra>
+                    </Feed.Content>
+                </Feed.Event>
+            </Feed>
         );
     }
 }
