@@ -7,7 +7,7 @@ const broadcast = new Schema({
     value: String,
     email: String,
     date: String
-  })
+    })
 
 const broadcastInformation = mongoose.model('Broadcast', broadcast);
 module.exports = broadcastInformation;

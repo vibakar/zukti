@@ -39,6 +39,8 @@ export default class Notificationfeed extends React.Component {
     }
   render() {
         return (
+
+
             <Feed>
                 <Feed.Event>
                     <Feed.Label>

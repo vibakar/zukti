@@ -9,7 +9,9 @@ router.post('/', function(req, res) {
       let email = req.user.local.email;
       let value = req.body.message;
       let date = req.body.date;
+
       let messages = new Broadcast({username:username,email:email,value: value,date: date});
+
       messages.save((error)=>{
     if(error) {
       res.json({'saved':false});

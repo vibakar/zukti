@@ -13,6 +13,7 @@ export default class TextAnswer extends React.Component{
     e.preventDefault();
     let answer = ReactDOM.findDOMNode(this.refs.answer).value;
     this.props.handlerForSaveAnswer(answer,'textAnswer');
+    ReactDOM.findDOMNode(this.refs.answer).value='';
   }
   render(){
     return(
