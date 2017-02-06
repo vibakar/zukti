@@ -93,14 +93,12 @@ app.use('/getadmin',isAuthenticated, getAdmin);
 app.use('/intent',isAuthenticated, intent);
 app.use('/concept',isAuthenticated, concept);
 
-<<<<<<< HEAD
 app.use('/qa',isAuthenticated, addKnowledge);
 app.use('/question',isAuthenticated, askQuestion);
 app.use('/savequery',isAuthenticated, savequery);
 
 app.use('/retriveChat',isAuthenticated, retriveChat)
 app.use('/savequery',isAuthenticated, savequery);
-=======
 app.use('/qa', addKnowledge);
 app.use('/question', askQuestion);
 app.use('/getknowledge',getKnowledge);
