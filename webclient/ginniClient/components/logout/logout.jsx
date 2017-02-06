@@ -16,6 +16,8 @@ Axios({
         url: 'http://localhost:8080/signout',
         data: 'json'
       }).then(function (response) {
+        let socket =io();
+        socket.emit('userLoginStatus',{value:-1});
         Cookie.remove("authType");
         Cookie.remove("token");
         hashHistory.push('/');
