@@ -1,7 +1,7 @@
 let getNeo4jDriver = require('../../../neo4j/connection');
 module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundCallback) {
 
-    intents.push('what');
+    //intents.push('what');
     let query = `UNWIND ${JSON.stringify(intents)} AS token
                  MATCH (n:intent)
                  WHERE n.name = token

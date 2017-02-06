@@ -23,14 +23,15 @@ export default class Info extends React.Component {
             detail: ' ',
             userinformation: [],
             countvalue: '0',
-            countonline: '0'
+            countonline: '0',
+            queryCount: 0
         };
     }
     componentDidMount() {
         let self = this;
         count=0;
         count1=0;
-        Axios({url: 'http://localhost:8080/viewall', method: 'GET'}).then(function(response) {
+        Axios({url: 'http://localhost:8080/viewall', method: 'GET'}).then((response)=> {
             let detailNew = response.data.map((fulldetail)=> {
                 count++;
                 self.setState({countvalue: count});
@@ -44,6 +45,25 @@ export default class Info extends React.Component {
         }).catch(function(err) {
             console.log(err);
         });
+        Axios.get('http://localhost:8080/analytics').
+        then((response)=>{
+          this.state.queryCount=response.data.queryCount;
+          this.setState({queryCount:this.state.queryCount});
+        }).
+        catch((error)=>{
+          console.log(error);
+        });
+        //
+        let socket=io();
+        socket.on('incrementQueryCount', (data) => {
+          this.state.queryCount =this.state.queryCount+1;
+          this.setState({queryCount:this.state.queryCount});
+        });
+        socket.on('userLoggedIncount',(data)=>{
+          console.log('user aaya gaya');
+          this.state.countonline = this.state.countonline+data.value;
+          this.setState({countonline:this.state.countonline});
+        })
     }
     render() {
         return (
@@ -116,7 +136,7 @@ export default class Info extends React.Component {
                                                 <Statistic>
                                                     <Statistic.Value>
                                                         <i className="inverted circular red idea icon"></i>
-                                                        <a>18900</a>
+                                                        <a>{this.state.queryCount}</a>
                                                     </Statistic.Value>
                                                     <Statistic.Label>Members</Statistic.Label>
                                                 </Statistic>

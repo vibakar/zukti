@@ -120,7 +120,7 @@ export default class AssistantChatContainer extends React.Component {
                         {this.state.messages}
                     </div>
                 </Scrollbars>
-                <InputUserMessage handlerUserReply={this.pushUserMessages} handleGinniReply={this.pushGinniMessages}/>
+                <InputUserMessage username={this.state.username}  handlerUserReply={this.pushUserMessages} handleGinniReply={this.pushGinniMessages}/>
             </div>
         );
     }

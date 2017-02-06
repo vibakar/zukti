@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Form} from 'semantic-ui-react';
 import Axios from 'axios';
+import Cookie from 'react-cookie';
 import AssistantGinniMixedReply from './assistantGinniMixedReply';
 import Config from '../../../../config/url';
 export default class InputUserMesaage extends React.Component {
@@ -9,8 +10,9 @@ export default class InputUserMesaage extends React.Component {
         super(props);
         this.handleUserInput = this.handleUserInput.bind(this);
     }
-
     handleUserInput(e) {
+        let socket = io();
+        socket.emit('newQuery', {i: 1});
         e.preventDefault();
         let message = {};
         let ginniReply = [];
@@ -19,19 +21,16 @@ export default class InputUserMesaage extends React.Component {
         this.props.handlerUserReply(message);
         ReactDOM.findDOMNode(this.refs.userInput).value = ''
         let url = Config.url + '/question/askQuestion';
-        Axios.post(url, {question: message}).then((response) => {
-            console.log(response);
+        Axios.post(url, {
+            username: this.props.username,
+            question: message
+        }).then((response) => {
             if (response.data) {
-                response.data.forEach((item)=>{
-                  ginniReply.push(<AssistantGinniMixedReply handleGinniReply = {
-                    this.props.handleGinniReply
-                  }
-                  data = {
-                    item
-                  } />);
+                response.data.forEach((item) => {
+                    ginniReply.push(<AssistantGinniMixedReply handleGinniReply={this.props.handleGinniReply} data={item}/>);
                 })
             }
-          this.props.handleGinniReply(ginniReply);
+            this.props.handleGinniReply(ginniReply);
         }).catch((error) => {
             console.log(error);
         });

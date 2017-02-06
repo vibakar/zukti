@@ -44,6 +44,19 @@ module.exports = function(app, passport) {
             }
         });
     });
+    app.get('/viewall', function(req, res) {
+        RegisteredUser.find(
+          {'local.localType': 'Customer'}, function(err, alldetails) {
+            if (err) {
+                res.send(err);
+                console.log('error ocuured');
+            } else {
+              console.log(alldetails);
+                res.send(alldetails);
+            }
+        });
+    });
+
     /* LOCAL SIGNUP*/
     // local sign up route
     app.post('/signup', function(req, res) {
@@ -92,19 +105,7 @@ module.exports = function(app, passport) {
             }
         });
     });
-    //admin view the users
-    app.get('/viewall', function(req, res) {
-        RegisteredUser.find(
-          {'local.localType': 'Customer'}, function(err, alldetails) {
-            if (err) {
-                res.send(err);
-                console.log('error ocuured');
-            } else {
-              console.log(alldetails);
-                res.send(alldetails);
-            }
-        });
-    });
+
     //view unanswered query
     app.get('/viewquery', function(req, res) {
         UnansweredQuery.find({}, function(err, alldetails) {
