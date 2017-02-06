@@ -8,16 +8,23 @@ export default class QuestionsAnswer extends React.Component {
     constructor(props) {
         super(props);
         this.addQuestionToDisplay = this.addQuestionToDisplay.bind(this);
+        this.addAnswerToDisplay = this.addAnswerToDisplay.bind(this);
         this.state = {
             question: '',
-            value: 'text'
+            value: 'text',
+            answer:''
         }
     }
     handleChange = (e, {value}) => this.setState({value});
+
     addQuestionToDisplay(question) {
         this.setState({question: question});
     }
+    addAnswerToDisplay(answer){
+      this.setState({answer:answer});
+    }
     render() {
+
         const styleFirstCardBoxInRow = {
             'margin-right': '0px'
         }
@@ -53,7 +60,14 @@ export default class QuestionsAnswer extends React.Component {
                             <Radio label='Code Snippet' name='radioGroup' value='codeSnippet' checked={this.state.value === 'codeSnippet'} onChange={this.handleChange}/>
                         </Card.Meta>
                         <Card.Description>
-                            <ReplyContentInput answerID={this.props.answerID} replyContentType={this.state.value}/>
+                            <ReplyContentInput answerID={this.props.answerID} replyContentType={this.state.value} showanswer={this.addAnswerToDisplay}/>
+                            <div>
+                                <Label color='teal' style={{
+                                    'margin-top': '5px'
+                                }} image>
+                                    {this.state.answer}
+                                </Label>
+                            </div>
                         </Card.Description>
                     </Card.Content>
                 </Card>

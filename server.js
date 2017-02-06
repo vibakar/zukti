@@ -19,6 +19,7 @@ let savequery = require('./webserver/routes/getReply/functions/saveanswer');
 let getAdmin = require('./webserver/routes/getAdmin/getadminUser');
 let savebroadcastmessage = require('./webserver/routes/broadcastmessage/broadcastmessage');
 let getbroadcastmessage = require('./webserver/routes/broadcastmessage/getbroadcastmessage');
+let getKnowledge = require('./webserver/routes/getKnowledge/getKnowledgeBase');
 let app = express();
 let compiler = webpack(config);
 let addnode=require('./webserver/routes/addNodeAndRelations/addNode');
@@ -87,7 +88,7 @@ app.use('/concept',concept);
 
 app.use('/qa', addKnowledge);
 app.use('/question', askQuestion);
-
+app.use('/getknowledge',getKnowledge);
 app.use('/retriveChat',retriveChat)
 app.use('/savequery', savequery);
 

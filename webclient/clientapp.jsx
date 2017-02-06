@@ -30,6 +30,7 @@ import Cookie from 'react-cookie';
 import Addnode from './ginniAdmin/components/buildNodeAndRelationship/createNodeAndRelation.jsx';
 
 
+
 injectTapEventPlugin();
 var requireAuth = function (nextState, replace) {
 var token = Cookie.load('token');
@@ -70,6 +71,6 @@ ReactDOM.render(
         <Route path='/expiryLink' component={ExpiryLink}/>
           <Route path='/successfullyregistered' component={SuccessfullyRegistered}/>
           <Route path='/addnode' component={Addnode}/>
-
+          
     </Router>
 </MuiThemeProvider>, document.getElementById('mountapp'));

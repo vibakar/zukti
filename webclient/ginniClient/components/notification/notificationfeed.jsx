@@ -19,7 +19,7 @@ export default class Notificationfeed extends React.Component {
                   <Grid.Column width={13}>
                     <Feed>
               <Feed.Event>
-                <Feed.Label image='http://semantic-ui.com/images/avatar/small/joe.jpg'/>
+                <Feed.Label image='http://semantic-ui.com/images/avatar/small/joe.jpg' position="center"/>
                 <Feed.Content>
                   <Feed.User><h2>Arpit</h2></Feed.User>
                 <Feed.Summary date={this.props.date}/>

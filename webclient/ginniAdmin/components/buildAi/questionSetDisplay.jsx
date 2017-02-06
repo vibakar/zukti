@@ -5,21 +5,43 @@ import {
   } from 'semantic-ui-react';
 import QuestionAnswer from './questionsAnswer';
 import AddQuestionAnswerSet from './addQuestionsAnswerSet';
+import DisplayQAset from '../getquestionanswerset/displayqaset';
+import Display from '../getquestionanswerset/displayaccordion';
 
 export default class QuestionSetDisplay extends React.Component {
 
     constructor() {
         super();
         this.addQuestionAnswerSet = this.addQuestionAnswerSet.bind(this);
+        this.displayQuestionAnswerSet = this.displayQuestionAnswerSet.bind(this);
+        this.removeset = this.removeset.bind(this);
         this.state = {
-           questionAnswerSet: []
+           questionAnswerSet: [],
+           type :'',
+           displayQuestionAnswerSet :[]
         };
     }
     // function to add a Question answer set to display
     addQuestionAnswerSet(id) {
-        this.state.questionAnswerSet.push(<QuestionAnswer answerID={id}/>);
+        this.setState({type:"add"});
+        this.state.questionAnswerSet.push(<QuestionAnswer answerID={id} removeRuleBlockHandler={this.removeset}/>);
         this.setState({questionAnswerSet: this.state.questionAnswerSet});
     }
+    //function to remove questionAnswerSet
+    removeset(index){
+      this.state.questionAnswerSet.splice(index,1);
+      this.setState({questionAnswerSet:this.state.questionAnswerSet});
+    }
+    displayQuestionAnswerSet(set)
+    { console.log(set);
+      set.map((que)=>{
+      this.state.displayQuestionAnswerSet.push(<Display questions={que.questions} answers = {que.answers}/>)
+      })
+      this.setState({displayQuestionAnswerSet:this.state.displayQuestionAnswerSet});
+      this.setState({type:"display"});
+      this.state.displayQuestionAnswerSet=[]
+
+      }
     render() {
         return (
             <div style={{
@@ -40,10 +62,16 @@ export default class QuestionSetDisplay extends React.Component {
                         </div>
                     </Grid.Row>
                     <Grid.Row>
+                      <Grid.Column width={8}>
                         <AddQuestionAnswerSet handlerAddQASet={this.addQuestionAnswerSet}/>
+                        </Grid.Column>
+
+                    <Grid.Column width={8}>
+                        <DisplayQAset handlerdisplayQASet={this.displayQuestionAnswerSet}/>
+                    </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
-                      {this.state.questionAnswerSet}
+                      {(this.state.type === "add") ? (this.state.questionAnswerSet):(this.state.displayQuestionAnswerSet)}
                     </Grid.Row>
                 </Grid>
             </div>
