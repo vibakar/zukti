@@ -34,7 +34,7 @@ let isAuthenticated = function isLoggedIn(req, res, next) {
         return next();
     }
     console.log('Not authenticated');
-    res.redirect('/');
+    res.redirect('/#/');
 };
 
 // Mongoose

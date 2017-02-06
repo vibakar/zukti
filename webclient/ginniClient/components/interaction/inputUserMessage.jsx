@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Form} from 'semantic-ui-react';
 import Axios from 'axios';
+import Cookie from 'react-cookie';
 import AssistantGinniMixedReply from './assistantGinniMixedReply';
 import Config from '../../../../config/url';
 export default class InputUserMesaage extends React.Component {
@@ -9,7 +10,6 @@ export default class InputUserMesaage extends React.Component {
         super(props);
         this.handleUserInput = this.handleUserInput.bind(this);
     }
-
     handleUserInput(e) {
         e.preventDefault();
         let message = {};
@@ -17,9 +17,10 @@ export default class InputUserMesaage extends React.Component {
         message.value = ReactDOM.findDOMNode(this.refs.userInput).value;
         message.time = new Date().toLocaleString();
         this.props.handlerUserReply(message);
+        alert(this.props.username);
         ReactDOM.findDOMNode(this.refs.userInput).value = ''
         let url = Config.url + '/question/askQuestion';
-        Axios.post(url, {question: message}).then((response) => {
+        Axios.post(url, {username:this.props.username,question: message}).then((response) => {
             console.log(response);
             if (response.data) {
                 response.data.forEach((item)=>{

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, hashHistory, IndexRoute} from 'react-router';
@@ -27,32 +26,32 @@ import AdminProfilePage from './ginniAdmin/components/admin/adminprofile';
 import Cookie from 'react-cookie';
 import Addnode from './ginniAdmin/components/buildNodeAndRelationship/createNodeAndRelation.jsx';
 
-
-
 injectTapEventPlugin();
-let requireAuth = function (nextState, replace) {
-let token = Cookie.load('token');
-  if (!token) {
-    replace({
-      pathname: '/',
-      state: { nextPathname: nextState.location.pathname }
-    })
-  }
+let requireAuth = function(nextState, replace) {
+    let token = Cookie.load('token');
+    if (!token) {
+        replace({
+            pathname: '/',
+            state: {
+                nextPathname: nextState.location.pathname
+            }
+        })
+    }
 }
 
 ReactDOM.render(
     <MuiThemeProvider>
     <Router history={hashHistory}>
         <Route path='/' component={ApplicationHome}/>
-        <Route path='/adminHome' component={App1} >
-          <IndexRoute component={AdminHome} onEnter={requireAuth.bind(this)} />
+        <Route path='/adminHome' component={App1}>
+            <IndexRoute component={AdminHome} onEnter={requireAuth.bind(this)}/>
         </Route>
-        <Route path="/clienthome" component={App} >
-          <IndexRoute component={ClientHome} onEnter={requireAuth.bind(this)} />
+        <Route path="/clienthome" component={App}>
+            <IndexRoute component={ClientHome} onEnter={requireAuth.bind(this)}/>
         </Route>
         <Route path='/react' component={react} onEnter={requireAuth.bind(this)}/>
         <Route path='/newpassword' component={NewPassword} onEnter={requireAuth.bind(this)}/>
-        <Route path='/login' component={LoginPage} />
+        <Route path='/login' component={LoginPage}/>
         <Route path='/forgotpassword' component={ForgotPassword} onEnter={requireAuth.bind(this)}/>
         <Route path='/forgetmail' component={ForgetpasswordEmail} onEnter={requireAuth.bind(this)}/>
         <Route path='/signup' component={Signup}/>
@@ -64,9 +63,7 @@ ReactDOM.render(
         <Route path='/logout' component={Logout} onEnter={requireAuth.bind(this)}/>
         <Route path='/log' component={LogoutAdmin} onEnter={requireAuth.bind(this)}/>
         <Route path='/expiryLink' component={ExpiryLink}/>
-          <Route path='/successfullyregistered' component={SuccessfullyRegistered}/>
-          <Route path='/addnode' component={Addnode} onEnter={requireAuth.bind(this)}/>
-
-
+        <Route path='/successfullyregistered' component={SuccessfullyRegistered}/>
+        <Route path='/addnode' component={Addnode} onEnter={requireAuth.bind(this)}/>
     </Router>
 </MuiThemeProvider>, document.getElementById('mountapp'));
