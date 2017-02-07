@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import {Grid, Button, Icon, Card,  Accordion ,Divider} from 'semantic-ui-react';
+import {Grid, Button, Icon, Card,  Accordion ,Divider, Image, Label} from 'semantic-ui-react';
 import TrainBot from '../trainbot/trainbot.jsx';
 import IntentDropDown from '../trainbot/IntentDropDown';
 import InputNewSameAsIntent from '../trainbot/inputNewSameAsIntent';
+import {Scrollbars} from 'react-custom-scrollbars';
 var query = '';
 export default class UnansweredQueries extends React.Component {
   constructor(props) {
@@ -18,26 +19,39 @@ export default class UnansweredQueries extends React.Component {
       axios({url: 'http://localhost:8080/viewquery', method: 'GET'}).then(function(msg) {
           console.log(msg.data);
           this.setState({ detailNew: msg.data});
-          console.log(this.state.detailNew);
+          console.log(msg.data)
 
-    }.bind(this)).catch(function(err) {
+   }.bind(this)).catch(function(err) {
           console.log(err);
       });
   }
 
-      render() {
+     render() {
          var user=this.state.detailNew.map(function(newsdata) {
         return (
           <div>
-
             <Grid >
                   <Grid.Row vertically>
                      <Grid.Column width={1}></Grid.Column>
                     <Grid.Column width={14}>
-                    <Icon name='help circle'/>{newsdata.question}<br/>
-                    Keyword:{newsdata.keywords}<br/>
-                    intent:{newsdata.intents}
-
+                      <Card fluid style={{height:'80px'}}>
+                        <Grid>
+                          <Grid.Column width={2}>
+                            <Grid.Row></Grid.Row>
+                            <Grid.Row></Grid.Row>
+                            <Label as='a'>
+     <Image avatar spaced='right' src='https://image.freepik.com/free-icon/user-male-shape-in-a-circle-ios-7-interface-symbol_318-35357.jpg' />
+   </Label></Grid.Column>
+                          <Grid.Column width={7}>
+                            {newsdata.username}<br/><br/>
+                            <Icon name='help circle' style={{color:'teal'}}/>{newsdata.question}<br/>
+                          </Grid.Column>
+                          <Grid.Column width={7} style={{color:'teal'}}>
+                            <br/>Keyword:{newsdata.keywords}<br/>
+                            intent:{newsdata.intents}
+                          </Grid.Column>
+                        </Grid>
+</Card>
 </Grid.Column>
     </Grid.Row>
       </Grid>
@@ -46,13 +60,27 @@ export default class UnansweredQueries extends React.Component {
 }.bind(this));
 return(
 <div style={{
-    backgroundImage: 'url("../../images/wall.jpg")',
-    height: '300%'
-}}>
-  <h4><b>
-    Unanswered Queries :</b><br/><br/>
-{user}
-</h4>
+    backgroundImage: 'url("../../images/wall.jpg")',marginTop: '1%',
+    height: '100%'
+  }}>
+<Grid divided='vertically'>
+    <Grid.Row columns={3}>
+      <Grid.Column width={1}></Grid.Column>
+
+     <Grid.Column width={14}>
+        <Scrollbars renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
+            display: "none",
+            position: "right"
+        }}/>} autoHeight autoHeightMin={554}>
+            <div style={{width:'98%',height:'50%'}} >
+              <h3>UNANSWERED QUERIES</h3>
+                          {user}
+</div></Scrollbars>
+                </Grid.Column>
+
+
+             </Grid.Row>
+          </Grid>
 </div>
 );
 }

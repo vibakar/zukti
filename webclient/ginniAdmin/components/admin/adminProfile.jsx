@@ -124,7 +124,7 @@ onDrop(files)
         photo.append('IMG', file[0]);
         this.setState({file: file});
     }
-    close = () => hashHistory.push('/chat');
+    close = () => hashHistory.push('/react');
     // validation for firstname
     ChangeFirst = (event) => {
         this.setState({firstname: event.target.value});

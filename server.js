@@ -20,6 +20,7 @@ let getAdmin = require('./webserver/routes/getAdmin/getadminUser');
 let savebroadcastmessage = require('./webserver/routes/broadcastmessage/broadcastmessage');
 let getbroadcastmessage = require('./webserver/routes/broadcastmessage/getbroadcastmessage');
 let getKnowledge = require('./webserver/routes/getKnowledge/getKnowledgeBase');
+let analytics = require('./webserver/routes/analyticsData/analytics');
 let app = express();
 let compiler = webpack(config);
 let addnode = require('./webserver/routes/addNodeAndRelations/addNode');
@@ -34,7 +35,7 @@ let isAuthenticated = function isLoggedIn(req, res, next) {
         return next();
     }
     console.log('Not authenticated');
-    res.redirect('/');
+    res.redirect('/#/');
 };
 
 // Mongoose
@@ -86,7 +87,7 @@ require('./webserver/routes/auth.js')(app, passport);
 app.use('/', uploadimage);
 
 //Routes
-
+app.use('/analytics',analytics);
 app.use('/savebroadcastmessage',isAuthenticated, savebroadcastmessage);
 app.use('/getbroadcastmessage',isAuthenticated, getbroadcastmessage);
 app.use('/getadmin',isAuthenticated, getAdmin);
@@ -139,6 +140,13 @@ io.on('connection', function(socket) {
     socket.emit('server event', {
         foo: 'bar'
     });
+    socket.on('newQuery',function(data){
+      socket.broadcast.emit('incrementQueryCount',data);
+    });
+    socket.on('userLoginStatus',function(data){
+      socket.broadcast.emit('userLoggedIncount',data);
+    });
+
     socket.on('client event', function(data) {
         socket.broadcast.emit('update label', data);
     });

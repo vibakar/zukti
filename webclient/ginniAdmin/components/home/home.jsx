@@ -3,7 +3,8 @@ import {
     Image,
     Icon,
     Divider,
-    Grid
+    Grid,
+    Popup
 } from 'semantic-ui-react';
 import {hashHistory} from 'react-router';
 import Axios from 'axios';
@@ -43,11 +44,11 @@ Axios({
             <Grid.Column width={2}/>
             <Grid.Column width={10}/>
             <Grid.Column width={4}>
-            <center><Icon name='sign out' size='large' inverted id='iconstyle' onClick={this.handleLogout.bind(this)}/></center>
+              <Popup offset={-140} positioning='left center' trigger={<center><Icon name='sign out' size='large' inverted id='iconstyle' onClick={this.handleLogout.bind(this)}/></center>} content='Logout'/>
             </Grid.Column>
             </Grid.Row>
             <Divider horizontal inverted>
-            <h2>WELCOME &nbsp;&nbsp;ADMIN &nbsp;&nbsp;
+            <h2 id='sparkleadmin'>WELCOME &nbsp;&nbsp;ADMIN &nbsp;&nbsp;
             </h2>
             </Divider>
             <Grid.Row divided vertically>

@@ -44,14 +44,14 @@ export default class Notificationfeed extends React.Component {
             <Feed>
                 <Feed.Event>
                     <Feed.Label>
-                        <Image avatar src={this.state.photo}/>
+                        <Image avatar src={this.state.photo} size='small'/>
                     </Feed.Label>
                     <Feed.Content>
                         <Feed.Summary>
-                            <Feed.User style={{color:'red'}}>{this.props.msgSender}</Feed.User>
-                            <Feed.Date>{this.props.date}</Feed.Date>
+                            <Feed.User id="messagesender">{this.props.msgSender}</Feed.User>
+                            <Feed.Date id="senderdate">{this.props.date}</Feed.Date>
                         </Feed.Summary>
-                        <Feed.Extra>
+                        <Feed.Extra id="notification">
                             {this.props.dispData}
                         </Feed.Extra>
                     </Feed.Content>

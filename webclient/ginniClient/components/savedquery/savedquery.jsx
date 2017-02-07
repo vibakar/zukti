@@ -80,12 +80,12 @@ export default class SavedQuery extends React.Component{
   return (
 
  <div>
-    <Card fluid >
-      <Card.Content>
+    <Card fluid style={{background:'#F1F8E9',borderStyle:'solid',borderWidth:'thin',borderColor:'teal'}}>
+      <Card.Content >
         <Card.Header>
                     {newsdata.question}
         </Card.Header>
-      <Card.Description>
+      <Card.Description style={{color:'black'}}>
       {newsdata.answer}
       <Popup positioning='left center' offset={5} inverted size='mini' trigger={<Label onClick={() => this.deletesavequery(newsdata._id)} corner='right' size='mini' icon='delete'></Label>} content='Delete'/>
       </Card.Description>
@@ -96,7 +96,7 @@ export default class SavedQuery extends React.Component{
   );
   }.bind(this));
   return(
-  <div style={{ backgroundImage: "url('../../images/background.jpg')", marginTop: '1%',height:'100%'}}>
+  <div style={{ backgroundImage: "url('../../images/background.jpg')", marginTop: '1%',height:'absolute'}}>
 
   <Grid divided='vertically'>
     <Grid.Row columns={3}>

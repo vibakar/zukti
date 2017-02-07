@@ -87,6 +87,8 @@ export default class LeftMenu extends Component {
             self.setState({name: response.data.user.facebook.displayName, email: response.data.user.facebook.email, photo: response.data.user.facebook.photos, usertype: false});
         }
         else if (authType == "google") {
+          console.log(response.data.user.google.photos);
+          console.log(response.data.user.google.name+"name")
             self.setState({name: response.data.user.google.name, email: response.data.user.google.email, photo: response.data.user.google.photos, usertype: false});
         }
         else if (authType == "local") {
@@ -159,8 +161,8 @@ else
                         notifications
                     </Menu.Item>
                     <Menu.Item name='LogOut' active={activeItem === 'LogOut'} onClick={this.handleItemClick}>
-                        <a href='#/logout'><Icon name='sign out' color='teal'/>
-                            LogOut</a>
+                        <Icon name='sign out' color='teal'/>
+                            <a href='#/logout'>LogOut</a>
                     </Menu.Item>
                 </Sidebar>
                 <Sidebar.Pusher id="sidebarpusher">
@@ -169,10 +171,11 @@ else
                             <Menu secondary>
                                 <Menu.Item>
                                     <a href="#/clienthome">
-                                        <Popup trigger={< Icon name = "arrow circle left" size = "large" circular color = 'teal' />} content='Back' size='mini'/>
+                                        <Popup trigger={< Icon name = "arrow circle left" size = "large" circular color = 'black' />} content='Back' size='mini'/>
                                     </a>
                                 </Menu.Item>
                                 <Menu.Item position='right'></Menu.Item>
+                                <Menu.Item/><Menu.Item/>
                                 <Menu.Item>
                                     <h3>GENIE</h3>
                                 </Menu.Item>

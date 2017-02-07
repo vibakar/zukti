@@ -44,6 +44,9 @@ export default class LoginPage extends React.Component
                   }
                   else{
                     hashHistory.push('/clienthome');
+                    let socket =io();
+                    console.log('before emmit');
+                    socket.emit('userLoginStatus',{value:1});
                   }
                 },
                 error: function(err) {
@@ -72,7 +75,7 @@ export default class LoginPage extends React.Component
         const {open, dimmer} = this.state;
         return (
             <div>
-            <Modal dimmer={dimmer} open={open} onClose={this.close} closeOnRootNodeClick={false} size="small" closeIcon='close'>
+            <Modal dimmer={dimmer} open={open} onClose={this.close} closeOnRootNodeClick={false} size="small" closeIcon='close' id='modallogincss'>
             <Modal.Header id="headerstyle">
             <h1><Image src='../../images/ginianim.gif' avatar/>Welcome to Genie</h1>
             </Modal.Header>
@@ -91,11 +94,11 @@ export default class LoginPage extends React.Component
             <Segment basic>
             <Form onSubmit={this.onSubmitLoginData}>
             <Form.Field id="formfieldlogin">
-            <Form.Input name= "userName" placeholder= 'Email id' icon='user' iconPosition='left' id="formstyle" onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required />
+            <Form.Input name= "userName" placeholder= 'Email-ID' icon='user' iconPosition='left' id="formstyle" onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required />
             <p style={{color: '#a54f4f',textAlign:'center'}}>{this.state.checkmail}</p>
             </Form.Field>
             <Form.Field id="formfieldlogin"><br/>
-            <Form.Input type='password' name="password" placeholder='password' icon='lock' iconPosition='left' id="formstyle" required/>
+            <Form.Input type='password' name="password" placeholder='Password' icon='lock' iconPosition='left' id="formstyle" required/>
             <a href="#/forgotpassword" id='forgotpassword'>Forgot Password?</a>
             </Form.Field><br/><br/><br/>
             <Modal.Actions>

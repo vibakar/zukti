@@ -1,3 +1,18 @@
+#modalsignupcss{
+  -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:1; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:1; opacity:1}
+}
 #signup
 {
   background-color: teal;
@@ -31,12 +46,16 @@ text-align: center;
 
 #text
 {
-  margin-left: 125px;
-  width:250px;
+  margin-left: 100px;
+  width:270px;
 }
 #textcolor
 {
   color: #a54f4f ;
+}
+#space
+{
+  margin-left: 2%;
 }
 
 @media only screen and (max-width:360px){

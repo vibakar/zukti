@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Icon, Divider, Grid} from 'semantic-ui-react';
+import {Image, Icon, Divider, Grid,Popup} from 'semantic-ui-react';
 import {hashHistory} from 'react-router';
 import Axios from 'axios';
 import Cookie from 'react-cookie';
@@ -35,11 +35,11 @@ export default class ClientHome extends React.Component {
                         <Grid.Column width={2}/>
                         <Grid.Column width={10}/>
                         <Grid.Column width={4}>
-                            <center><Icon name='sign out' size='large' inverted id='iconstyle' onClick={this.handleLogout.bind(this)}/></center>
+                            <Popup offset={-140} positioning='left center' trigger={<center><Icon name='sign out' size='large' inverted id='iconstyle' onClick={this.handleLogout.bind(this)}/></center>} content='Logout'/>
                         </Grid.Column>
                     </Grid.Row>
                     <Divider horizontal inverted>
-                        <h2>WELCOME &nbsp;&nbsp;TO &nbsp;&nbsp; GENIE
+                        <h2 id='headsparkle'>WELCOME &nbsp;&nbsp;TO &nbsp;&nbsp; GENIE
                         </h2>
                     </Divider>
                     <Grid.Row divided vertically>

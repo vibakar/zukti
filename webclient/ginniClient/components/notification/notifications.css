@@ -4,3 +4,14 @@ h3{
 #user{
   color:'#ff0000'
 }
+#notification,#messagesender
+{
+  font-weight: bold;
+  font-size: 15px;
+  font-style:normal;
+}
+#senderdate
+{
+  font-size: 13px;
+  font-style:normal;
+}

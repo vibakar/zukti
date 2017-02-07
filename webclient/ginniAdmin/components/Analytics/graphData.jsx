@@ -155,8 +155,9 @@ export default class GraphData extends React.Component {
         };
       }
         render() {
-            return (    <Grid   stackable itemsPerRow={2}>
-            <Grid.Column width={10}>
+            return (
+              <Grid stackable itemsPerRow={2} >
+            <Grid.Column width={10} >
             <div style={styles.graphContainer}>
             <h2>Users Added In Each Month</h2>
             <Line data={this.state.chartData} options={chartOptions} width='300' height='200' />

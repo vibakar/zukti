@@ -108,19 +108,19 @@ export default class AssistantChatContainer extends React.Component {
                 <Menu secondary>
                     <Menu.Item secondary position='right'/>
                     <Menu.Item position='left'>
-                        <Input transparent className='icon' icon='search' placeholder='Search your content' focus/>
+                        <Input  className='icon' style={{width:400}} icon={<Icon name='search' color='red' circular link />}  placeholder='Search your content' focus/>
                     </Menu.Item>
                 </Menu>
                 <Scrollbars id='ginni' renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
                     display: "none",
                     position: "right",
                     minHeight: "516px"
-                }}/>} autoHeight autoHeightMin={508}>
+                }}/>} autoHeight autoHeightMin={506}>
                     <div id='messagechat'>
                         {this.state.messages}
                     </div>
                 </Scrollbars>
-                <InputUserMessage handlerUserReply={this.pushUserMessages} handleGinniReply={this.pushGinniMessages}/>
+                <InputUserMessage username={this.state.username}  handlerUserReply={this.pushUserMessages} handleGinniReply={this.pushGinniMessages}/>
             </div>
         );
     }

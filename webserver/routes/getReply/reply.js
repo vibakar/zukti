@@ -6,40 +6,43 @@ let commonReply = require('./../../config/commonReply');
 let answerNotFoundReply = require('./../../config/answerNotFoundReply');
 let saveUnansweredQuery = require('./functions/saveUnansweredQuery');
 let saveUserQueries = require('./functions/saveUserQueries');
+let saveAnalyticsData = require('./functions/saveAnalyticsData');
+
 router.post('/askQuestion', function(req, res) {
-  //  let email = req.user.local.email;
     console.log(req.user);
     let email = req.user.local.email||req.user.facebook.email||req.user.google.email;
+    let username = req.body.username;
     let question = req.body.question;
     let query = processQuestion(question.value.toLowerCase());
     let keywords = query.keywords;
     let intents = query.intents;
-    let sendResponse = function(resultArray){
+    let sendResponse = function(isUnAnswered,resultArray){
+        saveAnalyticsData(isUnAnswered);
         saveUserQueries(email,question,resultArray);
         res.json(resultArray);
     }
     let answerFoundCallback = function(resultArray) {
-        sendResponse(resultArray);
+        sendResponse(false,resultArray);
     };
     let noAnswerFoundCallback = function() {
-        saveUnansweredQuery(email, question.value, keywords, intents);
+        saveUnansweredQuery(username,email, question.value, keywords, intents);
         let foundNoAnswer=answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
         resultArray=[];
         let resultObj={};
         resultObj.time = new Date().toLocaleString();
         resultObj.textAnswer=foundNoAnswer;
         resultArray.push(resultObj);
-        sendResponse(resultArray);
+        sendResponse(true,resultArray);
     };
     if (keywords.length === 0) {
-        saveUnansweredQuery(email, question.value);
+        saveUnansweredQuery(username,email, question.value);
         let foundNoAnswer = commonReply[Math.floor(Math.random() * commonReply.length)]
         resultArray=[];
         let resultObj={};
         resultObj.time = new Date().toLocaleString();
         resultObj.textAnswer=foundNoAnswer;
         resultArray.push(resultObj);
-        sendResponse(resultArray);
+        sendResponse(true,resultArray);
     } else {
         getQuestionResponse(intents, keywords, answerFoundCallback, noAnswerFoundCallback);
     }
