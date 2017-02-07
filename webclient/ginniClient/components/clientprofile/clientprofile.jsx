@@ -12,8 +12,8 @@ import Dropzone from 'react-dropzone';
 import Axios from 'axios';
 import validator from 'validator';
 import './clientprofile.css';
-//import $ from 'jquery';
 const request = require('superagent');
+import Cookie from 'react-cookie';
 
 export default class ClientProfile extends React.Component
 {
@@ -24,7 +24,8 @@ export default class ClientProfile extends React.Component
             email: '',
             firstname: '',
             lastname:'',
-            photo:''
+            photo:'',
+            changeImage:true
         };
         this.OnSubmitData = this.OnSubmitData.bind(this);
         this.show = this.show.bind(this);
@@ -37,18 +38,16 @@ onDrop(files)
           files.forEach((file)=> {
                       this.state.allFiles.push(file);
               });
-
-       this.setState({ allFiles: this.state.allFiles});
-        console.log(this.state.allFiles[0].name);
+console.log(this.state.allFiles);
+this.setState({changeImage: false})
+       this.setState({ allFiles: this.state.allFiles[0]});
+        console.log(this.state.allFiles);
     }
 
      uploadImage()
       {
-        console.log("Image"+this.state.allFiles[0].name);
         let photo = new FormData();
-          this.state.allFiles.forEach((file)=> {
-              photo.append('IMG',file);
-          });
+              photo.append('IMG',this.state.allFiles);
           let self=this;
         request.post('/upload').send(photo).end(function(err, resp) {
         console.log('save')
@@ -58,7 +57,7 @@ onDrop(files)
                   }
                   else
                   {
-                    console.log(self.state.allFiles[0])
+                    console.log(self.state.allFiles)
                       self.saveImage(resp.text);
                       //this.setState({ allFiles:[]});
                 return resp;
@@ -146,19 +145,21 @@ onDrop(files)
         }
     }
     render() {
+        let imagechange = null;
         const {open, size} = this.state;
+        let profilepicture= Cookie.load("profilepicture");
+        if(this.state.changeImage){
+          imagechange=(<Image src={require('../../../../webserver/images/'+profilepicture)} size='large' style={{height: 204}}/>);
+        }else {
+          imagechange=(<Image src={this.state.allFiles.preview} style={{height: 204}}/>);
+        }
         return (
             <Modal size='small' open={true} onClose={this.close} closeOnRootNodeClick={false} closeIcon='close'>
                 <Modal.Header id="updateheader"><Icon name='user'/>Edit Profile</Modal.Header>
                 <Modal.Content image>
                     <Image wrapped size='medium'>
                         <Dropzone ref='dropzone' multiple={false} default={'../../images/user.png'} accept={'image/*'} onDrop={this.onDrop}>
-                            <div>
-                                <div>{this.state.allFiles.map((file) => <img src={file.preview} style={{
-                                        height: 204,
-                                        width: 204
-                                    }}/>)}</div>
-                            </div>
+                            {imagechange}
                         </Dropzone><br/>
                         <Button primary onClick={this.uploadImage}>
                             Change Photo

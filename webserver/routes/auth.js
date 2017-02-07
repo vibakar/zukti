@@ -73,8 +73,8 @@ module.exports = function(app, passport) {
         newUser.local.name = (req.body.firstName + ' ' + req.body.lastName).toLowerCase();
         newUser.local.email = req.body.email;
         newUser.local.password = req.body.password;
-        newUser.local.firstname = req.body.firstName;
-        newUser.local.lastname = req.body.lastName;
+        newUser.local.firstname = (req.body.firstName).toLowerCase();
+        newUser.local.lastname = (req.body.lastName).toLowerCase();
         newUser.local.localType = 'Customer';
         newUser.local.authType = 'local';
         newUser.local.loggedinStatus = false;
@@ -96,11 +96,11 @@ module.exports = function(app, passport) {
      //let imageupload = fs.readFileSync('../images/IMG_1486181808021.jpeg');
       //  console.log(imgPath);
       //  console.log(imageupload);
-        newUser.local.name = req.body.firstName + " " + req.body.lastName;
+        newUser.local.name = (req.body.firstName + " " + req.body.lastName).toLowerCase();
         newUser.local.email = req.body.email;
         newUser.local.password = req.body.password;
-        newUser.local.firstname = req.body.firstName;
-        newUser.local.lastname = req.body.lastName;
+        newUser.local.firstname = (req.body.firstName).toLowerCase();
+        newUser.local.lastname = (req.body.lastName).toLowerCase();
         newUser.local.localType = 'Admin';
         newUser.local.isEmailVerified = true;
         newUser.local.verificationID = rand;
@@ -369,9 +369,9 @@ module.exports = function(app, passport) {
     app.put('/updateprofile', function(req, res) {
         if (req.body) {
             request1 = req.body.email;
-            request2 = req.body.firstname + " " + req.body.lastname;
-            request3 = req.body.firstname;
-            request4 = req.body.lastname;
+            request2 = (req.body.firstname + " " + req.body.lastname).toLowerCase();
+            request3 = req.body.firstname.toLowerCase();
+            request4 = req.body.lastname.toLowerCase();
             RegisteredUser.update({
                 'local.email': request1
             }, {
@@ -422,7 +422,7 @@ module.exports = function(app, passport) {
                 if (err) {
                     res.send(err);
                 } else {
-                    res.send("Password changed Successfully");
+                    res.send("Successfully Updated");
                 }
             });
 
