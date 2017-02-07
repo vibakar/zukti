@@ -122,7 +122,7 @@ export default class Signup extends React.Component {
             this.setState({errormessageemail: false});
         } else {
             this.setState({erroremail: true});
-            this.setState({errormessageemail: 'Enter your full email address, including the \@\ '});
+            this.setState({errormessageemail: 'Enter valid email, including \@\ '});
         }
     }
     // validation for password
@@ -141,7 +141,7 @@ export default class Signup extends React.Component {
         } else {
             this.setState({errorpassword: true});
             this.setState({verifypassword: false});
-            this.setState({errormessagepassword: 'Password should contain numbers,letters(capital and small) and Length should be greater than 6'});
+            this.setState({errormessagepassword: 'Password should contain numbers,letters(A&a) and minimum length 6'});
         }
     }
     // validation for confirmpassword
@@ -155,7 +155,7 @@ export default class Signup extends React.Component {
       } else {
         this.setState({confirmpassword: false});
         this.setState({errorrepassword: true});
-        this.setState({errormessage: 'Not matched'});
+        this.setState({errormessage: 'Password mismatch'});
     }
 }
 render() {
@@ -195,12 +195,11 @@ render() {
 
                 <Header as='h2' icon inverted>
                   <Image src='../images/mail.gif'/>
-                   Sending Mail!!!!!!!!<br/><br/>
-                   <Header.Subheader>It may take few minutes</Header.Subheader>
+                   <Header.Subheader>Hold a second to get mail</Header.Subheader>
                  </Header>
         </Dimmer>
         <span id="message"/>
-        <h4 id="text">Already a Genie member?<a href='#/login' id='space'>
+        <h4 id="text">Already a member?&nbsp;<a href='#/login' id='space'>
         Sign in here</a>
         </h4>
         </Form>

@@ -27,12 +27,12 @@ export default class SuccessfullyRegistered extends React.Component {
       <Grid.Row/>
       <Grid.Row>
       <Grid.Column style={{textAlign: 'center'}}>
-      <p id='head1'>"Suceessfully Verified"<br/>
+      <p id='head1'>Suceessfully Verified<br/>
    </p>
       </Grid.Column>
       </Grid.Row>
       <Grid.Row/>
-      <Grid.Row><h2>Now You Can Login  Here..!!</h2></Grid.Row>
+      <Grid.Row><h2>Login and get started!!</h2></Grid.Row>
       <Grid.Row/>
       <Grid.Row/>
       <Grid.Row/>

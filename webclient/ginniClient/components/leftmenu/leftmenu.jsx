@@ -52,6 +52,7 @@ export default class LeftMenu extends Component {
         this.setState({activeItem: name,counter:this.state.counter});
     });
     componentDidMount() {
+      console.log("entered");
         this.getUserInformation();
         this.getNotificationCount();
         let socket = io();
@@ -113,7 +114,7 @@ export default class LeftMenu extends Component {
   let authType= Cookie.load("authType");
         if(authType== "local"){
           let profilepicture = Cookie.load("profilepicture");
-          console.log(profilepicture);
+          console.log("value"+profilepicture);
             trigger = (
       <span>
       <Image avatar src={require('../../../../webserver/images/'+profilepicture)}/> {name=customername}
@@ -148,21 +149,21 @@ else
                         Home
                     </Menu.Item>
                     <Menu.Item name='ChatBot' active={activeItem === 'ChatBot'} onClick={this.handleItemClick}>
-                        <Icon name='talk' color='teal'/>
-                        ChatBot
+                        <Icon name='discussions' color='teal'/>
+                        Let's talk
                     </Menu.Item>
                     <Menu.Item name='SavedQueries' active={activeItem === 'SavedQueries'} onClick={this.handleItemClick}>
                         <Icon name='star' color='teal'/>
-                        SavedQueries
+                        Saved queries
                     </Menu.Item>
                     <Menu.Item name='notifications' active={activeItem === 'notifications'} onClick={this.handleItemClick}>
                         <Label color='red' floating-left>{this.state.counter}</Label>
                         <Icon name='alarm' color='teal'/>
-                        notifications
+                        Notifications
                     </Menu.Item>
                     <Menu.Item name='LogOut' active={activeItem === 'LogOut'} onClick={this.handleItemClick}>
                         <Icon name='sign out' color='teal'/>
-                            <a href='#/logout'>LogOut</a>
+                            <a href='#/logout'>Log out</a>
                     </Menu.Item>
                 </Sidebar>
                 <Sidebar.Pusher id="sidebarpusher">

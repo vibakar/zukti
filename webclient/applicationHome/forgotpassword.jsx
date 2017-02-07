@@ -61,11 +61,11 @@ export default class ForgotPassword extends React.Component
               }).then(function(response) {
                     if (response.data.userexists) {
                         // console.log(msg);
-                        self.setState({userexists: 'We Found Your Mail'});
+                        self.setState({userexists: ' '});
                         self.setState({checkmail: true});
                     } else {
                         // console.log(msg);
-                      self.setState({userexists: 'No such email exists in Genie. Please sign up'});
+                      self.setState({userexists: 'No such mail exist, Please sign up'});
                       self.setState({checkmail: false});
                       }
                 }).catch(function(error) {
@@ -75,7 +75,7 @@ export default class ForgotPassword extends React.Component
             this.setState({errormessageemail: false});
         } else {
             this.setState({erroremail: true});
-            this.setState({errormessageemail: 'Enter your full email address, including the \@\ '});
+            this.setState({errormessageemail: 'Enter valid email, including \@\ '});
         }
     }
     render() {
@@ -108,17 +108,17 @@ export default class ForgotPassword extends React.Component
                     </Grid.Column>
                     <Grid.Column Width={6} id="gridstyle">
                        <Header id="headerstylefor">
-                            <h2 id='request'><Icon name='mail' id='mailicon'/>Request a Password Reset</h2>
+                            <h2 id='request'><Icon name='mail' id='mailicon'/>Password Reset</h2>
                         </Header>
                         <Divider/>
                         <p id="textstyle">
-                            <h4 style={{color:'white',fontStyle:'italic'}}>Just fill in your email and we'll help you reset your password.</h4>
+                            <h4 style={{color:'white',fontStyle:'italic'}}>Forgot your password? No worries!! Give your registered mail to get reset link</h4>
                         </p>
                         <Form onSubmit={this.onSubmitData}>
                             <Form.Field id="forgotfield">
                         <Form.Input placeholder= 'email id' name= "email" icon='mail outline' iconPosition='left' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
-                                <p style={{color: 'white',textAlign:'center'}}>{this.state.userexists}</p>
-                                <p style={{color: 'white',textAlign:'center'}}>{this.state.errormessageemail}</p>
+                                <p style={{color: 'red',textAlign:'center'}}>{this.state.userexists}</p>
+                                <p style={{color: 'red',textAlign:'center'}}>{this.state.errormessageemail}</p>
                             </Form.Field>
                             <Button type='submit' id='buttonstylefor' onClick={this.handleOpen} circular  disabled={(!this.state.email) || (!this.state.checkmail)}>Send</Button>
                             <Dimmer
@@ -128,8 +128,7 @@ export default class ForgotPassword extends React.Component
 
                                     <Header as='h2' icon inverted>
                                       <Image src='../images/mail.gif' size='small'/><br/><br/>
-                                       Sending Mail..!!<br/><br/>
-                                       <Header.Subheader>It may take few minutes</Header.Subheader>
+                                       <Header.Subheader>Hold a moment to get mail</Header.Subheader>
                                      </Header>
                             </Dimmer>
                         </Form>

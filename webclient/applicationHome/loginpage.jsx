@@ -82,12 +82,10 @@ export default class LoginPage extends React.Component
             <Modal.Content>
             <p id="para">
             <h2>
-            Great to have you back!
+            Nice to see you back!
             </h2>
-            </p>
-            <p id="para1">
-            <h2>You can sign in to Genie with your existing Genie account</h2>
-            </p>
+            <h2>Go ahead to sign in</h2>
+          </p>
             <Modal.Description>
             <Grid columns={2} stackable>
             <Grid.Column>
@@ -105,8 +103,8 @@ export default class LoginPage extends React.Component
             <Button color='teal' id="buttonwidth1" circular>
             <Button.Content type='submit' ><Icon name='sign in'/>Login</Button.Content>
             </Button><br/><br/>
-            <p id="footer">New Here?
-            <a href="#/signup">Create an Genie Account</a>
+            <p id="footer">Not yet registered?&nbsp;
+            <a href="#/signup">Create Now</a>
             </p>
             </Modal.Actions>
             </Form>
@@ -117,12 +115,12 @@ export default class LoginPage extends React.Component
             <Modal.Actions>
             <a href='/auth/facebook'>
             <Button color='blue' id='buttonwidthfacebook' circular>
-            <Button.Content visible><Icon name='facebook'/>Sign Up With Facebook</Button.Content>
+            <Button.Content visible><Icon name='facebook'/>Login With Facebook</Button.Content>
             </Button>
             </a>
             <a href='/auth/google'>
             <Button color='red' id='buttonwidthgoogle' circular>
-            <Button.Content visible><Icon name='google'/>Sign Up With Google</Button.Content>
+            <Button.Content visible><Icon name='google'/>Login With Google</Button.Content>
             </Button>
             </a>
             </Modal.Actions>

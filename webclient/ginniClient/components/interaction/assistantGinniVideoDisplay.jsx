@@ -58,13 +58,12 @@ export default class AssistantGinniMixedReply extends React.Component {
                                 <ReactPlayer url={this.props.url} playing={false} controls={true}/>
                         </Feed.Extra>
                         <Feed.Meta>
-                            <Popup trigger={< Icon circular name = 'flag' color = 'green' />} content='Flag' size='mini'/>
-                            <Popup trigger={< Icon circular name = 'star' color = 'yellow' onClick={()=>{this.savedquery(this.props.url)}}/>} content='star this message' size='mini'/>
+                            <Popup trigger={< Icon circular name = 'flag' color = 'purple' />} content='Flag' size='mini'/>
+                            <Popup trigger={< Icon circular name = 'save' color = 'green' onClick={()=>{this.savedquery(this.props.url)}}/>} content='save this message' size='mini'/>
                             <Popup trigger={< Icon circular name = 'like outline' color = 'blue' />} content='Like' size='mini'/>
                             <Popup trigger={< Icon circular name = 'dislike outline' color = 'blue' />} content='Dislike' size='mini'/>
                             <Popup trigger={< Icon circular name = 'delete' color = 'red' />} content='Delete' size='mini'/>
-                            <Comment.Action>Reply</Comment.Action>
-                        </Feed.Meta>
+                            </Feed.Meta>
                     </Feed.Content>
                 </Feed.Event>
                 <Snackbar  open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={1000} onRequestClose={this.handleRequestClose}/>
