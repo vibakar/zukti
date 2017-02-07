@@ -12,7 +12,7 @@ export default class AssistantView extends React.Component {
         return (
             <Feed id='assistantView'>
                 <Feed.Event>
-                    <Feed.Label><Image avatar src={require('../../../../webserver/images/'+profilepicture)}/></Feed.Label>
+                    <Feed.Label><Image avatar src={this.props.profilePicture}/></Feed.Label>
                     <Feed.Content>
                         <Feed.Summary date={this.props.msgDate} user={this.props.userName}/>
                         <Feed.Extra text>
