@@ -40,7 +40,7 @@ export default class MessageView extends React.Component {
             <Feed>
                 <Feed.Event>
                     <Feed.Label>
-                        <Image avatar src={this.state.photo}/>
+                        <Image avatar src='http://semantic-ui.com/images/avatar/small/elliot.jpg'/>
                     </Feed.Label>
                     <Feed.Content>
                         <Feed.Summary>

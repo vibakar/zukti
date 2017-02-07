@@ -16,7 +16,8 @@ export default class AssistantChatContainer extends React.Component {
         this.state = {
             messages: [],
             username: 'User',
-            loaderActive: true
+            loaderActive: true,
+            profilePicture:''
         };
         this.retriveChat = this.retriveChat.bind(this);
         // to display ginni messages
@@ -29,6 +30,10 @@ export default class AssistantChatContainer extends React.Component {
         let username = Cookie.load('username');
         if (username) {
             this.state.username = username;
+        }
+        let profilePicture = Cookie.load('profilepicture');
+        if(profilePicture){
+          this.state.profilePicture = require('../../../../webserver/images/'+profilePicture);
         }
         this.retriveChat();
     }
@@ -53,7 +58,7 @@ export default class AssistantChatContainer extends React.Component {
                 let length = this.state.messages.length;
                 this.state.messages.push(
                   <div ref={(ref) => this['_div' + length] = ref} key={length}>
-                    <AssistantUserView msgDate={chat.question.time} userName={this.state.username} userMessage={chat.question.value}/>
+                    <AssistantUserView msgDate={chat.question.time} userName={this.state.username} userMessage={chat.question.value} profilePicture={this.state.profilePicture}/>
                   </div>
                 );
                 chat.resultArray.forEach((reply) => {
