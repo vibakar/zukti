@@ -1,19 +1,14 @@
 import React from 'react';
 import Axios from 'axios';
 import {
-    Message,
     Grid,
     Card,
     Feed,
-    Statistic,
-    Link,
-    Header,
-    Label,
-    Accordion
+    Statistic
 } from 'semantic-ui-react'
 import GraphData from './graphData';
-var count = 0;
-var count1 = 0;
+let count = 0;
+let count1 = 0;
 export default class Info extends React.Component {
     constructor() {
         super();
@@ -135,6 +130,7 @@ export default class Info extends React.Component {
                                             <Feed.Summary>
                                                 <Statistic>
                                                     <Statistic.Value>
+
                                                         <i className="inverted circular red idea icon"></i>
                                                         <a>{this.state.queryCount}</a>
                                                     </Statistic.Value>

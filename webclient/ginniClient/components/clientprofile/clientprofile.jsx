@@ -58,7 +58,8 @@ onDrop(files)
                   }
                   else
                   {
-                      self.saveImage(self.state.allFiles[0].preview);
+                    console.log(self.state.allFiles[0])
+                      self.saveImage(resp.text);
                       //this.setState({ allFiles:[]});
                 return resp;
                   }
@@ -151,7 +152,7 @@ onDrop(files)
                 <Modal.Header id="updateheader"><Icon name='user'/>Edit Profile</Modal.Header>
                 <Modal.Content image>
                     <Image wrapped size='medium'>
-                        <Dropzone ref='dropzone' multiple={false} accept={'image/*'} onDrop={this.onDrop}>
+                        <Dropzone ref='dropzone' multiple={false} default={'../../images/user.png'} accept={'image/*'} onDrop={this.onDrop}>
                             <div>
                                 <div>{this.state.allFiles.map((file) => <img src={file.preview} style={{
                                         height: 204,

@@ -39,7 +39,7 @@ export default class LoginPage extends React.Component
                     password: value.formData.password
                 },
                 success: function(response) {
-                  if(response.localType ==='Admin') {
+                  if(response.localType === 'Admin') {
                      hashHistory.push('/adminHome');
                   }
                   else{
@@ -50,8 +50,6 @@ export default class LoginPage extends React.Component
                   }
                 },
                 error: function(err) {
-                  //  alert(err.responseText);
-                    console.log(err.data);
                     this.setState({openSnackbar: true, snackbarMsg: err.responseText});
                 }.bind(this)
             });

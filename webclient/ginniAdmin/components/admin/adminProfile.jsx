@@ -39,6 +39,7 @@ onDrop(files)
               });
 
        this.setState({ allFiles: this.state.allFiles});
+       console.log(this.state.allFiles[0])
         console.log(this.state.allFiles[0].name);
     }
 
@@ -48,6 +49,7 @@ onDrop(files)
         let photo = new FormData();
           this.state.allFiles.forEach((file)=> {
               photo.append('IMG',file);
+              //console.log(file.name);
           });
           let self=this;
         request.post('/upload').send(photo).end(function(err, resp) {
@@ -58,8 +60,9 @@ onDrop(files)
                   }
                   else
                   {
-                    console.log(self.state.allFiles);
-                      self.saveImage(self.state.allFiles[0].preview);
+                    console.log(resp.text);
+                    console.log(self.state.allFiles[0].name);
+                      self.saveImage(resp.text);
                       //this.setState({ allFiles:[]});
                 return resp;
                   }
@@ -121,7 +124,7 @@ onDrop(files)
         photo.append('IMG', file[0]);
         this.setState({file: file});
     }
-    close = () => hashHistory.push('/chat');
+    close = () => hashHistory.push('/react');
     // validation for firstname
     ChangeFirst = (event) => {
         this.setState({firstname: event.target.value});

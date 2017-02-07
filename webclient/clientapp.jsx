@@ -54,9 +54,9 @@ ReactDOM.render(
         <Route path='/newpassword' component={NewPassword} onEnter={requireAuth.bind(this)}/>
         <Route path='/login' component={LoginPage} />
         <Route path='/forgotpassword' component={ForgotPassword} />
-        <Route path='/forgetmail' component={ForgetpasswordEmail} onEnter={requireAuth.bind(this)}/>
+        <Route path='/forgetmail' component={ForgetpasswordEmail} />
         <Route path='/signup' component={Signup}/>
-        <Route path='/mail' component={SentMailPage}/>
+        <Route path='/mail' component={SentMailPage} />
         <Route path='/chat' component={LeftMenu} onEnter={requireAuth.bind(this)}/>
         <Route path='/change' component={ChangePassword} onEnter={requireAuth.bind(this)}/>
         <Route path='/profile' component={ClientProfile} onEnter={requireAuth.bind(this)}/>

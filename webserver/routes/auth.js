@@ -1,6 +1,7 @@
 const RegisteredUser = require('../models/user');
 const UnansweredQuery = require('../models/unansweredQuery');
 const nodemailer = require('nodemailer');
+const fs= require('fs');
 
 module.exports = function(app, passport) {
   var rand,
@@ -20,6 +21,7 @@ module.exports = function(app, passport) {
       res.cookie('token', req.user);
       res.cookie('username', req.user.name);
       res.cookie('authType', req.user.authType);
+      res.cookie('profilepicture', req.user.photos);
       res.send(req.user);
     });
     //logout
@@ -27,6 +29,7 @@ module.exports = function(app, passport) {
         res.clearCookie('token');
         res.clearCookie('authType');
         res.clearCookie('username');
+        res.clearCookie('profilepicture');
         res.json({logout: 'Successfully LogOut'});
         RegisteredUser.update({
             'local.email': req.user.local.email
@@ -61,9 +64,13 @@ module.exports = function(app, passport) {
     // local sign up route
     app.post('/signup', function(req, res) {
         let newUser = new RegisteredUser();
+        //let imgPath = '../../webclient/images/user.png';
+        //let imageupload = fs.readFileSync(imgPath);
+        //console.log(imgPath);
+        //console.log(imageupload);
         rand = Math.floor((Math.random() * 100) + 54);
         newUser.local.verificationID = rand;
-        newUser.local.name = req.body.firstName + ' ' + req.body.lastName;
+        newUser.local.name = (req.body.firstName + ' ' + req.body.lastName).toLowerCase();
         newUser.local.email = req.body.email;
         newUser.local.password = req.body.password;
         newUser.local.firstname = req.body.firstName;
@@ -72,19 +79,23 @@ module.exports = function(app, passport) {
         newUser.local.authType = 'local';
         newUser.local.loggedinStatus = false;
         newUser.local.isEmailVerified = false;
-        newUser.local.photos = 'https://image.freepik.com/free-icon/user-male-shape-in-a-circle-ios-7-interface-symbol_318-35357.jpg';
-        newUser.save(function(err) {
-            if (err) {
+        newUser.local.photos = 'defultImage.jpg';
+        res.cookie('profilepicture',newUser.local.photos);
+        newUser.save(function(err){
+          if (err) {
                 res.send('Error in registration');
             } else {
                 res.send("Successfully registered");
                 //res.send('registered');
             }
         });
-    });
+      });
     app.post('/adminsignup', function(req, res) {
-        var newUser = new RegisteredUser();
+        let newUser = new RegisteredUser();
         rand = Math.floor((Math.random() * 100) + 54);
+     //let imageupload = fs.readFileSync('../images/IMG_1486181808021.jpeg');
+      //  console.log(imgPath);
+      //  console.log(imageupload);
         newUser.local.name = req.body.firstName + " " + req.body.lastName;
         newUser.local.email = req.body.email;
         newUser.local.password = req.body.password;
@@ -94,7 +105,8 @@ module.exports = function(app, passport) {
         newUser.local.isEmailVerified = true;
         newUser.local.verificationID = rand;
         newUser.local.authType = 'local';
-        newUser.local.photos = 'https://image.freepik.com/free-icon/user-male-shape-in-a-circle-ios-7-interface-symbol_318-35357.jpg';
+        newUser.local.photos = 'defultImage.jpg';
+        res.cookie('profilepicture',newUser.local.photos);
         newUser.save(function(err) {
             if (err) {
                 res.send('Error in registration');
@@ -398,14 +410,13 @@ module.exports = function(app, passport) {
       });  //image for localstratergy
     app.post('/uploadImage', function(req, res) {
       console.log("vtg hjk")
-              imagename= req.body.data;
-              console.log(req.body.data);
-              console.log(req.user.local.email)
+      res.cookie('profilepicture', req.body.data);
+              console.log(req.body.data,"vgbhnjk");
             RegisteredUser.update({
                 'local.email': req.user.local.email
             }, {
                 $set: {
-                    'local.photos': imagename
+                    'local.photos': req.body.data
                 }
             }, function(err) {
                 if (err) {

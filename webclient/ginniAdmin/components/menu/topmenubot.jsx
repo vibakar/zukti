@@ -43,9 +43,11 @@ export default class TopMenuBot extends React.Component {
   }
     render() {
       const customername =  this.state.name;
+      let profilepicture = Cookie.load("profilepicture");
+      console.log(profilepicture);
             const trigger = (
       <span>
-      <Image avatar src={this.state.photo}/> {name=customername}
+      <Image avatar src={require('../../../../webserver/images/'+profilepicture)}/> {name=customername}
       </span>
     )
         return (

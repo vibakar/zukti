@@ -33,15 +33,18 @@ export default class LeftMenu extends Component {
             firstname: '',
             lastname: '',
             usertype: false,
+            name:'',
+            photo:'',
             counter: 0
         }
         this.onSubmitEmail = this.onSubmitEmail.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
         this.getNotificationCount = this.getNotificationCount.bind(this);
         this.getUserInformation = this.getUserInformation.bind(this);
     }
 
     handleItemClick = ((e, {name}) => {
-        if (this.state.activeItem == 'notifications') {
+        if (this.state.activeItem === 'notifications') {
             let url = Config.url + '/getbroadcastmessage/updateCount'
             this.state.counter = 0;
             Axios.post(url).then((response) => {}).catch((error) => {console.log(error);});
@@ -52,7 +55,6 @@ export default class LeftMenu extends Component {
         this.getUserInformation();
         this.getNotificationCount();
         let socket = io();
-        console.log('Hiiii');
         socket.on('update label', (data) => {
             console.log(data);
             this.state.counter = this.state.counter + 1;
@@ -85,6 +87,8 @@ export default class LeftMenu extends Component {
             self.setState({name: response.data.user.facebook.displayName, email: response.data.user.facebook.email, photo: response.data.user.facebook.photos, usertype: false});
         }
         else if (authType == "google") {
+          console.log(response.data.user.google.photos);
+          console.log(response.data.user.google.name+"name")
             self.setState({name: response.data.user.google.name, email: response.data.user.google.email, photo: response.data.user.google.photos, usertype: false});
         }
         else if (authType == "local") {
@@ -98,15 +102,40 @@ export default class LeftMenu extends Component {
         onSubmitEmail() {
         hashHistory.push('/profile')
     }
+    onChangePassword() {
+    hashHistory.push('/change')
+}
 
     render() {
-        const activeItem = this.state.activeItem;
-        const customername = this.state.name;
-        const trigger = (
-            <span>
-                <Image avatar src={this.state.photo}/> {name = customername}
-            </span>
-        );
+      const activeItem= this.state.activeItem;
+      const customername =  this.state.name;
+      var trigger;
+  let authType= Cookie.load("authType");
+        if(authType== "local"){
+          let profilepicture = Cookie.load("profilepicture");
+          console.log(profilepicture);
+            trigger = (
+      <span>
+      <Image avatar src={require('../../../../webserver/images/'+profilepicture)}/> {name=customername}
+      </span>
+    );
+  }else
+    if(authType == "facebook"){
+      console.log(authType);
+        trigger = (
+  <span>
+  <Image avatar src={this.state.photo}/> {name=customername}
+  </span>
+);
+}
+else
+  if(authType == "google"){
+      trigger = (
+<span>
+<Image avatar src={this.state.photo}/> {name=customername}
+</span>
+);
+}
         return (
             <div id="leftbarmenu">
                 <Sidebar as={Menu} className='fixed' animation='slide along' width='thin' visible={true} icon='labeled' vertical inverted>
@@ -154,8 +183,7 @@ export default class LeftMenu extends Component {
                                     <Dropdown trigger={trigger} pointing='top right' icon={null}>
                                         <Dropdown.Menu >
                                             <Dropdown.Item text='Edit Profile' icon='user' disabled={(!this.state.usertype)} onClick={this.onSubmitEmail}/>
-                                            <Dropdown.Item text='Settings' icon='settings'/>
-                                            <Dropdown.Item text='Help' icon='help'/>
+                                            <Dropdown.Item text='Change Password' icon='lock' disabled={(!this.state.usertype)} onClick={this.onChangePassword}/>
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </Menu.Item>

@@ -39,8 +39,7 @@ return (
       <Grid.Row>
         <Grid.Column width={1} />
       <Grid.Column width={3}>
-        <center>{/*<Image size='mini' src={newsdata.local.photos}*/}
-<Image src='https://chapters.theiia.org/northwest-ohio/About/ChapterOfficers/Larounis,%20John.png' size='mini' avatar/>
+        <center><Image avatar size='mini' src={newsdata.local.photos}/>
       </center>
     </Grid.Column>
           <Grid.Column width={3}>
