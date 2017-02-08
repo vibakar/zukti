@@ -20,9 +20,8 @@ export default class Notifications extends React.Component {
         axios.get(url).then((response) => {
             console.log(response);
             this.state.messages=response.data.map((msg,index)=>{
-              console.log(msg.value);
               let msgContentView = this.processInputNotification(msg.value);
-              return <Notificationfeed key={index} date={msg.date} msgSender={msg.username} dispData={msgContentView}/>
+              return <Notificationfeed key={index} date={msg.date} msgSender={msg.username} dispData={msgContentView} msgSenderemail={msg.email}/>
             });
             this.state.messages.reverse();
             this.setState({messages: this.state.messages});
@@ -68,9 +67,6 @@ export default class Notifications extends React.Component {
                       <Grid.Column width={1}></Grid.Column>
 
                       <Grid.Column width={13}>
-
-
-
               <Scrollbars renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
                   display: "none",
                   position: "right"

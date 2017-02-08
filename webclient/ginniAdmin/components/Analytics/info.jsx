@@ -134,7 +134,7 @@ export default class Info extends React.Component {
                                                         <i className="inverted circular red idea icon"></i>
                                                         <a>{this.state.queryCount}</a>
                                                     </Statistic.Value>
-                                                    <Statistic.Label>Members</Statistic.Label>
+                                                    <Statistic.Label>Queries</Statistic.Label>
                                                 </Statistic>
                                             </Feed.Summary>
                                         </Feed.Content>

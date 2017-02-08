@@ -195,7 +195,7 @@ render() {
 
                 <Header as='h2' icon inverted>
                   <Image src='../images/mail.gif'/>
-                   <Header.Subheader>Hold a second to get mail</Header.Subheader>
+                   <Header.Subheader>Please hold for a minute to get verification mail......</Header.Subheader>
                  </Header>
         </Dimmer>
         <span id="message"/>

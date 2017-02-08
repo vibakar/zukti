@@ -17,7 +17,7 @@ export default class AssistantChatContainer extends React.Component {
             messages: [],
             username: 'User',
             loaderActive: true,
-            profilePicture:''
+            profilePicture: ''
         };
         this.retriveChat = this.retriveChat.bind(this);
         // to display ginni messages
@@ -28,6 +28,9 @@ export default class AssistantChatContainer extends React.Component {
     componentDidMount() {
         // Scroll to the bottom on initialization
         let username = Cookie.load('username');
+      let authType = Cookie.load('authType');
+      console.log(authType);
+      if(authType === 'local'){
         if (username) {
             this.state.username = username;
         }
@@ -35,6 +38,23 @@ export default class AssistantChatContainer extends React.Component {
         if(profilePicture){
           this.state.profilePicture = require('../../../../webserver/images/'+profilePicture);
         }
+      }
+      else if(authType === 'facebook'){
+        if (username) {
+            this.state.username = username;
+        }
+        let profilePicture = Cookie.load('profilepicture');
+        if(profilePicture){
+          this.state.profilePicture = profilePicture;
+        }
+      }
+      else if(authType === 'google'){
+        if (username) {
+            this.state.username = username;
+        }
+        let profilePicture = Cookie.load('profilepicture');
+          this.state.profilePicture = profilePicture;
+      }
         this.retriveChat();
     }
     componentDidUpdate() {
