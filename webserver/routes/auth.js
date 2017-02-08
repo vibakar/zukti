@@ -68,13 +68,16 @@ module.exports = function(app, passport) {
         //let imageupload = fs.readFileSync(imgPath);
         //console.log(imgPath);
         //console.log(imageupload);
+        String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
         rand = Math.floor((Math.random() * 100) + 54);
         newUser.local.verificationID = rand;
-        newUser.local.name = (req.body.firstName + ' ' + req.body.lastName).toLowerCase();
+        newUser.local.name = (req.body.firstName.capitalizeFirstLetter() + ' ' + req.body.lastName.capitalizeFirstLetter());
         newUser.local.email = req.body.email;
         newUser.local.password = req.body.password;
-        newUser.local.firstname = (req.body.firstName).toLowerCase();
-        newUser.local.lastname = (req.body.lastName).toLowerCase();
+        newUser.local.firstname = (req.body.firstName).capitalizeFirstLetter();
+        newUser.local.lastname = (req.body.lastName).capitalizeFirstLetter();
         newUser.local.localType = 'Customer';
         newUser.local.authType = 'local';
         newUser.local.loggedinStatus = false;
