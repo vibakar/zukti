@@ -1,10 +1,8 @@
 let express = require('express');
 let saveQuestionAnswer = require('./saveQuestionAnswer');
 let processQuestion = require('./processQuestion');
-//let addIntentQuestion = require('./addIntentQuestion');
-let saveAnswerToDB = require('./saveAnswerToDB');
 let router = express.Router();
-// add a question to the database
+
 router.post('/verifyQuestion', function(req, res) {
     let question = req.body.question;
     let questionInfo = processQuestion(question);
