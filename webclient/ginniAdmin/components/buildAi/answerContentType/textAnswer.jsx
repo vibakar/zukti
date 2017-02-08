@@ -1,34 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {Input, Form} from 'semantic-ui-react';
+import {TextArea, Form, Button, Icon} from 'semantic-ui-react';
 
-export default class TextAnswer extends React.Component{
-  constructor(props){
-    super(props);
-    // function to send input value and type to this.props.handlerForSaveAnswer(this will make an ajax call and save it to server)
-    this.getInputData=this.getInputData.bind(this);
-  }
-  getInputData(e){
-    e.preventDefault();
-    let answer = ReactDOM.findDOMNode(this.refs.answer).value;
-    this.props.handlerForSaveAnswer(answer,'textAnswer');
-    ReactDOM.findDOMNode(this.refs.answer).value='';
-  }
-  render(){
-    return(
-      <div>
-      <Form onSubmit={this.getInputData}>
-          <Form.Field>
-              <input autoComplete="off" type='text' name='answer' ref='answer' style={{
-                  width: '100%',
-                  'margin-bottom': '8px'
-              }} placeholder='Enter answer and press enter'/>
-          </Form.Field>
-      </Form>
-      <div>
-      </div>
-    </div>
-    );
-  }
+export default class TextAnswer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.getInputData = this.getInputData.bind(this);
+        this.addNewAnswer = this.addNewAnswer.bind(this);
+    }
+    getInputData(e,data) {
+        console.log(data);
+        this.props.handlerForSaveAnswerToParentState('text',data.value,data.id);
+    }
+    addNewAnswer(){
+      console.log(this.props);
+      this.props.handlerForSaveAnswerToParentState('text','',this.props.texts.length);
+    }
+    render() {
+      console.log(this.props.texts.length);
+      let inputs = this.props.texts.map((input,index)=>{
+        console.log(input);
+        return <TextArea style={{'width':'90%','margin-bottom': '8px'}} value={input} id={index} onChange={this.getInputData} placeholder='enter a text answer' autoHeight />
+      })
+        return (
+            <div>
+              <Form>
+                {inputs}
+                <Button onClick={this.addNewAnswer} icon><Icon name='plus'/></Button>
+              </Form>
+
+            </div>
+        );
+    }
 }

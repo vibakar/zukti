@@ -7,44 +7,43 @@ import Config from '../../../../config/url';
 export default class InputQuestion extends React.Component {
     constructor(props) {
         super(props);
-        this.addQuestion = this.addQuestion.bind(this);
+        this.state = {
+            errorMessage: ''
+        }
+        this.isValidQuestion = this.isValidQuestion.bind(this);
     }
 
     // to add a new question to ai rule and then store it
-    addQuestion(e) {
+    isValidQuestion(e) {
         e.preventDefault();
         //getting the value of question from text field
         let question = ReactDOM.findDOMNode(this.refs.question).value;
-        //clearing the input question text field
-        ReactDOM.findDOMNode(this.refs.question).value = '';
         // ajax call to save question in a specifc question set
-        let url = Config.url + '/qa/addQuestion';
-        console.log(this.props.categoryID);
-        Axios.post(url, {
-            question: question,
-            answerID: this.props.answerID
-        }).then((response) => {
-            if (response.data.hasKeywords === false) {
-                alert('The question must have keywords');
-            } else if (!response.data.hasIntents === false) {
-                alert('The question must have a predefined intent.');
+        let url = Config.url + '/qa/verifyQuestion';
+        Axios.post(url, {question: question}).then((response) => {
+            console.log(response);
+            console.log('hiiii');
+            if (!response.data.isValidQuestion) {
+                this.setState({errorMessage: response.data.errorMessage});
             } else {
-                this.props.handlerAddQuestionToDisplay(question);
+                this.props.handlerForsaveQuestionInParentState(question);
+                this.setState({errorMessage:''});
             }
         }).catch((error) => {
-            alert('Error in AJAX call while saving question to the respective question set');
+            alert('Error in verifying question validity');
             console.log(error);
         });
     }
 
     render() {
         return (
-            <Form onSubmit={this.addQuestion}>
+            <Form onSubmit={this.isValidQuestion}>
                 <Form.Field>
-                    <input autoComplete="off" type='text' name='question' ref='question' style={{
+                    <input onBlur={this.isValidQuestion} autoComplete="off" type='text' name='question' ref='question' style={{
                         width: '100%',
                         'margin-bottom': '8px'
-                    }} placeholder='Press enter to add more pharases'/>
+                    }} placeholder='the question must have a keyword and an intent'/>
+                    <p>{this.state.errorMessage}</p>
                 </Form.Field>
             </Form>
         );

@@ -1,7 +1,6 @@
 const RegisteredUser = require('../models/user');
 const UnansweredQuery = require('../models/unansweredQuery');
 const nodemailer = require('nodemailer');
-const fs= require('fs');
 
 module.exports = function(app, passport) {
   var rand,
@@ -64,10 +63,6 @@ module.exports = function(app, passport) {
     // local sign up route
     app.post('/signup', function(req, res) {
         let newUser = new RegisteredUser();
-        //let imgPath = '../../webclient/images/user.png';
-        //let imageupload = fs.readFileSync(imgPath);
-        //console.log(imgPath);
-        //console.log(imageupload);
         rand = Math.floor((Math.random() * 100) + 54);
         newUser.local.verificationID = rand;
         newUser.local.name = (req.body.firstName + ' ' + req.body.lastName).toLowerCase();
@@ -80,22 +75,18 @@ module.exports = function(app, passport) {
         newUser.local.loggedinStatus = false;
         newUser.local.isEmailVerified = false;
         newUser.local.photos = 'defultImage.jpg';
-        res.cookie('profilepicture',newUser.local.photos);
-        newUser.save(function(err){
+        res.cookie('profilepicture', newUser.local.photos);
+        newUser.save(function(err) {
           if (err) {
                 res.send('Error in registration');
             } else {
-                res.send("Successfully registered");
-                //res.send('registered');
+                res.send('Successfully registered');
             }
         });
       });
     app.post('/adminsignup', function(req, res) {
         let newUser = new RegisteredUser();
         rand = Math.floor((Math.random() * 100) + 54);
-     //let imageupload = fs.readFileSync('../images/IMG_1486181808021.jpeg');
-      //  console.log(imgPath);
-      //  console.log(imageupload);
         newUser.local.name = (req.body.firstName + " " + req.body.lastName).toLowerCase();
         newUser.local.email = req.body.email;
         newUser.local.password = req.body.password;
@@ -106,14 +97,12 @@ module.exports = function(app, passport) {
         newUser.local.verificationID = rand;
         newUser.local.authType = 'local';
         newUser.local.photos = 'defultImage.jpg';
-        res.cookie('profilepicture',newUser.local.photos);
+        res.cookie('profilepicture', newUser.local.photos);
         newUser.save(function(err) {
             if (err) {
                 res.send('Error in registration');
             } else {
-                res.send(newUser);
-                console.log("Successfully Registered");
-                //res.send('registered');
+                res.send('Successfully Registered');
             }
         });
     });
@@ -442,7 +431,35 @@ module.exports = function(app, passport) {
             }
         });
     });
-
+    // Admin Information
+    app.post('/admindetails', function(req, res) {
+      console.log("entered details")
+        let email = req.body.data;
+        console.log(email);
+        RegisteredUser.find({
+            'local.email': email
+        }, function(err, profile) {
+          console.log(profile)
+            res.send(profile);
+            if (err) {
+                res.send(err);
+            }
+        });
+    });
+    // client Information
+    app.post('/clientInformations', function(req, res) {
+        let email = req.body.data;
+        console.log(email);
+        RegisteredUser.find({
+            'local.email': email
+        }, function(err, profile) {
+          console.log(profile)
+            res.send(profile);
+            if (err) {
+                res.send(err);
+            }
+        });
+    });
     // *******************************************
     // Facebook authentication routes
     // *******************************************
@@ -461,6 +478,7 @@ module.exports = function(app, passport) {
                 res.cookie('token', req.user.facebook.token);
                 res.cookie('authType', req.user.facebook.authType);
                 res.cookie('username',req.user.facebook.displayName);
+                res.cookie('profilepicture', req.user.facebook.photos);
                 res.redirect('/#/clienthome');
               });
 
@@ -485,6 +503,7 @@ module.exports = function(app, passport) {
                 res.cookie('token', req.user.google.token);
                 res.cookie('username',req.user.google.name);
                 res.cookie('authType', req.user.google.authType);
+                res.cookie('profilepicture', req.user.google.photos);
                 res.redirect('/#/clienthome');
               });
 };

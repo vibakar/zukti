@@ -20,6 +20,7 @@ Axios({
         socket.emit('userLoginStatus',{value:-1});
         Cookie.remove("authType");
         Cookie.remove("token");
+        Cookie.remove("profilepicture");
         hashHistory.push('/logoutfile');
       })
        .catch(function (error) {

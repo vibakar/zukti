@@ -41,7 +41,7 @@ export default class UnansweredQueries extends React.Component {
                             <Grid.Row></Grid.Row>
                             <Grid.Row></Grid.Row>
                             <Label as='a'>
-     <Image avatar src={require('../../../../webserver/images/' + newsdata.photos)}/></Label></Grid.Column>
+     <Image avatar src={require('../../../../webserver/images/defultImage.jpg')}/></Label></Grid.Column>
                           <Grid.Column width={7}>
                             {newsdata.username}<br/><br/>
                             <Icon name='help circle' style={{color:'teal'}}/>{newsdata.question}<br/>

@@ -16,24 +16,24 @@ export default class Notificationfeed extends React.Component {
     componentDidMount(){
       let self=this;
       Axios({
-          url: "http://localhost:8080/userProfile",
-          method: 'GET',
-          data: 'json'
+          url: "http://localhost:8080/admindetails",
+          method: 'post',
+          data: {data: self.props.msgSenderemail}
         }).then(function (response) {
-              self.setState({name: response.data.user.local.name, email: response.data.user.local.email, photo: response.data.user.local.photos, usertype: true});
+          console.log(response.data[0].local.photos)
+          self.setState({photo: require('../../../../webserver/images/'+response.data[0].local.photos)});
         })
          .catch(function (error) {
               console.log("error", error);
         });
     }
   render() {
-    let imagename = this.state.photo;
+   let imagename = this.state.photo;
+   //alert(imagename);
         return (
             <Feed>
                 <Feed.Event>
-                    <Feed.Label>
-                      <Image avatar src={require('../../../../webserver/images/defultImage.jpg')}/>
-                    </Feed.Label>
+                      <Image avatar src={this.state.photo}/>
                     <Feed.Content>
                         <Feed.Summary>
                             <Feed.User id="messagesender">{this.props.msgSender}</Feed.User>

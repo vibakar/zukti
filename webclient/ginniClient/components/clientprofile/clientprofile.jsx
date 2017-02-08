@@ -23,72 +23,68 @@ export default class ClientProfile extends React.Component
             allFiles: [],
             email: '',
             firstname: '',
-            lastname:'',
-            photo:'',
-            changeImage:true
+            lastname: '',
+            photo: '',
+            changeImage: true
         };
         this.OnSubmitData = this.OnSubmitData.bind(this);
         this.show = this.show.bind(this);
         this.onDrop = this.onDrop.bind(this);
-        this.saveImage=this.saveImage.bind(this);
+        this.saveImage = this.saveImage.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
     };
-onDrop(files)
-      {
-          files.forEach((file)=> {
-                      this.state.allFiles.push(file);
-              });
-console.log(this.state.allFiles);
-this.setState({changeImage: false})
-       this.setState({ allFiles: this.state.allFiles[0]});
+    onDrop(files)
+    {
+        files.forEach((file) => {
+            this.state.allFiles.push(file);
+        });
+        console.log(this.state.allFiles);
+        this.setState({changeImage: false})
+        this.setState({allFiles: this.state.allFiles[0]});
         console.log(this.state.allFiles);
     }
 
-     uploadImage()
-      {
+    uploadImage()
+    {
         let photo = new FormData();
-              photo.append('IMG',this.state.allFiles);
-          let self=this;
+        photo.append('IMG', this.state.allFiles);
+        let self = this;
         request.post('/upload').send(photo).end(function(err, resp) {
-        console.log('save')
-            if (err)
-                  {
-                  console.error(err);
-                  }
-                  else
-                  {
-                    console.log(self.state.allFiles)
-                      self.saveImage(resp.text);
-                      //this.setState({ allFiles:[]});
+            console.log('save')
+            if (err) {
+                console.error(err);
+            } else {
+                console.log(self.state.allFiles)
+                self.saveImage(resp.text);
+                //this.setState({ allFiles:[]});
                 return resp;
-                  }
-          });
+            }
+        });
 
-      }
-      saveImage(image){
+    }
+    saveImage(image) {
         Axios({
-              method: 'POST',
-              url:"http://localhost:8080/uploadImage",
-              data: {data :image}
-          }).then(function(response) {
+            method: 'POST',
+            url: "http://localhost:8080/uploadImage",
+            data: {
+                data: image
+            }
+        }).then(function(response) {
             hashHistory.push('/chat');
-            }).catch(function(err) {
-                console.log("error",err);
-            });
-      }
+        }).catch(function(err) {
+            console.log("error", err);
+        });
+    }
     profile()
     {
         hashHistory.push('/chat')
     }
     componentDidMount() {
-      const self=this;
-        Axios({
-            url: ' http://localhost:8080/clientinformation',
-            method: 'get'
-        }).then(function(response) {
-          console.log(response.data[0].local);
-            console.log("email"+response.data[0].local.email);
-            self.setState({email:response.data[0].local.email});
+        const self = this;
+        Axios({url: ' http://localhost:8080/clientinformation', method: 'get'}).then(function(response) {
+            console.log(response.data[0].local);
+            console.log("email" + response.data[0].local.email);
+            self.setState({email: response.data[0].local.email});
 
         }).catch(function(err) {
             // alert("bjhbj"+err);
@@ -147,11 +143,15 @@ this.setState({changeImage: false})
     render() {
         let imagechange = null;
         const {open, size} = this.state;
-        let profilepicture= Cookie.load("profilepicture");
-        if(this.state.changeImage){
-          imagechange=(<Image src={require('../../../../webserver/images/'+profilepicture)} size='large' style={{height: 204}}/>);
-        }else {
-          imagechange=(<Image src={this.state.allFiles.preview} style={{height: 204}}/>);
+        let profilepicture = Cookie.load("profilepicture");
+        if (this.state.changeImage) {
+            imagechange = (<Image src={require('../../../../webserver/images/' + profilepicture)} size='large' style={{
+                height: 204
+            }}/>);
+        } else {
+            imagechange = (<Image src={this.state.allFiles.preview} style={{
+                height: 204
+            }}/>);
         }
         return (
             <Modal size='small' open={true} onClose={this.close} closeOnRootNodeClick={false} closeIcon='close'>
@@ -179,10 +179,10 @@ this.setState({changeImage: false})
                                 <label>Email</label>
                                 <Form.Input placeholder='email' name="email" value={this.state.email} disabled/>
 
-                        <Divider/>
-                      </Form.Field>
-                      <Button onClick={this.show('small')} disabled={(!this.state.firstname) || (!this.state.lastname)} color='blue' type='submit'>Save</Button>
-                  </Form>
+                                <Divider/>
+                            </Form.Field>
+                            <Button onClick={this.show('small')} disabled={(!this.state.firstname) || (!this.state.lastname)} color='blue' type='submit'>Save</Button>
+                        </Form>
                         <Modal size={size} open={open}>
                             <Modal.Header id="updateheader">
                                 <h2>
@@ -194,7 +194,6 @@ this.setState({changeImage: false})
                                 </Button>
                             </Modal.Actions>
                         </Modal>
-
 
                     </Modal.Description>
                 </Modal.Content>
