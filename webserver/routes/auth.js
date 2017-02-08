@@ -220,7 +220,9 @@ module.exports = function(app, passport) {
                         res.redirect('/#/expiryLink');
                     }
                 } else {
-                    res.end("<h1>Request is from unknown source");
+                  console.log("email is not verified");
+                  //res.end("<h1>Link expired</h1>");
+                  res.redirect('/#/expiryLink');
                 }
             }
         });
@@ -409,7 +411,6 @@ module.exports = function(app, passport) {
           }
       });  //image for localstratergy
     app.post('/uploadImage', function(req, res) {
-      console.log("vtg hjk")
       res.cookie('profilepicture', req.body.data);
               console.log(req.body.data,"vgbhnjk");
             RegisteredUser.update({

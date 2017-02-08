@@ -68,9 +68,6 @@ export default class Notifications extends React.Component {
                       <Grid.Column width={1}></Grid.Column>
 
                       <Grid.Column width={13}>
-
-
-
               <Scrollbars renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
                   display: "none",
                   position: "right"

@@ -19,6 +19,7 @@ export default class UnansweredQueries extends React.Component {
       axios({url: 'http://localhost:8080/viewquery', method: 'GET'}).then(function(msg) {
           console.log(msg.data);
           this.setState({ detailNew: msg.data});
+
           console.log(msg.data)
 
    }.bind(this)).catch(function(err) {
@@ -40,8 +41,7 @@ export default class UnansweredQueries extends React.Component {
                             <Grid.Row></Grid.Row>
                             <Grid.Row></Grid.Row>
                             <Label as='a'>
-     <Image avatar spaced='right' src='https://image.freepik.com/free-icon/user-male-shape-in-a-circle-ios-7-interface-symbol_318-35357.jpg' />
-   </Label></Grid.Column>
+     <Image avatar src={require('../../../../webserver/images/' + newsdata.photos)}/></Label></Grid.Column>
                           <Grid.Column width={7}>
                             {newsdata.username}<br/><br/>
                             <Icon name='help circle' style={{color:'teal'}}/>{newsdata.question}<br/>

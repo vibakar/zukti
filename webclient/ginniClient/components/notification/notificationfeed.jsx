@@ -20,31 +20,19 @@ export default class Notificationfeed extends React.Component {
           method: 'GET',
           data: 'json'
         }).then(function (response) {
-          let authType = Cookie.load("authType");
-          console.log(authType);
-          if (authType == "facebook") {
-              console.log(response.data.user.facebook.displayName);
-              self.setState({name: response.data.user.facebook.displayName, email: response.data.user.facebook.email, photo: response.data.user.facebook.photos, usertype: false});
-          }
-          else if (authType == "google") {
-              self.setState({name: response.data.user.google.name, email: response.data.user.google.email, photo: response.data.user.google.photos, usertype: false});
-          }
-          else if (authType == "local") {
               self.setState({name: response.data.user.local.name, email: response.data.user.local.email, photo: response.data.user.local.photos, usertype: true});
-          }
         })
          .catch(function (error) {
               console.log("error", error);
         });
     }
   render() {
+    let imagename = this.state.photo;
         return (
-
-
             <Feed>
                 <Feed.Event>
                     <Feed.Label>
-                        <Image avatar src={this.state.photo} size='small'/>
+                      <Image avatar src={require('../../../../webserver/images/defultImage.jpg')}/>
                     </Feed.Label>
                     <Feed.Content>
                         <Feed.Summary>

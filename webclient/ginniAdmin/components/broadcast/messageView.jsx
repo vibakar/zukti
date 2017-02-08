@@ -10,6 +10,7 @@ export default class MessageView extends React.Component {
           name:'',
           email:''
         }
+        this.setImage= this.setImage.bind(this);
     }
     componentDidMount(){
       let self=this;
@@ -18,29 +19,24 @@ export default class MessageView extends React.Component {
           method: 'GET',
           data: 'json'
         }).then(function (response) {
-          let authType = Cookie.load("authType");
-          console.log(authType);
-          if (authType == "facebook") {
-              console.log(response.data.user.facebook.displayName);
-              self.setState({name: response.data.user.facebook.displayName, email: response.data.user.facebook.email, photo: response.data.user.facebook.photos, usertype: false});
-          }
-          else if (authType == "google") {
-              self.setState({name: response.data.user.google.name, email: response.data.user.google.email, photo: response.data.user.google.photos, usertype: false});
-          }
-          else if (authType == "local") {
-              self.setState({name: response.data.user.local.name, email: response.data.user.local.email, photo: response.data.user.local.photos, usertype: true});
-          }
-        })
+          self.setImage(response.data.user.local.photos);
+            })
          .catch(function (error) {
               console.log("error", error);
         });
     }
+    setImage(image){
+      this.setState({photo: image})
+      console.log(this.state.photo);
+    }
     render() {
+      //alert(this.state.photo);
+      console.log("entered"+this.state.photo);
         return (
             <Feed>
                 <Feed.Event>
                     <Feed.Label>
-                        <Image avatar src='http://semantic-ui.com/images/avatar/small/elliot.jpg'/>
+                        <Image avatar src={require('../../../../webserver/images/defultImage.jpg')}/>
                     </Feed.Label>
                     <Feed.Content>
                         <Feed.Summary>
