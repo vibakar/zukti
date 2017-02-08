@@ -39,7 +39,7 @@ render(){
      <p id='head1'>HERE COMES YOUR GENIE<br/>
 
      <h5 id='head2'>ANY QUERY HITS YOU HARDER? THEN I AM HERE TO PROVIDE YOU DAZZLING SOLUTIONS</h5>
-      <h5 id='head3'><i>"To iterate is human, to recurse divine "</i></h5>
+      <h1 id='head3'><i>"To iterate is human, to recurse divine "</i></h1>
  </p>
 </Grid.Column>
 </Grid.Row>

@@ -17,7 +17,7 @@ export default class AssistantChatContainer extends React.Component {
             messages: [],
             username: 'User',
             loaderActive: true,
-            profilePicture:''
+            profilePicture: ''
         };
         this.retriveChat = this.retriveChat.bind(this);
         // to display ginni messages
