@@ -3,52 +3,26 @@ import Axios from 'axios';
 import TextAnswer from './answerContentType/textAnswer';
 import VideoAnswer from './answerContentType/videoAnswer';
 import BlogAnswer from './answerContentType/blogAnswer';
-import CodeSnippetAnswer from './answerContentType/codeSnippetAnswer';
 import Config from '../../../../config/url';
 
 export default class ReplyContentInput extends React.Component {
     constructor(props) {
         super(props);
-        // function to save question set response to the database
-        // it is passed and an props to respective Answer Content type component and will save the response according to  response type
-        this.saveAnswer=this.saveAnswer.bind(this);
     }
-    // will be indirectly called from respective anwer content type
-    saveAnswer(answer,type){
-      // endpoint to add answer to a specific questionsAnswerSet
-      let url=Config.url+'/qa/addAnswer';
-      // node id where the answer will be saved
-      let answerID=this.props.answerID;
-      console.log(answerID);
-      console.log('aaaaaaaaaaaaaaaaaaaaa');
-      //ajax call to above endpoint
-      //type variable to indentify text video blog code snippet answer
-      Axios.post(url,{answerID:answerID, answer:answer,type:type}).
-      then((response)=>{
-        alert('Answer added succesfully');
-        this.props.showanswer(answer);
-      }).
-      catch((error)=>{
-        alert(error);
-      });
-    }
+
     render() {
         switch (this.props.replyContentType) {
             case 'text':
                 {
-                    return <TextAnswer handlerForSaveAnswer={this.saveAnswer} />
+                    return <TextAnswer texts={this.props.texts} handlerForSaveAnswerToParentState={this.props.handlerForSaveAnswerToParentState} />
                 }
             case 'video':
                 {
-                    return <VideoAnswer handlerForSaveAnswer={this.saveAnswer}/>
+                    return <VideoAnswer videos={this.props.videos} handlerForSaveAnswerToParentState={this.props.handlerForSaveAnswerToParentState}/>
                 }
             case 'blog':
                 {
-                  return <BlogAnswer handlerForSaveAnswer={this.saveAnswer}/>
-                }
-            case 'codeSnippet':
-                {
-                  return <CodeSnippetAnswer handlerForSaveAnswer={this.saveAnswer}/>
+                  return <BlogAnswer blogs={this.props.blogs} handlerForSaveAnswerToParentState={this.props.handlerForSaveAnswerToParentState}/>
                 }
         }
     }
