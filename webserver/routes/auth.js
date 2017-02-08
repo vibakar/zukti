@@ -67,11 +67,11 @@ module.exports = function(app, passport) {
 }
         rand = Math.floor((Math.random() * 100) + 54);
         newUser.local.verificationID = rand;
-        newUser.local.name = (((req.body.firstName).toLowerCase()).capitalizeFirstLetter() + ' ' + ((req.body.lastName).toLowerCase()).capitalizeFirstLetter());
+        newUser.local.name = (req.body.firstName.toLowerCase().capitalizeFirstLetter() + ' ' + req.body.lastName.toLowerCase().capitalizeFirstLetter());
         newUser.local.email = req.body.email;
         newUser.local.password = req.body.password;
-        newUser.local.firstname = ((req.body.firstName).toLowerCase()).capitalizeFirstLetter();
-        newUser.local.lastname = ((req.body.lastName).toLowerCase()).capitalizeFirstLetter();
+        newUser.local.firstname = (req.body.firstName).toLowerCase().capitalizeFirstLetter();
+        newUser.local.lastname = (req.body.lastName).toLowerCase().capitalizeFirstLetter();
         newUser.local.localType = 'Customer';
         newUser.local.authType = 'local';
         newUser.local.loggedinStatus = false;
@@ -90,11 +90,14 @@ module.exports = function(app, passport) {
         let newUser = new RegisteredUser();
         rand = Math.floor((Math.random() * 100) + 54);
 
-        newUser.local.name = (req.body.firstName.capitalizeFirstLetter() + " " + req.body.lastName.capitalizeFirstLetter());
+      String.prototype.capitalizeFirstLetter = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+}
+        newUser.local.name = (req.body.firstName.toLowerCase().capitalizeFirstLetter() + " " + req.body.lastName.toLowerCase().capitalizeFirstLetter());
         newUser.local.email = req.body.email;
         newUser.local.password = req.body.password;
-        newUser.local.firstname = (req.body.firstName).capitalizeFirstLetter();
-        newUser.local.lastname = (req.body.lastName).capitalizeFirstLetter();
+        newUser.local.firstname = (req.body.firstName).toLowerCase().capitalizeFirstLetter();
+        newUser.local.lastname = (req.body.lastName).toLowerCase().capitalizeFirstLetter();
         newUser.local.localType = 'Admin';
         newUser.local.isEmailVerified = true;
         newUser.local.verificationID = rand;
@@ -363,9 +366,9 @@ module.exports = function(app, passport) {
     app.put('/updateprofile', function(req, res) {
         if (req.body) {
             request1 = req.body.email;
-            request2 = (req.body.firstname.capitalizeFirstLetter() + " " + req.body.lastname.capitalizeFirstLetter());
-            request3 = req.body.firstname.capitalizeFirstLetter();
-            request4 = req.body.lastname.capitalizeFirstLetter();
+            request2 = (req.body.firstname.toLowerCase().capitalizeFirstLetter() + " " + req.body.lastname.toLowerCase().capitalizeFirstLetter());
+            request3 = req.body.firstname.toLowerCase().capitalizeFirstLetter();
+            request4 = req.body.lastname.toLowerCase().capitalizeFirstLetter();
             RegisteredUser.update({
                 'local.email': request1
             }, {

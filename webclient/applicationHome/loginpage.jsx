@@ -87,7 +87,7 @@ export default class LoginPage extends React.Component
             <h2>
             Nice to see you back!
             </h2>
-            <h2>Go ahead to sign in</h2>
+            <h2>Go ahead and sign in</h2>
           </p>
             <Modal.Description>
             <Grid columns={2} stackable>
