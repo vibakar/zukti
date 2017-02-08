@@ -1,8 +1,6 @@
 const RegisteredUser = require('../models/user');
 const UnansweredQuery = require('../models/unansweredQuery');
 const nodemailer = require('nodemailer');
-const fs= require('fs');
-
 module.exports = function(app, passport) {
   var rand,
       mailOptions,
@@ -167,9 +165,9 @@ module.exports = function(app, passport) {
                 mailOptions = {
                     from: 'geniegenie0001@gmail.com', // sender address
                     to: profile[0].local.email, // list of receivers
-                    subject: 'Verification Email', // Subject line
+                    subject: 'Verify your Email with Genie', // Subject line
                     text: text,
-                    html: "Welcome to Genie ,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
+                    html: "<center><h1>Welcome to Genie</h1></center><br><br><br>Hi,<br><br>To complete Signup Click on the button to verify yourself.<br><br><br><a href=" + link + " style='background-color:#44c767;-moz-border-radius:28px;-webkit-border-radius:28px;border-radius:28px;border:1px solid #18ab29;display:inline-block;padding:16px 31px;color:#ffffff;text-shadow:0px 1px 0px #2f6627;text-decoration:none;'> Verify </a><br><br><b>Why verify?</b><br><br>For using Genie we require a verified email to prevent spam.<br><br>Verifying lets you join Genie quickly and easily.<br><br>Cheers,<br><br><b>Team Genie</b><br><br><small><i>This link is valid for an hour.This is an Auto-generated mail,please do not reply</i></small>"
                 };
                 console.log(mailOptions + host);
                 transporter.sendMail(mailOptions, function(error, info) {
