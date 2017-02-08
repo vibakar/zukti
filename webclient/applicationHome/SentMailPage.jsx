@@ -49,9 +49,9 @@ export default class SentMailPage extends React.Component {
                             textAlign: 'center'
                         }}>
                             <p id='head1'>
-                                Please check your mail for login<br/>
-                                <h3 id='head4'>Verification link sent to your Mail</h3>
-                                <h1 id='head4'>"Thank you for register our Genie"</h1>
+                                Please click the verification link to complete Signup<br/>
+                                <h3 id='headlink'>Verification link is sent to your Registered mail</h3>
+                                <h1 id='head4'>Thanks for registering</h1>
                             </p>
                         </Grid.Column>
                     </Grid.Row>

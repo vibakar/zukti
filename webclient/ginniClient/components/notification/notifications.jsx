@@ -76,7 +76,7 @@ export default class Notifications extends React.Component {
                   position: "right"
               }}/>} autoHeight autoHeightMin={555}>
                   <div style={{width:'98%',height:'50%'}} >
-                    <h3>NOTIFICATIONS FROM ADMIN</h3>
+                    <h3>MESSAGE FROM ADMIN</h3>
                                 {this.state.messages}
       </div></Scrollbars>
                       </Grid.Column>

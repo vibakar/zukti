@@ -52,7 +52,7 @@ export default class NewPassword extends React.Component {
             this.setState({errormessagepassword: false});
         } else {
             this.setState({errorpassword: true});
-            this.setState({errormessagepassword: 'Password should contain numbers,letters and Length should be greater than 6'});
+            this.setState({errormessagepassword: 'Password should contain numbers,letters(A&a) and minimum length 6'});
         }
     }
       // validation for confirmpassword
@@ -65,7 +65,7 @@ export default class NewPassword extends React.Component {
             this.setState({errormessage: ''});
         } else {
             this.setState({errorrepassword: true});
-            this.setState({errormessage: 'Pls enter correct password'});
+            this.setState({errormessage: 'Password mismatch'});
         }
     }
     render() {
@@ -75,12 +75,12 @@ export default class NewPassword extends React.Component {
                 <br/><br/><br/><br/><br/><br/><br/>
                   <Form onSubmit={this.onSubmitData} >
                     <Form.Field >
-                        <h3 id='heading'><Icon name='lock' id='icon'/>Reset your new password</h3><Divider id='divider'/>
-                        <h3 style={{color:'white',fontStyle:'italic'}}>Keep your credential secure by changing it </h3><br/>
+                        <h3 id='heading'><Icon name='lock' id='icon'/>Reset your password</h3><Divider id='divider'/>
+                        <h3 style={{color:'white',fontStyle:'italic'}}>Enter new password </h3><br/>
                         <Form.Input type='password' placeholder='new password' circular id='fields' icon='key' iconPosition='left' name="password" onChange={this.ChangePassword.bind(this)} error={this.state.errorpassword} required/><br/>
-                        <p style={{color: 'white'}}>{this.state.errormessagepassword}</p>
+                        <p style={{color: 'red'}}>{this.state.errormessagepassword}</p>
                         <Form.Input type= 'password' placeholder='confirm password' id='fields' icon='key' iconPosition='left' name="repassword" onChange={this.ChangeRepassword.bind(this)} error={this.state.errorrepassword} required/><br/>
-                        <p style={{color: 'white'}}>{this.state.errormessage}</p>
+                        <p style={{color: 'red'}}>{this.state.errormessage}</p>
                         <Button type='submit' id='submit' onClick={this.handleOpen} circular disabled={(!this.state.repassword) || (!this.state.password) || (this.state.errorrepassword)}>submit</Button>
                         <Dimmer
                                  active={active}

@@ -97,7 +97,7 @@ export default class ClientHome extends React.Component {
                             <Grid.Row>
                                 <center>
                                     <a href="#">
-                                        <h2 className="heading4">JAVASCRIPT</h2>
+                                        <h2 className="heading4">JAVA SCRIPT</h2>
                                     </a>
                                 </center>
                             </Grid.Row>

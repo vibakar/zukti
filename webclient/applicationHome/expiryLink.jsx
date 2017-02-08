@@ -27,7 +27,7 @@ export default class ExpiryLink extends React.Component {
       <Grid.Row/>
       <Grid.Row>
       <Grid.Column style={{textAlign: 'center'}}>
-      <p id='head1'>"Oops! Your Link has been Expired"<br/>
+      <p id='head1'>Expired Link or Invalid URL<br/>
    </p>
       </Grid.Column>
       </Grid.Row>

@@ -40,7 +40,7 @@ export default class ChangePassword extends React.Component {
       } else {
           this.setState({errorpassword: true});
           this.setState({verifypassword: false});
-          this.setState({errormessagepassword: 'Password should contain numbers,letters(capital and small) and Length should be greater than 6'});
+          this.setState({errormessagepassword: 'Password should contain numbers,letters(A&a) and minimum length is  6'});
       }
   }
   // validation for confirmpassword
@@ -54,7 +54,7 @@ export default class ChangePassword extends React.Component {
     } else {
       this.setState({confirmpassword: false});
       this.setState({errorrepassword: true});
-      this.setState({errormessage: 'Not matched'});
+      this.setState({errormessage: 'Password not matched'});
   }
 }
  close = () => hashHistory.push ('/chat');
@@ -85,7 +85,7 @@ passwordchange(e, value) {
       closeOnRootNodeClick={false}
       size='small' closeIcon="close"
       >
-      <Modal.Header id="headerchange"><h1>Reset Password</h1></Modal.Header>
+      <Modal.Header id="headerchange"><h1>Change Password</h1></Modal.Header>
       <Modal.Content>
       <Form onSubmit={this.passwordchange.bind(this)}>
       <Form.Field width={8} id='forminput'>

@@ -22,6 +22,12 @@
   padding-top: 20px;
   margin-bottom: 10px;
 }
+#headlink
+{
+font-family:'sans-serif';
+  color: white;
+  font-size: 40px;
+}
 @-moz-keyframes slidein {
             from {
                margin-left:100%;

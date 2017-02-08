@@ -43,7 +43,7 @@ export default class SidebarBot extends Component {
                     </Menu.Item>
                     <Menu.Item name='BroadCast' active={activeItem === 'BroadCast'} onClick={this.handleItemClick}>
                         <Icon name='announcement' color='teal'/>
-                        BroadCast
+                        Broadcast
                     </Menu.Item>
                     <Menu.Item name='Users' active={activeItem === 'Users'} onClick={this.handleItemClick}>
                         <Icon name='users' color='teal'/>
@@ -55,7 +55,7 @@ export default class SidebarBot extends Component {
                     </Menu.Item>
                     <Menu.Item name='TrainBot' active={activeItem === 'UseTheBot'} onClick={this.handleItemClick}>
                         <Icon name='child' color='teal'/>
-                        TrainBot
+                        Train bot
                     </Menu.Item>
                     <Menu.Item name='Unanswered Queries' active={activeItem === 'Unanswered Queries'} onClick={this.handleItemClick}>
                         <Icon name='help' color='teal'/>
