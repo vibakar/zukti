@@ -20,19 +20,19 @@ module.exports = function(req,questionsAnswerSavedCallback) {
      blogs.forEach((item)=>{
       let blog = item.trim();
       if(blog!=''){
-          blogsQuery  =blogsQuery+ `MERGE (a)-[:isA]-> (:blog {value:${JSON.stringify(blog)}}) `;
+          blogsQuery  =blogsQuery+ `MERGE (q)-[:answer {rating:0}]-> (:blog {value:${JSON.stringify(blog)}}) `;
       }
     });
     videos.forEach((item)=>{
        let video = item.trim();
        if(video!=''){
-           videoQuery =videoQuery+ `MERGE (a)-[:isA]-> (:video {value:${JSON.stringify(video)}}) `;
+           videoQuery =videoQuery+ `MERGE (q)-[:answer {rating:0}]-> (:video {value:${JSON.stringify(video)}}) `;
        }
     });
     texts.forEach((item)=>{
        let text = item.trim();
        if(text!=''){
-           textsQuery =textsQuery+`MERGE (a)-[:isA]-> (:text {value:${JSON.stringify(text)}}) `;
+           textsQuery =textsQuery+`MERGE (q)-[:answer {rating:0}]-> (:text {value:${JSON.stringify(text)}}) `;
        }
     });
     let query = ` UNWIND ${JSON.stringify(keywords)}  as token
@@ -47,8 +47,7 @@ module.exports = function(req,questionsAnswerSavedCallback) {
                   MATCH (bw)-[r:subconcept*]->(:concept {name:'react'})
                   WHERE SIZE(r) = max WITH COLLECT(bw) AS bws
                   UNWIND bws AS keywords
-                  MERGE (q:question {value:${JSON.stringify(question)}})-[:${mainIntent}]->(a:answer)-[:${mainIntent}]->(keywords)
-                  MERGE((q)-[:${mainIntent}]->(keywords))
+                  MERGE (q:question {value:${JSON.stringify(question)}})-[:${mainIntent}]->(keywords)
                   ${blogsQuery} ${videoQuery} ${textsQuery}
                   RETURN 1`
     let session = getNeo4jDriver().session();

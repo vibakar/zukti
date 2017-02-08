@@ -2,6 +2,7 @@ let getNeo4jDriver = require('../../../neo4j/connection');
 module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundCallback) {
 
     //intents.push('what');
+
     let query = `UNWIND ${JSON.stringify(intents)} AS token
                  MATCH (n:intent)
                  WHERE n.name = token
@@ -19,9 +20,11 @@ module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundC
                  MATCH (bw)-[r:subconcept*]->(:concept {name:'react'})
                  WHERE SIZE(r) = max WITH COLLECT(bw) AS bws,intent AS intent
                  UNWIND bws AS keywords
-                 MATCH (keywords)<-[r]-(a:answer)
+                 MATCH (keywords)<-[r]-(q:question)-[rel:answer]->(a)
                  WHERE TYPE(r)=intent
-                 RETURN COLLECT(a)`;
+                 WITH a as a, rel as rel
+                 ORDER BY rel.rating DESC
+                 RETURN LABELS(a),COLLECT(a.value) `
 
     let session = getNeo4jDriver().session();
     session
@@ -30,19 +33,24 @@ module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundC
             // Completed!
             session.close();
             console.log(result);
-            if (result.records[0]._fields[0].length === 0) {
+            if (result.records === 0) {
                 noAnswerFoundCallback();
             } else {
-                let resultArray = result.records[0]._fields[0].map((field)=>{
-                    let answerObj = {};
-                    answerObj.time = new Date().toLocaleString();
-                    answerObj.textAnswer=field.properties.textAnswer;
-                    answerObj.videoUrl=field.properties.videoAnswer;
-                    answerObj.blogUrl=field.properties.blogAnswer;
-                    return answerObj;
-                }
-              );
-                answerFoundCallback(resultArray);
+                console.log(result);
+                let answerObj = {};
+                answerObj.time = new Date().toLocaleString();
+                let resultArray = result.records.forEach((record) => {
+                    let field = record._fields;
+                    answerObj[field[0][0]] = field[1].map((value, index) => {
+                        if (value != '') {
+                            return {
+                                value: value
+                            }
+                        }
+                    });
+                });
+                console.log(answerObj);
+                answerFoundCallback(answerObj);
             }
         })
         .catch(function(error) {

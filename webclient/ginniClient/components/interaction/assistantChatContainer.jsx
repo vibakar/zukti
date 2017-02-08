@@ -16,7 +16,7 @@ export default class AssistantChatContainer extends React.Component {
         this.state = {
             messages: [],
             username: 'User',
-            loaderActive: true,
+            loaderActive: false,
             profilePicture:''
         };
         this.retriveChat = this.retriveChat.bind(this);
@@ -35,7 +35,7 @@ export default class AssistantChatContainer extends React.Component {
         if(profilePicture){
           this.state.profilePicture = require('../../../../webserver/images/'+profilePicture);
         }
-        this.retriveChat();
+    //    this.retriveChat();
     }
     componentDidUpdate() {
         // Scroll as new elements come along
@@ -52,7 +52,8 @@ export default class AssistantChatContainer extends React.Component {
         let url = Config.url + '/retriveChat';
         Axios.get(url).then((response) => {
             console.log(response);
-            if(response.data){
+            if(response.data.chats){
+              console.log(response);
               console.log('Inside then');
               response.data.chats.forEach((chat) => {
                 let length = this.state.messages.length;
@@ -74,6 +75,7 @@ export default class AssistantChatContainer extends React.Component {
             this.setState({messages: this.state.messages, loaderActive: false});
         }).catch((err) => {
             console.log(err);
+            console.log('inn');
             alert('ERROR IN FETCHING CHATS')
         });
     }
