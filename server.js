@@ -94,7 +94,7 @@ app.use('/getadmin',isAuthenticated, getAdmin);
 app.use('/intent',isAuthenticated, intent);
 app.use('/concept',isAuthenticated, concept);
 
-app.use('/qa',isAuthenticated, addKnowledge);
+app.use('/qa',addKnowledge);
 app.use('/question',isAuthenticated, askQuestion);
 app.use('/savequery',isAuthenticated, savequery);
 
