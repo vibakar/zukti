@@ -51,7 +51,7 @@ ReactDOM.render(
             <IndexRoute component={ClientHome} onEnter={requireAuth.bind(this)}/>
         </Route>
         <Route path='/react' component={react} onEnter={requireAuth.bind(this)}/>
-        <Route path='/newpassword' component={NewPassword} onEnter={requireAuth.bind(this)}/>
+        <Route path='/newpassword' component={NewPassword}/>
         <Route path='/login' component={LoginPage} />
         <Route path='/forgotpassword' component={ForgotPassword} />
         <Route path='/forgetmail' component={ForgetpasswordEmail} />

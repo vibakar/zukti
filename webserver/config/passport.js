@@ -34,18 +34,18 @@ module.exports = function(passport) {
                 } else if (!user) {
                     console.log(user);
                     const error = new Error('Your Email ID is not registered');
-                    error.name = 'You have not Register Yet ! Please SignUp first :)';
+                    error.name = 'You have not Registered Yet! Please Sign Up first';
                     return done(error.name);
                 } else if (!user.local.isEmailVerified) {
                     console.log(user);
                     const error = new Error('Email ID is not Verified');
                     console.log(user.local.isEmailVerified+"fhf")
-                    error.name = 'Check your email for Login Verification !';
+                    error.name = 'Please verify your registered mail!';
                     return done(error.name);
                 } else if (!(user.local.password === password)) {
                     console.log(user);
                     const error = new Error('Incorrect password');
-                    error.name = 'You Have Entered Incorrect password !';
+                    error.name = 'Please enter correct password!';
                     return done(error.name);
                 } else  {
                   console.log(user);
@@ -85,6 +85,9 @@ module.exports = function(passport) {
     // FACEBOOK ================================================================
     // =========================================================================
     var fbStrategy = configAuth.FACEBOOK;
+    String.prototype.capitalize = function(){
+       return this.replace( /(^|\s)([a-z])/g , function(m,p1,p2){ return p1+p2.toUpperCase(); } );
+      };
     fbStrategy.passReqToCallback = true; // allows us to pass in the req from our route (lets us check if a user is logged in or not)
     passport.use(new FacebookStrategy(fbStrategy, function(req, token, refreshToken, profile, done) {
         // asynchronous
@@ -102,7 +105,7 @@ module.exports = function(passport) {
                           user.facebook.token = token;
                             //user.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
                             user.facebook.email = (profile.emails[0].value || '').toLowerCase();
-                            user.facebook.displayName = (profile.displayName).toLowerCase();
+                            user.facebook.displayName = (profile.displayName).toLowerCase().capitalize();
                             user.facebook.photos = profile.photos[0].value;
                             user.facebook.authType = "facebook";
                             user.save(function(err) {
@@ -119,7 +122,7 @@ module.exports = function(passport) {
                         newUser.facebook.token = token;
                         //  newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
                         newUser.facebook.email = (profile.emails[0].value || '').toLowerCase();
-                          newUser.facebook.displayName = (profile.displayName).toLowerCase();
+                          newUser.facebook.displayName = (profile.displayName).toLowerCase().capitalize();
                           newUser.facebook.photos = profile.photos[0].value;
                           newUser.facebook.authType = "facebook";
                         newUser.save(function(err) {
@@ -136,7 +139,7 @@ module.exports = function(passport) {
                 user.facebook.token = token;
                   //user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
                   user.facebook.email = (profile.emails[0].value || '').toLowerCase();
-                  user.facebook.displayName = (profile.displayName).toLowerCase();
+                  user.facebook.displayName = (profile.displayName).toLowerCase().capitalize();
                   user.facebook.photos = profile.photos[0].value;
                   user.facebook.authType = "facebook";
                 user.save(function(err) {
@@ -174,7 +177,7 @@ function(req, token, refreshToken, profile, done) {
                     // if there is a user id already but no token (user was linked at one point and then removed)
                     if (!user.google.token) {
                         user.google.token = token;
-                        user.google.name  = (profile.displayName).toLowerCase();
+                        user.google.name  = (profile.displayName).toLowerCase().capitalize();
                         user.google.photos = profile.photos[0].value;
                         user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
                         user.google.authType = "google";
@@ -192,7 +195,7 @@ function(req, token, refreshToken, profile, done) {
 
                     newUser.google.id    = profile.id;
                     newUser.google.token = token;
-                    newUser.google.name  = (profile.displayName).toLowerCase();
+                    newUser.google.name  = (profile.displayName).toLowerCase().capitalize();
                     newUser.google.photos = profile.photos[0].value;
                     newUser.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
                     newUser.google.authType = "google";
@@ -212,7 +215,7 @@ function(req, token, refreshToken, profile, done) {
 
             user.google.id    = profile.id;
             user.google.token = token;
-            user.google.name  = (profile.displayName).toLowerCase();
+            user.google.name  = (profile.displayName).toLowerCase().capitalize();
             user.google.photos = profile.photos[0].value;
             user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
             user.google.authType = "google";

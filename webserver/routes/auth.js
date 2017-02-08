@@ -1,8 +1,6 @@
 const RegisteredUser = require('../models/user');
 const UnansweredQuery = require('../models/unansweredQuery');
 const nodemailer = require('nodemailer');
-const fs= require('fs');
-
 module.exports = function(app, passport) {
   var rand,
       mailOptions,
@@ -64,56 +62,53 @@ module.exports = function(app, passport) {
     // local sign up route
     app.post('/signup', function(req, res) {
         let newUser = new RegisteredUser();
-        //let imgPath = '../../webclient/images/user.png';
-        //let imageupload = fs.readFileSync(imgPath);
-        //console.log(imgPath);
-        //console.log(imageupload);
+        String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
         rand = Math.floor((Math.random() * 100) + 54);
         newUser.local.verificationID = rand;
-        newUser.local.name = (req.body.firstName + ' ' + req.body.lastName).toLowerCase();
+        newUser.local.name = (req.body.firstName.toLowerCase().capitalizeFirstLetter() + ' ' + req.body.lastName.toLowerCase().capitalizeFirstLetter());
         newUser.local.email = req.body.email;
         newUser.local.password = req.body.password;
-        newUser.local.firstname = (req.body.firstName).toLowerCase();
-        newUser.local.lastname = (req.body.lastName).toLowerCase();
+        newUser.local.firstname = (req.body.firstName).toLowerCase().capitalizeFirstLetter();
+        newUser.local.lastname = (req.body.lastName).toLowerCase().capitalizeFirstLetter();
         newUser.local.localType = 'Customer';
         newUser.local.authType = 'local';
         newUser.local.loggedinStatus = false;
         newUser.local.isEmailVerified = false;
         newUser.local.photos = 'defultImage.jpg';
-        res.cookie('profilepicture',newUser.local.photos);
-        newUser.save(function(err){
+        res.cookie('profilepicture', newUser.local.photos);
+        newUser.save(function(err) {
           if (err) {
                 res.send('Error in registration');
             } else {
-                res.send("Successfully registered");
-                //res.send('registered');
+                res.send('Successfully registered');
             }
         });
       });
     app.post('/adminsignup', function(req, res) {
         let newUser = new RegisteredUser();
         rand = Math.floor((Math.random() * 100) + 54);
-     //let imageupload = fs.readFileSync('../images/IMG_1486181808021.jpeg');
-      //  console.log(imgPath);
-      //  console.log(imageupload);
-        newUser.local.name = (req.body.firstName + " " + req.body.lastName).toLowerCase();
+
+      String.prototype.capitalizeFirstLetter = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+}
+        newUser.local.name = (req.body.firstName.toLowerCase().capitalizeFirstLetter() + " " + req.body.lastName.toLowerCase().capitalizeFirstLetter());
         newUser.local.email = req.body.email;
         newUser.local.password = req.body.password;
-        newUser.local.firstname = (req.body.firstName).toLowerCase();
-        newUser.local.lastname = (req.body.lastName).toLowerCase();
+        newUser.local.firstname = (req.body.firstName).toLowerCase().capitalizeFirstLetter();
+        newUser.local.lastname = (req.body.lastName).toLowerCase().capitalizeFirstLetter();
         newUser.local.localType = 'Admin';
         newUser.local.isEmailVerified = true;
         newUser.local.verificationID = rand;
         newUser.local.authType = 'local';
         newUser.local.photos = 'defultImage.jpg';
-        res.cookie('profilepicture',newUser.local.photos);
+        res.cookie('profilepicture', newUser.local.photos);
         newUser.save(function(err) {
             if (err) {
                 res.send('Error in registration');
             } else {
-                res.send(newUser);
-                console.log("Successfully Registered");
-                //res.send('registered');
+                res.send('Successfully Registered');
             }
         });
     });
@@ -164,9 +159,9 @@ module.exports = function(app, passport) {
                 mailOptions = {
                     from: 'geniegenie0001@gmail.com', // sender address
                     to: profile[0].local.email, // list of receivers
-                    subject: 'Verification Email', // Subject line
+                    subject: 'Verify your Email with Genie', // Subject line
                     text: text,
-                    html: "Welcome to Genie ,<br> Please Click on the link to verify your email.<br><a href=" + link + ">Click here to verify</a>"
+                    html: "<center><h1>Welcome to Genie</h1></center><br><br><br>Hi,<br><br>To complete Signup Click on the button to verify yourself.<br><br><br><a href=" + link + " style='background-color:#44c767;-moz-border-radius:28px;-webkit-border-radius:28px;border-radius:28px;border:1px solid #18ab29;display:inline-block;padding:16px 31px;color:#ffffff;text-shadow:0px 1px 0px #2f6627;text-decoration:none;'> Verify </a><br><br><b>Why verify?</b><br><br>For using Genie we require a verified email to prevent spam.<br><br>Verifying lets you join Genie quickly and easily.<br><br>Cheers,<br><br><b>Team Genie</b><br><br><small><i>This link is valid for an hour.This is an Auto-generated mail,please do not reply</i></small>"
                 };
                 console.log(mailOptions + host);
                 transporter.sendMail(mailOptions, function(error, info) {
@@ -220,7 +215,9 @@ module.exports = function(app, passport) {
                         res.redirect('/#/expiryLink');
                     }
                 } else {
-                    res.end("<h1>Request is from unknown source");
+                  console.log("email is not verified");
+                  //res.end("<h1>Link expired</h1>");
+                  res.redirect('/#/expiryLink');
                 }
             }
         });
@@ -267,8 +264,8 @@ module.exports = function(app, passport) {
                 mailOptions = {
                     from: 'geniegenie0001@gmail.com', // sender address
                     to: profile[0].local.email, // list of receivers
-                    subject: 'Verification Email from Genie', // Subject line
-                    html: "Forgot Password,<br> Please Click on the link to set new password.<br><a href=" + link + ">Click here to change password</a>"
+                    subject: 'Password reset for Genie account', // Subject line
+                    html: "<center><h1>Welcome to Genie</h1></center><br><br><br>Hi,<br><br>Forgot password??<br><br> No worries, click on the button to reset right away !!.<br><br><br><a href=" + link + " style='background-color:#FF0000;-moz-border-radius:28px;-webkit-border-radius:28px;border-radius:28px;border:1px solid #FF0000;display:inline-block;padding:16px 31px;color:#ffffff;text-shadow:0px 1px 0px #2f6627;text-decoration:none;'>Reset password</a><br><br>Cheers,<br><br><b>Team Genie</b><br><br><small><i>This link is valid for an hour.This is an Auto-generated mail,please do not reply</i></small>"
                 };
                 console.log(mailOptions);
                 transporter.sendMail(mailOptions, function(error, info) {
@@ -369,9 +366,9 @@ module.exports = function(app, passport) {
     app.put('/updateprofile', function(req, res) {
         if (req.body) {
             request1 = req.body.email;
-            request2 = (req.body.firstname + " " + req.body.lastname).toLowerCase();
-            request3 = req.body.firstname.toLowerCase();
-            request4 = req.body.lastname.toLowerCase();
+            request2 = (req.body.firstname.toLowerCase().capitalizeFirstLetter() + " " + req.body.lastname.toLowerCase().capitalizeFirstLetter());
+            request3 = req.body.firstname.toLowerCase().capitalizeFirstLetter();
+            request4 = req.body.lastname.toLowerCase().capitalizeFirstLetter();
             RegisteredUser.update({
                 'local.email': request1
             }, {
@@ -409,7 +406,6 @@ module.exports = function(app, passport) {
           }
       });  //image for localstratergy
     app.post('/uploadImage', function(req, res) {
-      console.log("vtg hjk")
       res.cookie('profilepicture', req.body.data);
               console.log(req.body.data,"vgbhnjk");
             RegisteredUser.update({
@@ -441,7 +437,35 @@ module.exports = function(app, passport) {
             }
         });
     });
-
+    // Admin Information
+    app.post('/admindetails', function(req, res) {
+      console.log("entered details")
+        let email = req.body.data;
+        console.log(email);
+        RegisteredUser.find({
+            'local.email': email
+        }, function(err, profile) {
+          console.log(profile)
+            res.send(profile);
+            if (err) {
+                res.send(err);
+            }
+        });
+    });
+    // client Information
+    app.post('/clientInformations', function(req, res) {
+        let email = req.body.data;
+        console.log(email);
+        RegisteredUser.find({
+            'local.email': email
+        }, function(err, profile) {
+          console.log(profile)
+            res.send(profile);
+            if (err) {
+                res.send(err);
+            }
+        });
+    });
     // *******************************************
     // Facebook authentication routes
     // *******************************************
@@ -460,6 +484,7 @@ module.exports = function(app, passport) {
                 res.cookie('token', req.user.facebook.token);
                 res.cookie('authType', req.user.facebook.authType);
                 res.cookie('username',req.user.facebook.displayName);
+                res.cookie('profilepicture', req.user.facebook.photos);
                 res.redirect('/#/clienthome');
               });
 
@@ -484,6 +509,7 @@ module.exports = function(app, passport) {
                 res.cookie('token', req.user.google.token);
                 res.cookie('username',req.user.google.name);
                 res.cookie('authType', req.user.google.authType);
+                res.cookie('profilepicture', req.user.google.photos);
                 res.redirect('/#/clienthome');
               });
 };

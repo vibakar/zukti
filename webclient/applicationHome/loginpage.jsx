@@ -23,7 +23,8 @@ export default class LoginPage extends React.Component
             snackbarMsg: '',
             erroremail: false,
             errormessageemail: '',
-            email: ''
+            email: '',
+            validemail: ''
         };
         this.onSubmitLoginData = this.onSubmitLoginData.bind(this);
     }
@@ -63,10 +64,12 @@ export default class LoginPage extends React.Component
         // check whether the user is alreay exists or not
         if (validator.isEmail(event.target.value)) {
             this.setState({erroremail: false});
+            this.setState({validemail: true});
             this.setState({errormessageemail: false});
         } else {
             this.setState({erroremail: true});
-            this.setState({errormessageemail: 'Enter your full email address, including the \@\ '});
+            this.setState({validemail: false});
+            this.setState({errormessageemail: 'Enter valid email, including the \@\ '});
         }
     }
     show = (dimmer) => () => this.setState({dimmer, open: true})
@@ -84,7 +87,7 @@ export default class LoginPage extends React.Component
             <h2>
             Nice to see you back!
             </h2>
-            <h2>Go ahead to sign in</h2>
+            <h2>Go ahead and sign in</h2>
           </p>
             <Modal.Description>
             <Grid columns={2} stackable>
@@ -93,14 +96,14 @@ export default class LoginPage extends React.Component
             <Form onSubmit={this.onSubmitLoginData}>
             <Form.Field id="formfieldlogin">
             <Form.Input name= "userName" placeholder= 'Email-ID' icon='user' iconPosition='left' id="formstyle" onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required />
-            <p style={{color: '#a54f4f',textAlign:'center'}}>{this.state.checkmail}</p>
+            <p style={{color: '#a54f4f'}}>{this.state.errormessageemail}</p>
             </Form.Field>
             <Form.Field id="formfieldlogin"><br/>
             <Form.Input type='password' name="password" placeholder='Password' icon='lock' iconPosition='left' id="formstyle" required/>
             <a href="#/forgotpassword" id='forgotpassword'>Forgot Password?</a>
             </Form.Field><br/><br/><br/>
             <Modal.Actions>
-            <Button color='teal' id="buttonwidth1" circular>
+            <Button color='teal' id="buttonwidth1" circular disabled={(!this.state.email) || (!this.state.validemail)}>
             <Button.Content type='submit' ><Icon name='sign in'/>Login</Button.Content>
             </Button><br/><br/>
             <p id="footer">Not yet registered?&nbsp;

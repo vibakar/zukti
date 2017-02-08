@@ -2,8 +2,7 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const CONFIG = require('../config/auth');
-// define the schema for our user model
-//let imgPath = '../../webclient/images/user.png';
+const bcrypt = require('bcrypt-nodejs')
 
 const userSchema = mongoose.Schema({
 
@@ -50,6 +49,14 @@ userSchema.statics.generateToken = function(email) {
         expiresIn: 15 * 60
     });
     return token;
+};
+userSchema.methods.generateHash = function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+// checking if password is valid
+userSchema.methods.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.local.password);
 };
 
 // create the model for users and expose it to our app
