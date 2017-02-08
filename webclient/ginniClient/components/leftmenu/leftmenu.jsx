@@ -153,7 +153,7 @@ else
                         Let's talk
                     </Menu.Item>
                     <Menu.Item name='SavedQueries' active={activeItem === 'SavedQueries'} onClick={this.handleItemClick}>
-                        <Icon name='star' color='teal'/>
+                        <Icon name='save' color='teal'/>
                         Saved queries
                     </Menu.Item>
                     <Menu.Item name='notifications' active={activeItem === 'notifications'} onClick={this.handleItemClick}>
