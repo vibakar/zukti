@@ -99,11 +99,11 @@ module.exports = function(app, passport) {
      //let imageupload = fs.readFileSync('../images/IMG_1486181808021.jpeg');
       //  console.log(imgPath);
       //  console.log(imageupload);
-        newUser.local.name = (req.body.firstName + " " + req.body.lastName).toLowerCase();
+        newUser.local.name = (req.body.firstName.capitalizeFirstLetter() + " " + req.body.lastName.capitalizeFirstLetter());
         newUser.local.email = req.body.email;
         newUser.local.password = req.body.password;
-        newUser.local.firstname = (req.body.firstName).toLowerCase();
-        newUser.local.lastname = (req.body.lastName).toLowerCase();
+        newUser.local.firstname = (req.body.firstName).capitalizeFirstLetter();
+        newUser.local.lastname = (req.body.lastName).capitalizeFirstLetter();
         newUser.local.localType = 'Admin';
         newUser.local.isEmailVerified = true;
         newUser.local.verificationID = rand;
@@ -372,9 +372,9 @@ module.exports = function(app, passport) {
     app.put('/updateprofile', function(req, res) {
         if (req.body) {
             request1 = req.body.email;
-            request2 = (req.body.firstname + " " + req.body.lastname).toLowerCase();
-            request3 = req.body.firstname.toLowerCase();
-            request4 = req.body.lastname.toLowerCase();
+            request2 = (req.body.firstname.capitalizeFirstLetter() + " " + req.body.lastname.capitalizeFirstLetter());
+            request3 = req.body.firstname.capitalizeFirstLetter();
+            request4 = req.body.lastname.capitalizeFirstLetter();
             RegisteredUser.update({
                 'local.email': request1
             }, {
