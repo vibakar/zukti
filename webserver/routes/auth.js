@@ -268,8 +268,8 @@ module.exports = function(app, passport) {
                 mailOptions = {
                     from: 'geniegenie0001@gmail.com', // sender address
                     to: profile[0].local.email, // list of receivers
-                    subject: 'Verification Email from Genie', // Subject line
-                    html: "Forgot Password,<br> Please Click on the link to set new password.<br><a href=" + link + ">Click here to change password</a>"
+                    subject: 'Password reset for Genie account', // Subject line
+                    html: "<center><h1>Welcome to Genie</h1></center><br><br><br>Hi,<br><br>Forgot password??<br><br> No worries, click on the button to reset right away !!.<br><br><br><a href=" + link + " style='background-color:#FF0000;-moz-border-radius:28px;-webkit-border-radius:28px;border-radius:28px;border:1px solid #FF0000;display:inline-block;padding:16px 31px;color:#ffffff;text-shadow:0px 1px 0px #2f6627;text-decoration:none;'>Reset password</a><br><br>Cheers,<br><br><b>Team Genie</b><br><br><small><i>This link is valid for an hour.This is an Auto-generated mail,please do not reply</i></small>"
                 };
                 console.log(mailOptions);
                 transporter.sendMail(mailOptions, function(error, info) {
