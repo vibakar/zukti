@@ -15,11 +15,11 @@ export default class Defaultpage extends React.Component {
                     <div id="defaultdiv">
                         <Image src='../../images/reactlogo.png' centered size='small'/>
                         <h1 id='sparkle'>REACT</h1>
-                        <h2>Make your development easy with Genie.</h2>
+                        <h2>Make your development easy with Me.</h2>
                           <h3>
                             <i>"Keep your ears open, grab everything you can, react, and learn"</i>
                         </h3>
-                        <h5 id='defaulthead'>For further questions click on let's talk and get your questions answered.
+    <h5 id='defaulthead'>For further questions click on let's talk and get your questions answered.
                         </h5>
                     </div>
                 </Grid.Row>
