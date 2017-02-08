@@ -27,13 +27,13 @@ export default class LogoutFile extends React.Component {
       <Grid.Row/>
       <Grid.Row>
       <Grid.Column style={{textAlign: 'center'}}>
-      <p id='head1'>"Thanks For Your Visit !!"<br/>
+      <p id='head1'>Great to serve you!!<br/>
    </p>
       </Grid.Column>
       </Grid.Row>
       <Grid.Row/>
       <Grid.Row/>
-      <Grid.Row><h2>~~~COME BACK SOON~~~</h2></Grid.Row>
+      <Grid.Row><h2 style={{color:'white'}}>See you soon...</h2></Grid.Row>
       <Grid.Row/>
       <Grid.Row/>
       <Grid.Row/>
