@@ -40,6 +40,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                           </Label.Group>
 
                         </Feed.Extra>
+
                         <AssistantGinniOptions type='blog' value={blogUrl}/>
                     </Feed.Content>
                 </Feed.Event>

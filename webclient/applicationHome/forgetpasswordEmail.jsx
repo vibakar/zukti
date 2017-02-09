@@ -1,6 +1,7 @@
 import React from 'react';
 import {Grid, Button} from 'semantic-ui-react';
 import './applicationHome.css';
+import ForgetPassword from  '../config/forgetpasswordEmail.json';
 export default class ForgetpasswordEmail extends React.Component {
   constructor() {
     super();
@@ -27,9 +28,9 @@ export default class ForgetpasswordEmail extends React.Component {
       <Grid.Row/>
       <Grid.Row>
       <Grid.Column style={{textAlign: 'center'}}>
-        <p id='head1'>Please click the reset link to change password<br/>
-        <h3 id='head4'>Verification link is sent to your Registered mail</h3>
-        <h1 id='head4'>You can change your password now..!!</h1>
+        <p id='head1'>{ForgetPassword.head1}<br/>
+        <h3 id='head4'>{ForgetPassword.head2}</h3>
+        <h1 id='head4'>{ForgetPassword.head3}</h1>
     </p>
       </Grid.Column>
       </Grid.Row>

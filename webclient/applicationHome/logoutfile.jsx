@@ -1,6 +1,7 @@
 import React from 'react';
 import {Grid, Button} from 'semantic-ui-react';
 import './applicationHome.css';
+import Logout from '../config/logout.json';
 export default class LogoutFile extends React.Component {
   constructor() {
     super();
@@ -27,13 +28,15 @@ export default class LogoutFile extends React.Component {
       <Grid.Row/>
       <Grid.Row>
       <Grid.Column style={{textAlign: 'center'}}>
-      <p id='head1'>Great to serve you!!<br/>
+      <p id='head1'>{Logout.head1}<br/>
+
    </p>
       </Grid.Column>
       </Grid.Row>
       <Grid.Row/>
       <Grid.Row/>
-      <Grid.Row><h2 style={{color:'white'}}>See you soon...</h2></Grid.Row>
+      <Grid.Row><h2>{Logout.head2}</h2></Grid.Row>
+
       <Grid.Row/>
       <Grid.Row/>
       <Grid.Row/>
