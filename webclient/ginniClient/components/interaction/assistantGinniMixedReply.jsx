@@ -28,10 +28,12 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.setState({openSnackbar: false});
     };
 
-    savedquery(message)
+    savedquery(message,time,question)
       {
         this.setState({openSnackbar: true, snackbarMsg:"saved for reference"});
             console.log(message);
+              console.log(time);
+              console.log(question);
 
             Axios({
                 url: ' http://localhost:8080/clientinformation',
@@ -42,7 +44,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                         url: 'http://localhost:8080/savequery/answeredquery',
                         method:'POST',
                         data: {email:response.data[0].local.email,
-                              savedquery:{question:"",answer:message}}
+                              savedquery:{question:'',answer:message,date:time}}
                       }).then(function(msg) {
                           console.log(msg);
                       }).catch(function(err) {
@@ -81,10 +83,11 @@ export default class AssistantGinniMixedReply extends React.Component {
                                 {this.props.data.blogUrl?<Label onClick={this.displayBlogUrl}>Blogs</Label>:''}
                                 {this.props.data.videoUrl?<Label onClick={this.displayVideoUrl}>Videos</Label>:''}
                             </Label.Group>
+
                         </Feed.Extra>
                         <Feed.Meta>
                             <Popup trigger={< Icon circular name = 'flag' color = 'purple' />} content='Flag' size='mini'/>
-                          <Popup trigger={< Icon circular name = 'save' color = 'green' onClick={()=>{this.savedquery(this.props.data.textAnswer)}}/>} content='save this message' size='mini'/>
+                          <Popup trigger={< Icon circular name = 'save' color = 'green' onClick={()=>{this.savedquery(this.props.data.textAnswer,this.props.data.time,this.props.message)}}/>} content='save this message' size='mini'/>
                             <Popup trigger={< Icon circular name = 'like outline' color = 'blue' />} content='Like' size='mini'/>
                             <Popup trigger={< Icon circular name = 'dislike outline' color = 'blue' />} content='Dislike' size='mini'/>
                             <Popup trigger={< Icon circular name = 'delete' color = 'red' />} content='Delete' size='mini'/>

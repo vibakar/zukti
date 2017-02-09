@@ -82,10 +82,10 @@ export default class SavedQuery extends React.Component{
  <div>
     <Card fluid style={{background:'#F1F8E9',borderStyle:'solid',borderWidth:'thin',borderColor:'teal'}}>
       <Card.Content >
-        <Card.Header>
-                    {newsdata.question}
-        </Card.Header>
+        
+      <h4>  {newsdata.date}</h4>
       <Card.Description style={{color:'black'}}>
+
       {newsdata.answer}
       <Popup positioning='left center' offset={5} inverted size='mini' trigger={<Label onClick={() => this.deletesavequery(newsdata._id)} corner='right' size='mini' icon='delete'></Label>} content='Delete'/>
       </Card.Description>
