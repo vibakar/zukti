@@ -1,6 +1,7 @@
 import React from 'react';
 import {Grid, Button} from 'semantic-ui-react';
 import './applicationHome.css';
+import SuccessMessage from '../config/successfullyregistered.json';
 export default class SuccessfullyRegistered extends React.Component {
   constructor() {
     super();
@@ -27,12 +28,12 @@ export default class SuccessfullyRegistered extends React.Component {
       <Grid.Row/>
       <Grid.Row>
       <Grid.Column style={{textAlign: 'center'}}>
-      <p id='head1'>Suceessfully Verified<br/>
+      <p id='head1'>{SuccessMessage.head1}<br/>
    </p>
       </Grid.Column>
       </Grid.Row>
       <Grid.Row/>
-      <Grid.Row><h2>Login and get started!!</h2></Grid.Row>
+      <Grid.Row><h2>{SuccessMessage.head2}</h2></Grid.Row>
       <Grid.Row/>
       <Grid.Row/>
       <Grid.Row/>

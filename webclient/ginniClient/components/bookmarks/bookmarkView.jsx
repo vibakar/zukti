@@ -5,6 +5,9 @@ import UnfurlLink from './unfurlLink';
 export default class BookmarkView extends React.Component {
     constructor(props) {
         super(props);
+        this.state={
+          saved:false
+        }
         this.deleteBookmark = this.deleteBookmark.bind(this);
     }
     deleteBookmark(e,data) {

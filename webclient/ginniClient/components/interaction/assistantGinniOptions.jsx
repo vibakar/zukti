@@ -8,7 +8,8 @@ export default class AssistantGinniOptions extends React.Component {
         this.state = {
             likeEnabled: true,
             dislikeEnabled: true,
-            likeDislikeMsg: ' '
+            saved:false,
+            likeDislikeMsg: ' ',
         }
         this.upvoteAnswer = this.upvoteAnswer.bind(this);
         this.downVoteAnswer = this.downVoteAnswer.bind(this);
@@ -59,6 +60,7 @@ export default class AssistantGinniOptions extends React.Component {
       catch((error)=>{
         console.log(error);
       });
+      this.setState({saved:true});
     }
     render() {
         let likeDislikeMsg = this.state.likeDislikeMsg;
@@ -67,7 +69,8 @@ export default class AssistantGinniOptions extends React.Component {
 
             <Feed.Meta>
                 <Popup trigger={< Icon circular name = 'flag' color = 'purple' />} content='Flag' size='mini'/>
-                <Popup trigger={< Icon circular name = 'save' color = 'green' onClick={this.savedQuery} />} content='save this message' size='mini'/>
+                {!this.state.saved?<Popup trigger={< Icon circular name = 'save' color = 'green' onClick={this.savedQuery} />} content='save this message' size='mini'/>:''}
+                {this.state.saved?<Label as='a'>Saved</Label>:''}
                  {this.state.likeEnabled && this.state.dislikeEnabled
                     ? <Popup trigger={< Icon circular name = 'like outline' color = 'blue' onClick = {
                             this.upvoteAnswer

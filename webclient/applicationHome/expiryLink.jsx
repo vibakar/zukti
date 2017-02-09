@@ -1,6 +1,7 @@
 import React from 'react';
 import {Grid, Button} from 'semantic-ui-react';
 import './applicationHome.css';
+import Expiry from '../config/expiryLink.json';
 export default class ExpiryLink extends React.Component {
   constructor() {
     super();
@@ -27,7 +28,7 @@ export default class ExpiryLink extends React.Component {
       <Grid.Row/>
       <Grid.Row>
       <Grid.Column style={{textAlign: 'center'}}>
-      <p id='head1'>Expired Link or Invalid URL<br/>
+      <p id='head1'>{Expiry.head1}<br/>
    </p>
       </Grid.Column>
       </Grid.Row>

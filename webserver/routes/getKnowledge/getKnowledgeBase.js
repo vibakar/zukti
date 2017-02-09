@@ -4,9 +4,9 @@ let displayQuestionAnswerSet = require('./displayQA');
 
 router.get('/',function(req,res)
 {
-  let resultCallback = function(questionSet,answerSet) {
+  let resultCallback = function(questionanswerSet) {
       res.json({
-          questionSet:questionSet,answerSet:answerSet
+          questionanswerSet:questionanswerSet
       });
   }
   displayQuestionAnswerSet(resultCallback);

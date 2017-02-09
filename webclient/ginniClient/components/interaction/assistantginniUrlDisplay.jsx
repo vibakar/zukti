@@ -38,7 +38,6 @@ export default class AssistantGinniMixedReply extends React.Component {
                                   ? <Label onClick={this.displayMoreBlogs}>View more blogs ({this.props.blogs.length-1})</Label>
                                   : ''}
                           </Label.Group>
-
                         </Feed.Extra>
                         <AssistantGinniOptions question={this.props.question} type='blog' value={blogUrl}/>
                     </Feed.Content>

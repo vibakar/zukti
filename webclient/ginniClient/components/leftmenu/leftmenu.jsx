@@ -42,7 +42,6 @@ export default class LeftMenu extends Component {
         this.getNotificationCount = this.getNotificationCount.bind(this);
         this.getUserInformation = this.getUserInformation.bind(this);
     }
-
     handleItemClick = ((e, {name}) => {
         if (this.state.activeItem === 'notifications') {
             let url = Config.url + '/getbroadcastmessage/updateCount'
@@ -61,8 +60,6 @@ export default class LeftMenu extends Component {
             this.state.counter = this.state.counter + 1;
             this.setState({counter: this.state.counter});
         });
-
-
     }
     getNotificationCount() {
         let url = Config.url + '/getbroadcastmessage/count';
@@ -106,7 +103,6 @@ export default class LeftMenu extends Component {
     onChangePassword() {
     hashHistory.push('/change')
 }
-
     render() {
       const activeItem= this.state.activeItem;
       const customername =  this.state.name;
@@ -150,7 +146,7 @@ else
                     </Menu.Item>
                     <Menu.Item name='ChatBot' active={activeItem === 'ChatBot'} onClick={this.handleItemClick}>
                         <Icon name='discussions' color='teal'/>
-                        Let's talk
+                        Let's Explore
                     </Menu.Item>
                     <Menu.Item name='Bookmarks' active={activeItem === 'Bookmarks'} onClick={this.handleItemClick}>
                         <Icon name='save' color='teal'/>
@@ -190,7 +186,6 @@ else
                                 </Menu.Item>
                             </Menu>
                         </div>
-
                         <div id='leftmenucontentdiv'>
                             <LeftMenuContent sidebarItemSelected={activeItem}/>
                         </div>
