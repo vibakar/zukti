@@ -1,6 +1,6 @@
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
  devtool: 'cheap-module-eval-source-map',
@@ -8,22 +8,23 @@ module.exports = {
    app: [
    'webpack/hot/dev-server',
    'webpack-hot-middleware/client?reload=true',
-    path.join(__dirname, "webclient", "clientapp.jsx")]
+    path.join(__dirname, 'webclient', 'clientapp.jsx')]
  },
  output: {
-   path: path.join(__dirname, "webclient", "dist"),
-   publicPath: "/dist/",
-   filename: "bundle.js"
+   path: path.join(__dirname, 'webclient', 'dist'),
+   publicPath: '/dist/',
+   filename: 'bundle.js'
  },
  module: {
      loaders: [{
                test: /\.jsx$/,
                loaders: [
-                            'babel?presets[]=react,presets[]=es2015,presets[]=stage-0'                         ]
+                'babel?presets[]=react,presets[]=es2015,presets[]=stage-0'
+              ]
               },
               {
                 test: /\.css$/,
-                loader:"style-loader!css-loader"
+                loader: 'style-loader!css-loader'
               },
               {
                 test: /\.(jpe?g|png|gif|svg)$/i,
@@ -31,7 +32,7 @@ module.exports = {
               }
             ]
  },
- watch:true,
+ watch: true,
  resolve: {
    extensions: ['', '.js', '.jsx', '/index.js', '/index.jsx']
  },

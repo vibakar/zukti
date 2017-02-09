@@ -7,8 +7,10 @@ router.get('/', function(req, res) {
         email: email
     }, function(err, data) {
         if (err) {
+            console.log(err);
             res.json({restrived: false});
         } else {
+            console.log(data);
             res.json(data);
         }
     });

@@ -10,6 +10,8 @@ import ApplicationHome from './applicationHome/applicationHome';
 import LogoutFile from './applicationHome/logoutfile';
 import NewPassword from './applicationHome/newpassword';
 import LoginPage from './applicationHome/loginpage';
+import DisplayQuestionAnswer from './ginniAdmin/components/displayQuestionAnswer/displaysetting.jsx';
+import BlogsVideoSlider from './ginniClient/components/slider/blogsvideoslider.jsx';
 import ForgotPassword from './applicationHome/forgotpassword.jsx';
 import Signup from './applicationHome/signup';
 import ClientHome from './ginniClient/components/clienthome/home';
@@ -51,12 +53,14 @@ ReactDOM.render(
             <IndexRoute component={ClientHome} onEnter={requireAuth.bind(this)}/>
         </Route>
         <Route path='/react' component={react} onEnter={requireAuth.bind(this)}/>
-        <Route path='/newpassword' component={NewPassword} onEnter={requireAuth.bind(this)}/>
+        <Route path='/newpassword' component={NewPassword}/>
         <Route path='/login' component={LoginPage} />
         <Route path='/forgotpassword' component={ForgotPassword} />
         <Route path='/forgetmail' component={ForgetpasswordEmail} />
         <Route path='/signup' component={Signup}/>
         <Route path='/mail' component={SentMailPage} />
+        <Route path='/display' component={DisplayQuestionAnswer} />
+        <Route path='/slider' component={BlogsVideoSlider} />
         <Route path='/chat' component={LeftMenu} onEnter={requireAuth.bind(this)}/>
         <Route path='/change' component={ChangePassword} onEnter={requireAuth.bind(this)}/>
         <Route path='/profile' component={ClientProfile} onEnter={requireAuth.bind(this)}/>

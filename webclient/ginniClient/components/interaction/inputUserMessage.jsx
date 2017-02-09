@@ -25,10 +25,11 @@ export default class InputUserMesaage extends React.Component {
             username: this.props.username,
             question: message
         }).then((response) => {
+          console.log(response);
             if (response.data) {
-                response.data.forEach((item) => {
-                    ginniReply.push(<AssistantGinniMixedReply handleGinniReply={this.props.handleGinniReply} data={item}/>);
-                })
+                if(!response.data.isUnAnswered){
+                      ginniReply.push(<AssistantGinniMixedReply handleGinniReply={this.props.handleGinniReply} data={response.data.answerObj}/>);
+                }
             }
             this.props.handleGinniReply(ginniReply);
         }).catch((error) => {

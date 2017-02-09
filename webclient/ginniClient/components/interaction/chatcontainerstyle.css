@@ -31,7 +31,9 @@
     font-size: 15px;
     width: 600px;
 }
-
+#userstyle {
+  margin-left: 2%;
+}
 #textinput {
     border-color: teal;
     width: 98%;
@@ -47,7 +49,6 @@
     position: absolute;
     bottom: 0;
     max-height: 516px;
-
 }
 #chatheading {
     text-align: center;
