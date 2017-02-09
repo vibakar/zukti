@@ -4,6 +4,7 @@ import {
     Button
 } from 'semantic-ui-react';
 import './applicationHome.css';
+import SentMail from  '../config/SentMail.json';
 export default class SentMailPage extends React.Component {
     constructor() {
         super();
@@ -49,9 +50,9 @@ export default class SentMailPage extends React.Component {
                             textAlign: 'center'
                         }}>
                             <p id='head1'>
-                                Please click the verification link to complete Signup<br/>
-                                <h3 id='headlink'>Verification link is sent to your Registered mail</h3>
-                                <h1 id='head4'>Thanks for registering</h1>
+                              {SentMail.head1}<br/>
+                                <h3 id='headlink'>{SentMail.head2}</h3>
+                                <h1 id='head4'>{SentMail.head3}</h1>
                             </p>
                         </Grid.Column>
                     </Grid.Row>

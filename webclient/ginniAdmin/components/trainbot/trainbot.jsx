@@ -34,7 +34,6 @@ export default class TrainBot extends React.Component {
     handleclose = () => {
       this.setState({open: false});
     }
-
     render() {
         return (
             <div style={{
@@ -42,40 +41,36 @@ export default class TrainBot extends React.Component {
                 height: '100%'
             }}>
                 <Grid >
+                  <Grid.Row textAlign='center'>
+                    <Grid.Column width={1} />
+                  <Grid.Column width={14}>
+                      <h3>ADD TO EXISTING INTENT</h3>
+                      <Divider />
+                  </Grid.Column>
+                  <Grid.Column width={1} />
+                </Grid.Row>
+                <Grid.Row>
                   <Grid.Column width={1}/>
                   <Grid.Column width={6}>
                     <Grid.Row />
-                    <Grid.Row textAlign='center'>
-                        <Grid.Column width={5}>
-                            <h4>ADD TO EXISTING INTENT</h4>
-                        </Grid.Column>
-                        <Divider />
-                    </Grid.Row>
                     <Grid.Row>
                         <Grid.Column width={5}></Grid.Column>
                         <Grid.Column width={6}>
                             <IntentDropDown handlerForSameAsIntents={this.setSameAsIntents}/>
                         </Grid.Column>
-                    </Grid.Row>
+                    </Grid.Row><br/>
                     <Grid.Row>
                   <a><h5 onClick={this.handleopen} id='addintent'> Add More Intent ?</h5></a>
-                  </Grid.Row>
-                    <br/>  <br/>
+                </Grid.Row><br/><br/>
+{ this.state.open ? <NewIntentText open={ this.handleclose}/> : null}
+                  </Grid.Column>
+                  <Grid.Column width={2} />
+                  <Grid.Column width={6}>
+                    <Grid.Row />
                     <Grid.Row>
                         <Grid.Column width={5}></Grid.Column>
                         <Grid.Column width={6}>
                             <InputNewSameAsIntent baseIntent={this.state.baseIntent} handlerAddNewIntent={this.addNewSameAsIntent}/>
-                        </Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row />
-                    <br/>  <br/>
-                    <Grid.Row>
-                        <Grid.Column width={5}></Grid.Column>
-                        <Grid.Column width={6} >
-                            <Button color="teal" fluid>
-                                <Icon name='plus circle'>Add
-                                </Icon>
-                            </Button>
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row />
@@ -94,13 +89,20 @@ export default class TrainBot extends React.Component {
                                 </Card.Content>
                             </Card>
                         </Grid.Column>
-                    </Grid.Row>
-                  </Grid.Column>
-                  <Grid.Column width={2} />
-                  <Grid.Column width={6}>
-                  { this.state.open ? <NewIntentText open={ this.handleclose}/> : null}
-                  </Grid.Column>
+                        </Grid.Row>
+                    <Grid.Row />
+                    <br/>  <br/>
+                    <Grid.Row>
+                        <Grid.Column width={5}></Grid.Column>
+                        <Grid.Column width={6} >
+                            <Button color="teal" fluid>
+                                <Icon name='plus circle'>Add
+                                </Icon>
+                            </Button>
+                        </Grid.Column>
+                          </Grid.Row></Grid.Column>
                   <Grid.Column width={1}/>
+                </Grid.Row>
                 </Grid>
             </div>
         );

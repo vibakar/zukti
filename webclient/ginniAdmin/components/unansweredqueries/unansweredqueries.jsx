@@ -74,6 +74,7 @@ return(
         }}/>} autoHeight autoHeightMin={554}>
             <div style={{width:'98%',height:'50%'}} >
               <h3>UNANSWERED QUERIES</h3>
+              <Divider/>
                           {user}
 </div></Scrollbars>
                 </Grid.Column>

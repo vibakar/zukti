@@ -20,7 +20,7 @@ import TopMenuBot from './topmenubot';
 export default class SidebarBot extends Component {
 
 
-    constructor(){
+   constructor(){
       super();
       this.state={
         activeItem:'SetupAi'
@@ -39,7 +39,7 @@ export default class SidebarBot extends Component {
                     </Menu.Item>
                     <Menu.Item name='SetupAi' active={activeItem === 'SetupAi'} onClick={this.handleItemClick}>
                         <Icon name='book' color='teal'/>
-                        Set up AI
+                        Setup Q&A
                     </Menu.Item>
                     <Menu.Item name='BroadCast' active={activeItem === 'BroadCast'} onClick={this.handleItemClick}>
                         <Icon name='announcement' color='teal'/>
@@ -55,7 +55,7 @@ export default class SidebarBot extends Component {
                     </Menu.Item>
                     <Menu.Item name='TrainBot' active={activeItem === 'UseTheBot'} onClick={this.handleItemClick}>
                         <Icon name='child' color='teal'/>
-                        Train bot
+                        Train Intent
                     </Menu.Item>
                     <Menu.Item name='Unanswered Queries' active={activeItem === 'Unanswered Queries'} onClick={this.handleItemClick}>
                         <Icon name='help' color='teal'/>
@@ -76,7 +76,7 @@ export default class SidebarBot extends Component {
                         height:'100%'
                     }}>
                       <TopMenuBot/>
-                      <div style={{'background-color':'#f3f2f2',height:'100%'}}>
+                      <div style={{'background-color':'#f3f2f2 ',height:'100%'}}>
                             <Content sidebarItemSelected={activeItem}/>
                       </div>
                         </Segment>

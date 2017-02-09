@@ -1,11 +1,12 @@
 import React from 'react';
 import { Grid, Button } from 'semantic-ui-react';
 import './applicationHome.css';
-
+import Home from  '../config/Home.json';
 export default class AdminWelcomePage extends React.Component {
   constructor() {
     super();
   }
+
 render(){
       return(
 <div style={{ backgroundImage: "url('../../images/intro-bg.jpg')"}} >
@@ -35,11 +36,10 @@ render(){
 
     <Grid.Column style={{textAlign: 'center'}}>
 
+     <p id='head1'>{Home.head1}<br/>
 
-     <p id='head1'>HERE COMES YOUR GENIE<br/>
-
-     <h5 id='head2'>ANY QUERY HITS YOU HARDER? THEN I AM HERE TO PROVIDE YOU DAZZLING SOLUTIONS</h5>
-      <h5 id='head3'><i>"To iterate is human, to recurse divine "</i></h5>
+     <h5 id='head2'>{Home.head2}</h5>
+      <h5 id='head3'><i>{Home.head3}</i></h5>
  </p>
 </Grid.Column>
 </Grid.Row>
