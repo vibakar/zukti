@@ -52,7 +52,18 @@ export default class Signup extends React.Component {
             }).then(function(msg) {
                 hashHistory.push('/mail');
             }).catch(function(err) {
-                // alert(err);
+              alert(email);
+                Axios({
+                    url: ' http://localhost:8080/deleteuser',
+                    method: 'delete',
+                    data: {
+                        data: email
+                      }
+                      }).then(function(msg){
+                          hashHistory.push('/mailnotsend');
+                      }).catch(function(err){
+                        console.log("error");
+                      })
             })
         }
     // new user signup
@@ -97,6 +108,7 @@ export default class Signup extends React.Component {
         this.setState({email: event.target.value});
         // console.log(event.target.value);
         // check whether the user is alreay exists or not
+        if(event.target.value.length>7){
         if (validator.isEmail(event.target.value)) {
           let self = this;
             Axios({
@@ -124,6 +136,7 @@ export default class Signup extends React.Component {
             this.setState({erroremail: true});
             this.setState({errormessageemail: 'Enter valid email, including \@\ '});
         }
+      }
     }
     // validation for password
     ChangePassword = (event) => {
@@ -134,6 +147,7 @@ export default class Signup extends React.Component {
         let has_letter = new RegExp('[a-z]');
         let has_caps = new RegExp('[A-Z]');
         let has_numbers = new RegExp('[0-9]');
+          if(event.target.value.length >4){
         if (has_letter.test(password_info) && points >= 6 && has_caps.test(password_info) && has_numbers.test(password_info)) {
             this.setState({errorpassword: false});
             this.setState({errormessagepassword: false});
@@ -143,20 +157,24 @@ export default class Signup extends React.Component {
             this.setState({verifypassword: false});
             this.setState({errormessagepassword: 'Password should contain numbers,letters(A&a) and minimum length 6'});
         }
+      }
     }
     // validation for confirmpassword
     ChangeRepassword = (event) => {
         this.setState({repassword: event.target.value});
-        if (validator.equals(event.target.value, this.state.password)) {
+          if(event.target.value.length >5){
+            if (validator.equals(event.target.value, this.state.password)) {
           // checking equality between password and confirmpassword
           this.setState({errorrepassword: false});
           this.setState({errormessage: false});
             this.setState({confirmpassword: true});
-      } else {
+          }
+      else {
         this.setState({confirmpassword: false});
         this.setState({errorrepassword: true});
         this.setState({errormessage: 'Password mismatch'});
     }
+  }
 }
 render() {
     const {open, dimmer,active} = this.state;
@@ -195,7 +213,7 @@ render() {
 
                 <Header as='h2' icon inverted>
                   <Image src='../images/mail.gif'/>
-                   <Header.Subheader>Hold a second to get mail</Header.Subheader>
+                   <Header.Subheader>Please hold for a minute to get verification mail......</Header.Subheader>
                  </Header>
         </Dimmer>
         <span id="message"/>

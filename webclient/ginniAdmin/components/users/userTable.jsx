@@ -39,7 +39,7 @@ return (
       <Grid.Row>
         <Grid.Column width={1} />
       <Grid.Column width={3}>
-        <center><Image avatar size='mini' src={newsdata.local.photos}/>
+        <center><Image avatar src={require('../../../../webserver/images/' + newsdata.local.photos)}/>
       </center>
     </Grid.Column>
           <Grid.Column width={3}>

@@ -19,6 +19,8 @@ Axios({
       }).then(function (response) {
         Cookie.remove("authType");
         Cookie.remove("token");
+        Cookie.remove("username");
+        Cookie.remove("profilepicture");
         hashHistory.push('/logoutfile');
       })
        .catch(function (error) {

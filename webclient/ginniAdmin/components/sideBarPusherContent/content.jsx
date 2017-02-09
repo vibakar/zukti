@@ -1,5 +1,5 @@
 import React from 'react';
-import BuildAi from '../buildAi/buildAi'
+import SetUpBot from '../buildAi/setUpBot'
 import UserTable from '../users/usertable';
 import Analytics from '../Analytics/info';
 import BroadCast from '../broadCast/broadCast';
@@ -14,7 +14,7 @@ export default class Content extends React.Component {
         switch (this.props.sidebarItemSelected) {
             case 'SetupAi':
                 {
-                    return <BuildAi/>
+                    return <SetUpBot/>
                 }
             case 'BroadCast':
                 {

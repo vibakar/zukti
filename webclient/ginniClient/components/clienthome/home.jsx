@@ -47,7 +47,7 @@ export default class ClientHome extends React.Component {
                         <Grid.Column width={4} centered={'true'}>
                             <Grid.Row>
                                 <center>
-                                    <Image src='../../images/react.jpg' size='small' avatar onclick={this.onSubmitEmail.bind(this)}/>
+                                    <Image className="imagepointer" src='../../images/react.jpg' size='small' avatar onClick={this.onSubmitEmail.bind(this)}/>
                                 </center>
                             </Grid.Row>
                             <Grid.Row>
@@ -59,28 +59,24 @@ export default class ClientHome extends React.Component {
                         <Grid.Column width={4}>
                             <Grid.Row>
                                 <center>
-                                    <a href="#"><Image src='../../images/express.png' size='small' avatar/></a>
+                                  <Image src='../../images/express.png' size='small' avatar/>
                                 </center>
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                    <a href="#">
                                         <h2 className="heading2">EXPRESS</h2>
-                                    </a>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
                         <Grid.Column width={4}>
                             <Grid.Row>
                                 <center>
-                                    <a href="#"><Image src='../../images/java.png' size='small' avatar/></a>
+                                    <Image src='../../images/java.png' size='small' avatar/>
                                 </center>
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                    <a href="#">
                                         <h2 className="heading3">JAVA</h2>
-                                    </a>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -91,42 +87,35 @@ export default class ClientHome extends React.Component {
                         <Grid.Column width={4}>
                             <Grid.Row>
                                 <center>
-                                    <a href="#"><Image src='../../images/js.jpg' size='small' avatar/></a>
+                                  <Image src='../../images/js.jpg' size='small' avatar/>
                                 </center>
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                    <a href="#">
                                         <h2 className="heading4">JAVA SCRIPT</h2>
-                                    </a>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
                         <Grid.Column width={4}>
                             <Grid.Row>
                                 <center>
-                                    <a href="#"><Image src='../../images/node.jpg' size='small' avatar/></a>
+                                    <Image src='../../images/node.jpg' size='small' avatar/>
                                 </center>
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                    <a href="#">
                                         <h2 className="heading5">NODE</h2>
-                                    </a>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
                         <Grid.Column width={4}>
                             <Grid.Row>
-                                <center>
-                                    <a href="#"><Image src='../../images/plus2.jpg' size='small' avatar/></a>
+                                <center><Image src='../../images/plus2.jpg' size='small' avatar/>
                                 </center>
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                    <a href="#">
                                         <h2 className="heading6">ADD BOT</h2>
-                                    </a>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>

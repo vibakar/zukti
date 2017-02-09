@@ -16,13 +16,15 @@ router.post('/askQuestion', function(req, res) {
     let query = processQuestion(question.value.toLowerCase());
     let keywords = query.keywords;
     let intents = query.intents;
-    let sendResponse = function(isUnAnswered,resultArray){
+    let sendResponse = function(isUnAnswered,answerObj){
         saveAnalyticsData(isUnAnswered);
-        saveUserQueries(email,question,resultArray);
-        res.json(resultArray);
+    //    saveUserQueries(email,question,resultArray);
+        res.json({isUnAnswered:isUnAnswered,answerObj:answerObj});
     }
-    let answerFoundCallback = function(resultArray) {
-        sendResponse(false,resultArray);
+    let answerFoundCallback = function(answerObj) {
+        console.log('inside answer found');
+        console.log(answerObj);
+        sendResponse(false,answerObj);
     };
     let noAnswerFoundCallback = function() {
         saveUnansweredQuery(username,email, question.value, keywords, intents);

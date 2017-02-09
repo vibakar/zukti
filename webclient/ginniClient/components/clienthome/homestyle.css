@@ -1,20 +1,23 @@
 .heading1{
   color:white;
 }
+.imagepointer{
+  cursor: pointer;
+}
 .heading2{
-  color:white;
+  color:grey;
 }
 .heading3{
-  color:white;
+  color:grey;
 }
 .heading4{
-  color:white;
+  color:grey;
 }
 .heading5{
-  color:white;
+  color:grey;
 }
 .heading6{
-  color:white;
+  color:grey;
 }
 #headsparkle
 {

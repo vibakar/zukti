@@ -53,6 +53,7 @@ export default class SentMailPage extends React.Component {
                               {SentMail.head1}<br/>
                                 <h3 id='headlink'>{SentMail.head2}</h3>
                                 <h1 id='head4'>{SentMail.head3}</h1>
+
                             </p>
                         </Grid.Column>
                     </Grid.Row>

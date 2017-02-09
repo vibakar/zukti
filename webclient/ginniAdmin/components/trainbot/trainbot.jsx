@@ -58,7 +58,9 @@ export default class TrainBot extends React.Component {
                         <Grid.Column width={6}>
                             <IntentDropDown handlerForSameAsIntents={this.setSameAsIntents}/>
                         </Grid.Column>
+
                     </Grid.Row><br/>
+
                     <Grid.Row>
                   <a><h5 onClick={this.handleopen} id='addintent'> Add More Intent ?</h5></a>
                 </Grid.Row><br/><br/>

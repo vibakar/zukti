@@ -1,14 +1,13 @@
 import React from 'react';
 import {Grid, Button} from 'semantic-ui-react';
 import './applicationHome.css';
-import Logout from '../config/logout.json';
-export default class LogoutFile extends React.Component {
+export default class MailNotSend extends React.Component {
   constructor() {
     super();
   }
   render() {
     return(
-      <div style={{ backgroundImage: "url('../../images/intro-bg.jpg')"}} >
+      <div style={{ backgroundImage: "url('../../images/homes.jpg')"}} >
       <Grid container={'true'} centered={'true'}>
       <Grid.Row/>
       <Grid.Row>
@@ -28,15 +27,15 @@ export default class LogoutFile extends React.Component {
       <Grid.Row/>
       <Grid.Row>
       <Grid.Column style={{textAlign: 'center'}}>
-      <p id='head1'>{Logout.head1}<br/>
-
+      <p id='head1'>Oops! Mail not Send, Due to some Network Error !!<br/>
+      <h2> Check your Network Connection ! </h2>
+      <h3>Please, Sign up again...</h3>
    </p>
       </Grid.Column>
       </Grid.Row>
       <Grid.Row/>
       <Grid.Row/>
-      <Grid.Row><h2>{Logout.head2}</h2></Grid.Row>
-
+      <Grid.Row/>
       <Grid.Row/>
       <Grid.Row/>
       <Grid.Row/>

@@ -9,17 +9,11 @@ export default class DisplayQAset extends React.Component {
         this.displayQuestionSetBlock = this.displayQuestionSetBlock.bind(this);
     }
     displayQuestionSetBlock() {
-        let questionSet = [];
-        let answerSet = [];
+
         let url = Config.url + '/getknowledge';
         Axios.get(url).then((response) => {
-            questionSet = response.data.questionSet;
-            answerSet = response.data.answerSet;
-            let set=[];
-            for(var i=0;i<questionSet.length;i++){
-              set[i]={questions:questionSet[i],answers:answerSet[i].properties}
-            }
-            this.props.handlerdisplayQASet(set);
+          console.log(response);
+            this.props.handlerdisplayQASet();
         }).catch((error) => {
             alert(error);
         });
