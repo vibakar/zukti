@@ -25,8 +25,7 @@ export default class DrawerExample extends React.Component {
           docked={false}
           width={700}
           open={this.state.open}
-          onRequestChange={(open) => this.setState({open})}
-        >
+          onRequestChange={(open) => this.setState({open})}>
           <Icon name='close' size='large' style={{marginLeft:'95%',marginTop:'1%',cursor:'pointer'}} onTouchTap={this.handleClose}/>
           <MenuItem onTouchTap={this.handleClose}>blog 1</MenuItem>
           <MenuItem onTouchTap={this.handleClose}>blog 2</MenuItem>

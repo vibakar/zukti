@@ -43,13 +43,14 @@ export default class ForgotPassword extends React.Component
                 hashHistory.push('/forgetmail');
             })
              .catch(function (error) {
-                 console.log(error);
+                  hashHistory.push('/mailnotsend');
             });
     }
     ChangeEmail = (event) => {
         this.setState({email: event.target.value});
         // console.log(event.target.value);
         // check whether the user is alreay exists or not
+        if(event.target.value.length>7){
         if (validator.isEmail(event.target.value)) {
           let self = this;
             Axios({
@@ -77,6 +78,7 @@ export default class ForgotPassword extends React.Component
             this.setState({erroremail: true});
             this.setState({errormessageemail: 'Enter valid email, including \@\ '});
         }
+      }
     }
     render() {
       const {active} = this.state;
