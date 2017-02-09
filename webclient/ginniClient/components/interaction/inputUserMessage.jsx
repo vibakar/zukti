@@ -5,6 +5,7 @@ import Axios from 'axios';
 import Cookie from 'react-cookie';
 import AssistantGinniMixedReply from './assistantGinniMixedReply';
 import AssistantGinniPlainText from './assistantGinniPlainText';
+import LoadingDots from './loadingDots';
 import Config from '../../../../config/url';
 export default class InputUserMesaage extends React.Component {
     constructor(props) {
@@ -22,6 +23,7 @@ export default class InputUserMesaage extends React.Component {
         this.props.handlerUserReply(message);
         ReactDOM.findDOMNode(this.refs.userInput).value = ''
         let url = Config.url + '/question/askQuestion';
+        this.props.handleGinniReply([<LoadingDots/>]);
         Axios.post(url, {
             username: this.props.username,
             question: message
@@ -32,13 +34,12 @@ export default class InputUserMesaage extends React.Component {
                       ginniReply.push(<AssistantGinniMixedReply handleGinniReply={this.props.handleGinniReply} question={message.value} data={response.data.answerObj}/>);
                 }
                 else{
-
                   response.data.answerObj.forEach((reply)=>{
                     ginniReply.push(<AssistantGinniPlainText value={reply.value}/> );
                   })
                 }
             }
-            this.props.handleGinniReply(ginniReply);
+            this.props.handleGinniReply(ginniReply,true);
         }).catch((error) => {
             console.log(error);
         });

@@ -34,11 +34,8 @@ router.post('/', function(req, res, next) {
                 console.log(data)
             });
         } else {
-            console.log(userBookmarks);
-            let bookmark ={question:question,responseType:responseType,savedResponse:savedResponse,date:date};
+              let bookmark ={question:question,responseType:responseType,savedResponse:savedResponse,date:date};
             let bookmarks = userBookmarks.bookmarks;
-            console.log(bookmarks);
-            console.log(userBookmarks.email);
             bookmarks.unshift(bookmark);
             userBookmarks.bookmarks = bookmarks;
             userBookmarks.save(function(err){
