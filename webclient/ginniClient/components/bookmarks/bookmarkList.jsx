@@ -7,7 +7,7 @@ export default class BookmarkList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            bookmarks: [ ]
+            bookmarks: []
         }
         this.removeBookmarkFromView = this.removeBookmarkFromView.bind(this);
     }
