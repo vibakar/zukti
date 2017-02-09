@@ -16,7 +16,7 @@ export default class AssistantChatContainer extends React.Component {
         this.state = {
             messages: [],
             username: 'User',
-            loaderActive: true,
+            loaderActive: false,
             profilePicture: ''
         };
         this.retriveChat = this.retriveChat.bind(this);
@@ -28,34 +28,33 @@ export default class AssistantChatContainer extends React.Component {
     componentDidMount() {
         // Scroll to the bottom on initialization
         let username = Cookie.load('username');
-      let authType = Cookie.load('authType');
-      console.log(authType);
-      if(authType === 'local'){
-        if (username) {
-            this.state.username = username;
+        let authType = Cookie.load('authType');
+        console.log(authType);
+        if (authType === 'local') {
+            if (username) {
+                this.state.username = username;
+            }
+            let profilePicture = Cookie.load('profilepicture');
+            if (profilePicture) {
+                this.state.profilePicture = require('../../../../webserver/images/' + profilePicture);
+            }
+            //    this.retriveChat();
+        } else if (authType === 'facebook') {
+            if (username) {
+                this.state.username = username;
+            }
+            let profilePicture = Cookie.load('profilepicture');
+            if (profilePicture) {
+                this.state.profilePicture = profilePicture;
+            }
+        } else if (authType === 'google') {
+            if (username) {
+                this.state.username = username;
+            }
+            let profilePicture = Cookie.load('profilepicture');
+            this.state.profilePicture = profilePicture;
         }
-        let profilePicture = Cookie.load('profilepicture');
-        if(profilePicture){
-          this.state.profilePicture = require('../../../../webserver/images/'+profilePicture);
-        }
-      }
-      else if(authType === 'facebook'){
-        if (username) {
-            this.state.username = username;
-        }
-        let profilePicture = Cookie.load('profilepicture');
-        if(profilePicture){
-          this.state.profilePicture = profilePicture;
-        }
-      }
-      else if(authType === 'google'){
-        if (username) {
-            this.state.username = username;
-        }
-        let profilePicture = Cookie.load('profilepicture');
-          this.state.profilePicture = profilePicture;
-      }
-        this.retriveChat();
+        //        this.retriveChat();
     }
     componentDidUpdate() {
         // Scroll as new elements come along
@@ -72,28 +71,30 @@ export default class AssistantChatContainer extends React.Component {
         let url = Config.url + '/retriveChat';
         Axios.get(url).then((response) => {
             console.log(response);
-            if(response.data){
-              console.log('Inside then');
-              response.data.chats.forEach((chat) => {
-                let length = this.state.messages.length;
-                this.state.messages.push(
-                  <div ref={(ref) => this['_div' + length] = ref} key={length}>
-                    <AssistantUserView msgDate={chat.question.time} userName={this.state.username} userMessage={chat.question.value} profilePicture={this.state.profilePicture}/>
-                  </div>
-                );
-                chat.resultArray.forEach((reply) => {
-                  let length = this.state.messages.length;
-                  this.state.messages.push(
-                    <div ref={(ref) => this['_div' + length] = ref} key={length}>
-                      <AssistantGinniMixedReply data={reply} handleGinniReply={this.pushGinniMessages}/>
-                    </div>
-                  );
+            if (response.data.chats) {
+                console.log(response);
+                console.log('Inside then');
+                response.data.chats.forEach((chat) => {
+                    let length = this.state.messages.length;
+                    this.state.messages.push(
+                        <div ref={(ref) => this['_div' + length] = ref} key={length}>
+                            <AssistantUserView msgDate={chat.question.time} userName={this.state.username} userMessage={chat.question.value} profilePicture={this.state.profilePicture}/>
+                        </div>
+                    );
+                    chat.resultArray.forEach((reply) => {
+                        let length = this.state.messages.length;
+                        this.state.messages.push(
+                            <div ref={(ref) => this['_div' + length] = ref} key={length}>
+                                <AssistantGinniMixedReply data={reply} handleGinniReply={this.pushGinniMessages}/>
+                            </div>
+                        );
+                    });
                 });
-              });
             }
             this.setState({messages: this.state.messages, loaderActive: false});
         }).catch((err) => {
             console.log(err);
+            console.log('inn');
             alert('ERROR IN FETCHING CHATS')
         });
     }
@@ -133,7 +134,9 @@ export default class AssistantChatContainer extends React.Component {
                 <Menu secondary>
                     <Menu.Item secondary position='right'/>
                     <Menu.Item position='left'>
-                        <Input  className='icon' style={{width:400}} icon={<Icon name='search' color='red' circular link />}  placeholder='Search your content' focus/>
+                        <Input className='icon' style={{
+                            width: 400
+                        }} icon={< Icon name = 'search' color = 'red' circular link />} placeholder='Search your content' focus/>
                     </Menu.Item>
                 </Menu>
                 <Scrollbars id='ginni' renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
@@ -145,7 +148,7 @@ export default class AssistantChatContainer extends React.Component {
                         {this.state.messages}
                     </div>
                 </Scrollbars>
-                <InputUserMessage username={this.state.username}  handlerUserReply={this.pushUserMessages} handleGinniReply={this.pushGinniMessages}/>
+                <InputUserMessage username={this.state.username} handlerUserReply={this.pushUserMessages} handleGinniReply={this.pushGinniMessages}/>
             </div>
         );
     }

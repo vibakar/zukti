@@ -1,72 +1,48 @@
 import React from 'react';
-import {Feed, Icon} from 'semantic-ui-react';
-import {Popup, Comment} from 'semantic-ui-react';
-import Embedly from 'react-embedly';
-import Snackbar from 'material-ui/Snackbar';
+import {Feed, Icon,Label} from 'semantic-ui-react';
 import Axios from 'axios';
+import AssistantGinniMoreBlogsView from './assistantGinniMoreBlogsView';
+import AssistantGinniOptions from './assistantGinniOptions';
+import UnfurlLink from './UnfurlLink';
 
 export default class AssistantGinniMixedReply extends React.Component {
   constructor(props) {
       super(props);
-      this.state={
-        openSnackbar: false,
-        snackbarMsg: ''
-      }
-        this.savedquery=this.savedquery.bind(this);
+      this.displayMoreBlogs =this.displayMoreBlogs.bind(this);
   }
-  handleRequestClose = () => {
-      this.setState({openSnackbar: false});
-  };
-  savedquery(message)
-    {
-      this.setState({openSnackbar: true, snackbarMsg:"saved for reference"});
-          console.log(message);
-
-          Axios({
-              url: ' http://localhost:8080/clientinformation',
-              method: 'get'
-          }).then(function(response) {
-              console.log("email"+response.data[0].local.email);
-                    Axios({
-                      url: 'http://localhost:8080/savequery/answeredquery',
-                      method:'POST',
-                      data: {email:response.data[0].local.email,
-                            savedquery:{question:"",answer:message}}
-                    }).then(function(msg) {
-                        console.log(msg);
-                    }).catch(function(err) {
-                        console.log(err);
-                    });
-
-          }).catch(function(err) {
-              // alert("bjhbj"+err);
-          });
-        }
-
+  displayMoreBlogs(){
+    let ginniReply = [];
+    let blogsResponseArray = this.props.blogs;
+    blogsResponseArray.shift();
+    blogsResponseArray.forEach((blog)=>{
+      ginniReply.push(<AssistantGinniMoreBlogsView  value={blog.value}/>)
+    })
+    this.props.handleGinniReply(ginniReply);
+  }
     render() {
-      const {open} = this.state;
+      let blogUrl = this.props.blogs[0].value;
+      console.log('top rated blog');
+      console.log(blogUrl);
         return (
             <Feed id="ginniview">
                 <Feed.Event>
                     <Feed.Label image='../../images/geniebot.jpg'/>
                     <Feed.Content>
                         <Feed.Summary date={new Date().toLocaleString()} user='Genie'/>
-                        <Feed.Extra text>
-                            {this.props.message}
-                        </Feed.Extra>
                         <Feed.Extra images>
-                            <Embedly url={this.props.url} apiKey="73f538bb83f94560a044bc6f0f33c5f6"/>
+                            <UnfurlLink url ={blogUrl}/>
                         </Feed.Extra>
-                        <Feed.Meta>
-                            <Popup trigger={< Icon circular name = 'flag' color = 'purple' />} content='Flag' size='mini'/>
-                            <Popup trigger={< Icon circular name = 'save' color = 'green' onClick={()=>{this.savedquery(this.props.url)}}/>} content='save this message' size='mini'/>
-                            <Popup trigger={< Icon circular name = 'like outline' color = 'blue' />} content='Like' size='mini'/>
-                            <Popup trigger={< Icon circular name = 'dislike outline' color = 'blue' />} content='Dislike' size='mini'/>
-                            <Popup trigger={< Icon circular name = 'delete' color = 'red' />} content='Delete' size='mini'/>
-                            </Feed.Meta>
+                        <Feed.Extra>
+                          <Label.Group color='blue'>
+                              {this.props.blogs.length > 1
+                                  ? <Label onClick={this.displayMoreBlogs}>View more blogs</Label>
+                                  : ''}
+                          </Label.Group>
+
+                        </Feed.Extra>
+                        <AssistantGinniOptions type='blog' value={blogUrl}/>
                     </Feed.Content>
                 </Feed.Event>
-                <Snackbar  open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={1000} onRequestClose={this.handleRequestClose}/>
             </Feed>
         );
     }
