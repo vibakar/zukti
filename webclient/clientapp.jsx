@@ -25,6 +25,7 @@ import ExpiryLink from './applicationHome/expiryLink';
 import SuccessfullyRegistered from './applicationHome/successfullyregistered';
 import AdminProfilePage from './ginniAdmin/components/admin/adminprofile';
 import Cookie from 'react-cookie';
+import MailNotSend from './applicationHome/mailnotsend.jsx';
 import Addnode from './ginniAdmin/components/buildNodeAndRelationship/createNodeAndRelation.jsx';
 
 injectTapEventPlugin();
@@ -66,6 +67,7 @@ ReactDOM.render(
         <Route path='/expiryLink' component={ExpiryLink}/>
         <Route path='/successfullyregistered' component={SuccessfullyRegistered}/>
         <Route path='/addnode' component={Addnode} onEnter={requireAuth.bind(this)}/>
+        <Route path='/mailnotsend' component={MailNotSend}/>
         <Route path='/logoutfile' component={LogoutFile}/>
 
     </Router>

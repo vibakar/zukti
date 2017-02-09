@@ -167,9 +167,7 @@ module.exports = function(app, passport) {
                 transporter.sendMail(mailOptions, function(error, info) {
                     if (error) {
                         console.log(error);
-                        res.json({
-                            yo: 'error' + error
-                        });
+                        console.log("Error")
                     } else {
                         console.log('Message sent: ' + info.response);
                         res.json({yo: info.response});
@@ -179,6 +177,21 @@ module.exports = function(app, passport) {
         });
 
     });
+    app.delete("/deleteuser", function(req, res) {
+    request = req.body.data;
+    console.log(request);
+    RegisteredUser.remove({'local.email': request}, function(err) {
+      if(err) {
+        console.log("no")
+        res.send("Error in deleting the data");
+      }
+      else {
+        console.log("deleted")
+
+        res.send("Data is deleted successfully");
+      }
+    });
+});
     /*verify the link which sent to  user email*/
     app.get('/verify', function(req, res) {
         RegisteredUser.find({
@@ -271,9 +284,6 @@ module.exports = function(app, passport) {
                 transporter.sendMail(mailOptions, function(error, info) {
                     if (error) {
                         console.log(error);
-                        res.json({
-                            yo: 'error' + error
-                        });
                     } else {
                         console.log('Message sent: ' + info.response);
                         res.json({yo: info.response});
