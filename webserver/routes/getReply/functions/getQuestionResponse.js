@@ -33,7 +33,7 @@ module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundC
             // Completed!
             session.close();
             console.log(result);
-            if (result.records === 0) {
+            if (result.records.length === 0) {
                 noAnswerFoundCallback();
             } else {
                 console.log(result);

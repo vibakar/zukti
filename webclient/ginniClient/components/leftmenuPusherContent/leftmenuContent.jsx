@@ -2,7 +2,7 @@ import React from 'react';
 import DefaultPage from './defaultpageclient';
 import AssistanView from '../interaction/assistantChatContainer';
 import Notifications from '../notification/notifications';
-import SavedQuery from '../savedquery/savedquery';
+import BookmarkList from '../bookmarks/bookmarkList';
 export default class LeftMenuContent extends React.Component {
     constructor(props) {
         super(props);
@@ -22,9 +22,9 @@ export default class LeftMenuContent extends React.Component {
                     return <AssistanView/>
                 }
 
-            case 'SavedQueries':
+            case 'Bookmarks':
                 {
-                    return <SavedQuery/>
+                    return <BookmarkList/>
                 }
             case 'notifications':
                 {

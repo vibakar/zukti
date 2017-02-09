@@ -152,9 +152,9 @@ else
                         <Icon name='discussions' color='teal'/>
                         Let's talk
                     </Menu.Item>
-                    <Menu.Item name='SavedQueries' active={activeItem === 'SavedQueries'} onClick={this.handleItemClick}>
+                    <Menu.Item name='Bookmarks' active={activeItem === 'Bookmarks'} onClick={this.handleItemClick}>
                         <Icon name='save' color='teal'/>
-                        Saved queries
+                        Bookmarks
                     </Menu.Item>
                     <Menu.Item name='notifications' active={activeItem === 'notifications'} onClick={this.handleItemClick}>
                         <Label color='red' floating-left>{this.state.counter}</Label>

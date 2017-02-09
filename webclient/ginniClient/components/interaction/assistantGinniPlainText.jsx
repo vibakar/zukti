@@ -7,7 +7,6 @@ export default class AssistantView extends React.Component {
         super(props);
     }
     render() {
-      console.log('inside plain text');
         return (
             <Feed id='assistantView'>
                 <Feed.Event>

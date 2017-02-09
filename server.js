@@ -12,18 +12,16 @@ let config = require('./webpack.config');
 let retriveChat = require('./webserver/routes/retriveChats/chats');
 let getLexicon = require('./webserver/lexicon/getLexicon');
 let intent = require('./webserver/routes/intent/intent');
-let concept = require('./webserver/routes/addnodeAndRelations/fetchConcepts');
 let addKnowledge = require('./webserver/routes/addKnowledge/question');
 let askQuestion = require('./webserver/routes/getReply/reply');
-let savequery = require('./webserver/routes/getReply/functions/saveanswer');
 let getAdmin = require('./webserver/routes/getAdmin/getadminUser');
 let savebroadcastmessage = require('./webserver/routes/broadcastmessage/broadcastmessage');
 let getbroadcastmessage = require('./webserver/routes/broadcastmessage/getbroadcastmessage');
 let getKnowledge = require('./webserver/routes/getKnowledge/getKnowledgeBase');
 let analytics = require('./webserver/routes/analyticsData/analytics');
+let bookmarks = require('./webserver/routes/bookmarks/bookmarks')
 let app = express();
 let compiler = webpack(config);
-let addnode = require('./webserver/routes/addNodeAndRelations/addNode');
 
 const configDB = require('./webserver/config/database');
 const requestAuthenticate = require('./webserver/middleware/requestAuthenticate');
@@ -92,21 +90,14 @@ app.use('/savebroadcastmessage',isAuthenticated, savebroadcastmessage);
 app.use('/getbroadcastmessage',isAuthenticated, getbroadcastmessage);
 app.use('/getadmin',isAuthenticated, getAdmin);
 app.use('/intent',isAuthenticated, intent);
-app.use('/concept',isAuthenticated, concept);
-
 app.use('/qa',addKnowledge);
 app.use('/question',isAuthenticated, askQuestion);
-app.use('/savequery',isAuthenticated, savequery);
-
 app.use('/retriveChat',isAuthenticated, retriveChat)
-app.use('/savequery',isAuthenticated, savequery);
 app.use('/qa', addKnowledge);
 app.use('/question', askQuestion);
 app.use('/getknowledge',getKnowledge);
-app.use('/savequery', savequery);
 app.use('/retriveChat',retriveChat)
-app.use('/savequery', savequery);
-
+app.use('/bookmarks',bookmarks);
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     publicPath: config.output.publicPath,
@@ -120,7 +111,6 @@ app.use(webpackDevMiddleware(compiler, {
 }));
 
 app.use(webpackHotMiddleware(compiler));
-app.use('/cn', addnode);
 
 
 //Listening to port 8080

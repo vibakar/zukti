@@ -1,5 +1,5 @@
 let UserChatHistory = require('../../../models/userChatHistory');
-module.exports = function(email, question, resultArray) {
+module.exports = function(email,isUnAnswered, question, answerObj) {
     UserChatHistory.findOne({
         email: email
     }, function(err, data) {
@@ -7,8 +7,9 @@ module.exports = function(email, question, resultArray) {
             let newUserChatHistory = new UserChatHistory();
             newUserChatHistory.email = email;
             let chat = {};
+            chat.isUnAnswered = isUnAnswered;
             chat.question = question;
-            chat.resultArray = resultArray;
+            chat.answerObj = answerObj;
             newUserChatHistory.chats = [];
             newUserChatHistory.chats.push(chat);
             newUserChatHistory.save(function(err, data) {
@@ -17,8 +18,10 @@ module.exports = function(email, question, resultArray) {
             });
         } else {
             let chat = {};
+            chat.isUnAnswered = isUnAnswered;
             chat.question = question;
-            chat.resultArray = resultArray;
+            chat.answerObj = answerObj;
+            chat.answerDate = new Date().toLocaleString();
             data.chats.push(chat);
             data.save(function(err) {
                 if (err) {

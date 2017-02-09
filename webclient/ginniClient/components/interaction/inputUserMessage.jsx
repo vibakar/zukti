@@ -4,6 +4,7 @@ import {Form} from 'semantic-ui-react';
 import Axios from 'axios';
 import Cookie from 'react-cookie';
 import AssistantGinniMixedReply from './assistantGinniMixedReply';
+import AssistantGinniPlainText from './assistantGinniPlainText';
 import Config from '../../../../config/url';
 export default class InputUserMesaage extends React.Component {
     constructor(props) {
@@ -28,7 +29,13 @@ export default class InputUserMesaage extends React.Component {
           console.log(response);
             if (response.data) {
                 if(!response.data.isUnAnswered){
-                      ginniReply.push(<AssistantGinniMixedReply handleGinniReply={this.props.handleGinniReply} data={response.data.answerObj}/>);
+                      ginniReply.push(<AssistantGinniMixedReply handleGinniReply={this.props.handleGinniReply} question={message.value} data={response.data.answerObj}/>);
+                }
+                else{
+
+                  response.data.answerObj.forEach((reply)=>{
+                    ginniReply.push(<AssistantGinniPlainText value={reply.value}/> );
+                  })
                 }
             }
             this.props.handleGinniReply(ginniReply);
