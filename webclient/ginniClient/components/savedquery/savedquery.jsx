@@ -113,7 +113,7 @@ export default class SavedQuery extends React.Component{
 </Scrollbars>
           </Grid.Column>
   </Grid.Row>
-  <Snackbar  open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={1200} onRequestClose={this.handleRequestClose}/>
+  <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={1200} onRequestClose={this.handleRequestClose}/>
   </Grid>
 
   </div>

@@ -43,6 +43,7 @@
     "react-custom-scrollbars": "^4.0.1",
     "react-dom": "^15.4.1",
     "react-donut-chart": "^1.0.3",
+    "react-drawer": "^1.2.5",
     "react-dropzone": "^3.9.1",
     "react-embedly": "^0.3.5",
     "react-flexbox-grid": "^0.10.2",
