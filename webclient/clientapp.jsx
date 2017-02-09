@@ -11,7 +11,6 @@ import LogoutFile from './applicationHome/logoutfile';
 import NewPassword from './applicationHome/newpassword';
 import LoginPage from './applicationHome/loginpage';
 import DisplayQuestionAnswer from './ginniAdmin/components/displayQuestionAnswer/displaysetting.jsx';
-import BlogsVideoSlider from './ginniClient/components/slider/blogsvideoslider.jsx';
 import ForgotPassword from './applicationHome/forgotpassword.jsx';
 import Signup from './applicationHome/signup';
 import ClientHome from './ginniClient/components/clienthome/home';
@@ -20,6 +19,7 @@ import LeftMenu from './ginniClient/components/leftmenu/leftmenu.jsx';
 import LogoutAdmin from './ginniAdmin/components/logout/logout';
 import ChangePassword from './ginniClient/components/changepassword/changepassword.jsx';
 import ClientProfile from './ginniClient/components/clientprofile/clientprofile';
+import DrawerExample from './ginniClient/components/slider/blogsvideoslider.jsx';
 import Logout from './ginniClient/components/logout/logout';
 import ForgetpasswordEmail from './applicationHome/forgetpasswordEmail';
 import SentMailPage from './applicationHome/SentMailPage';
@@ -60,7 +60,7 @@ ReactDOM.render(
         <Route path='/signup' component={Signup}/>
         <Route path='/mail' component={SentMailPage} />
         <Route path='/display' component={DisplayQuestionAnswer} />
-        <Route path='/slider' component={BlogsVideoSlider} />
+        <Route path='/slider' component={DrawerExample} />
         <Route path='/chat' component={LeftMenu} onEnter={requireAuth.bind(this)}/>
         <Route path='/change' component={ChangePassword} onEnter={requireAuth.bind(this)}/>
         <Route path='/profile' component={ClientProfile} onEnter={requireAuth.bind(this)}/>

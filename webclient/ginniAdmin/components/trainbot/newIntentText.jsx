@@ -56,7 +56,7 @@ export default class NewIntentText extends React.Component {
                     <input autoComplete='off' type='text' ref='newIntent' placeholder='Add Intent'/>
                     <br/>
                     <br/>
-                    <Button color="teal" fluid onClick={this.createNewIntent}>
+                    <Button color="red" fluid onClick={this.createNewIntent}>
                         <Icon name='plus circle'>Add
                         </Icon>
                     </Button>

@@ -35,20 +35,33 @@ export default class UnansweredQueries extends React.Component {
                   <Grid.Row vertically>
                      <Grid.Column width={1}></Grid.Column>
                     <Grid.Column width={14}>
-                      <Card fluid style={{height:'80px'}}>
+                      <Card fluid>
                         <Grid>
                           <Grid.Column width={2}>
                             <Grid.Row></Grid.Row>
                             <Grid.Row></Grid.Row>
-                            <Label as='a'>
-     <Image avatar src={require('../../../../webserver/images/defultImage.jpg')}/></Label></Grid.Column>
-                          <Grid.Column width={7}>
-                            {newsdata.username}<br/><br/>
-                            <Icon name='help circle' style={{color:'teal'}}/>{newsdata.question}<br/>
+
+     <Image  size='mini' style={{marginTop:'20%',marginLeft:'35%'}} src={require('../../../../webserver/images/defultImage.jpg')}/></Grid.Column>
+                          <Grid.Column width={9}>
+                            <Grid.Row/>
+                            <h4>{newsdata.username}</h4>
+                            <Grid vertically>
+                              <Grid.Row columns={2}>
+                                <Grid.Column width={1}>
+                            <Icon name='help circle' size='large' style={{color:'red'}}/>
                           </Grid.Column>
-                          <Grid.Column width={7} style={{color:'teal'}}>
-                            <br/>Keyword:{newsdata.keywords}<br/>
-                            intent:{newsdata.intents}
+                          <Grid.Column width={15}>
+                            {newsdata.question}<br/>
+                          </Grid.Column>
+                        </Grid.Row>
+                      </Grid>
+                            <Grid.Row/>
+                          </Grid.Column>
+                          <Grid.Column width={5} style={{color:'green'}}>
+                            <Grid.Row/>
+                          <h5>Keyword:{newsdata.keywords}</h5>
+                          <h5>Intent:{newsdata.intents}</h5>
+                          <Grid.Row/>
                           </Grid.Column>
                         </Grid>
 </Card>
@@ -60,7 +73,7 @@ export default class UnansweredQueries extends React.Component {
 }.bind(this));
 return(
 <div style={{
-    backgroundImage: 'url("../../images/wall.jpg")',marginTop: '1%',
+    backgroundImage: 'url("../../images/background.jpg")',marginTop: '1%',
     height: '100%'
   }}>
 <Grid divided='vertically'>
