@@ -75,6 +75,7 @@ export default class QuestionsAnswer extends React.Component {
         Axios.post('/qa/addQuestionAnswer',{question:this.state.question,texts:this.state.texts,videos:this.state.videos,blogs:this.state.blogs}).
         then((response)=>{
           console.log(response);
+          this.setState({question:' ',texts:[' '],videos:[' '],blogs:[' '],noAnswerError:'',invalidQuestionError:''});
           alert('Saved')
         }).
         catch((error)=>{
