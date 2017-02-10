@@ -62,6 +62,7 @@ export default class LoginPage extends React.Component
     ChangeEmail = (event) => {
         this.setState({email: event.target.value});
         // check whether the user is alreay exists or not
+        if(event.target.value.length> 7){
         if (validator.isEmail(event.target.value)) {
             this.setState({erroremail: false});
             this.setState({validemail: true});
@@ -71,6 +72,7 @@ export default class LoginPage extends React.Component
             this.setState({validemail: false});
             this.setState({errormessageemail: 'Enter valid email, including the \@\ '});
         }
+      }
     }
     show = (dimmer) => () => this.setState({dimmer, open: true})
     close = () => hashHistory.push('/');

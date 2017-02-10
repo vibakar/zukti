@@ -9,7 +9,6 @@ export default class AssistantGinniMoreTextView extends React.Component {
         super(props);
     }
     render() {
-      const {open} = this.state;
         return (
             <Feed id="ginniview">
                 <Feed.Event>
@@ -17,11 +16,11 @@ export default class AssistantGinniMoreTextView extends React.Component {
                     <Feed.Content>
                         <Feed.Summary date={this.props.data.time} user='Genie'/>
                         <Feed.Extra text>
-                            {text}
+                            {this.props.textValue}
                         </Feed.Extra>
                         <Feed.Extra>
                         </Feed.Extra>
-                      <AssistantGinniOptions type='text' value={this.props.text}/>
+                      <AssistantGinniOptions question={this.props.question} type='text' value={this.props.textValue}/>
                     </Feed.Content>
                 </Feed.Event>
             </Feed>

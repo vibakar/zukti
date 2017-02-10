@@ -19,7 +19,7 @@ import UnfurlLink from './UnfurlLink';
       let videosResponseArray = this.props.videos;
       videosResponseArray.shift();
       videosResponseArray.forEach((video)=>{
-        ginniReply.push(<AssistantGinniMoreVideosView value={video.value}/>)
+        ginniReply.push(<AssistantGinniMoreVideosView question={this.props.question} value={video.value}/>)
       })
       this.props.handleGinniReply(ginniReply);
     }
@@ -37,12 +37,12 @@ import UnfurlLink from './UnfurlLink';
                           <Feed.Extra>
                             <Label.Group color='blue'>
                                 {this.props.videos.length > 1
-                                    ? <Label onClick={this.displayMoreVideos}>View more videos</Label>
+                                    ? <Label onClick={this.displayMoreVideos}>View more videos ({this.props.videos.length-1})</Label>
                                     : ''}
                                 <Label onClick={this.playVideo}>Play video</Label>
                             </Label.Group>
                           </Feed.Extra>
-                          <AssistantGinniOptions type='video' value={videoUrl}/>
+                          <AssistantGinniOptions question={this.props.question} type='video' value={videoUrl}/>
                       </Feed.Content>
                   </Feed.Event>
               </Feed>

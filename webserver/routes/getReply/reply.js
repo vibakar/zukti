@@ -18,21 +18,19 @@ router.post('/askQuestion', function(req, res) {
     let intents = query.intents;
     let sendResponse = function(isUnAnswered,answerObj){
         saveAnalyticsData(isUnAnswered);
-    //    saveUserQueries(email,question,resultArray);
+        saveUserQueries(email,isUnAnswered,question,answerObj);
         res.json({isUnAnswered:isUnAnswered,answerObj:answerObj});
     }
     let answerFoundCallback = function(answerObj) {
-        console.log('inside answer found');
-        console.log(answerObj);
         sendResponse(false,answerObj);
     };
     let noAnswerFoundCallback = function() {
+        console.log('No answer found');
         saveUnansweredQuery(username,email, question.value, keywords, intents);
         let foundNoAnswer=answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
         resultArray=[];
         let resultObj={};
-        resultObj.time = new Date().toLocaleString();
-        resultObj.textAnswer=foundNoAnswer;
+        resultObj.value=foundNoAnswer;
         resultArray.push(resultObj);
         sendResponse(true,resultArray);
     };
@@ -41,8 +39,7 @@ router.post('/askQuestion', function(req, res) {
         let foundNoAnswer = commonReply[Math.floor(Math.random() * commonReply.length)]
         resultArray=[];
         let resultObj={};
-        resultObj.time = new Date().toLocaleString();
-        resultObj.textAnswer=foundNoAnswer;
+        resultObj.value=foundNoAnswer;
         resultArray.push(resultObj);
         sendResponse(true,resultArray);
     } else {

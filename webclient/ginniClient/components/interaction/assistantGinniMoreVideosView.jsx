@@ -25,7 +25,7 @@ export default class AssistantGinniMoreVideosView extends React.Component {
                         <Feed.Extra images>
                             <UnfurlLink url={this.props.value} />
                         </Feed.Extra>
-                            <AssistantGinniOptions type='video' value={this.props.value}/>
+                            <AssistantGinniOptions question={this.props.question} type='video' value={this.props.value}/>
                     </Feed.Content>
                 </Feed.Event>
             </Feed>

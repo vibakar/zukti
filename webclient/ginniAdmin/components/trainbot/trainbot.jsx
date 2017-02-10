@@ -59,8 +59,9 @@ export default class TrainBot extends React.Component {
                     </Grid.Row>
                     <br/>
                     <Grid.Row>
-                  <a><h5 onClick={this.handleopen} id='addintent'> Add More Intent ?</h5></a>
-                  </Grid.Row>
+                  <a><h5 onClick={this.handleopen} id='addintent'> Add More Intent ?</h5></a><br/>
+                  { this.state.open ? <NewIntentText open={ this.handleclose}/> : null}
+                </Grid.Row>
                     <br/>  <br/>
                     <Grid.Row>
                         <Grid.Column width={5}></Grid.Column>
@@ -73,33 +74,27 @@ export default class TrainBot extends React.Component {
                     <Grid.Row>
                         <Grid.Column width={5}></Grid.Column>
                         <Grid.Column width={6} >
-                            <Button color="teal" fluid>
+                            <Button color="facebook" fluid>
                                 <Icon name='plus circle'>Add
                                 </Icon>
                             </Button>
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row />
-                    <br/>  <br/>
-                    <Grid.Row>
-                        <Grid.Column width={5}></Grid.Column>
-                        <Grid.Column width={6}>
-                            <Card fluid color="teal">
-                                <Card.Content>
-                                    <Card.Header>
-                                        <label><h4>We Have SameAs</h4></label>
-                                    </Card.Header>
-                                </Card.Content>
-                                <Card.Content extra>
-                                    {this.state.sameAsIntentsDisplay}
-                                </Card.Content>
-                            </Card>
-                        </Grid.Column>
-                    </Grid.Row>
                   </Grid.Column>
-                  <Grid.Column width={2} />
-                  <Grid.Column width={6}>
-                  { this.state.open ? <NewIntentText open={ this.handleclose}/> : null}
+                  <Grid.Column width={0}/>
+                  <Grid.Column width={7}>
+                    <Grid.Row/>
+                    <Card fluid color="blue">
+                        <Card.Content>
+                            <Card.Header>
+                                <label><h4>List of Relevant Intent</h4></label>
+                            </Card.Header>
+                        </Card.Content>
+                        <Card.Content extra>
+                            {this.state.sameAsIntentsDisplay}
+                        </Card.Content>
+                    </Card>
                   </Grid.Column>
                   <Grid.Column width={1}/>
                 </Grid>
