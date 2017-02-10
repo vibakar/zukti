@@ -33,6 +33,7 @@ export default class ChangePassword extends React.Component {
       let has_letter = new RegExp('[a-z]');
       let has_caps = new RegExp('[A-Z]');
       let has_numbers = new RegExp('[0-9]');
+      if(event.target.value.length >4){
       if (has_letter.test(password_info) && points >= 6 && has_caps.test(password_info) && has_numbers.test(password_info)) {
           this.setState({errorpassword: false});
           this.setState({errormessagepassword: false});
@@ -42,10 +43,12 @@ export default class ChangePassword extends React.Component {
           this.setState({verifypassword: false});
           this.setState({errormessagepassword: 'Password should contain numbers,letters(A&a) and minimum length is  6'});
       }
+    }
   }
   // validation for confirmpassword
   ChangeRepassword = (event) => {
       this.setState({repassword: event.target.value});
+      if(event.target.value.length> 4){
       if (validator.equals(event.target.value, this.state.password)) {
         // checking equality between password and confirmpassword
         this.setState({errorrepassword: false});
@@ -56,6 +59,7 @@ export default class ChangePassword extends React.Component {
       this.setState({errorrepassword: true});
       this.setState({errormessage: 'Password not matched'});
   }
+}
 }
  close = () => hashHistory.push ('/chat');
 passwordchange(e, value) {

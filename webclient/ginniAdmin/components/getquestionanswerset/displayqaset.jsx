@@ -9,16 +9,47 @@ export default class DisplayQAset extends React.Component {
         this.displayQuestionSetBlock = this.displayQuestionSetBlock.bind(this);
     }
     displayQuestionSetBlock() {
-        let questionSet = [];
-        let answerSet = [];
+        let questions = [];
+        let answers = [];
         let url = Config.url + '/getknowledge';
         Axios.get(url).then((response) => {
-            questionSet = response.data.questionSet;
-            answerSet = response.data.answerSet;
-            let set=[];
-            for(var i=0;i<questionSet.length;i++){
-              set[i]={questions:questionSet[i],answers:answerSet[i].properties}
-            }
+
+            //separate questions and answers
+            let questionset = response.data.questionanswerSet;
+            console.log("sssssssssssssssssss");
+            console.log(questionset);
+            let set = [];
+
+            questionset.map((data, index) => {
+                let blogArray = [],
+                    textArray = [],
+                    videoArray = [];
+                data._fields[1].map((data1, i) => {
+                    if (data1[0] === "blog") {
+                        blogArray.push(data1[1])
+                    }
+                });
+                data._fields[1].map((data1, i) => {
+                    if (data1[0] === "text") {
+                        textArray.push(data1[1]);
+                    }
+                });
+                data._fields[1].map((data1, i) => {
+                    if (data1[0] === "video") {
+                        videoArray.push(data1[1]);
+                    }
+                });
+                set.push({
+                    questions: data._fields[0],
+                    answers: {
+                        blogs: blogArray,
+                        texts: textArray,
+                        videos: videoArray
+                    }
+                })
+            })
+
+            console.log(set);
             this.props.handlerdisplayQASet(set);
         }).catch((error) => {
             alert(error);

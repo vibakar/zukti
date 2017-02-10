@@ -1,6 +1,7 @@
 let express = require('express');
 let saveQuestionAnswer = require('./saveQuestionAnswer');
 let processQuestion = require('./processQuestion');
+let voteAnswer = require('./voteAnswer');
 let router = express.Router();
 
 router.post('/verifyQuestion', function(req, res) {
@@ -32,6 +33,17 @@ router.post('/addQuestionAnswer', function(req, res) {
         });
     };
     saveQuestionAnswer(req,questionsAnswerSavedCallback);
+});
+
+router.post('/rateAnswer',function(req,res){
+  let liked = req.body.liked;
+  let type = req.body.type;
+  let value = req.body.value;
+  console.log(type);
+  console.log(value);
+  console.log(liked);
+  voteAnswer(liked,type,value);
+  res.send('liked');
 });
 
 

@@ -18,6 +18,7 @@ import LeftMenu from './ginniClient/components/leftmenu/leftmenu.jsx';
 import LogoutAdmin from './ginniAdmin/components/logout/logout';
 import ChangePassword from './ginniClient/components/changepassword/changepassword.jsx';
 import ClientProfile from './ginniClient/components/clientprofile/clientprofile';
+import DrawerExample from './ginniClient/components/slider/blogsvideoslider.jsx';
 import Logout from './ginniClient/components/logout/logout';
 import ForgetpasswordEmail from './applicationHome/forgetpasswordEmail';
 import SentMailPage from './applicationHome/SentMailPage';
@@ -25,7 +26,8 @@ import ExpiryLink from './applicationHome/expiryLink';
 import SuccessfullyRegistered from './applicationHome/successfullyregistered';
 import AdminProfilePage from './ginniAdmin/components/admin/adminprofile';
 import Cookie from 'react-cookie';
-import Addnode from './ginniAdmin/components/buildNodeAndRelationship/createNodeAndRelation.jsx';
+import MailNotSend from './applicationHome/mailnotsend.jsx';
+
 
 injectTapEventPlugin();
 let requireAuth = function(nextState, replace) {
@@ -57,6 +59,8 @@ ReactDOM.render(
         <Route path='/forgetmail' component={ForgetpasswordEmail} />
         <Route path='/signup' component={Signup}/>
         <Route path='/mail' component={SentMailPage} />
+        <Route path='/display' component={DisplayQuestionAnswer} />
+        <Route path='/slider' component={DrawerExample} />
         <Route path='/chat' component={LeftMenu} onEnter={requireAuth.bind(this)}/>
         <Route path='/change' component={ChangePassword} onEnter={requireAuth.bind(this)}/>
         <Route path='/profile' component={ClientProfile} onEnter={requireAuth.bind(this)}/>
@@ -65,7 +69,7 @@ ReactDOM.render(
         <Route path='/log' component={LogoutAdmin} onEnter={requireAuth.bind(this)}/>
         <Route path='/expiryLink' component={ExpiryLink}/>
         <Route path='/successfullyregistered' component={SuccessfullyRegistered}/>
-        <Route path='/addnode' component={Addnode} onEnter={requireAuth.bind(this)}/>
+        <Route path='/mailnotsend' component={MailNotSend}/>
         <Route path='/logoutfile' component={LogoutFile}/>
 
     </Router>

@@ -49,7 +49,7 @@ export default class ViewUserChat extends React.Component {
           });
         return (
             <div>
-                <Button  color='teal' onClick={this.getUserChats} circular><Icon name='history'/>CHATS</Button>
+                <Button  color='facebook' onClick={this.getUserChats} circular><Icon name='history'/>CHATS</Button>
                 <Modal size={size} open={open} onClose={this.close}  closeIcon='close'>
           <Modal.Header id='viewuserchat'>
             <Icon name='tasks'/>

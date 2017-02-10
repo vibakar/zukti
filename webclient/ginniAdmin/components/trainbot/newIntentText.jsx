@@ -38,6 +38,9 @@ export default class NewIntentText extends React.Component {
     {
       this.setState({opensnackbar:false});
     };
+    closeNewIntent=()=>{
+      this.props.open();
+    }
 
     // bind the dropdown with base intents from neo4j databse
 
@@ -48,7 +51,8 @@ export default class NewIntentText extends React.Component {
         return (
             <Form >
                 <Form.Field >
-                    <h4>ADD A NEW INTENT</h4>
+                    <h4>ADD A NEW INTENT
+                          <Icon name='remove' color='red' size='large' style={{marginLeft:'55%'}} onClick={this.closeNewIntent}></Icon></h4>
                     <Divider/>
                     <label>
                         <h4>Enter The New Intent</h4>
@@ -56,10 +60,11 @@ export default class NewIntentText extends React.Component {
                     <input autoComplete='off' type='text' ref='newIntent' placeholder='Add Intent'/>
                     <br/>
                     <br/>
-                    <Button color="teal" fluid onClick={this.createNewIntent}>
+                    <Button color="green" fluid onClick={this.createNewIntent}>
                         <Icon name='plus circle'>Add
                         </Icon>
-                    </Button>
+                    </Button><br/>
+
                 </Form.Field>
                 <Snackbar open={this.state.opensnackbar} message={this.state.snakbarmsg} autoHIdeDuration={400} onRequestClose={this.handleRequestClose}/>
 

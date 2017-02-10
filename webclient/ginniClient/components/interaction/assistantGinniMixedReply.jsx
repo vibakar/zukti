@@ -3,8 +3,10 @@ import {Feed, Icon, Label} from 'semantic-ui-react';
 import {Popup, Comment} from 'semantic-ui-react';
 import AssistantGinniUrlDisplay from './assistantGinniUrlDisplay';
 import AssistantGinniVideoDisplay from './assistantGinniVideoDisplay';
+import AssistantGinniMoreTextDisplay from './assistantGinniMoreTextDisplay';
+import AssistantGinniPlainText from './assistantGinniPlainText';
+import AssistantGinniOptions from './assistantGinniOptions';
 import Axios from 'axios';
-import Snackbar from 'material-ui/Snackbar';
 
 export default class AssistantGinniMixedReply extends React.Component {
     // props validation
@@ -14,59 +16,30 @@ export default class AssistantGinniMixedReply extends React.Component {
     };
     constructor(props) {
         super(props);
-        this.state={
-          openSnackbar: false,
-          snackbarMsg: ''
-
-        }
-        // function to show videos url feteched from response
-        this.displayVideoUrl = this.displayVideoUrl.bind(this);
-        this.displayBlogUrl = this.displayBlogUrl.bind(this);
-          this.savedquery=this.savedquery.bind(this);
+        this.displayMoreText = this.displayMoreText.bind(this);
+        this.displayVideos = this.displayVideos.bind(this);
+        this.displayBlogs = this.displayBlogs.bind(this);
     }
-    handleRequestClose = () => {
-        this.setState({openSnackbar: false});
-    };
-
-    savedquery(message)
-      {
-        this.setState({openSnackbar: true, snackbarMsg:"saved for reference"});
-            console.log(message);
-
-            Axios({
-                url: ' http://localhost:8080/clientinformation',
-                method: 'get'
-            }).then(function(response) {
-                console.log("email"+response.data[0].local.email);
-                      Axios({
-                        url: 'http://localhost:8080/savequery/answeredquery',
-                        method:'POST',
-                        data: {email:response.data[0].local.email,
-                              savedquery:{question:"",answer:message}}
-                      }).then(function(msg) {
-                          console.log(msg);
-                      }).catch(function(err) {
-                          console.log(err);
-                      });
-
-            }).catch(function(err) {
-                // alert("bjhbj"+err);
-            });
-          }
-
-
-    displayVideoUrl() {
-        console.log(this.props.data);
-        let ginniReply = [<AssistantGinniVideoDisplay message='Here are some videos' url={this.props.data.videoUrl}/>];
+    displayMoreText() {
+        let textResponseArray = this.props.data.text;
+        textResponseArray.shift();
+        ginniReply = textResponseArray.map((answer, index) => {
+            return <AssistantGinniMoreTextDisplay question={this.props.question}  textValue={answer.value}/>
+        });
         this.props.handleGinniReply(ginniReply);
     }
-    displayBlogUrl() {
-        let ginniReply = [<AssistantGinniUrlDisplay message='Here are some blogs' url={this.props.data.blogUrl}/>];
+    displayVideos() {
+        let ginniReply = [<AssistantGinniPlainText value = 'Here is a top rated video for you' />];
+        ginniReply.push(<AssistantGinniVideoDisplay question={this.props.question} handleGinniReply={this.props.handleGinniReply} videos={this.props.data.video}/>);
+        this.props.handleGinniReply(ginniReply);
+    }
+    displayBlogs() {
+        let ginniReply = [<AssistantGinniPlainText value = 'The most top rated blog for you is' />];
+        ginniReply.push(<AssistantGinniUrlDisplay question={this.props.question} handleGinniReply={this.props.handleGinniReply} blogs={this.props.data.blog}/>);
         this.props.handleGinniReply(ginniReply);
     }
     render() {
-      const {open} = this.state;
-        let text = this.props.data.textAnswer;
+        let text = this.props.data.text[0].value;
         return (
             <Feed id="ginniview">
                 <Feed.Event>
@@ -78,21 +51,21 @@ export default class AssistantGinniMixedReply extends React.Component {
                         </Feed.Extra>
                         <Feed.Extra>
                             <Label.Group color='blue'>
-                                {this.props.data.blogUrl?<Label onClick={this.displayBlogUrl}>Blogs</Label>:''}
-                                {this.props.data.videoUrl?<Label onClick={this.displayVideoUrl}>Videos</Label>:''}
+                                {this.props.data.text.length > 1
+                                    ? <Label onClick={this.displayMoreText}>View more</Label>
+                                    : ''}
+                                {this.props.data.blog
+                                    ? <Label onClick={this.displayBlogs}>Blogs</Label>
+                                    : ''}
+                                {this.props.data.video
+                                    ? <Label onClick={this.displayVideos}>Videos</Label>
+                                    : ''}
                             </Label.Group>
                         </Feed.Extra>
-                        <Feed.Meta>
-                            <Popup trigger={< Icon circular name = 'flag' color = 'purple' />} content='Flag' size='mini'/>
-                          <Popup trigger={< Icon circular name = 'save' color = 'green' onClick={()=>{this.savedquery(this.props.data.textAnswer)}}/>} content='save this message' size='mini'/>
-                            <Popup trigger={< Icon circular name = 'like outline' color = 'blue' />} content='Like' size='mini'/>
-                            <Popup trigger={< Icon circular name = 'dislike outline' color = 'blue' />} content='Dislike' size='mini'/>
-                            <Popup trigger={< Icon circular name = 'delete' color = 'red' />} content='Delete' size='mini'/>
-                        </Feed.Meta>
+                        <AssistantGinniOptions question={this.props.question} type='text' value={text}/>
                     </Feed.Content>
                 </Feed.Event>
-                <Snackbar  open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={1000} onRequestClose={this.handleRequestClose}/>
-            </Feed>
+              </Feed>
         );
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Input, TextArea, Button, Icon} from 'semantic-ui-react';
+import {Form, TextArea, Button, Icon} from 'semantic-ui-react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Cookie from 'react-cookie';
@@ -12,16 +12,15 @@ export default class AddContent extends React.Component {
         super(props);
         this.state = {
             username: 'Admin'
-        }
+        };
     }
     componentDidMount() {
         let username = Cookie.load('username');
         if (username) {
-            console.log(username);
             this.state.username = username;
         }
     }
-    //to handle text data
+    // to handle text data
     handleSubmitText = (e) => {
         e.preventDefault();
         let text = ReactDOM.findDOMNode(this.refs.text).value;
@@ -50,7 +49,8 @@ export default class AddContent extends React.Component {
             <div>
                 <h1>Enter your message for users</h1>
                 <Form onSubmit={this.handleSubmitText}>
-                    <TextArea placeholder='Tell us more' autoHeight name='text' ref='text'/><br/><br/>
+                    <TextArea placeholder='Tell us more'
+                     autoHeight name='text' ref='text'/><br/><br/>
                     <Button color='red' type='submit' animated>
                         <Button.Content visible>Submit</Button.Content>
                         <Button.Content hidden>

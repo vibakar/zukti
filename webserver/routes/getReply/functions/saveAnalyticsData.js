@@ -1,7 +1,6 @@
 let GinniAnalytics = require('../../../models/ginniAnalytics');
 module.exports = function(isUnAnswered) {
-  console.log('Inside analytrics server');
-  GinniAnalytics.findOne({},(err,data)=>{
+    GinniAnalytics.findOne({},(err,data)=>{
     let ginniAnalytics
     if(!data){
        ginniAnalytics =new GinniAnalytics();
