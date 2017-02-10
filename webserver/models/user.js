@@ -42,6 +42,18 @@ const userSchema = mongoose.Schema({
 
 
 });
+// generating a hash
+userSchema.methods.generateHash = function(password) {
+    console.log("Inside generating hashing method");
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+// checking if password is valid
+userSchema.methods.validPassword = function(password) {
+    console.log("Checking password valid....");
+    return bcrypt.compareSync(password, this.local.password);
+};
+
 userSchema.statics.generateToken = function(email) {
     let token = jwt.sign({
         id: email
@@ -49,14 +61,6 @@ userSchema.statics.generateToken = function(email) {
         expiresIn: 15 * 60
     });
     return token;
-};
-userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
-
-// checking if password is valid
-userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
 };
 
 // create the model for users and expose it to our app

@@ -15,7 +15,9 @@ export default class QuestionSetDisplay extends React.Component {
     constructor() {
         super();
         this.state = {
-          type:''
+          type:'',
+          data:[],
+          displayQuestionAnswer :[]
             }
             this.addQuestionAnswerSet = this.addQuestionAnswerSet.bind(this);
             this.displayQuestionAnswerSet = this.displayQuestionAnswerSet.bind(this);
@@ -26,19 +28,25 @@ export default class QuestionSetDisplay extends React.Component {
         this.setState({type:'add'});
       }
 
-      displayQuestionAnswerSet(){
+      displayQuestionAnswerSet(data){
         this.setState({type:'display'});
+        console.log(data);
+        data.map((data)=>{
+          this.state.displayQuestionAnswer.push(<Display questions={data.questions} answers = {data.answers}/>)
+        });
+        this.setState({displayQuestionAnswer:this.state.displayQuestionAnswer});
+
       }
 
     render() {
-      const show = this.state.type;
-      let display= null;
-      if(show === 'add'){
-        display = <BuildAI />
-      }
-      else if (show === 'display') {
-        display = <Display />
-      }
+      // const show = this.state.type;
+      // let display= null;
+      // if(show === 'add'){
+      //   display = <BuildAI />
+      // }
+      // else if (show === 'display') {
+      //   display = <Display data ={this.state.data}/>
+      // }
 
         return (
             <div style={{
@@ -68,7 +76,7 @@ export default class QuestionSetDisplay extends React.Component {
                     </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
-                     {display}
+                     {(this.state.type === "add") ? (<BuildAI />):(this.state.displayQuestionAnswer)}
                    </Grid.Row>
                 </Grid>
             </div>

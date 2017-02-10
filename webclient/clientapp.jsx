@@ -10,7 +10,6 @@ import ApplicationHome from './applicationHome/applicationHome';
 import LogoutFile from './applicationHome/logoutfile';
 import NewPassword from './applicationHome/newpassword';
 import LoginPage from './applicationHome/loginpage';
-import DisplayQuestionAnswer from './ginniAdmin/components/displayQuestionAnswer/displaysetting.jsx';
 import ForgotPassword from './applicationHome/forgotpassword.jsx';
 import Signup from './applicationHome/signup';
 import ClientHome from './ginniClient/components/clienthome/home';
@@ -28,6 +27,7 @@ import SuccessfullyRegistered from './applicationHome/successfullyregistered';
 import AdminProfilePage from './ginniAdmin/components/admin/adminprofile';
 import Cookie from 'react-cookie';
 import MailNotSend from './applicationHome/mailnotsend.jsx';
+
 
 injectTapEventPlugin();
 let requireAuth = function(nextState, replace) {
@@ -59,7 +59,6 @@ ReactDOM.render(
         <Route path='/forgetmail' component={ForgetpasswordEmail} />
         <Route path='/signup' component={Signup}/>
         <Route path='/mail' component={SentMailPage} />
-        <Route path='/display' component={DisplayQuestionAnswer} />
         <Route path='/slider' component={DrawerExample} />
         <Route path='/chat' component={LeftMenu} onEnter={requireAuth.bind(this)}/>
         <Route path='/change' component={ChangePassword} onEnter={requireAuth.bind(this)}/>

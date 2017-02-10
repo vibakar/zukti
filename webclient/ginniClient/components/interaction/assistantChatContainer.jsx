@@ -74,7 +74,7 @@ export default class AssistantChatContainer extends React.Component {
                 response.data.chats.forEach((chat) => {
                     let length = this.state.messages.length;
                     this.state.messages.push(
-                        <div ref={(ref) => this['_div' + length] = ref} key={length}>
+                        <div ref={(ref) => this['_div' + length] = ref}>
                             <AssistantUserView msgDate={chat.question.time} userName={this.state.username} userMessage={chat.question.value} profilePicture={this.state.profilePicture}/>
                         </div>
                     );
@@ -82,7 +82,7 @@ export default class AssistantChatContainer extends React.Component {
                         let length = this.state.messages.length;
                         chat.answerObj.forEach((answer,index) => {
                             this.state.messages.push(
-                                <div ref={(ref) => this['_div' + length+index] = ref} key={length+index}>
+                                <div ref={(ref) => this['_div' + length+index] = ref}>
                                     <AssistantGinniPlainText value={answer.value}/>
                                 </div>
                             );
@@ -91,7 +91,7 @@ export default class AssistantChatContainer extends React.Component {
                     else {
                         let length = this.state.messages.length;
                         this.state.messages.push(
-                            <div ref={(ref) => this['_div' + length+1] = ref} key={length+1}>
+                            <div ref={(ref) => this['_div' + length+1] = ref}>
                                 <AssistantGinniMixedReply question={chat.question.value} data={chat.answerObj} handleGinniReply={this.pushGinniMessages}/>
                             </div>
                         );
