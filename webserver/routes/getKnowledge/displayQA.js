@@ -9,8 +9,8 @@ module.exports = function(resultCallback) {
         .then((result) => {
 
             session.close();
-            resultCallback(result.records[0]);
-            //console.log(result);
+            resultCallback(result.records);
+          
         })
         .catch((error) => {
             console.log(error);
