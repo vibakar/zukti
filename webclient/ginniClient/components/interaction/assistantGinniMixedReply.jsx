@@ -53,15 +53,15 @@ export default class AssistantGinniMixedReply extends React.Component {
                             {text}
                         </Feed.Extra>
                         <Feed.Extra>
-                            <Label.Group color='blue'>
+                            <Label.Group>
                                 {this.props.data.text&&this.props.data.text.length > 1
-                                    ? <Label onClick={this.displayMoreText}>View more</Label>
+                                    ? <Label onClick={this.displayMoreText} basic color='orange'>View more</Label>
                                     : ''}
                                 {this.props.data.blog
-                                    ? <Label onClick={this.displayBlogs}>Blogs</Label>
+                                    ? <Label onClick={this.displayBlogs} basic color='orange'>Blogs</Label>
                                     : ''}
                                 {this.props.data.video
-                                    ? <Label onClick={this.displayVideos}>Videos</Label>
+                                    ? <Label onClick={this.displayVideos} basic color='orange'>Videos</Label>
                                     : ''}
                             </Label.Group>
                         </Feed.Extra>

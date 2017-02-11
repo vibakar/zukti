@@ -35,7 +35,6 @@ export default class UnansweredQueries extends React.Component {
                   <Grid.Row vertically>
                      <Grid.Column width={1}></Grid.Column>
                     <Grid.Column width={14}>
-                      <Card fluid>
                         <Grid>
                           <Grid.Column width={2}>
                             <Grid.Row></Grid.Row>
@@ -44,14 +43,14 @@ export default class UnansweredQueries extends React.Component {
      <Image  size='mini' style={{marginTop:'20%',marginLeft:'35%'}} src={require('../../../../webserver/images/defultImage.jpg')}/></Grid.Column>
                           <Grid.Column width={9}>
                             <Grid.Row/>
-                            <h4>{newsdata.username}</h4>
+                            <h4 style={{color:'blue'}}>{newsdata.username}</h4>
                             <Grid vertically>
                               <Grid.Row columns={2}>
                                 <Grid.Column width={1}>
                             <Icon name='help circle' size='large' style={{color:'red'}}/>
                           </Grid.Column>
                           <Grid.Column width={15}>
-                            {newsdata.question}<br/>
+                          <h4>{newsdata.question}</h4><br/>
                           </Grid.Column>
                         </Grid.Row>
                       </Grid>
@@ -59,15 +58,15 @@ export default class UnansweredQueries extends React.Component {
                           </Grid.Column>
                           <Grid.Column width={5} style={{color:'green'}}>
                             <Grid.Row/>
-                          <h5>Keyword:{newsdata.keywords}</h5>
-                          <h5>Intent:{newsdata.intents}</h5>
+                          <h5>Keyword:<h4 style={{color:'black'}}>{newsdata.keywords}</h4></h5>
+                          <h5>Intent:<h4 style={{color:'black'}}>{newsdata.intents}</h4></h5>
                           <Grid.Row/>
                           </Grid.Column>
                         </Grid>
-</Card>
 </Grid.Column>
     </Grid.Row>
       </Grid>
+    <Divider/>
     </div>
 );
 }.bind(this));
@@ -86,7 +85,7 @@ return(
             position: "right"
         }}/>} autoHeight autoHeightMin={554}>
             <div style={{width:'98%',height:'50%'}} >
-              <h3>UNANSWERED QUERIES</h3>
+              <h3 style={{color:'red',fontStyle:'bold'}}>UNANSWERED QUERIES</h3>
               <Divider/>
                           {user}
 </div></Scrollbars>

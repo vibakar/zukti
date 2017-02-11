@@ -1,9 +1,10 @@
 import React from 'react';
-import {Grid, Image,Feed,Icon} from 'semantic-ui-react';
+import {Grid, Image,Feed,Icon,Divider} from 'semantic-ui-react';
 import { Button} from 'semantic-ui-react';
 import Axios from 'axios';
 import ViewUserChat from './viewUserChat';
 import './usertable.css';
+import {Scrollbars} from 'react-custom-scrollbars';
 export default class UserTable extends React.Component
 {
   constructor() {
@@ -31,24 +32,23 @@ export default class UserTable extends React.Component
 alert(email);
     }
 
- render() {
+render() {
     let user=this.state.userinformation.map(function(newsdata) {
 return (
   <div id='eachcardstyle'>
     <Grid>
       <Grid.Row>
-        <Grid.Column width={1} />
       <Grid.Column width={3}>
         <center><Image avatar src={require('../../../../webserver/images/' + newsdata.local.photos)}/>
       </center>
     </Grid.Column>
-          <Grid.Column width={3}>
-          <b>{newsdata.local.name}</b>
+          <Grid.Column width={4}>
+          <h4><b>{newsdata.local.name}</b></h4>
         </Grid.Column>
         <Grid.Column width={5}>
-          <b>{newsdata.local.email}</b>
+          <b style={{color:'blue'}}>{newsdata.local.email}</b>
         </Grid.Column>
-<Grid.Column width={2}>
+<Grid.Column width={3}>
           <div>
             <ViewUserChat userEmail={newsdata.local.email}/>
           </div>
@@ -60,11 +60,30 @@ return (
   );
 }.bind(this));
 return(
-<div style={{ backgroundImage: "url('../../images/background.jpg')", height: '100%', marginTop: '1%'}}>
+  <div style={{
+      backgroundImage: 'url("../../images/background.jpg")',marginTop: '1%',
+      height: '100%'
+    }}>
+  <Grid divided='vertically'>
+      <Grid.Row columns={3}>
+        <Grid.Column width={1}></Grid.Column>
 
- {user}
+      <Grid.Column width={14} >
+          <Scrollbars renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
+              display: "none",
+              position: "right"
+          }}/>} autoHeight autoHeightMin={554}>
+              <div style={{width:'98%',height:'50%'}} >
+                <h3 style={{color:"red",fontStyle:"bold"}}>USER DETAILS</h3>
+                <Divider/>
 
-</div>
+                           {user}
+  </div></Scrollbars>
+                  </Grid.Column>
+              </Grid.Row>
+            </Grid>
+  </div>
+
 );
 }
 }

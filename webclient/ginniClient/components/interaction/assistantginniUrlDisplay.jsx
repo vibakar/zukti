@@ -33,9 +33,9 @@ export default class AssistantGinniMixedReply extends React.Component {
                             <UnfurlLink url ={blogUrl}/>
                         </Feed.Extra>
                         <Feed.Extra>
-                          <Label.Group color='blue'>
+                          <Label.Group >
                               {this.props.blogs.length > 1
-                                  ? <Label onClick={this.displayMoreBlogs}>View more blogs ({this.props.blogs.length-1})</Label>
+                                  ? <Label onClick={this.displayMoreBlogs} basic color='orange'>View more blogs ({this.props.blogs.length-1})</Label>
                                   : ''}
                           </Label.Group>
                         </Feed.Extra>
