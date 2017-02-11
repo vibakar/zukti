@@ -82,7 +82,7 @@ export default class SavedQuery extends React.Component{
  <div>
     <Card fluid style={{background:'#F1F8E9',borderStyle:'solid',borderWidth:'thin',borderColor:'teal'}}>
       <Card.Content >
-        
+
       <h4>  {newsdata.date}</h4>
       <Card.Description style={{color:'black'}}>
 
