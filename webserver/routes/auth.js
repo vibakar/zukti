@@ -374,6 +374,9 @@ module.exports = function(app, passport) {
 
     //profileupdation
     app.put('/updateprofile', function(req, res) {
+      String.prototype.capitalizeFirstLetter = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+}
         if (req.body) {
             request1 = req.body.email;
             request2 = (req.body.firstname.toLowerCase().capitalizeFirstLetter() + " " + req.body.lastname.toLowerCase().capitalizeFirstLetter());

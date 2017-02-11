@@ -4,12 +4,16 @@ import {Button, Image, Modal, Dimmer, Header} from 'semantic-ui-react';
 import {Form} from 'semantic-ui-react';
 import validator from 'validator';
 import Axios from 'axios';
+import Snackbar from 'material-ui/Snackbar';
 import './signup.css';
 export default class Signup extends React.Component {
     constructor()
     {
         super();
         this.state = {
+          openSnackbar: false,
+            snackbarMsg: '',
+            opendimmer: false,
             emailId: '',
             userexists: '',
             firstname: '',
@@ -69,18 +73,29 @@ export default class Signup extends React.Component {
     // new user signup
     onRegisterUser(e, value) {
       e.preventDefault();
-      Axios({
-        url: 'http://localhost:8080/signup',
-        method: 'post',
-        data: value.formData
-      }).then(function(msg) {
-          console.log(msg.firstname);
-      }).catch(function(err) {
-          console.log(err);
-          // alert(err + 'check the details' + Object.keys(value.formData));
-      });
-      this.sentemail(value.formData.email);
+      if(value.formData.password===value.formData.repassword)
+        {
+          this.setState({opendimmer:true});
+          Axios({
+            url: 'http://localhost:8080/signup',
+            method: 'post',
+            data: value.formData
+          }).then(function(msg) {
+              console.log(msg.firstname);
+          }).catch(function(err) {
+              console.log(err);
+              // alert(err + 'check the details' + Object.keys(value.formData));
+          });
+          this.sentemail(value.formData.email);
+        }
+        else{
+             this.setState({openSnackbar: true, snackbarMsg:"check password field"});
+        }
   }
+  handleRequestClose = () => {
+          this.setState({openSnackbar: false});
+      };
+
     // validation for firstname
     ChangeFirst = (event) => {
         this.setState({firstname: event.target.value});
@@ -108,7 +123,7 @@ export default class Signup extends React.Component {
         this.setState({email: event.target.value});
         // console.log(event.target.value);
         // check whether the user is alreay exists or not
-        if(event.target.value.length>7){
+        if(event.target.value.length>=0){
         if (validator.isEmail(event.target.value)) {
           let self = this;
             Axios({
@@ -162,7 +177,7 @@ export default class Signup extends React.Component {
     // validation for confirmpassword
     ChangeRepassword = (event) => {
         this.setState({repassword: event.target.value});
-          if(event.target.value.length >5){
+          if(event.target.value.length >2){
             if (validator.equals(event.target.value, this.state.password)) {
           // checking equality between password and confirmpassword
           this.setState({errorrepassword: false});
@@ -206,7 +221,7 @@ render() {
         <p id="textcolor">{this.state.errormessage}</p>
         </Form.Field>
         <Button type='submit' id='buttonstyle' onClick={this.handleOpen} circular disabled={(!this.state.firstname) || (!this.state.lastname) || (!this.state.email) || (!this.state.password) || (!this.state.repassword) || (!this.state.mailexists) || (!this.state.verifypassword) || (!this.state.confirmpassword)}>SET UP YOUR ACCOUNT</Button>
-        <Dimmer
+        {this.state.opendimmer?<Dimmer
                  active={active}
                  onClickOutside={this.handleClose}
                  page>
@@ -215,7 +230,7 @@ render() {
                   <Image src='../images/mail.gif'/>
                    <Header.Subheader>Please hold for a minute to get verification mail......</Header.Subheader>
                  </Header>
-        </Dimmer>
+        </Dimmer>:null}
         <span id="message"/>
         <h4 id="text">Already a member?&nbsp;<a href='#/login' id='space'>
         Sign in here</a>
@@ -223,6 +238,8 @@ render() {
         </Form>
         </Modal.Content>
         </Modal>
+        {this.state.openSnackbar?<Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={1200} onRequestClose={this.handleRequestClose}/>
+        :null}
         </div>
         );
 }

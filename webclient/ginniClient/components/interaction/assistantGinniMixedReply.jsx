@@ -7,7 +7,6 @@ import AssistantGinniMoreTextDisplay from './assistantGinniMoreTextDisplay';
 import AssistantGinniPlainText from './assistantGinniPlainText';
 import AssistantGinniOptions from './assistantGinniOptions';
 import Axios from 'axios';
-import Snackbar from 'material-ui/Snackbar';
 
 export default class AssistantGinniMixedReply extends React.Component {
     // props validation

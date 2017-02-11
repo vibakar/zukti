@@ -21,7 +21,7 @@ export default class DisplayQuestionAnswer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-     todos: ['what is react?','what is component?','what is router?','what is reactrouter?','what is state?','what is props?','what is component will mount?','what is component did mount?','what is component in react?','what is component lifecycle?'],
+
      currentPage: 1,
      todosPerPage: 3
    };
@@ -42,13 +42,13 @@ export default class DisplayQuestionAnswer extends React.Component {
      const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
      const currentTodos = todos.slice(indexOfFirstTodo, indexOfLastTodo);
 
-   const renderTodos = currentTodos.map((todo, index) => {
+   const renderTodos = this.props.data.map((todo, index) => {
        return <p key={index}>
          <Grid vertically>
            <Grid.Row columns={3}>
              <Grid.Column width={3}></Grid.Column>
              <Grid.Column width={10}>
-         <Card fluid id='cardwidth'>{todo}
+         <Card fluid id='cardwidth'>
          </Card>
        </Grid.Column>
         <Grid.Column width={3}></Grid.Column>

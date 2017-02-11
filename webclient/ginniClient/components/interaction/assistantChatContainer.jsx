@@ -109,7 +109,10 @@ export default class AssistantChatContainer extends React.Component {
                 console.log(err);
                 this.setState({messages: this.state.messages, loaderActive: false});
             });}
-        pushGinniMessages(ginniReply) {
+        pushGinniMessages(ginniReply,loadingDots) {
+            if(loadingDots){
+              this.state.messages.pop();
+            }
             ginniReply.forEach((reply) => {
                 let length = this.state.messages.length;
                 let displayItem = (
