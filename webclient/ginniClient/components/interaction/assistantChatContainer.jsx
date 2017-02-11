@@ -79,10 +79,10 @@ export default class AssistantChatContainer extends React.Component {
                         </div>
                     );
                     if (chat.isUnAnswered) {
-                        let length = this.state.messages.length;
                         chat.answerObj.forEach((answer,index) => {
+                          let length = this.state.messages.length;
                             this.state.messages.push(
-                                <div ref={(ref) => this['_div' + length+index] = ref}>
+                                <div ref={(ref) => this['_div' + length] = ref}>
                                     <AssistantGinniPlainText value={answer.value}/>
                                 </div>
                             );
@@ -91,10 +91,11 @@ export default class AssistantChatContainer extends React.Component {
                     else {
                         let length = this.state.messages.length;
                         this.state.messages.push(
-                            <div ref={(ref) => this['_div' + length+1] = ref}>
+                            <div ref={(ref) => this['_div' + length] = ref}>
                                 <AssistantGinniMixedReply question={chat.question.value} data={chat.answerObj} handleGinniReply={this.pushGinniMessages}/>
                             </div>
                         );
+
                     }
                 });
               }
@@ -130,7 +131,7 @@ export default class AssistantChatContainer extends React.Component {
         }
 
         render() {
-
+          console.log('In render');
             return (
                 <div className='formstyle' style={{
                     backgroundImage: "url('http://exploretheme.com/wp-content/uploads/2015/03/restaurant-icons.jpg')",
