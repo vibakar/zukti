@@ -14,15 +14,15 @@ export default class ReplyContentInput extends React.Component {
         switch (this.props.replyContentType) {
             case 'text':
                 {
-                    return <TextAnswer texts={this.props.texts} handlerForSaveAnswerToParentState={this.props.handlerForSaveAnswerToParentState} />
+                    return <TextAnswer texts={this.props.texts} handlerRemoveAnswer={this.props.handlerRemoveAnswer} handlerForSaveAnswerToParentState={this.props.handlerForSaveAnswerToParentState} />
                 }
             case 'video':
                 {
-                    return <VideoAnswer videos={this.props.videos} handlerForSaveAnswerToParentState={this.props.handlerForSaveAnswerToParentState}/>
+                    return <VideoAnswer videos={this.props.videos} handlerRemoveAnswer={this.props.handlerRemoveAnswer} handlerForSaveAnswerToParentState={this.props.handlerForSaveAnswerToParentState}/>
                 }
             case 'blog':
                 {
-                  return <BlogAnswer blogs={this.props.blogs} handlerForSaveAnswerToParentState={this.props.handlerForSaveAnswerToParentState}/>
+                  return <BlogAnswer blogs={this.props.blogs} handlerRemoveAnswer={this.props.handlerRemoveAnswer} handlerForSaveAnswerToParentState={this.props.handlerForSaveAnswerToParentState}/>
                 }
         }
     }

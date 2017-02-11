@@ -39,7 +39,10 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.props.handleGinniReply(ginniReply);
     }
     render() {
-        let text = this.props.data.text[0].value;
+        let text ='';
+        if(this.props.data.text){
+          text = this.props.data.text[0].value;
+        }
         return (
             <Feed id="ginniview">
                 <Feed.Event>
@@ -51,7 +54,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                         </Feed.Extra>
                         <Feed.Extra>
                             <Label.Group color='blue'>
-                                {this.props.data.text.length > 1
+                                {this.props.data.text&&this.props.data.text.length > 1
                                     ? <Label onClick={this.displayMoreText}>View more</Label>
                                     : ''}
                                 {this.props.data.blog

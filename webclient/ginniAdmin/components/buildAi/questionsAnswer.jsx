@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Label, Radio, Button} from 'semantic-ui-react';
+import {Card, Label, Radio, Button, Icon} from 'semantic-ui-react';
 import Axios from 'axios';
 import InputQuestion from './inputQuestion';
 import ReplyContentInput from './replyContentInput';
@@ -13,23 +13,39 @@ export default class QuestionsAnswer extends React.Component {
             question: '',
             texts: [' '],
             videos: [' '],
-            blogs: [' ']
+            blogs: [' '],
+            noAnswerError:'',
+            invalidQuestionError:''
         }
         this.saveQuestionToState = this.saveQuestionToState.bind(this);
         this.saveAnswerToState = this.saveAnswerToState.bind(this);
         this.saveQuestionAnswer = this.saveQuestionAnswer.bind(this);
+        this.removeAnswer = this.removeAnswer.bind(this);
     }
 
     handleChange = (e, {value}) => this.setState({value});
 
+    // delete answer
+    removeAnswer(type,index){
+      if(type=='text'){
+        this.state.texts.splice(index, 1);
+        this.setState({texts:this.state.texts});
+      }
+      else if(type=='video'){
+        this.state.videos.splice(index,1);
+        this.setState({videos:this.state.videos});
+      }
+      else if(type=='blog'){
+        this.state.blogs.splice(index,1);
+        this.setState({blogs:this.state.blogs});
+      }
+    }
     // function to save question into State
     saveQuestionToState(question) {
-        console.log(question);
         this.state.question = question;
     }
     saveAnswerToState(type, answer, i) {
         if (type == 'text') {
-            console.log('in text');
             this.state.texts[i] = answer;
             this.setState({texts: this.state.texts})
         } else if (type == 'video') {
@@ -42,14 +58,29 @@ export default class QuestionsAnswer extends React.Component {
     }
     // fired when submit button is clicked in this function the question answer will be saved to neo4j
     saveQuestionAnswer(){
-      console.log(this.state);
         // perform validation first and then save it to graph DB
-        Axios.post('/qa/addQuestionAnswer',{...this.state}).
+        let hasAnswer=this.state.texts[0].trim()==''&&this.state.videos[0].trim()==''&&this.state.blogs[0].trim()=='';
+        let hasQuestion = this.state.question.trim()==='';
+        console.log(hasAnswer);
+        console.log(hasQuestion);
+        console.log('aaaa');
+        if(hasQuestion){
+          this.setState({errorMessage:'The question must be valid'});
+          return;
+        }
+        if(hasAnswer){
+          this.setState({errorMessage:'There must be a atleast one answer'});
+          return;
+        }
+        Axios.post('/qa/addQuestionAnswer',{question:this.state.question,texts:this.state.texts,videos:this.state.videos,blogs:this.state.blogs}).
         then((response)=>{
           console.log(response);
+          this.setState({question:' ',texts:[' '],videos:[' '],blogs:[' '],noAnswerError:'',invalidQuestionError:''});
+          alert('Saved')
         }).
         catch((error)=>{
           console.log(error);
+          alert(error);
         })
     }
     render() {
@@ -80,8 +111,12 @@ export default class QuestionsAnswer extends React.Component {
                             <Radio label='Video' name='radioGroup' value='video' checked={this.state.value === 'video'} onChange={this.handleChange}/>
                         </Card.Meta>
                         <Card.Description>
-                            <ReplyContentInput texts={this.state.texts} videos={this.state.videos} blogs={this.state.blogs} handlerForSaveAnswerToParentState ={this.saveAnswerToState} replyContentType={this.state.value}/>
-                            <Button color='teal' onClick={this.saveQuestionAnswer}>SAVE</Button>
+                            <ReplyContentInput texts={this.state.texts} videos={this.state.videos} blogs={this.state.blogs} handlerRemoveAnswer={this.removeAnswer} handlerForSaveAnswerToParentState ={this.saveAnswerToState} replyContentType={this.state.value}/>
+                          <p style={{color:'red'}}>{this.state.errorMessage}</p>
+                          <Button color='green'  onClick={this.saveQuestionAnswer} style={{marginLeft:'30%',width:350}} animated>
+                            <Button.Content visible>SAVE</Button.Content>
+                            <Button.Content hidden><Icon name='save'/></Button.Content>
+                          </Button>
                         </Card.Description>
                     </Card.Content>
                 </Card>

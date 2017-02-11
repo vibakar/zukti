@@ -7,10 +7,10 @@ import Config from '../../../../config/url';
 export default class InputQuestion extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            errorMessage: ''
-        }
         this.isValidQuestion = this.isValidQuestion.bind(this);
+        this.state={
+          errorMessage:''
+        }
     }
 
     // to add a new question to ai rule and then store it
@@ -21,8 +21,6 @@ export default class InputQuestion extends React.Component {
         // ajax call to save question in a specifc question set
         let url = Config.url + '/qa/verifyQuestion';
         Axios.post(url, {question: question}).then((response) => {
-            console.log(response);
-            console.log('hiiii');
             if (!response.data.isValidQuestion) {
                 this.setState({errorMessage: response.data.errorMessage});
             } else {
@@ -43,8 +41,8 @@ export default class InputQuestion extends React.Component {
                         width: '100%',
                         'margin-bottom': '8px'
                     }} placeholder='the question must have a keyword and an intent'/>
-                    <p>{this.state.errorMessage}</p>
                 </Form.Field>
+                <p style={{color:'red'}}>{this.state.errorMessage}</p>
             </Form>
         );
     }

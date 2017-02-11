@@ -1,6 +1,9 @@
+
 const RegisteredUser = require('../models/user');
 const UnansweredQuery = require('../models/unansweredQuery');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt-nodejs');
+var VIDcheck;
 module.exports = function(app, passport) {
   var rand,
       mailOptions,
@@ -69,7 +72,7 @@ module.exports = function(app, passport) {
         newUser.local.verificationID = rand;
         newUser.local.name = (req.body.firstName.toLowerCase().capitalizeFirstLetter() + ' ' + req.body.lastName.toLowerCase().capitalizeFirstLetter());
         newUser.local.email = req.body.email;
-        newUser.local.password = req.body.password;
+        newUser.local.password = newUser.generateHash(req.body.password);
         newUser.local.firstname = (req.body.firstName).toLowerCase().capitalizeFirstLetter();
         newUser.local.lastname = (req.body.lastName).toLowerCase().capitalizeFirstLetter();
         newUser.local.localType = 'Customer';
@@ -95,7 +98,7 @@ module.exports = function(app, passport) {
 }
         newUser.local.name = (req.body.firstName.toLowerCase().capitalizeFirstLetter() + " " + req.body.lastName.toLowerCase().capitalizeFirstLetter());
         newUser.local.email = req.body.email;
-        newUser.local.password = req.body.password;
+        newUser.local.password = newUser.generateHash(req.body.password);
         newUser.local.firstname = (req.body.firstName).toLowerCase().capitalizeFirstLetter();
         newUser.local.lastname = (req.body.lastName).toLowerCase().capitalizeFirstLetter();
         newUser.local.localType = 'Admin';
@@ -154,7 +157,12 @@ module.exports = function(app, passport) {
 
                 host = req.get('host');
                 console.log(profile);
-                link = "http://" + req.get('host') + "/verify?id=" + profile[0].local.verificationID + "&email=" + profile[0].local.email;
+                //var hashVID = bcrypt.hashSync(profile[0].local.verificationID, 10);
+                var VID = profile[0].generateHashVID(profile[0].local.verificationID);
+                VIDcheck = VID;
+                var linkEmail = profile[0].generateHashEmail(profile[0].local.email);
+                console.log(VID+" is the VID");
+                link = "http://" + req.get('host') + "/verify?id=" + VID + "&email=" + profile[0].local.email;
                 var text = 'Hello from \n\n' + req.body.data;
                 mailOptions = {
                     from: 'geniegenie0001@gmail.com', // sender address
@@ -194,7 +202,9 @@ module.exports = function(app, passport) {
 });
     /*verify the link which sent to  user email*/
     app.get('/verify', function(req, res) {
-        RegisteredUser.find({
+        let checkID = req.query.id;
+        let checkMail = req.query.email;
+            RegisteredUser.find({
             'local.email': req.query.email
         }, function(err, profile) {
 
@@ -205,7 +215,7 @@ module.exports = function(app, passport) {
                 console.log(req.protocol + ":/" + req.get('host') + ":" + ("http://" + host));
                 if ((req.protocol + "://" + req.get('host')) == ("http://" + host)) {
                     console.log("Domain is matched. Information is from Authentic email");
-                    if (req.query.id == profile[0].local.verificationID) {
+                    if (checkID == VIDcheck) {
                         console.log("email is verified");
                         RegisteredUser.update({
                             'local.email': req.query.email
@@ -374,9 +384,6 @@ module.exports = function(app, passport) {
 
     //profileupdation
     app.put('/updateprofile', function(req, res) {
-      String.prototype.capitalizeFirstLetter = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-}
         if (req.body) {
             request1 = req.body.email;
             request2 = (req.body.firstname.toLowerCase().capitalizeFirstLetter() + " " + req.body.lastname.toLowerCase().capitalizeFirstLetter());

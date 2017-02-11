@@ -60,7 +60,7 @@ export default class AssistantChatContainer extends React.Component {
     componentDidUpdate() {
         // Scroll as new elements come along
         console.log('IN componentDidUpdate');
-        var len = this.state.messages.length - 1;
+        var len = this.state.messages.length-1;
         console.log(len);
         const node = ReactDOM.findDOMNode(this['_div' + len]);
         console.log(node);
@@ -69,35 +69,29 @@ export default class AssistantChatContainer extends React.Component {
         }
     }
     retriveChat() {
-        let url = Config.url + '/retriveChat';
-        Axios.get(url).then((response) => {
-            console.log(response);
+        Axios.get('/retriveChat').then((response) => {
             if (response.data) {
-                console.log(response);
-                console.log('Inside then');
                 response.data.chats.forEach((chat) => {
                     let length = this.state.messages.length;
                     this.state.messages.push(
-                        <div ref={(ref) => this['_div' + length] = ref} key={length}>
+                        <div ref={(ref) => this['_div' + length] = ref}>
                             <AssistantUserView msgDate={chat.question.time} userName={this.state.username} userMessage={chat.question.value} profilePicture={this.state.profilePicture}/>
                         </div>
                     );
                     if (chat.isUnAnswered) {
                         let length = this.state.messages.length;
                         chat.answerObj.forEach((answer,index) => {
-                          console.log('Inside unanswered');
                             this.state.messages.push(
-                                <div ref={(ref) => this['_div' + length+index] = ref} key={length+index}>
+                                <div ref={(ref) => this['_div' + length+index] = ref}>
                                     <AssistantGinniPlainText value={answer.value}/>
                                 </div>
                             );
                         });
                     }
                     else {
-                      console.log('insidde answered');
                         let length = this.state.messages.length;
                         this.state.messages.push(
-                            <div ref={(ref) => this['_div' + length+1] = ref} key={length}>
+                            <div ref={(ref) => this['_div' + length+1] = ref}>
                                 <AssistantGinniMixedReply question={chat.question.value} data={chat.answerObj} handleGinniReply={this.pushGinniMessages}/>
                             </div>
                         );
