@@ -134,7 +134,7 @@ export default class AssistantChatContainer extends React.Component {
           console.log('In render');
             return (
                 <div className='formstyle' style={{
-                    backgroundImage: "url('http://exploretheme.com/wp-content/uploads/2015/03/restaurant-icons.jpg')",
+                    backgroundImage: "url('../../images/background.jpg')",
                     height: '100%'
                 }}>
                     <Dimmer active={this.state.loaderActive} inverted>
