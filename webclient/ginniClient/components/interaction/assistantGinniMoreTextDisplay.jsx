@@ -14,7 +14,7 @@ export default class AssistantGinniMoreTextView extends React.Component {
                 <Feed.Event>
                     <Feed.Label image='../../images/geniebot.jpg'/>
                     <Feed.Content>
-                        <Feed.Summary date={this.props.data.time} user='Genie'/>
+                        <Feed.Summary date={new Date().toLocaleString()} user='Genie'/>
                         <Feed.Extra text>
                             {this.props.textValue}
                         </Feed.Extra>

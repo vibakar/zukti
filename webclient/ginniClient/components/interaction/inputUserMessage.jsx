@@ -13,12 +13,15 @@ export default class InputUserMesaage extends React.Component {
         this.handleUserInput = this.handleUserInput.bind(this);
     }
     handleUserInput(e) {
-        let socket = io();
-        socket.emit('newQuery', {i: 1});
         e.preventDefault();
         let message = {};
         let ginniReply = [];
         message.value = ReactDOM.findDOMNode(this.refs.userInput).value;
+        if(message.value.trim()==''){
+          return;
+        }
+        let socket = io();
+        socket.emit('newQuery', {i: 1});
         message.time = new Date().toLocaleString();
         this.props.handlerUserReply(message);
         ReactDOM.findDOMNode(this.refs.userInput).value = ''

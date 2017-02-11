@@ -23,7 +23,7 @@ export default class AssistantGinniMixedReply extends React.Component {
     displayMoreText() {
         let textResponseArray = this.props.data.text;
         textResponseArray.shift();
-        ginniReply = textResponseArray.map((answer, index) => {
+        let ginniReply = textResponseArray.map((answer, index) => {
             return <AssistantGinniMoreTextDisplay question={this.props.question}  textValue={answer.value}/>
         });
         this.props.handleGinniReply(ginniReply);
