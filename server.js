@@ -89,7 +89,7 @@ app.use('/analytics',analytics);
 app.use('/savebroadcastmessage',isAuthenticated, savebroadcastmessage);
 app.use('/getbroadcastmessage',isAuthenticated, getbroadcastmessage);
 app.use('/getadmin',isAuthenticated, getAdmin);
-app.use('/intent',isAuthenticated, intent);
+app.use('/intent', intent);
 app.use('/qa',addKnowledge);
 app.use('/question',isAuthenticated, askQuestion);
 app.use('/retriveChat',isAuthenticated, retriveChat)
