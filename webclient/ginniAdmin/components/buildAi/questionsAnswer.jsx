@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Label, Radio, Button} from 'semantic-ui-react';
+import {Card, Label, Radio, Button, Icon} from 'semantic-ui-react';
 import Axios from 'axios';
 import InputQuestion from './inputQuestion';
 import ReplyContentInput from './replyContentInput';
@@ -112,8 +112,11 @@ export default class QuestionsAnswer extends React.Component {
                         </Card.Meta>
                         <Card.Description>
                             <ReplyContentInput texts={this.state.texts} videos={this.state.videos} blogs={this.state.blogs} handlerRemoveAnswer={this.removeAnswer} handlerForSaveAnswerToParentState ={this.saveAnswerToState} replyContentType={this.state.value}/>
-                          <p>{this.state.errorMessage}</p>
-                          <Button color='teal' onClick={this.saveQuestionAnswer}>SAVE</Button>
+                          <p style={{color:'red'}}>{this.state.errorMessage}</p>
+                          <Button color='green'  onClick={this.saveQuestionAnswer} style={{marginLeft:'30%',width:350}} animated>
+                            <Button.Content visible>SAVE</Button.Content>
+                            <Button.Content hidden><Icon name='save'/></Button.Content>
+                          </Button>
                         </Card.Description>
                     </Card.Content>
                 </Card>

@@ -50,7 +50,7 @@ export default class ForgotPassword extends React.Component
         this.setState({email: event.target.value});
         // console.log(event.target.value);
         // check whether the user is alreay exists or not
-        if(event.target.value.length>7){
+        if(event.target.value.length>=1){
         if (validator.isEmail(event.target.value)) {
           let self = this;
             Axios({

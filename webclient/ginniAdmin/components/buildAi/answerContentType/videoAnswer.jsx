@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {TextArea, Form, Button, Icon} from 'semantic-ui-react';
+import {TextArea, Form, Button, Icon,Popup} from 'semantic-ui-react';
 
 export default class videoAnswer extends React.Component {
     constructor(props) {
@@ -41,7 +41,7 @@ export default class videoAnswer extends React.Component {
         return (
           <div>
           <TextArea style={{'width':'90%','margin-bottom': '8px'}} value={input} id={index} onChange={this.getInputData} placeholder='enter a video url' autoHeight />
-          {this.props.videos.length==1?'':<Button id={index} onClick={this.removeAnswer}><Icon name='minus'/></Button>}
+          {this.props.videos.length==1?'':<Button id={index} onClick={this.removeAnswer} style={{marginLeft:'2%',backgroundColor:'white',color:'red'}}><Icon name='minus' circular/></Button>}
           </div>
         )
       })
@@ -50,8 +50,8 @@ export default class videoAnswer extends React.Component {
               <Form>
                 {inputs}
               </Form>
-              <Button onClick={this.addNewAnswer} icon><Icon name='plus'/></Button>
-              {this.state.emptyInput?<p>Fill the above input field first</p>:''}
+              <Popup offset={10} inverted positioning='left center' trigger={<Button onClick={this.addNewAnswer} icon style={{backgroundColor:'white',color:'blue',marginLeft:'85%'}}><Icon name='plus' circular/></Button>} content='Add' size='mini'></Popup>
+              {this.state.emptyInput?<p style={{color:'red'}}>Fill the above input field first</p>:''}
             </div>
         );
     }

@@ -42,7 +42,7 @@ export default class InputQuestion extends React.Component {
                         'margin-bottom': '8px'
                     }} placeholder='the question must have a keyword and an intent'/>
                 </Form.Field>
-                <p>{this.state.errorMessage}</p>
+                <p style={{color:'red'}}>{this.state.errorMessage}</p>
             </Form>
         );
     }
