@@ -35,7 +35,7 @@ export default class QuestionSetDisplay extends React.Component {
           this.state.displayQuestionAnswer.push(<Display questions={data.questions} answers = {data.answers}/>)
         });
         this.setState({displayQuestionAnswer:this.state.displayQuestionAnswer});
-
+        this.state.displayQuestionAnswer =[];
       }
 
     render() {
