@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Display from './displayaccordion';
 import FilterData from './filterData';
+import FilterConcept from './filterConcept'
 import Pager from 'react-pager';
 import processQuestion from '../../../../webserver/routes/getReply/functions/processQuestion'
 import Style from '../../../css/style.css'
@@ -68,7 +69,7 @@ this.state.showData=[];
               this.state.filterData.push(<Display questions={data.questions} answers={data.answers} />)
             }
 
-          })
+          });
           this.setState({showData:this.state.filterData});
 
           this.state.showData=[];
@@ -77,11 +78,33 @@ this.state.showData=[];
 
         }
 
+        handleConcept = (concept)=>{
+
+          concept = concept.split(" ").join("");
+          console.log(concept);
+          this.state.showData = this.state.data[this.state.current];
+          this.state.showData.map((data)=>{
+            console.log(processQuestion(data.questions));
+            let conceptOfQuestion = processQuestion(data.questions).keywords;
+            console.log(conceptOfQuestion);
+            conceptOfQuestion.map((con)=>{
+              if(con === concept){
+                            this.state.filterData.push(<Display questions={data.questions} answers={data.answers} />)
+            }
+          })
+          })
+          this.setState({showData:this.state.filterData});
+          this.state.showData=[];
+          console.log(this.state.showData);
+          this.state.filterData=[];
+        }
+
 
     render() {
         return (
           <div>
           <FilterData intent={this.handleDropResponse}/>
+          <FilterConcept concept={this.handleConcept}/>
           {this.state.showData}
           <Pager style={Style}
                 total={this.state.total}

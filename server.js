@@ -19,7 +19,8 @@ let savebroadcastmessage = require('./webserver/routes/broadcastmessage/broadcas
 let getbroadcastmessage = require('./webserver/routes/broadcastmessage/getbroadcastmessage');
 let getKnowledge = require('./webserver/routes/getKnowledge/getKnowledgeBase');
 let analytics = require('./webserver/routes/analyticsData/analytics');
-let bookmarks = require('./webserver/routes/bookmarks/bookmarks')
+let bookmarks = require('./webserver/routes/bookmarks/bookmarks');
+let concept = require('./webserver/routes/concept/getConcept');
 let app = express();
 let compiler = webpack(config);
 
@@ -90,6 +91,7 @@ app.use('/savebroadcastmessage',isAuthenticated, savebroadcastmessage);
 app.use('/getbroadcastmessage',isAuthenticated, getbroadcastmessage);
 app.use('/getadmin',isAuthenticated, getAdmin);
 app.use('/intent', intent);
+app.use('/concept',concept);
 app.use('/qa',addKnowledge);
 app.use('/question',isAuthenticated, askQuestion);
 app.use('/retriveChat',isAuthenticated, retriveChat)
