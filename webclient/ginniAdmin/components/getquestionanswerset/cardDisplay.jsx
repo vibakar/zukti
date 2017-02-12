@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, Image } from 'semantic-ui-react'
+import { Button, Card, Image, Divider } from 'semantic-ui-react'
 
 export default class CardDisplay extends React.Component{
   constructor(props){
@@ -8,29 +8,14 @@ export default class CardDisplay extends React.Component{
 
   render(){
     return(
-
-      <Card.Group >
-    <Card>
-      <Card.Content>
-
-        <Card.Header>
-          {this.props.type}
-        </Card.Header>
-
-        <Card.Description>
-          {this.props.data}
-
-        </Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <div className='ui two buttons'>
-          <Button basic color='green'>update</Button>
-          <Button basic color='red'>Delete</Button>
-        </div>
-      </Card.Content>
-    </Card>
-    </Card.Group>
-
+      <div>
+            <h4>
+              {this.props.data}
+            </h4>
+          <Button style={{marginLeft:'70%'}} basic color='blue'>update</Button>
+          <Button style={{marginLeft:'2%'}} basic color='red'>Delete</Button>
+        <Divider/>
+  </div>
     )
   }
 

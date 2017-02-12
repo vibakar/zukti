@@ -47,11 +47,11 @@ export default class AddContent extends React.Component {
     render() {
         return (
             <div>
-                <h1>Enter your message for users</h1>
+                <h3>Enter your message for users</h3>
                 <Form onSubmit={this.handleSubmitText}>
                     <TextArea placeholder='Tell us more'
-                     autoHeight name='text' ref='text'/><br/><br/>
-                    <Button color='red' type='submit' animated>
+                     autoHeight name='text' ref='text' required/><br/><br/>
+                    <Button color='green' type='submit' animated style={{width:'50%'}}>
                         <Button.Content visible>Submit</Button.Content>
                         <Button.Content hidden>
                             <Icon name='right arrow'/>

@@ -6,7 +6,7 @@ let getLexicon = require('../../../lexicon/getLexicon');
 
 module.exports = function( NewIntent, resultCallback) {
     let newIntent = nlp.text(NewIntent).root();
-    let query =`CREATE (n: intent {name:${JSON.stringify(newIntent)}}),(n)-[:same_as]->(n)`;
+    let query =`MERGE (n: intent {name:${JSON.stringify(newIntent)}})-[:same_as]->(n)`;
     let session = getNeo4jDriver().session();
     session.run(query)
         .then((result) => {

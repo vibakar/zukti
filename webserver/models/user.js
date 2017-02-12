@@ -42,6 +42,33 @@ const userSchema = mongoose.Schema({
 
 
 });
+// generating a hash
+userSchema.methods.generateHash = function(password) {
+    console.log("Inside generating hashing method");
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+userSchema.methods.generateHashVID = function(verificationID) {
+    console.log("Inside generating hashing method");
+    return bcrypt.hashSync(verificationID, bcrypt.genSaltSync(8), null);
+};
+userSchema.methods.generateHashEmail = function(email) {
+    console.log("Inside generating hashing method");
+    return bcrypt.hashSync(email, bcrypt.genSaltSync(8), null);
+};
+
+// checking if password is valid
+userSchema.methods.validPassword = function(password) {
+    console.log("Checking password valid....");
+    return bcrypt.compareSync(password, this.local.password);
+};
+userSchema.methods.validVID = function(verificationID) {
+    console.log("Checking password valid....");
+    return bcrypt.compareSync(verificationID, this.local.verificationID);
+};
+userSchema.methods.validEmail = function(email) {
+    console.log("Checking password valid....");
+    return bcrypt.compareSync(email, this.local.email);
+};
 userSchema.statics.generateToken = function(email) {
     let token = jwt.sign({
         id: email
@@ -49,14 +76,6 @@ userSchema.statics.generateToken = function(email) {
         expiresIn: 15 * 60
     });
     return token;
-};
-userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};
-
-// checking if password is valid
-userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
 };
 
 // create the model for users and expose it to our app

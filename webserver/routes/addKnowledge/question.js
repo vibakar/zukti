@@ -7,6 +7,7 @@ let router = express.Router();
 router.post('/verifyQuestion', function(req, res) {
     let question = req.body.question;
     let questionInfo = processQuestion(question);
+    console.log(questionInfo);
     if (questionInfo.keywords.length === 0) {
         res.json({
             isValidQuestion: false,

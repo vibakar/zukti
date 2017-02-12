@@ -35,11 +35,11 @@ import UnfurlLink from './UnfurlLink';
                               <UnfurlLink url ={videoUrl}/>
                           </Feed.Extra>
                           <Feed.Extra>
-                            <Label.Group color='blue'>
+                            <Label.Group >
                                 {this.props.videos.length > 1
-                                    ? <Label onClick={this.displayMoreVideos}>View more videos ({this.props.videos.length-1})</Label>
+                                    ? <Label onClick={this.displayMoreVideos} basic color='orange'>View more videos ({this.props.videos.length-1})</Label>
                                     : ''}
-                                <Label onClick={this.playVideo}>Play video</Label>
+                                <Label onClick={this.playVideo} basic color='orange'>Play video</Label>
                             </Label.Group>
                           </Feed.Extra>
                           <AssistantGinniOptions question={this.props.question} type='video' value={videoUrl}/>

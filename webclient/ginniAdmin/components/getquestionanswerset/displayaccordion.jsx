@@ -1,7 +1,8 @@
 import React from 'react'
-import {Accordion, Icon, Button} from 'semantic-ui-react'
+import {Accordion, Icon, Button, Segment} from 'semantic-ui-react'
 import Embedly from 'react-embedly';
 import CardDisplay from './cardDisplay'
+import {Scrollbars} from 'react-custom-scrollbars';
 
 export default class Display extends React.Component {
     constructor(props) {
@@ -32,22 +33,24 @@ export default class Display extends React.Component {
     }
 
     render() {
-
-
         return (
             <div>
-                <Accordion styled style={{
-                    marginLeft: '200px'
+              <Segment style={{width:900,marginLeft:'10%'}}>
+                <Accordion exclusive={true}  styled style={{
+                    marginLeft: '0%',
+                    width:'100%'
+
                 }}>
-                    <Accordion.Title>
+                    <Accordion.Title >
                         <Icon name='dropdown'/> {this.props.questions}
                     </Accordion.Title>
-                    <Accordion.Content >
-                        {this.state.texts}
-                        {this.state.blogs}
-                        {this.state.videos}
+                    <Accordion.Content>
+                      <h3 style={{color: 'green'}}>TEXTS</h3> {this.state.texts}
+                      <h3 style={{color: 'blue'}}>BLOGS</h3> {this.state.blogs}
+                      <h3 style={{color: 'red'}}>VIDEOS</h3> {this.state.videos}
                     </Accordion.Content>
                 </Accordion>
+              </Segment>
             </div>
         )
     }

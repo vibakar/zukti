@@ -41,7 +41,7 @@ export default class ViewUserChat extends React.Component {
             return (
                 <div>
                   <List as='ol'>
-                            <List.Item as='li' value='*'>{conversation.question.value}&nbsp;&nbsp;&nbsp;{conversation.question.time}</List.Item>
+                            <List.Item as='li' value='?'>{conversation.question.value}&nbsp;&nbsp;&nbsp;{conversation.question.time}</List.Item>
                             <Divider/>
                           </List>
         </div>
@@ -49,11 +49,11 @@ export default class ViewUserChat extends React.Component {
           });
         return (
             <div>
-                <Button  color='facebook' onClick={this.getUserChats} circular><Icon name='history'/>CHATS</Button>
+                <Button  color='green' onClick={this.getUserChats} circular><Icon name='history'/>CHATS</Button>
                 <Modal size={size} open={open} onClose={this.close}  closeIcon='close'>
           <Modal.Header id='viewuserchat'>
-            <Icon name='tasks'/>
-          CHAT HISTORY
+            <Icon name='question circle outline'/>
+           QUESTIONS ASKED
           </Modal.Header>
           <Modal.Content id='viewuserchatcontent'>
             <b>{chats?chats:'hiiii '}</b>

@@ -56,7 +56,7 @@ export default class Notifications extends React.Component {
     render() {
         return (
             <div style={{
-                backgroundImage: "url('http://exploretheme.com/wp-content/uploads/2015/03/restaurant-icons.jpg')",
+                backgroundImage: "url('../../images/background.jpg')",
                 marginTop: '1%',
                 height: '100%'
             }}>

@@ -23,7 +23,7 @@ export default class AssistantGinniMixedReply extends React.Component {
     displayMoreText() {
         let textResponseArray = this.props.data.text;
         textResponseArray.shift();
-        ginniReply = textResponseArray.map((answer, index) => {
+        let ginniReply = textResponseArray.map((answer, index) => {
             return <AssistantGinniMoreTextDisplay question={this.props.question}  textValue={answer.value}/>
         });
         this.props.handleGinniReply(ginniReply);
@@ -39,7 +39,10 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.props.handleGinniReply(ginniReply);
     }
     render() {
-        let text = this.props.data.text[0].value;
+        let text ='';
+        if(this.props.data.text){
+          text = this.props.data.text[0].value;
+        }
         return (
             <Feed id="ginniview">
                 <Feed.Event>
@@ -50,15 +53,15 @@ export default class AssistantGinniMixedReply extends React.Component {
                             {text}
                         </Feed.Extra>
                         <Feed.Extra>
-                            <Label.Group color='blue'>
-                                {this.props.data.text.length > 1
-                                    ? <Label onClick={this.displayMoreText}>View more</Label>
+                            <Label.Group>
+                                {this.props.data.text&&this.props.data.text.length > 1
+                                    ? <Label onClick={this.displayMoreText} basic color='orange'>View more</Label>
                                     : ''}
                                 {this.props.data.blog
-                                    ? <Label onClick={this.displayBlogs}>Blogs</Label>
+                                    ? <Label onClick={this.displayBlogs} basic color='orange'>Blogs</Label>
                                     : ''}
                                 {this.props.data.video
-                                    ? <Label onClick={this.displayVideos}>Videos</Label>
+                                    ? <Label onClick={this.displayVideos} basic color='orange'>Videos</Label>
                                     : ''}
                             </Label.Group>
                         </Feed.Extra>

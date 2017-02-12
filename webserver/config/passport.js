@@ -42,7 +42,7 @@ module.exports = function(passport) {
                     console.log(user.local.isEmailVerified+"fhf")
                     error.name = 'Please verify your registered mail!';
                     return done(error.name);
-                } else if (!(user.local.password === password)) {
+                } else if (!user.validPassword(password)) {
                     console.log(user);
                     const error = new Error('Incorrect password');
                     error.name = 'Please enter correct password!';

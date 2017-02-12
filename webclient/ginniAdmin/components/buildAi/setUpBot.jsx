@@ -8,6 +8,7 @@ import AddQuestionAnswerSet from './addQuestionAnswerSet';
 import DisplayQAset from '../getquestionanswerset/displayqaset';
 import Display from '../getquestionanswerset/displayaccordion';
 import BuildAI from './BuildAI';
+import Pagination from '../getquestionanswerset/pagination';
 
 
 export default class QuestionSetDisplay extends React.Component {
@@ -31,11 +32,11 @@ export default class QuestionSetDisplay extends React.Component {
       displayQuestionAnswerSet(data){
         this.setState({type:'display'});
         console.log(data);
-        data.map((data)=>{
-          this.state.displayQuestionAnswer.push(<Display questions={data.questions} answers = {data.answers}/>)
-        });
-        this.setState({displayQuestionAnswer:this.state.displayQuestionAnswer});
-        this.state.displayQuestionAnswer =[];
+        // data.map((data)=>{
+        //   this.state.displayQuestionAnswer.push(<Pagination data={data}/>)
+        // });
+        this.setState({displayQuestionAnswer:<Pagination data={data}/>});
+      //  this.state.displayQuestionAnswer =[];
       }
 
     render() {
@@ -50,7 +51,7 @@ export default class QuestionSetDisplay extends React.Component {
 
         return (
             <div style={{
-                backgroundImage: "url('../../images/wall.jpg')",height: '100%'
+                backgroundImage: "url('../../images/background.jpg')",height: '100%'
             }}>
                 <Grid style={{
                     width: '95%',

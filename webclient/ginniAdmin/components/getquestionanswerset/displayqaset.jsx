@@ -16,8 +16,7 @@ export default class DisplayQAset extends React.Component {
 
             //separate questions and answers
             let questionset = response.data.questionanswerSet;
-            console.log("sssssssssssssssssss");
-            console.log(questionset);
+
             let set = [];
 
             questionset.map((data, index) => {
@@ -49,7 +48,7 @@ export default class DisplayQAset extends React.Component {
                 })
             })
 
-            console.log(set);
+          
             this.props.handlerdisplayQASet(set);
         }).catch((error) => {
             alert(error);
