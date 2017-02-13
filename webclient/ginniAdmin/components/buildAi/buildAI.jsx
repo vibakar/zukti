@@ -4,6 +4,7 @@ import {
     Grid
   } from 'semantic-ui-react';
 import QuestionAnswer from './questionsAnswer';
+import './buildAi.css';
 export default class QuestionSetDisplay extends React.Component {
 
     constructor() {
@@ -23,7 +24,7 @@ export default class QuestionSetDisplay extends React.Component {
                         <div style={{
                             width: '100%'
                         }}>
-                            <p>It is a set of questions and the corresponding bot replies.I will understand user questions similar to those you’ve set up and reply with a appropiate answer.</p>
+                            <p id="textpara">It is a set of questions and the corresponding bot replies.I will understand user questions similar to those you’ve set up and reply with a appropiate answer.</p>
                             <Divider fitted/>
                         </div>
                     </Grid.Row>

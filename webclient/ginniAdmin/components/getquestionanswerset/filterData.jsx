@@ -2,6 +2,7 @@ import React from 'react';
 import {Form, Dropdown, Input} from 'semantic-ui-react';
 import Axios from 'axios';
 import Config from '../../../../config/url';
+import './questionanswer.css';
 export default class FilterData extends React.Component {
     constructor(props) {
         super(props);
@@ -29,10 +30,11 @@ export default class FilterData extends React.Component {
 
     render() {
         return (
+
             <Form>
                 <Form.Field >
                     <label>
-                        <h4>Choose Intent</h4>
+                        <h4 id="dropdown">Choose Intent</h4>
                     </label>
                     <Input>
                         <Dropdown  options={this.state.options} placeholder='Intent'
@@ -40,6 +42,7 @@ export default class FilterData extends React.Component {
                     </Input>
                 </Form.Field>
             </Form>
+
         );
     }
 }

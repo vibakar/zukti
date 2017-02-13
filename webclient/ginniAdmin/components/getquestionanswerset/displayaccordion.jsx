@@ -3,6 +3,7 @@ import {Accordion, Icon, Button, Segment} from 'semantic-ui-react'
 import Embedly from 'react-embedly';
 import CardDisplay from './cardDisplay'
 import {Scrollbars} from 'react-custom-scrollbars';
+import './questionanswer.css';
 
 export default class Display extends React.Component {
     constructor(props) {
@@ -41,13 +42,13 @@ export default class Display extends React.Component {
                     width:'100%'
 
                 }}>
-                    <Accordion.Title >
+                    <Accordion.Title id="title" >
                         <Icon name='dropdown'/> {this.props.questions}
                     </Accordion.Title>
                     <Accordion.Content>
-                      <h3 style={{color: 'green'}}>TEXTS</h3> {this.state.texts}
-                      <h3 style={{color: 'blue'}}>BLOGS</h3> {this.state.blogs}
-                      <h3 style={{color: 'red'}}>VIDEOS</h3> {this.state.videos}
+                      <h3 style={{color: 'orange',  textDecoration:'underline',fontWeight:'bold',fontSize:'20px'}}>TEXTS</h3> {this.state.texts}
+                      <h3 style={{color: 'orange',textDecoration:'underline',fontWeight:'bold',fontSize:'20px'}}>BLOGS</h3> {this.state.blogs}
+                      <h3 style={{color: 'orange',textDecoration:'underline',fontWeight:'bold',fontSize:'20px'}}>VIDEOS</h3> {this.state.videos}
                     </Accordion.Content>
                 </Accordion>
               </Segment>
