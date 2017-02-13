@@ -20,6 +20,8 @@ export default class AssistantGinniMixedReply extends React.Component {
     this.props.handleGinniReply(ginniReply);
   }
     render() {
+      console.log(this.props);
+      console.log('inside url display');
       let blogUrl = this.props.blogs[0].value;
       console.log('top rated blog');
       console.log(blogUrl);

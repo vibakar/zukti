@@ -5,6 +5,7 @@ import Axios from 'axios';
 import Cookie from 'react-cookie';
 import AssistantGinniMixedReply from './assistantGinniMixedReply';
 import AssistantGinniPlainText from './assistantGinniPlainText';
+import AssistantGinniKeywordResponse from './AssistantGinniKeywordResponse';
 import LoadingDots from './loadingDots';
 import Config from '../../../../config/url';
 export default class InputUserMesaage extends React.Component {
@@ -33,12 +34,16 @@ export default class InputUserMesaage extends React.Component {
         }).then((response) => {
           console.log(response);
             if (response.data) {
+              console.log(response.data);
                 if(!response.data.isUnAnswered){
                       ginniReply.push(<AssistantGinniMixedReply handleGinniReply={this.props.handleGinniReply} question={message.value} data={response.data.answerObj}/>);
                 }
                 else{
                   response.data.answerObj.forEach((reply)=>{
                     ginniReply.push(<AssistantGinniPlainText value={reply.value}/> );
+                    if(reply.keywordResponse){
+                      ginniReply.push(<AssistantGinniKeywordResponse handleGinniReply={this.props.handleGinniReply} question={message.value} data={reply}/>);
+                    }
                   })
                 }
             }

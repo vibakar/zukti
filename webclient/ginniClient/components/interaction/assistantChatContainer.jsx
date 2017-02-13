@@ -7,6 +7,7 @@ import Cookie from 'react-cookie';
 import Axios from 'axios';
 import AssistantGinniMixedReply from './assistantGinniMixedReply';
 import AssistantGinniPlainText from './assistantGinniPlainText';
+import AssistantGinniKeywordResponse from './AssistantGinniKeywordResponse';
 import AssistantUserView from './assistantUserView';
 import Config from '../../../../config/url';
 import './chatcontainerstyle.css';
@@ -59,13 +60,13 @@ export default class AssistantChatContainer extends React.Component {
     }
     componentDidUpdate() {
         // Scroll as new elements come along
-        console.log('IN componentDidUpdate');
-        var len = this.state.messages.length-1;
+        var len = this.state.messages.length - 1;
         console.log(len);
         const node = ReactDOM.findDOMNode(this['_div' + len]);
         console.log(node);
         if (node) {
-            node.scrollIntoView();
+            node.scrollIntoView(false);
+            //node.scrollIntoView();
         }
     }
     retriveChat() {
@@ -79,16 +80,23 @@ export default class AssistantChatContainer extends React.Component {
                         </div>
                     );
                     if (chat.isUnAnswered) {
-                        chat.answerObj.forEach((answer,index) => {
-                          let length = this.state.messages.length;
+                        chat.answerObj.forEach((answer, index) => {
+                            let length = this.state.messages.length;
                             this.state.messages.push(
                                 <div ref={(ref) => this['_div' + length] = ref}>
                                     <AssistantGinniPlainText value={answer.value}/>
                                 </div>
                             );
+                            if (answer.keywordResponse) {
+                                let length = this.state.messages.length;
+                                this.state.messages.push(
+                                    <div ref={(ref) => this['_div' + length] = ref}>
+                                        <AssistantGinniKeywordResponse handleGinniReply ={this.pushGinniMessages} question={chat.question.value} data={answer}/>
+                                    </div>
+                                );
+                            }
                         });
-                    }
-                    else {
+                    } else {
                         let length = this.state.messages.length;
                         this.state.messages.push(
                             <div ref={(ref) => this['_div' + length] = ref}>
@@ -98,67 +106,67 @@ export default class AssistantChatContainer extends React.Component {
 
                     }
                 });
-              }
-              this.setState({messages: this.state.messages, loaderActive: false});
-            }).catch((err) => {
-                console.log(err);
-                this.setState({messages: this.state.messages, loaderActive: false});
-            });}
-        pushGinniMessages(ginniReply,loadingDots) {
-            if(loadingDots){
-              this.state.messages.pop();
             }
-            ginniReply.forEach((reply) => {
-                let length = this.state.messages.length;
-                let displayItem = (
-                    <div ref={(ref) => this['_div' + length] = ref} key={length}>
-                        {reply}
-                    </div >
-                );
-                this.state.messages.push(displayItem);
-            });
-            this.setState({messages: this.state.messages});
-        }
-        pushUserMessages(message) {
-            let length = this.state.messages.length;
-            let userMessageDisplay = (
-                <div ref={(ref) => this['_div' + length] = ref} key={length}>
-                    <AssistantUserView msgDate={message.time} userName={this.state.username} userMessage={message.value}/>
-                </div>
-            );
-            this.state.messages.push(userMessageDisplay);
-            this.setState({messages: this.state.messages});
-        }
-
-        render() {
-          console.log('In render');
-            return (
-                <div className='formstyle' style={{
-                    backgroundImage: "url('../../images/background.jpg')",
-                    height: '100%'
-                }}>
-                    <Dimmer active={this.state.loaderActive} inverted>
-                        <Loader size='huge'>Loading previous chat history</Loader>
-                    </Dimmer>
-                    <Menu secondary>
-                        <Menu.Item secondary position='right'/>
-                        <Menu.Item position='left'>
-                            <Input className='icon' style={{
-                                width: 400
-                            }} icon={< Icon name = 'search' color = 'red' circular link />} placeholder='Search your content' focus/>
-                        </Menu.Item>
-                    </Menu>
-                    <Scrollbars id='ginni' renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
-                        display: "none",
-                        position: "right",
-                        minHeight: "516px"
-                    }}/>} autoHeight autoHeightMin={506}>
-                        <div id='messagechat'>
-                            {this.state.messages}
-                        </div>
-                    </Scrollbars>
-                    <InputUserMessage username={this.state.username} handlerUserReply={this.pushUserMessages} handleGinniReply={this.pushGinniMessages}/>
-                </div>
-            );
-        }
+            this.setState({messages: this.state.messages, loaderActive: false});
+        }).catch((err) => {
+            console.log(err);
+            this.setState({messages: this.state.messages, loaderActive: false});
+        });
     }
+    pushGinniMessages(ginniReply, loadingDots) {
+        if (loadingDots) {
+            this.state.messages.pop();
+        }
+        ginniReply.forEach((reply) => {
+            let length = this.state.messages.length;
+            let displayItem = (
+                <div ref={(ref) => this['_div' + length] = ref} key={length}>
+                    {reply}
+                </div >
+            );
+            this.state.messages.push(displayItem);
+        });
+        this.setState({messages: this.state.messages});
+    }
+    pushUserMessages(message) {
+        let length = this.state.messages.length;
+        let userMessageDisplay = (
+            <div ref={(ref) => this['_div' + length] = ref} key={length}>
+                <AssistantUserView msgDate={message.time} userName={this.state.username} userMessage={message.value} profilePicture={this.state.profilePicture}/>
+            </div>
+        );
+        this.state.messages.push(userMessageDisplay);
+        this.setState({messages: this.state.messages});
+    }
+
+    render() {
+        console.log('In render');
+        return (
+            <div className='formstyle' style={{
+                backgroundImage: "url('../../images/background.jpg')"
+            }}>
+                <Dimmer active={this.state.loaderActive} inverted>
+                    <Loader size='huge'>Loading previous chat history</Loader>
+                </Dimmer>
+                <Menu secondary>
+                    <Menu.Item secondary position='right'/>
+                    <Menu.Item position='left'>
+                        <Input className='icon' style={{
+                            width: 400
+                        }} icon={< Icon name = 'search' color = 'red' circular link />} placeholder='Search your content' focus/>
+                    </Menu.Item>
+                </Menu>
+                <Scrollbars id='ginni' renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
+                    display: "none",
+                    position: "right",
+                    minHeight: "516px"
+                }}/>} autoHeight autoHeightMin={506}>
+                    <div id='messagechat'>
+                        {this.state.messages}
+                    </div>
+                </Scrollbars>
+                <InputUserMessage username={this.state.username} handlerUserReply={this.pushUserMessages} handleGinniReply={this.pushGinniMessages}/>
+            </div>
+        );
+    }
+}

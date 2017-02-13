@@ -7,6 +7,7 @@ let answerNotFoundReply = require('./../../config/answerNotFoundReply');
 let saveUnansweredQuery = require('./functions/saveUnansweredQuery');
 let saveUserQueries = require('./functions/saveUserQueries');
 let saveAnalyticsData = require('./functions/saveAnalyticsData');
+let getKeywordResponse = require('./functions/getKeywordResponse');
 
 router.post('/askQuestion', function(req, res) {
     console.log(req.user);
@@ -42,7 +43,12 @@ router.post('/askQuestion', function(req, res) {
         resultObj.value=foundNoAnswer;
         resultArray.push(resultObj);
         sendResponse(true,resultArray);
-    } else {
+    }
+    else if(intents.length === 0){
+      saveUnansweredQuery(username, email ,question.value);
+      getKeywordResponse(keywords,sendResponse);
+    }
+     else {
         getQuestionResponse(intents, keywords, answerFoundCallback, noAnswerFoundCallback);
     }
 });
