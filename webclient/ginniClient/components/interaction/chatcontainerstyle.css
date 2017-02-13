@@ -18,6 +18,9 @@
     font-size: 15px;
     width: 600px;
 }
+#cursor:hover{
+  cursor: pointer;
+}
 
 #geniestyle {
     margin-left: 2%;

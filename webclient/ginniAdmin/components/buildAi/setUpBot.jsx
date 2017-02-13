@@ -28,27 +28,13 @@ export default class QuestionSetDisplay extends React.Component {
     addQuestionAnswerSet() {
         this.setState({type:'add'});
       }
-
+// function display question and answer
       displayQuestionAnswerSet(data){
         this.setState({type:'display'});
-        console.log(data);
-        // data.map((data)=>{
-        //   this.state.displayQuestionAnswer.push(<Pagination data={data}/>)
-        // });
         this.setState({displayQuestionAnswer:<Pagination data={data}/>});
-      //  this.state.displayQuestionAnswer =[];
-      }
+            }
 
     render() {
-      // const show = this.state.type;
-      // let display= null;
-      // if(show === 'add'){
-      //   display = <BuildAI />
-      // }
-      // else if (show === 'display') {
-      //   display = <Display data ={this.state.data}/>
-      // }
-
         return (
             <div id="backgroundimage" style={{
                 backgroundImage: "url('../../images/background.jpg')",height: '100%'

@@ -15,7 +15,7 @@ export default class LoadingDots extends React.Component {
                     <Feed.Content>
                         <Feed.Summary  user='Ginni'/>
                         <Feed.Extra text>
-                            <ThreeBounce timingFunction='linear' duration='1.5s' gutter={8} size={15} color='grey' />
+                            <ThreeBounce timingFunction='linear' duration='1.5s' gutter={8} size={15} color='brown' />
                         </Feed.Extra>
                     </Feed.Content>
                 </Feed.Event>

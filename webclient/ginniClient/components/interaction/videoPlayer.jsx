@@ -14,7 +14,7 @@ export default class AssistantView extends React.Component {
                 <Feed.Event>
                     <Feed.Label  image='../../images/geniebot.jpg'/>
                     <Feed.Content>
-                        <Feed.Summary date={new Date().toLocaleString()}  user='Ginni'/>
+                        <Feed.Summary date={new Date().toLocaleString()}  user='Genie'/>
                         <Feed.Extra >
                             <ReactPlayer url={this.props.url} playing={false} controls={true}/>
                         </Feed.Extra>

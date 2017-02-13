@@ -92,7 +92,7 @@ app.use('/getbroadcastmessage',isAuthenticated, getbroadcastmessage);
 app.use('/getadmin',isAuthenticated, getAdmin);
 app.use('/intent', intent);
 app.use('/concept',concept);
-app.use('/qa',addKnowledge);
+
 app.use('/question',isAuthenticated, askQuestion);
 app.use('/retriveChat',isAuthenticated, retriveChat)
 app.use('/qa', addKnowledge);

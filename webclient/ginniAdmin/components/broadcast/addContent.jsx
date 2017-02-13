@@ -26,6 +26,7 @@ export default class AddContent extends React.Component {
         let text = ReactDOM.findDOMNode(this.refs.text).value;
         let date = new Date().toLocaleString();
         this.props.handleAdminInput(this.state.username, text, date);
+        // to broadcast message to users logged in
         let socket = io();
         socket.emit('client event', {
             username: this.state.username,
@@ -34,6 +35,7 @@ export default class AddContent extends React.Component {
         });
         ReactDOM.findDOMNode(this.refs.text).value = '';
         let url = Config.url + '/savebroadcastmessage';
+        // to send the broadcast information to database
         axios.post(url, {
             username: this.state.username,
             message: text,
@@ -49,9 +51,10 @@ export default class AddContent extends React.Component {
             <div>
                 <h3>Enter your message for users</h3>
                 <Form onSubmit={this.handleSubmitText}>
-                    <TextArea placeholder='Tell us more'
-                     autoHeight name='text' ref='text' required/><br/><br/>
-                    <Button color='green' type='submit' animated style={{width:'50%'}}>
+                    <TextArea placeholder='Tell us more' autoHeight name='text' ref='text' required/><br/><br/>
+                    <Button color='green' type='submit' animated style={{
+                        width: '50%'
+                    }}>
                         <Button.Content visible>Submit</Button.Content>
                         <Button.Content hidden>
                             <Icon name='right arrow'/>

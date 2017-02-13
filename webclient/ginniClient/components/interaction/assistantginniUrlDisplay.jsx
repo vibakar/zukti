@@ -4,6 +4,7 @@ import Axios from 'axios';
 import AssistantGinniMoreBlogsView from './assistantGinniMoreBlogsView';
 import AssistantGinniOptions from './assistantGinniOptions';
 import UnfurlLink from './UnfurlLink';
+import './chatcontainerstyle.css';
 
 export default class AssistantGinniMixedReply extends React.Component {
   constructor(props) {
@@ -20,6 +21,8 @@ export default class AssistantGinniMixedReply extends React.Component {
     this.props.handleGinniReply(ginniReply);
   }
     render() {
+      console.log(this.props);
+      console.log('inside url display');
       let blogUrl = this.props.blogs[0].value;
       console.log('top rated blog');
       console.log(blogUrl);
@@ -35,7 +38,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                         <Feed.Extra>
                           <Label.Group >
                               {this.props.blogs.length > 1
-                                  ? <Label onClick={this.displayMoreBlogs} basic color='orange'>View more blogs ({this.props.blogs.length-1})</Label>
+                                  ? <Label onClick={this.displayMoreBlogs} basic color='orange' id='cursor'>View more blogs ({this.props.blogs.length-1})</Label>
                                   : ''}
                           </Label.Group>
                         </Feed.Extra>

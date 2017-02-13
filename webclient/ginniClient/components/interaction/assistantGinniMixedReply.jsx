@@ -7,6 +7,7 @@ import AssistantGinniMoreTextDisplay from './assistantGinniMoreTextDisplay';
 import AssistantGinniPlainText from './assistantGinniPlainText';
 import AssistantGinniOptions from './assistantGinniOptions';
 import Axios from 'axios';
+import './chatcontainerstyle.css';
 
 export default class AssistantGinniMixedReply extends React.Component {
     // props validation
@@ -55,13 +56,13 @@ export default class AssistantGinniMixedReply extends React.Component {
                         <Feed.Extra>
                             <Label.Group>
                                 {this.props.data.text&&this.props.data.text.length > 1
-                                    ? <Label onClick={this.displayMoreText} basic color='orange'>View more</Label>
+                                    ? <Label onClick={this.displayMoreText} basic color='orange' id='cursor'>View more</Label>
                                     : ''}
                                 {this.props.data.blog
-                                    ? <Label onClick={this.displayBlogs} basic color='orange'>Blogs</Label>
+                                    ? <Label onClick={this.displayBlogs} basic color='orange' id='cursor'>Blogs</Label>
                                     : ''}
                                 {this.props.data.video
-                                    ? <Label onClick={this.displayVideos} basic color='orange'>Videos</Label>
+                                    ? <Label onClick={this.displayVideos} basic color='orange' id='cursor'>Videos</Label>
                                     : ''}
                             </Label.Group>
                         </Feed.Extra>

@@ -4,6 +4,7 @@ import AssistantGinniMoreVideosView from './assistantGinniMoreVideosView';
 import AssistantGinniOptions from './assistantGinniOptions';
 import VideoPlayer from './videoPlayer';
 import UnfurlLink from './UnfurlLink';
+import './chatcontainerstyle.css';
   export default class AssistantGinniMixedReply extends React.Component {
     constructor(props) {
         super(props);
@@ -37,9 +38,9 @@ import UnfurlLink from './UnfurlLink';
                           <Feed.Extra>
                             <Label.Group >
                                 {this.props.videos.length > 1
-                                    ? <Label onClick={this.displayMoreVideos} basic color='orange'>View more videos ({this.props.videos.length-1})</Label>
+                                    ? <Label onClick={this.displayMoreVideos} basic color='orange' id='cursor'>View more videos ({this.props.videos.length-1})</Label>
                                     : ''}
-                                <Label onClick={this.playVideo} basic color='orange'>Play video</Label>
+                                <Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>
                             </Label.Group>
                           </Feed.Extra>
                           <AssistantGinniOptions question={this.props.question} type='video' value={videoUrl}/>
