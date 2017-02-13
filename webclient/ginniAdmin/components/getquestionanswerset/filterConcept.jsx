@@ -36,7 +36,7 @@ export default class FilterConcept extends React.Component {
                         <h4>Choose Concept</h4>
                     </label>
                     <Input>
-                        <Dropdown  options={this.state.options} placeholder='Concept'
+                        <Dropdown options={this.state.options} placeholder='Concept'
                         search selection onChange={this.handleDropdownChange}/>
                     </Input>
                 </Form.Field>
