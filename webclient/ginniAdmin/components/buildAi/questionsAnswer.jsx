@@ -94,7 +94,7 @@ export default class QuestionsAnswer extends React.Component {
             }}>
                 <Card fluid style={styleFirstCardBoxInRow}>
                     <Card.Content>
-                        <Card.Meta>
+                        <Card.Meta style={{color:'black',fontSize:"15px",fontWeight:"bold"}}>
                             If the user asks something similar to
                         </Card.Meta>
                         <Card.Description>
@@ -102,7 +102,7 @@ export default class QuestionsAnswer extends React.Component {
                         </Card.Description>
                     </Card.Content>
                     <Card.Content>
-                        <Card.Meta>
+                        <Card.Meta style={{color:'black',fontSize:"15px",fontWeight:"bold"}}>
                             Bot reply
                             <Radio label='Blog' name='radioGroup' value='blog' checked={this.state.value === 'blog'} onChange={this.handleChange}/>
                             <Radio style={{

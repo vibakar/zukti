@@ -54,7 +54,7 @@ export default class BookmarkList extends React.Component {
                                     width: '98%',
                                     height: '50%'
                                 }}>
-                                    <h3>Bookmarked Responses</h3>
+                                    <h3 style={{color:'black',textAlign:'center'}}>BOOKMARKED RESPONSES</h3>
                                     {bookmarkView}
                                 </div>
                             </Scrollbars>

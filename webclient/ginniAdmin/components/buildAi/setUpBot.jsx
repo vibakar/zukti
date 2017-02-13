@@ -3,7 +3,7 @@ import {
     Divider,
     Grid
   } from 'semantic-ui-react';
-
+import './buildAi.css';
 import AddQuestionAnswerSet from './addQuestionAnswerSet';
 import DisplayQAset from '../getquestionanswerset/displayqaset';
 import Display from '../getquestionanswerset/displayaccordion';
@@ -50,7 +50,7 @@ export default class QuestionSetDisplay extends React.Component {
       // }
 
         return (
-            <div style={{
+            <div id="backgroundimage" style={{
                 backgroundImage: "url('../../images/background.jpg')",height: '100%'
             }}>
                 <Grid style={{
@@ -63,7 +63,7 @@ export default class QuestionSetDisplay extends React.Component {
                         <div style={{
                             width: '100%'
                         }}>
-                            <p>It is a set of questions and the corresponding bot replies. Ginni will understand user questions similar to those you’ve set up and reply with a appropiate answer.</p>
+                            <p id="textpara">It is a set of questions and the corresponding bot replies. Ginni will understand user questions similar to those you’ve set up and reply with a appropiate answer.</p>
                             <Divider fitted/>
                         </div>
                     </Grid.Row>

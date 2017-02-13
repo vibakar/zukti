@@ -48,7 +48,7 @@ export default class DisplayQAset extends React.Component {
                 })
             })
 
-          
+
             this.props.handlerdisplayQASet(set);
         }).catch((error) => {
             alert(error);
