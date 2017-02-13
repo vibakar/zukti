@@ -22,9 +22,8 @@ export default class Pagination extends React.Component {
         };
 
     }
-
+    //to divide data into smaller arrays for pagination
     componentWillMount() {
-
         let lengthOfData = this.props.data.length;
         console.log(lengthOfData);
         console.log(this.props.data);
@@ -36,7 +35,7 @@ export default class Pagination extends React.Component {
         console.log(splitData);
         this.setState({data: splitData})
     }
-
+    //to Display 1st page of Pagination
     componentDidMount() {
         console.log(this.state.current);
         this.state.data[0].map((data) => {
@@ -45,7 +44,7 @@ export default class Pagination extends React.Component {
         this.setState({showData: this.state.showData});
         this.state.showData = [];
     }
-
+    //handle pagination when page changed
     handlePageChanged(newPage) {
         this.state.showData = [];
         console.log(newPage);
@@ -56,9 +55,9 @@ export default class Pagination extends React.Component {
             console.log(data1.answers);
             this.state.showData.push(<Display questions={data1.questions} answers={data1.answers}/>);
         });
-        this.setState({showData:this.state.showData});
+        this.setState({showData: this.state.showData});
     }
-
+    // to filter data according to intents
     handleDropResponse = (intent) => {
 
         this.state.showData = this.state.data[this.state.current];
@@ -78,9 +77,8 @@ export default class Pagination extends React.Component {
         this.state.filterData = [];
 
     }
-
+    //to filter data according to concepts
     handleConcept = (concept) => {
-
         concept = concept.split(" ").join("");
         console.log(concept);
         this.state.showData = this.state.data[this.state.current];
@@ -104,8 +102,7 @@ export default class Pagination extends React.Component {
         return (
             <div>
                 <FilterData intent={this.handleDropResponse}/>
-                <FilterConcept concept={this.handleConcept}/>
-                {this.state.showData}
+                <FilterConcept concept={this.handleConcept}/> {this.state.showData}
                 <Pager style={Style} total={this.state.total} current={this.state.current} visiblePages={this.state.visiblePage} titles={{
                     first: '<|',
                     last: '>|'
