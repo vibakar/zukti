@@ -3,7 +3,6 @@ import {
     Divider,
     Grid
   } from 'semantic-ui-react';
-
 import AddQuestionAnswerSet from './addQuestionAnswerSet';
 import DisplayQAset from '../getquestionanswerset/displayqaset';
 import Display from '../getquestionanswerset/displayaccordion';
@@ -28,27 +27,13 @@ export default class QuestionSetDisplay extends React.Component {
     addQuestionAnswerSet() {
         this.setState({type:'add'});
       }
-
+// function display question and answer
       displayQuestionAnswerSet(data){
         this.setState({type:'display'});
-        console.log(data);
-        // data.map((data)=>{
-        //   this.state.displayQuestionAnswer.push(<Pagination data={data}/>)
-        // });
         this.setState({displayQuestionAnswer:<Pagination data={data}/>});
-      //  this.state.displayQuestionAnswer =[];
-      }
+            }
 
     render() {
-      // const show = this.state.type;
-      // let display= null;
-      // if(show === 'add'){
-      //   display = <BuildAI />
-      // }
-      // else if (show === 'display') {
-      //   display = <Display data ={this.state.data}/>
-      // }
-
         return (
             <div style={{
                 backgroundImage: "url('../../images/background.jpg')",height: '100%'

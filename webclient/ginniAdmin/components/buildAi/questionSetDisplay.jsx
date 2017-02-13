@@ -32,8 +32,9 @@ export default class QuestionSetDisplay extends React.Component {
       this.state.questionAnswerSet.splice(index,1);
       this.setState({questionAnswerSet:this.state.questionAnswerSet});
     }
+    // display quaetion answer set
     displayQuestionAnswerSet(set)
-    { console.log(set);
+    {
       set.map((que)=>{
       this.state.displayQuestionAnswerSet.push(<Display questions={que.questions} answers = {que.answers}/>)
       })
