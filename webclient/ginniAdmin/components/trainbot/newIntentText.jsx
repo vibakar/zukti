@@ -19,6 +19,7 @@ export default class NewIntentText extends React.Component {
         e.preventDefault();
         //getting the value of new intent from text field
         let newIntent = ReactDOM.findDOMNode(this.refs.newIntent).value;
+      
         //checking for empty field since empty node is not required
         if (newIntent) {
             //clearing the input newSameAsIntent text field

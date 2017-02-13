@@ -74,10 +74,7 @@ export default class TrainBot extends React.Component {
                     <Grid.Row>
                         <Grid.Column width={5}></Grid.Column>
                         <Grid.Column width={6} >
-                            <Button color="facebook" fluid>
-                                <Icon name='plus circle'>Add
-                                </Icon>
-                            </Button>
+                            
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row />
