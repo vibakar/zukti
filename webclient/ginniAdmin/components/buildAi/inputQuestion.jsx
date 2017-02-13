@@ -38,7 +38,7 @@ export default class InputQuestion extends React.Component {
             <Form onSubmit={this.isValidQuestion}>
                 <Form.Field>
                     <input onBlur={this.isValidQuestion} autoComplete="off" type='text' name='question' ref='question' style={{
-                        width: '100%',
+                        width: '90%',
                         'margin-bottom': '8px'
                     }} placeholder='the question must have a keyword and an intent'/>
                 </Form.Field>

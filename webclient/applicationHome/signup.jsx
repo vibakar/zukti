@@ -227,8 +227,8 @@ render() {
                  page>
 
                 <Header as='h2' icon inverted>
-                  <Image src='../images/mail.gif'/>
-                   <Header.Subheader>Please hold for a minute to get verification mail......</Header.Subheader>
+                  <Image src='../images/mail.gif' size="small" />
+                   <Header.Subheader><h3>Please hold for a minute to get verification mail......</h3></Header.Subheader>
                  </Header>
         </Dimmer>:null}
         <span id="message"/>
