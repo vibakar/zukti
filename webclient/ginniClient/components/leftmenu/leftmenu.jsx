@@ -3,18 +3,10 @@ import LeftMenuContent from '../leftmenuPusherContent/leftmenuContent';
 import {
     Sidebar,
     Segment,
-    Button,
     Image,
     Icon,
-    Header,
-    Grid,
-    Divider,
     Menu,
-    Card,
     Popup,
-    Feed,
-    Link,
-    Input,
     Label,
     Dropdown
 } from 'semantic-ui-react';
@@ -34,8 +26,8 @@ export default class LeftMenu extends Component {
             firstname: '',
             lastname: '',
             usertype: false,
-            name:'',
-            photo:'',
+            name: '',
+            photo: '',
             counter: 0
         }
         this.onSubmitEmail = this.onSubmitEmail.bind(this);
@@ -47,11 +39,13 @@ export default class LeftMenu extends Component {
         if (this.state.activeItem === 'notifications') {
             let url = Config.url + '/getbroadcastmessage/updateCount'
             this.state.counter = 0;
-            Axios.post(url).then((response) => {}).catch((error) => {console.log(error);});
+            Axios.post(url).then((response) => {}).catch((error) => {
+                console.log(error);
+            });
         }
-        this.setState({activeItem: name,counter:this.state.counter});
+        this.setState({activeItem: name, counter: this.state.counter});
     });
-    componentDidMount() {    
+    componentDidMount() {
         this.getUserInformation();
         this.getNotificationCount();
         let socket = io();
@@ -71,67 +65,59 @@ export default class LeftMenu extends Component {
             console.log(error);
         })
     }
+    // to fetch the information about the user
     getUserInformation() {
-    let self=this;
-    Axios({
-        url: "http://localhost:8080/userProfile",
-        method: 'GET',
-        data: 'json'
-      }).then(function (response) {
-        let authType = Cookie.load("authType");
+        let self = this;
+        Axios({url: "http://localhost:8080/userProfile", method: 'GET', data: 'json'}).then(function(response) {
+            let authType = Cookie.load("authType");
 
-        if (authType == "facebook") {
+            if (authType == "facebook") {
 
-            self.setState({name: response.data.user.facebook.displayName, email: response.data.user.facebook.email, photo: response.data.user.facebook.photos, usertype: false});
-        }
-        else if (authType == "google") {
+                self.setState({name: response.data.user.facebook.displayName, email: response.data.user.facebook.email, photo: response.data.user.facebook.photos, usertype: false});
+            } else if (authType == "google") {
 
-            self.setState({name: response.data.user.google.name, email: response.data.user.google.email, photo: response.data.user.google.photos, usertype: false});
-        }
-        else if (authType == "local") {
-            self.setState({name: response.data.user.local.name, email: response.data.user.local.email, photo: response.data.user.local.photos, usertype: true});
-        }
-      })
-       .catch(function (error) {
+                self.setState({name: response.data.user.google.name, email: response.data.user.google.email, photo: response.data.user.google.photos, usertype: false});
+            } else if (authType == "local") {
+                self.setState({name: response.data.user.local.name, email: response.data.user.local.email, photo: response.data.user.local.photos, usertype: true});
+            }
+        }).catch(function(error) {
             console.log("error", error);
-      });
-  }
-        onSubmitEmail() {
+        });
+    }
+    onSubmitEmail() {
         hashHistory.push('/profile')
     }
+    // redirects to changepassword page
     onChangePassword() {
-    hashHistory.push('/change')
-}
+        hashHistory.push('/change')
+    }
     render() {
-      const activeItem= this.state.activeItem;
-      const customername =  this.state.name;
-      var trigger;
-  let authType= Cookie.load("authType");
-        if(authType== "local"){
-          let profilepicture = Cookie.load("profilepicture");
+        const activeItem = this.state.activeItem;
+        const customername = this.state.name;
+        let trigger;
+        let authType = Cookie.load("authType");
+        if (authType == "local") {
+            let profilepicture = Cookie.load("profilepicture");
 
             trigger = (
-      <span>
-      <Image avatar src={require('../../../../webserver/images/'+profilepicture)}/> {name=customername}
-      </span>
-    );
-  }else
-    if(authType == "facebook"){
+                <span>
+                    <Image avatar src={require('../../../../webserver/images/' + profilepicture)}/> {name = customername}
+                </span>
+            );
+        } else if (authType == "facebook") {
 
-        trigger = (
-  <span>
-  <Image avatar src={this.state.photo}/> {name=customername}
-  </span>
-);
-}
-else
-  if(authType == "google"){
-      trigger = (
-<span>
-<Image avatar src={this.state.photo}/> {name=customername}
-</span>
-);
-}
+            trigger = (
+                <span>
+                    <Image avatar src={this.state.photo}/> {name = customername}
+                </span>
+            );
+        } else if (authType == "google") {
+            trigger = (
+                <span>
+                    <Image avatar src={this.state.photo}/> {name = customername}
+                </span>
+            );
+        }
         return (
             <div id="leftbarmenu">
                 <Sidebar as={Menu} className='fixed' animation='slide along' width='thin' visible={true} icon='labeled' vertical inverted>
@@ -158,7 +144,7 @@ else
                     </Menu.Item>
                     <Menu.Item name='LogOut' active={activeItem === 'LogOut'} onClick={this.handleItemClick}>
                         <Icon name='sign out' color='teal'/>
-                            <a href='#/logout'>Log out</a>
+                        <a href='#/logout'>Log out</a>
                     </Menu.Item>
                 </Sidebar>
                 <Sidebar.Pusher id="sidebarpusher">

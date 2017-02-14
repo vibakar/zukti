@@ -19,12 +19,11 @@ import './menu.css';
 import TopMenuBot from './topmenubot';
 export default class SidebarBot extends Component {
 
-
-   constructor(){
-      super();
-      this.state={
-        activeItem:'SetupAi'
-      }
+    constructor() {
+        super();
+        this.state = {
+            activeItem: 'SetupAi'
+        }
     }
     handleItemClick = (e, {name}) => this.setState({activeItem: name})
     render() {
@@ -35,7 +34,7 @@ export default class SidebarBot extends Component {
             }}>
                 <Sidebar as={Menu} className='fixed' animation='slide along' width='thin' visible={true} icon='labeled' vertical inverted>
                     <Menu.Item name='Genie'>
-                        <a href="/home"><Image src='../../images/ginianim.gif'  size='tiny' avatar/></a>
+                        <a href="/home"><Image src='../../images/ginianim.gif' size='tiny' avatar/></a>
                     </Menu.Item>
                     <Menu.Item name='SetupAi' active={activeItem === 'SetupAi'} onClick={this.handleItemClick}>
                         <Icon name='book' color='teal'/>
@@ -59,29 +58,32 @@ export default class SidebarBot extends Component {
                     </Menu.Item>
                     <Menu.Item name='Unanswered Queries' active={activeItem === 'Unanswered Queries'} onClick={this.handleItemClick}>
                         <Icon name='help' color='teal'/>
-                      Unanswered Queries
+                        Unanswered Queries
                     </Menu.Item>
                     <Menu.Item name='LogOut'>
                         <Icon name='sign out' color='teal'/>
                         <a href='#/log'>Logout</a>
                     </Menu.Item>
-                  </Sidebar>
+                </Sidebar>
                 <Sidebar.Pusher className='container' style={{
                     width: '90%',
-                    height:'90%'
+                    height: '90%'
                 }}>
                     <Segment style={{
                         'margin-top': '0px',
                         'padding': '0px',
-                        height:'100%'
+                        height: '100%'
                     }}>
-                      <TopMenuBot/>
-                      <div style={{'background-color':'#f3f2f2 ',height:'100%'}}>
+                        <TopMenuBot/>
+                        <div style={{
+                            'background-color': '#f3f2f2 ',
+                            height: '100%'
+                        }}>
                             <Content sidebarItemSelected={activeItem}/>
-                      </div>
-                        </Segment>
-                    </Sidebar.Pusher>
-                </div>
-              );
-            }
-          }
+                        </div>
+                    </Segment>
+                </Sidebar.Pusher>
+            </div>
+        );
+    }
+}
