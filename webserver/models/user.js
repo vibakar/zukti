@@ -17,29 +17,28 @@ const userSchema = mongoose.Schema({
         name: String,
         loggedinStatus: Boolean,
         isEmailVerified: Boolean,
-        verificationID: Number,
+        verificationID: String,
         photos: String
-        },
+    },
     facebook: {
-      id           : String,
-      token        : String,
-      email        : String,
-      name         : String,
-      displayName  : String,
-      photos       : String,
-      authType     : String
+        id: String,
+        token: String,
+        email: String,
+        name: String,
+        displayName: String,
+        photos: String,
+        authType: String
 
     },
     google: {
-      id           : String,
-      token        : String,
-      email        : String,
-      name         : String,
-      displayName  : String,
-      photos       : String,
-      authType     : String
+        id: String,
+        token: String,
+        email: String,
+        name: String,
+        displayName: String,
+        photos: String,
+        authType: String
     }
-
 
 });
 // generating a hash
@@ -47,11 +46,11 @@ userSchema.statics.generateHash = function(password) {
     console.log("Inside generating hashing method");
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
-userSchema.methods.generateHashVID = function(verificationID) {
+userSchema.statics.generateHashVID = function(verificationID) {
     console.log("Inside generating hashing method");
     return bcrypt.hashSync(verificationID, bcrypt.genSaltSync(8), null);
 };
-userSchema.methods.generateHashEmail = function(email) {
+userSchema.statics.generateHashEmail = function(email) {
     console.log("Inside generating hashing method");
     return bcrypt.hashSync(email, bcrypt.genSaltSync(8), null);
 };

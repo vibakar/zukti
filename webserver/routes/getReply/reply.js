@@ -11,44 +11,42 @@ let getKeywordResponse = require('./functions/getKeywordResponse');
 
 router.post('/askQuestion', function(req, res) {
     console.log(req.user);
-    let email = req.user.local.email||req.user.facebook.email||req.user.google.email;
+    let email = req.user.local.email || req.user.facebook.email || req.user.google.email;
     let username = req.body.username;
     let question = req.body.question;
     let query = processQuestion(question.value.toLowerCase());
     let keywords = query.keywords;
     let intents = query.intents;
-    let sendResponse = function(isUnAnswered,answerObj){
+    let sendResponse = function(isUnAnswered, answerObj) {
         saveAnalyticsData(isUnAnswered);
-        saveUserQueries(email,isUnAnswered,question,answerObj);
-        res.json({isUnAnswered:isUnAnswered,answerObj:answerObj});
+        saveUserQueries(email, isUnAnswered, question, answerObj);
+        res.json({isUnAnswered: isUnAnswered, answerObj: answerObj});
     }
     let answerFoundCallback = function(answerObj) {
-        sendResponse(false,answerObj);
+        sendResponse(false, answerObj);
     };
     let noAnswerFoundCallback = function() {
         console.log('No answer found');
-        saveUnansweredQuery(username,email, question.value, keywords, intents);
-        let foundNoAnswer=answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
-        resultArray=[];
-        let resultObj={};
-        resultObj.value=foundNoAnswer;
+        saveUnansweredQuery(username, email, question.value, keywords, intents);
+        let foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
+        let resultArray = [];
+        let resultObj = {};
+        resultObj.value = foundNoAnswer;
         resultArray.push(resultObj);
-        sendResponse(true,resultArray);
+        sendResponse(true, resultArray);
     };
     if (keywords.length === 0) {
-        saveUnansweredQuery(username,email, question.value);
+        saveUnansweredQuery(username, email, question.value);
         let foundNoAnswer = commonReply[Math.floor(Math.random() * commonReply.length)]
-        resultArray=[];
-        let resultObj={};
-        resultObj.value=foundNoAnswer;
+        let resultArray = [];
+        let resultObj = {};
+        resultObj.value = foundNoAnswer;
         resultArray.push(resultObj);
-        sendResponse(true,resultArray);
-    }
-    else if(intents.length === 0){
-      saveUnansweredQuery(username, email ,question.value);
-      getKeywordResponse(keywords,sendResponse);
-    }
-     else {
+        sendResponse(true, resultArray);
+    } else if (intents.length === 0) {
+        saveUnansweredQuery(username, email, question.value);
+        getKeywordResponse(keywords, sendResponse);
+    } else {
         getQuestionResponse(intents, keywords, answerFoundCallback, noAnswerFoundCallback);
     }
 });

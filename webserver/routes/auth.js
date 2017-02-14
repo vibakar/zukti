@@ -1,19 +1,12 @@
 const RegisteredUser = require('../models/user');
 const UnansweredQuery = require('../models/unansweredQuery');
 const nodemailer = require('nodemailer');
-const bcrypt = require('bcrypt-nodejs');
 var VIDcheck;
 module.exports = function(app, passport) {
     var rand,
         mailOptions,
         host,
         link;
-    function isLoggedIn(req, res, next) {
-        if (req.isAuthenticated()) {
-            return next();
-        }
-        res.redirect('/#/');
-    }
 
     app.post('/login', passport.authenticate('local', {failureRedirect: '/'}), (req, res) => {
         res.cookie('token', req.user);
@@ -40,7 +33,6 @@ module.exports = function(app, passport) {
                 console.log("status not updated");
             } else {
                 req.logout();
-
                 // res.send('Successfully Logged out');
             }
         });
@@ -67,7 +59,7 @@ module.exports = function(app, passport) {
             return this.charAt(0).toUpperCase() + this.slice(1);
         }
         rand = Math.floor((Math.random() * 100) + 54);
-        newUser.local.verificationID = rand;
+        newUser.local.verificationID = RegisteredUser.generateHashVID(rand);
         newUser.local.name = (req.body.firstName.toLowerCase().capitalizeFirstLetter() + ' ' + req.body.lastName.toLowerCase().capitalizeFirstLetter());
         newUser.local.email = req.body.email;
         newUser.local.password = RegisteredUser.generateHash(req.body.password);
@@ -83,6 +75,7 @@ module.exports = function(app, passport) {
             if (err) {
                 res.send('Error in registration');
             } else {
+
                 res.send('Successfully registered');
             }
         });
@@ -156,9 +149,9 @@ module.exports = function(app, passport) {
                 host = req.get('host');
                 console.log(profile);
                 //var hashVID = bcrypt.hashSync(profile[0].local.verificationID, 10);
-                var VID = profile[0].generateHashVID(profile[0].local.verificationID);
+                var VID = RegisteredUser.generateHashVID(profile[0].local.verificationID);
                 VIDcheck = VID;
-                var linkEmail = profile[0].generateHashEmail(profile[0].local.email);
+                var linkEmail = RegisteredUser.generateHashEmail(profile[0].local.email);
                 console.log(VID + " is the VID");
                 link = "http://" + req.get('host') + "/verify?id=" + VID + "&email=" + profile[0].local.email;
                 var text = 'Hello from \n\n' + req.body.data;
@@ -206,7 +199,7 @@ module.exports = function(app, passport) {
         RegisteredUser.find({
             'local.email': req.query.email
         }, function(err, profile) {
-
+            console.log(profile[0]);
             if (err) {
                 res.send(err);
                 console.log('error occured');
@@ -214,7 +207,7 @@ module.exports = function(app, passport) {
                 console.log(req.protocol + ":/" + req.get('host') + ":" + ("http://" + host));
                 if ((req.protocol + "://" + req.get('host')) == ("http://" + host)) {
                     console.log("Domain is matched. Information is from Authentic email");
-                    if (checkID == VIDcheck) {
+                    if (profile[0].local.verificationID !=0) {
                         console.log("email is verified");
                         RegisteredUser.update({
                             'local.email': req.query.email
@@ -233,7 +226,6 @@ module.exports = function(app, passport) {
                         res.redirect('/#/successfullyregistered');
                     } else {
                         console.log("email is not verified");
-                        //res.end("<h1>Link expired</h1>");
                         res.redirect('/#/expiryLink');
                     }
                 } else {
@@ -247,11 +239,14 @@ module.exports = function(app, passport) {
     //send verification link to the user mail for forgotpassword
     app.post('/forgetpassword', function password(req, res) {
         rand = Math.floor((Math.random() * 100) + 54);
+        let encryptRand =RegisteredUser.generateHashVID(rand);
+        console.log('Verfication ID for forget password');
+        console.log(encryptRand);
         RegisteredUser.update({
             'local.email': req.body.email
         }, {
             $set: {
-                'local.verificationID': rand
+                'local.verificationID': encryptRand
             }
         }, function(err) {
             if (err) {
@@ -261,7 +256,6 @@ module.exports = function(app, passport) {
                 console.log("id changed");
             }
         });
-        console.log(req.body.email);
         RegisteredUser.find({
             'local.email': req.body.email
         }, function(err, profile) {
@@ -282,14 +276,13 @@ module.exports = function(app, passport) {
                     }
                 });
                 host = req.get('host');
-                link = "http://" + req.get('host') + "/newPassword?id=" + rand + "&email=" + profile[0].local.email;
+                link = "http://" + req.get('host') + "/newPassword?id=" + encryptRand + "&email=" + profile[0].local.email;
                 mailOptions = {
                     from: 'geniegenie0001@gmail.com', // sender address
                     to: profile[0].local.email, // list of receivers
                     subject: 'Password reset for Genie account', // Subject line
                     html: "<center><h1>Welcome to Genie</h1></center><br><br><br>Hi,<br><br>Forgot password??<br><br> No worries, click on the button to reset right away !!.<br><br><br><a href=" + link + " style='background-color:#FF0000;-moz-border-radius:28px;-webkit-border-radius:28px;border-radius:28px;border:1px solid #FF0000;display:inline-block;padding:16px 31px;color:#ffffff;text-shadow:0px 1px 0px #2f6627;text-decoration:none;'>Reset password</a><br><br>Cheers,<br><br><b>Team Genie</b><br><br><small><i>This link is valid for an hour.This is an Auto-generated mail,please do not reply</i></small>"
                 };
-                console.log(mailOptions);
                 transporter.sendMail(mailOptions, function(error, info) {
                     if (error) {
                         console.log(error);
@@ -303,6 +296,7 @@ module.exports = function(app, passport) {
     });
     /*verify the link which sent to  user email for forgotpassword*/
     app.get('/newPassword', function(req, res) {
+      console.log(req.query.email);
         RegisteredUser.find({
             'local.email': req.query.email
         }, function(err, profile) {
@@ -310,6 +304,7 @@ module.exports = function(app, passport) {
                 res.send(err);
                 console.log('error occured');
             } else {
+                console.log(profile);
                 if (profile[0].local.verificationID != 0) {
                     res.redirect('/#/newpassword?id=' + req.query.id);
                 } else {
@@ -425,7 +420,8 @@ module.exports = function(app, passport) {
                 }
             });
         }
-    }); //image for localstratergy
+    });
+     // image for localstratergy
     app.post('/uploadImage', function(req, res) {
         res.cookie('profilepicture', req.body.data);
         console.log(req.body.data, "vgbhnjk");

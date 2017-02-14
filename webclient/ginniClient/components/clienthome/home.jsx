@@ -39,7 +39,7 @@ export default class ClientHome extends React.Component {
                         </Grid.Column>
                     </Grid.Row>
                     <Divider horizontal inverted>
-                        <h2 id='headsparkle'>I AM GENIE GIVING DAZZLING SOLUTIONS <br/>TO YOUR REACT PROBLEMS
+                        <h2 id='headsparkle'>I AM GENIE GIVING DAZZLING SOLUTIONS <br/>TO YOUR PROBLEMS
                         </h2>
                     </Divider>
                     <Grid.Row divided vertically>
