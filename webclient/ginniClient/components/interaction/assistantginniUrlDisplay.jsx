@@ -4,6 +4,7 @@ import Axios from 'axios';
 import AssistantGinniMoreBlogsView from './assistantGinniMoreBlogsView';
 import AssistantGinniOptions from './assistantGinniOptions';
 import UnfurlLink from './UnfurlLink';
+import './chatcontainerstyle.css';
 
 export default class AssistantGinniMixedReply extends React.Component {
   constructor(props) {
@@ -37,7 +38,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                         <Feed.Extra>
                           <Label.Group >
                               {this.props.blogs.length > 1
-                                  ? <Label onClick={this.displayMoreBlogs} basic color='orange'>View more blogs ({this.props.blogs.length-1})</Label>
+                                  ? <Label onClick={this.displayMoreBlogs} basic color='orange' id='cursor'>View more blogs ({this.props.blogs.length-1})</Label>
                                   : ''}
                           </Label.Group>
                         </Feed.Extra>

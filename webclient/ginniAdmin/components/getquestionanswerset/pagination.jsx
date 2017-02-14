@@ -139,7 +139,7 @@ export default class Pagination extends React.Component {
                 total={this.state.total}
                 current={this.state.current}
                 visiblePages={this.state.visiblePage}
-                titles={{ first: '<|', last: '>|' }}
+                titles={{ first: '<|', last: '|>' }}
                 className="pagination-sm pull-right"
                 onPageChanged={this.handlePageChanged} />
 

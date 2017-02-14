@@ -1,29 +1,26 @@
-
 const RegisteredUser = require('../models/user');
 const UnansweredQuery = require('../models/unansweredQuery');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt-nodejs');
 var VIDcheck;
 module.exports = function(app, passport) {
-  var rand,
-      mailOptions,
-      host,
-      link;
-      function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
+    var rand,
+        mailOptions,
+        host,
+        link;
+    function isLoggedIn(req, res, next) {
+        if (req.isAuthenticated()) {
+            return next();
+        }
+        res.redirect('/#/');
     }
-    res.redirect('/#/');
-}
 
-    app.post('/login', passport.authenticate('local', {
-      failureRedirect: '/'
-    }), (req, res)=> {
-      res.cookie('token', req.user);
-      res.cookie('username', req.user.name);
-      res.cookie('authType', req.user.authType);
-      res.cookie('profilepicture', req.user.photos);
-      res.send(req.user);
+    app.post('/login', passport.authenticate('local', {failureRedirect: '/'}), (req, res) => {
+        res.cookie('token', req.user);
+        res.cookie('username', req.user.name);
+        res.cookie('authType', req.user.authType);
+        res.cookie('profilepicture', req.user.photos);
+        res.send(req.user);
     });
     //logout
     app.get('/signout', function(req, res) {
@@ -42,20 +39,21 @@ module.exports = function(app, passport) {
             if (err) {
                 console.log("status not updated");
             } else {
-              req.logout();
+                req.logout();
 
                 // res.send('Successfully Logged out');
             }
         });
     });
     app.get('/viewall', function(req, res) {
-        RegisteredUser.find(
-          {'local.localType': 'Customer'}, function(err, alldetails) {
+        RegisteredUser.find({
+            'local.localType': 'Customer'
+        }, function(err, alldetails) {
             if (err) {
                 res.send(err);
                 console.log('error ocuured');
             } else {
-              console.log(alldetails);
+                console.log(alldetails);
                 res.send(alldetails);
             }
         });
@@ -66,13 +64,13 @@ module.exports = function(app, passport) {
     app.post('/signup', function(req, res) {
         let newUser = new RegisteredUser();
         String.prototype.capitalizeFirstLetter = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-}
+            return this.charAt(0).toUpperCase() + this.slice(1);
+        }
         rand = Math.floor((Math.random() * 100) + 54);
         newUser.local.verificationID = rand;
         newUser.local.name = (req.body.firstName.toLowerCase().capitalizeFirstLetter() + ' ' + req.body.lastName.toLowerCase().capitalizeFirstLetter());
         newUser.local.email = req.body.email;
-        newUser.local.password = newUser.generateHash(req.body.password);
+        newUser.local.password = RegisteredUser.generateHash(req.body.password);
         newUser.local.firstname = (req.body.firstName).toLowerCase().capitalizeFirstLetter();
         newUser.local.lastname = (req.body.lastName).toLowerCase().capitalizeFirstLetter();
         newUser.local.localType = 'Customer';
@@ -82,23 +80,23 @@ module.exports = function(app, passport) {
         newUser.local.photos = 'defultImage.jpg';
         res.cookie('profilepicture', newUser.local.photos);
         newUser.save(function(err) {
-          if (err) {
+            if (err) {
                 res.send('Error in registration');
             } else {
                 res.send('Successfully registered');
             }
         });
-      });
+    });
     app.post('/adminsignup', function(req, res) {
         let newUser = new RegisteredUser();
         rand = Math.floor((Math.random() * 100) + 54);
 
-      String.prototype.capitalizeFirstLetter = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-}
+        String.prototype.capitalizeFirstLetter = function() {
+            return this.charAt(0).toUpperCase() + this.slice(1);
+        }
         newUser.local.name = (req.body.firstName.toLowerCase().capitalizeFirstLetter() + " " + req.body.lastName.toLowerCase().capitalizeFirstLetter());
         newUser.local.email = req.body.email;
-        newUser.local.password = newUser.generateHash(req.body.password);
+        newUser.local.password = RegisteredUser.generateHash(req.body.password);
         newUser.local.firstname = (req.body.firstName).toLowerCase().capitalizeFirstLetter();
         newUser.local.lastname = (req.body.lastName).toLowerCase().capitalizeFirstLetter();
         newUser.local.localType = 'Admin';
@@ -126,7 +124,7 @@ module.exports = function(app, passport) {
                 res.send(alldetails);
             }
         });
-      });
+    });
     /*------------------Routing Started ------------------------*/
     /*------------------Verifiocation Mail send to the mail------------------------*/
     var host,
@@ -161,7 +159,7 @@ module.exports = function(app, passport) {
                 var VID = profile[0].generateHashVID(profile[0].local.verificationID);
                 VIDcheck = VID;
                 var linkEmail = profile[0].generateHashEmail(profile[0].local.email);
-                console.log(VID+" is the VID");
+                console.log(VID + " is the VID");
                 link = "http://" + req.get('host') + "/verify?id=" + VID + "&email=" + profile[0].local.email;
                 var text = 'Hello from \n\n' + req.body.data;
                 mailOptions = {
@@ -186,25 +184,26 @@ module.exports = function(app, passport) {
 
     });
     app.delete("/deleteuser", function(req, res) {
-    request = req.body.data;
-    console.log(request);
-    RegisteredUser.remove({'local.email': request}, function(err) {
-      if(err) {
-        console.log("no")
-        res.send("Error in deleting the data");
-      }
-      else {
-        console.log("deleted")
+        request = req.body.data;
+        console.log(request);
+        RegisteredUser.remove({
+            'local.email': request
+        }, function(err) {
+            if (err) {
+                console.log("no")
+                res.send("Error in deleting the data");
+            } else {
+                console.log("deleted")
 
-        res.send("Data is deleted successfully");
-      }
+                res.send("Data is deleted successfully");
+            }
+        });
     });
-});
     /*verify the link which sent to  user email*/
     app.get('/verify', function(req, res) {
         let checkID = req.query.id;
         let checkMail = req.query.email;
-            RegisteredUser.find({
+        RegisteredUser.find({
             'local.email': req.query.email
         }, function(err, profile) {
 
@@ -238,9 +237,9 @@ module.exports = function(app, passport) {
                         res.redirect('/#/expiryLink');
                     }
                 } else {
-                  console.log("email is not verified");
-                  //res.end("<h1>Link expired</h1>");
-                  res.redirect('/#/expiryLink');
+                    console.log("email is not verified");
+                    //res.end("<h1>Link expired</h1>");
+                    res.redirect('/#/expiryLink');
                 }
             }
         });
@@ -340,14 +339,13 @@ module.exports = function(app, passport) {
                             'local.verificationID': req.body.id
                         }, {
                             $set: {
-                                'local.password': req.body.pass,
+                                'local.password': RegisteredUser.generateHash(req.body.pass),
                                 'local.verificationID': 0
                             }
                         }, function(err) {
                             if (err) {
                                 console.log(err);
                             } else {
-                                console.log("Account Verified and password was changed");
                                 res.redirect('/#/');
                             }
                         });
@@ -384,6 +382,9 @@ module.exports = function(app, passport) {
 
     //profileupdation
     app.put('/updateprofile', function(req, res) {
+        String.prototype.capitalizeFirstLetter = function() {
+            return this.charAt(0).toUpperCase() + this.slice(1);
+        }
         if (req.body) {
             request1 = req.body.email;
             request2 = (req.body.firstname.toLowerCase().capitalizeFirstLetter() + " " + req.body.lastname.toLowerCase().capitalizeFirstLetter());
@@ -408,39 +409,39 @@ module.exports = function(app, passport) {
     });
     //reset password
     app.put('/resetpassword', function(req, res) {
-          if (req.body) {
-              request1 = req.body.password;
-              RegisteredUser.update({
-                  'local.email': req.user.local.email
-              }, {
-                  $set: {
-                      'local.password': request1
-                  }
-              }, function(err) {
-                  if (err) {
-                      res.send(err);
-                  } else {
-                      res.send("Password changed Successfully");
-                  }
-              });
-          }
-      });  //image for localstratergy
-    app.post('/uploadImage', function(req, res) {
-      res.cookie('profilepicture', req.body.data);
-              console.log(req.body.data,"vgbhnjk");
+        if (req.body) {
+            request1 = req.body.password;
             RegisteredUser.update({
                 'local.email': req.user.local.email
             }, {
                 $set: {
-                    'local.photos': req.body.data
+                    'local.password': RegisteredUser.generateHash(request1)
                 }
             }, function(err) {
                 if (err) {
                     res.send(err);
                 } else {
-                    res.send("Successfully Updated");
+                    res.send("Password changed Successfully");
                 }
             });
+        }
+    }); //image for localstratergy
+    app.post('/uploadImage', function(req, res) {
+        res.cookie('profilepicture', req.body.data);
+        console.log(req.body.data, "vgbhnjk");
+        RegisteredUser.update({
+            'local.email': req.user.local.email
+        }, {
+            $set: {
+                'local.photos': req.body.data
+            }
+        }, function(err) {
+            if (err) {
+                res.send(err);
+            } else {
+                res.send("Successfully Updated");
+            }
+        });
 
     });
     // customer Information
@@ -450,7 +451,7 @@ module.exports = function(app, passport) {
         RegisteredUser.find({
             'local.email': email
         }, function(err, profile) {
-          console.log(profile)
+            console.log(profile)
             res.send(profile);
             if (err) {
                 res.send(err);
@@ -459,13 +460,13 @@ module.exports = function(app, passport) {
     });
     // Admin Information
     app.post('/admindetails', function(req, res) {
-      console.log("entered details")
+        console.log("entered details")
         let email = req.body.data;
         console.log(email);
         RegisteredUser.find({
             'local.email': email
         }, function(err, profile) {
-          console.log(profile)
+            console.log(profile)
             res.send(profile);
             if (err) {
                 res.send(err);
@@ -479,7 +480,7 @@ module.exports = function(app, passport) {
         RegisteredUser.find({
             'local.email': email
         }, function(err, profile) {
-          console.log(profile)
+            console.log(profile)
             res.send(profile);
             if (err) {
                 res.send(err);
@@ -491,45 +492,43 @@ module.exports = function(app, passport) {
     // *******************************************
     // send to facebook to do the authentication
 
-    app.get('/auth/facebook', passport.authenticate('facebook', { session: false, scope : 'email' }),(req, res) =>
-      {
-            res.json(req.user);
-      });
+    app.get('/auth/facebook', passport.authenticate('facebook', {
+        session: false,
+        scope: 'email'
+    }), (req, res) => {
+        res.json(req.user);
+    });
 
-      // handle the callback after facebook has authenticated the user
-          app.get('/auth/facebook/callback',
-              passport.authenticate('facebook', {
-                  failureRedirect : '/#/'
-              }), (req, res) => {
-                res.cookie('token', req.user.facebook.token);
-                res.cookie('authType', req.user.facebook.authType);
-                res.cookie('username',req.user.facebook.displayName);
-                res.cookie('profilepicture', req.user.facebook.photos);
-                res.redirect('/#/clienthome');
-              });
+    // handle the callback after facebook has authenticated the user
+    app.get('/auth/facebook/callback', passport.authenticate('facebook', {failureRedirect: '/#/'}), (req, res) => {
+        res.cookie('token', req.user.facebook.token);
+        res.cookie('authType', req.user.facebook.authType);
+        res.cookie('username', req.user.facebook.displayName);
+        res.cookie('profilepicture', req.user.facebook.photos);
+        res.redirect('/#/clienthome');
+    });
 
-          app.get('/userProfile',function(req, res){
-            console.log(req.user);
-            res.json({user:req.user});
-          });
+    app.get('/userProfile', function(req, res) {
+        console.log(req.user);
+        res.json({user: req.user});
+    });
     // *******************************************
     // Google authentication routes
     // *******************************************
     //  send to google to do the authentication
-    app.get('/auth/google', passport.authenticate('google', { session: false, scope : [ 'email'] }),(req, res) =>
-      {
-            res.json(req.user);
-      });
+    app.get('/auth/google', passport.authenticate('google', {
+        session: false,
+        scope: ['email']
+    }), (req, res) => {
+        res.json(req.user);
+    });
 
     // the callback after google has authorized the user
-    app.get('/auth/google/callback',
-              passport.authenticate('google', {
-                  failureRedirect : '/#/'
-              }), (req, res) => {
-                res.cookie('token', req.user.google.token);
-                res.cookie('username',req.user.google.name);
-                res.cookie('authType', req.user.google.authType);
-                res.cookie('profilepicture', req.user.google.photos);
-                res.redirect('/#/clienthome');
-              });
+    app.get('/auth/google/callback', passport.authenticate('google', {failureRedirect: '/#/'}), (req, res) => {
+        res.cookie('token', req.user.google.token);
+        res.cookie('username', req.user.google.name);
+        res.cookie('authType', req.user.google.authType);
+        res.cookie('profilepicture', req.user.google.photos);
+        res.redirect('/#/clienthome');
+    });
 };

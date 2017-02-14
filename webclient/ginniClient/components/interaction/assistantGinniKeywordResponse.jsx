@@ -43,10 +43,10 @@ export default class AssistantGinniMixedReply extends React.Component {
                         <Feed.Extra>
                             <Label.Group>
                                 {this.props.data.blog.length-1>0
-                                    ? <Label onClick={this.displayBlogs} basic color='orange'>Blogs</Label>
+                                    ? <Label onClick={this.displayBlogs} basic color='orange' id='cursor'>Blogs</Label>
                                     : ''}
                                 {this.props.data.video
-                                    ? <Label onClick={this.displayVideos} basic color='orange'>Videos</Label>
+                                    ? <Label onClick={this.displayVideos} basic color='orange' id='cursor'>Videos</Label>
                                     : ''}
                             </Label.Group>
                         </Feed.Extra>
