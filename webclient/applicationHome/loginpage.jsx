@@ -46,7 +46,6 @@ export default class LoginPage extends React.Component
                   else{
                     hashHistory.push('/clienthome');
                     let socket =io();
-                    console.log('before emmit');
                     socket.emit('userLoginStatus',{value:1});
                   }
                 },

@@ -23,6 +23,7 @@ import Cookie from 'react-cookie';
 import {hashHistory} from 'react-router';
 import Config from '../../../../config/url';
 import './leftmenu.css';
+
 export default class LeftMenu extends Component {
     constructor(props) {
         super(props);
@@ -50,22 +51,21 @@ export default class LeftMenu extends Component {
         }
         this.setState({activeItem: name,counter:this.state.counter});
     });
-    componentDidMount() {
-      console.log("entered");
+    componentDidMount() {    
         this.getUserInformation();
         this.getNotificationCount();
         let socket = io();
         socket.on('update label', (data) => {
-            console.log(data);
+
             this.state.counter = this.state.counter + 1;
             this.setState({counter: this.state.counter});
         });
     }
     getNotificationCount() {
         let url = Config.url + '/getbroadcastmessage/count';
-        console.log(url);
+
         Axios.get(url).then((response) => {
-            console.log(response);
+
             this.setState({counter: response.data.count});
         }).catch((error) => {
             console.log(error);
@@ -79,14 +79,13 @@ export default class LeftMenu extends Component {
         data: 'json'
       }).then(function (response) {
         let authType = Cookie.load("authType");
-        console.log(authType);
+
         if (authType == "facebook") {
-            console.log(response.data.user.facebook.displayName);
+
             self.setState({name: response.data.user.facebook.displayName, email: response.data.user.facebook.email, photo: response.data.user.facebook.photos, usertype: false});
         }
         else if (authType == "google") {
-          console.log(response.data.user.google.photos);
-          console.log(response.data.user.google.name+"name")
+
             self.setState({name: response.data.user.google.name, email: response.data.user.google.email, photo: response.data.user.google.photos, usertype: false});
         }
         else if (authType == "local") {
@@ -110,7 +109,7 @@ export default class LeftMenu extends Component {
   let authType= Cookie.load("authType");
         if(authType== "local"){
           let profilepicture = Cookie.load("profilepicture");
-          console.log("value"+profilepicture);
+
             trigger = (
       <span>
       <Image avatar src={require('../../../../webserver/images/'+profilepicture)}/> {name=customername}
@@ -118,7 +117,7 @@ export default class LeftMenu extends Component {
     );
   }else
     if(authType == "facebook"){
-      console.log(authType);
+
         trigger = (
   <span>
   <Image avatar src={this.state.photo}/> {name=customername}

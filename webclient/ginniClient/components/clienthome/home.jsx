@@ -44,7 +44,7 @@ export default class ClientHome extends React.Component {
                     </Divider>
                     <Grid.Row divided vertically>
                         <Grid.Column width={2}/>
-                        <Grid.Column width={4} centered={'true'}>
+                        <Grid.Column width={4} centered={true}>
                             <Grid.Row>
                                 <center>
                                     <Image className="imagepointer" src='../../images/react.jpg' size='small' avatar onClick={this.onSubmitEmail.bind(this)}/>

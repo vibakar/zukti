@@ -13,7 +13,7 @@ export default class AdminWelcomePage extends React.Component {
                 backgroundImage: "url('../../images/intro-bg.jpg')",height:'absolute'
             }}>
 
-                <Grid container={'true'} centered={'true'}>
+                <Grid container={true} centered={true}>
                     <Grid.Row/>
                     <Grid.Row>
                         <Grid.Column width={2}>
