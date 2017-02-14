@@ -1,5 +1,6 @@
-let nlp = require('nlp_compromise');
+
 module.exports = function(sentence) {
+  let nlp = require('nlp_compromise');
   let keywordLexicon = require('../../../lexicon/keywordLexicon.json');
   let intentLexicon = require('../../../lexicon/intentLexicon.json');
     //  console.log(intentLexicon);
