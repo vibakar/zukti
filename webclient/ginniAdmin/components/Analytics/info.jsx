@@ -27,19 +27,20 @@ export default class Info extends React.Component {
         count=0;
         count1=0;
         Axios({url: 'http://localhost:8080/viewall', method: 'GET'}).then((response)=> {
-            let detailNew = response.data.map((fulldetail)=> {
-                count++;
-                self.setState({countvalue: count});
-                if (fulldetail.local.loggedinStatus) {
-                    count1++;
-                    self.setState({countonline: count1});
-                }
-                return fulldetail;
-            });
-            this.setState({userinformation: detailNew});
+          console.log(response.data.length);
+          count=response.data.length;
+            self.setState({countvalue: count});
         }).catch(function(err) {
             console.log(err);
         });
+        Axios({url: 'http://localhost:8080/viewallonlineuser', method: 'GET'}).then((response)=> {
+          console.log(response.data.length);
+          count1=response.data.length;
+            self.setState({countonline: count1});
+        }).catch(function(err) {
+            console.log(err);
+        });
+
         Axios.get('http://localhost:8080/analytics').
         then((response)=>{
           this.state.queryCount=response.data.queryCount;
@@ -55,7 +56,6 @@ export default class Info extends React.Component {
           this.setState({queryCount:this.state.queryCount});
         });
         socket.on('userLoggedIncount',(data)=>{
-          console.log('user aaya gaya');
           this.state.countonline = this.state.countonline+data.value;
           this.setState({countonline:this.state.countonline});
         })

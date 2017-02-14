@@ -57,7 +57,18 @@ module.exports = function(app, passport) {
             }
         });
     });
-
+    app.get('/viewallonlineuser', function(req, res) {
+            RegisteredUser.find(
+              {'local.loggedinStatus': 'true','local.localType': 'Customer'}, function(err, alldetails) {
+                if (err) {
+                    res.send(err);
+                    console.log('error ocuured');
+                } else {
+                  console.log(alldetails);
+                    res.send(alldetails);
+                }
+            });
+        });
     /* LOCAL SIGNUP*/
     // local sign up route -  all the details entered by the user will be saved in database
     app.post('/signup', function(req, res) {
