@@ -11,6 +11,7 @@ export default class Signup extends React.Component {
     {
         super();
         this.state = {
+          // setting the default values for some state variables
           openSnackbar: false,
             snackbarMsg: '',
             opendimmer: false,
@@ -45,7 +46,7 @@ export default class Signup extends React.Component {
 
     show = (dimmer) => () => this.setState({dimmer, open: true})
     close = () => hashHistory.push('/');
-    // email verification link
+    // send email verification link to user to activate user account
     sentemail(email) {
         Axios({
             url: ' http://localhost:8080/send',
@@ -57,6 +58,7 @@ export default class Signup extends React.Component {
                 hashHistory.push('/mail');
             }).catch(function(err) {
               alert(email);
+              // In case of any network error in between signup process it deletes the user from database if it is stored without sending verification link
                 Axios({
                     url: ' http://localhost:8080/deleteuser',
                     method: 'delete',
@@ -73,9 +75,11 @@ export default class Signup extends React.Component {
     // new user signup
     onRegisterUser(e, value) {
       e.preventDefault();
+      // checks the equlity between password and confirm password field
       if(value.formData.password===value.formData.repassword)
         {
           this.setState({opendimmer:true});
+          // signup
           Axios({
             url: 'http://localhost:8080/signup',
             method: 'post',
@@ -88,6 +92,7 @@ export default class Signup extends React.Component {
           });
           this.sentemail(value.formData.email);
         }
+        // if password and confirm password field not matched it shows error
         else{
              this.setState({openSnackbar: true, snackbarMsg:"check password field"});
         }

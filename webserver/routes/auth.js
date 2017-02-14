@@ -7,7 +7,6 @@ module.exports = function(app, passport) {
         mailOptions,
         host,
         link;
-
     app.post('/login', passport.authenticate('local', {failureRedirect: '/'}), (req, res) => {
         res.cookie('token', req.user);
         res.cookie('username', req.user.name);
@@ -15,7 +14,7 @@ module.exports = function(app, passport) {
         res.cookie('profilepicture', req.user.photos);
         res.send(req.user);
     });
-    //logout
+    //logout - all the user informations will be cleared in cookie and loggedin status will be changed to false
     app.get('/signout', function(req, res) {
         res.clearCookie('token');
         res.clearCookie('authType');
@@ -33,10 +32,10 @@ module.exports = function(app, passport) {
                 console.log("status not updated");
             } else {
                 req.logout();
-                // res.send('Successfully Logged out');
             }
         });
     });
+    // sends all the customer details to clientside
     app.get('/viewall', function(req, res) {
         RegisteredUser.find({
             'local.localType': 'Customer'
@@ -50,9 +49,20 @@ module.exports = function(app, passport) {
             }
         });
     });
-
+    app.get('/viewallonlineuser', function(req, res) {
+            RegisteredUser.find(
+              {'local.loggedinStatus': 'true','local.localType': 'Customer'}, function(err, alldetails) {
+                if (err) {
+                    res.send(err);
+                    console.log('error ocuured');
+                } else {
+                  console.log(alldetails);
+                    res.send(alldetails);
+                }
+            });
+        });
     /* LOCAL SIGNUP*/
-    // local sign up route
+    // local sign up route -  all the details entered by the user will be saved in database
     app.post('/signup', function(req, res) {
         let newUser = new RegisteredUser();
         String.prototype.capitalizeFirstLetter = function() {
@@ -80,7 +90,9 @@ module.exports = function(app, passport) {
             }
         });
     });
+    // adminsignup- all the details entered by admin in postman will be saved in database
     app.post('/adminsignup', function(req, res) {
+
         let newUser = new RegisteredUser();
         rand = Math.floor((Math.random() * 100) + 54);
 
@@ -107,7 +119,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    //view unanswered query
+    // view all the unanswered query asked by user to the admin
     app.get('/viewquery', function(req, res) {
         UnansweredQuery.find({}, function(err, alldetails) {
             if (err) {
@@ -123,6 +135,7 @@ module.exports = function(app, passport) {
     var host,
         link,
         mailOptions;
+    // send the verification mail to the user while signup to activate his account
     app.post('/send', function handleSayHello(req, res) {
         console.log(req.body.data);
         RegisteredUser.find({
@@ -134,6 +147,7 @@ module.exports = function(app, passport) {
                 console.log('error ocuured');
 
             } else {
+                // module to send email
                 var transporter = nodemailer.createTransport({
                     service: 'Gmail',
                     secure: false,
@@ -176,6 +190,7 @@ module.exports = function(app, passport) {
         });
 
     });
+    // deleteuser-in case of any network error while signup the user data will be deleted in database if email is not sent to a particular user
     app.delete("/deleteuser", function(req, res) {
         request = req.body.data;
         console.log(request);
@@ -193,6 +208,7 @@ module.exports = function(app, passport) {
         });
     });
     /*verify the link which sent to  user email*/
+    // verification link cannot be used more than once (will be expired once it is used)
     app.get('/verify', function(req, res) {
         let checkID = req.query.id;
         let checkMail = req.query.email;
@@ -236,7 +252,7 @@ module.exports = function(app, passport) {
             }
         });
     });
-    //send verification link to the user mail for forgotpassword
+    //send verification link to the user mail for forgotpassword and this link is not valid more than once
     app.post('/forgetpassword', function password(req, res) {
         rand = Math.floor((Math.random() * 100) + 54);
         let encryptRand =RegisteredUser.generateHashVID(rand);
@@ -256,6 +272,7 @@ module.exports = function(app, passport) {
                 console.log("id changed");
             }
         });
+        // find whether the user exists with that email id
         RegisteredUser.find({
             'local.email': req.body.email
         }, function(err, profile) {
@@ -315,6 +332,7 @@ module.exports = function(app, passport) {
             }
         });
     });
+    // once new password is changed it will be updated in user Information
     app.post('/updatepassword', function(req, res) {
         RegisteredUser.find({
             'local.verificationID': req.body.id
@@ -324,6 +342,7 @@ module.exports = function(app, passport) {
                 console.log('error occured');
             } else {
                 console.log(req.protocol + ":/" + req.get('host') + ":" + ("http://" + host));
+                // checks whether the link is valid or expired
                 if ((req.protocol + "://" + req.get('host')) == ("http://" + host)) {
                     console.log("Domain is matched. Information is from Authentic email");
                     console.log("req.body.id" + req.body.id);
@@ -333,6 +352,7 @@ module.exports = function(app, passport) {
                         RegisteredUser.update({
                             'local.verificationID': req.body.id
                         }, {
+                            // using the verification id password updated in particular user Information
                             $set: {
                                 'local.password': RegisteredUser.generateHash(req.body.pass),
                                 'local.verificationID': 0
@@ -360,6 +380,7 @@ module.exports = function(app, passport) {
         RegisteredUser.find({
             'local.email': req.body.email
         }, function(err, profile) {
+            // checks email already exist or not
             if (profile.length) {
                 console.log(req.body.email);
                 console.log(profile.length);
@@ -375,7 +396,7 @@ module.exports = function(app, passport) {
         });
     });
 
-    //profileupdation
+    //profileupdation for both user and admin
     app.put('/updateprofile', function(req, res) {
         String.prototype.capitalizeFirstLetter = function() {
             return this.charAt(0).toUpperCase() + this.slice(1);
@@ -388,6 +409,7 @@ module.exports = function(app, passport) {
             RegisteredUser.update({
                 'local.email': request1
             }, {
+                // updating user details with the help of email
                 $set: {
                     'local.name': request2,
                     'local.firstname': request3,
@@ -402,13 +424,14 @@ module.exports = function(app, passport) {
             });
         }
     });
-    //reset password
+    // user can reset password after login to the application
     app.put('/resetpassword', function(req, res) {
         if (req.body) {
             request1 = req.body.password;
             RegisteredUser.update({
                 'local.email': req.user.local.email
             }, {
+                // updating the new password
                 $set: {
                     'local.password': RegisteredUser.generateHash(request1)
                 }
@@ -421,13 +444,14 @@ module.exports = function(app, passport) {
             });
         }
     });
-     // image for localstratergy
+    // uploading image for localstratergy
     app.post('/uploadImage', function(req, res) {
         res.cookie('profilepicture', req.body.data);
         console.log(req.body.data, "vgbhnjk");
         RegisteredUser.update({
             'local.email': req.user.local.email
         }, {
+            // updating image
             $set: {
                 'local.photos': req.body.data
             }
@@ -443,6 +467,7 @@ module.exports = function(app, passport) {
     // customer Information
     app.get('/clientinformation', function(req, res) {
         let email = req.user.local.email;
+        // using email can fetch all the information about the user
         console.log(email);
         RegisteredUser.find({
             'local.email': email
@@ -458,6 +483,7 @@ module.exports = function(app, passport) {
     app.post('/admindetails', function(req, res) {
         console.log("entered details")
         let email = req.body.data;
+        // using email can fetch all the information about the admin
         console.log(email);
         RegisteredUser.find({
             'local.email': email
@@ -469,20 +495,7 @@ module.exports = function(app, passport) {
             }
         });
     });
-    // client Information
-    app.post('/clientInformations', function(req, res) {
-        let email = req.body.data;
-        console.log(email);
-        RegisteredUser.find({
-            'local.email': email
-        }, function(err, profile) {
-            console.log(profile)
-            res.send(profile);
-            if (err) {
-                res.send(err);
-            }
-        });
-    });
+
     // *******************************************
     // Facebook authentication routes
     // *******************************************
@@ -503,7 +516,7 @@ module.exports = function(app, passport) {
         res.cookie('profilepicture', req.user.facebook.photos);
         res.redirect('/#/clienthome');
     });
-
+    // userprofile-in which all the user informations will be stored
     app.get('/userProfile', function(req, res) {
         console.log(req.user);
         res.json({user: req.user});

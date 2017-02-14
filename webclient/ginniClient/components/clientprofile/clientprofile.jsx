@@ -19,6 +19,7 @@ export default class ClientProfile extends React.Component
 {
     constructor(props) {
         super(props);
+        // setting default values to the state variables
         this.state = {
             allFiles: [],
             email: '',
@@ -32,7 +33,8 @@ export default class ClientProfile extends React.Component
         this.onDrop = this.onDrop.bind(this);
         this.saveImage = this.saveImage.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
-    };
+    }
+    // to set the image for preview
     onDrop(files)
     {
         files.forEach((file) => {
@@ -43,12 +45,13 @@ export default class ClientProfile extends React.Component
         this.setState({allFiles: this.state.allFiles[0]});
         console.log(this.state.allFiles);
     }
-
+// to save the image in server
     uploadImage()
     {
         let photo = new FormData();
         photo.append('IMG', this.state.allFiles);
         let self = this;
+          // sending the image to server
         request.post('/upload').send(photo).end(function(err, resp) {
             console.log('save')
             if (err) {
@@ -60,8 +63,8 @@ export default class ClientProfile extends React.Component
                 return resp;
             }
         });
-
     }
+    // to save the image name in database in which the image already saved in server
     saveImage(image) {
         Axios({
             method: 'POST',
@@ -75,10 +78,12 @@ export default class ClientProfile extends React.Component
             console.log("error", err);
         });
     }
+      // if user profile updated successfully it redirects to react page
     profile()
     {
         hashHistory.push('/chat')
     }
+      // get the information about the user like fetches emailid
     componentDidMount() {
         const self = this;
         Axios({url: ' http://localhost:8080/clientinformation', method: 'get'}).then(function(response) {
@@ -90,6 +95,7 @@ export default class ClientProfile extends React.Component
             // alert("bjhbj"+err);
         });
     }
+      // edited details will be sent to server
     OnSubmitData(e, value) {
         const self = this;
         e.preventDefault();

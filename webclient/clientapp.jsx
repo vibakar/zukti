@@ -27,9 +27,8 @@ import SuccessfullyRegistered from './applicationHome/successfullyregistered';
 import AdminProfilePage from './ginniAdmin/components/admin/adminprofile';
 import Cookie from 'react-cookie';
 import MailNotSend from './applicationHome/mailnotsend.jsx';
-
-
 injectTapEventPlugin();
+// route protection - if the token is empty then it should not move forward or backward into the application and it should not display any user information
 let requireAuth = function(nextState, replace) {
     let token = Cookie.load('token');
     if (!token) {
@@ -38,10 +37,9 @@ let requireAuth = function(nextState, replace) {
             state: {
                 nextPathname: nextState.location.pathname
             }
-        })
+        });
     }
-}
-
+};
 ReactDOM.render(
     <MuiThemeProvider>
     <Router history={hashHistory}>
@@ -70,6 +68,5 @@ ReactDOM.render(
         <Route path='/successfullyregistered' component={SuccessfullyRegistered}/>
         <Route path='/mailnotsend' component={MailNotSend}/>
         <Route path='/logoutfile' component={LogoutFile}/>
-
     </Router>
 </MuiThemeProvider>, document.getElementById('mountapp'));

@@ -5,7 +5,7 @@ import Axios from 'axios';
 import Cookie from 'react-cookie';
 import './homestyle.css';
 export default class ClientHome extends React.Component {
-
+// if the user clicks logout it clears all the cookies which is stored when user login and redirect to apphome
     handleLogout()
     {
       Axios({
@@ -21,6 +21,7 @@ export default class ClientHome extends React.Component {
                  console.log("error",err);
             });
     }
+    // redirects to chat page
     onSubmitEmail() {
         hashHistory.push('/chat')
     }
@@ -44,7 +45,7 @@ export default class ClientHome extends React.Component {
                     </Divider>
                     <Grid.Row divided vertically>
                         <Grid.Column width={2}/>
-                        <Grid.Column width={4} centered={'true'}>
+                        <Grid.Column width={4} centered={true}>
                             <Grid.Row>
                                 <center>
                                     <Image className="imagepointer" src='../../images/react.jpg' size='small' avatar onClick={this.onSubmitEmail.bind(this)}/>

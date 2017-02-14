@@ -17,6 +17,7 @@ export default class LoginPage extends React.Component
 {
     constructor(props) {
         super(props);
+      // setting the default values for some state variables
         this.state = {
             open: true,
             openSnackbar: false,
@@ -39,17 +40,20 @@ export default class LoginPage extends React.Component
                     email: value.formData.userName,
                     password: value.formData.password
                 },
+                // if the emailid exist then it checks whether the emailid entered is user or admin
                 success: function(response) {
+                  // if it is admin it redirects to adminhome
                   if(response.localType === 'Admin') {
                      hashHistory.push('/adminHome');
                   }
+                    // if it is user it redirects to clienthome
                   else{
                     hashHistory.push('/clienthome');
-                    let socket =io();
-                    console.log('before emmit');
-                    socket.emit('userLoginStatus',{value:1});
+                    let socket = io();
+                    socket.emit('userLoginStatus', {value:1});
                   }
                 },
+                // It throws a error message in case of any error like password incorrect or no such emailid registered
                 error: function(err) {
                     this.setState({openSnackbar: true, snackbarMsg: err.responseText});
                 }.bind(this)
@@ -87,7 +91,7 @@ export default class LoginPage extends React.Component
             <Modal.Content>
             <p id="para">
             <h2>
-            Nice to see you back!
+            Great to have you back!
             </h2>
             <h2>Go ahead and sign in</h2>
           </p>
