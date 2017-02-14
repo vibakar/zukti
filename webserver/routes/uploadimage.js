@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const name;
+let name;
 /* Uploaded images stored in a given directory with extensions */
 let storage = multer.diskStorage({
     destination: function(req, file, cb) {

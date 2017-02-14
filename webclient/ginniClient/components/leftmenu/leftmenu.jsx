@@ -3,18 +3,10 @@ import LeftMenuContent from '../leftmenuPusherContent/leftmenuContent';
 import {
     Sidebar,
     Segment,
-    Button,
     Image,
     Icon,
-    Header,
-    Grid,
-    Divider,
     Menu,
-    Card,
     Popup,
-    Feed,
-    Link,
-    Input,
     Label,
     Dropdown
 } from 'semantic-ui-react';
@@ -102,7 +94,7 @@ export default class LeftMenu extends Component {
     render() {
         const activeItem = this.state.activeItem;
         const customername = this.state.name;
-        const trigger,
+        let trigger;
         let authType = Cookie.load("authType");
         if (authType == "local") {
             let profilepicture = Cookie.load("profilepicture");
