@@ -1,8 +1,9 @@
+// function to take keywords and return response from neo4j database
 let getNeo4jDriver = require('../../../neo4j/connection');
 let answerNotFoundReply = require('../../../config/answerNotFoundReply');
 let replyForKeyword = require('../../../config/replyForKeyword.json');
 module.exports = function(keywords, sendResponse) {
-
+// query to extract data
     let query = `UNWIND ${JSON.stringify(keywords)} AS token
                  MATCH (n:concept)
                  WHERE n.name = token
@@ -20,15 +21,15 @@ module.exports = function(keywords, sendResponse) {
                  ORDER BY rel.rating DESC
                  RETURN LABELS(n)as contentType ,COLLECT(distinct n.value) `;
 
-
     let session = getNeo4jDriver().session();
     session
         .run(query)
         .then(function(result) {
             // Completed!
             session.close();
-            console.log(result.records[0]._fields[0]);
+          // condition to handle when no result is found
             if (result.records[0] === 0) {
+              //randomly generating answer and send response
                 let foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
                 resultArray = [];
                 let resultObj = {};
@@ -39,28 +40,26 @@ module.exports = function(keywords, sendResponse) {
             } else {
                 let hasAtleastSomeContent = false;
                 let resultArray = [];
-                let resultObj = {}
-                result.records.forEach((record)=>{
-                  let field = record._fields;
-                  let contentType =field[0][0];
-                  let content = field[1];
-                  console.log(content);
-                  if(content.length!=0){
-                    hasAtleastSomeContent =true;
-                    resultObj[contentType] = content;
-                  }
+                let resultObj = {};
+                result.records.forEach((record) => {
+                    let field = record._fields;
+                    let contentType = field[0][0];
+                    let content = field[1];
+                        if (content.length != 0) {
+                        hasAtleastSomeContent = true;
+                        resultObj[contentType] = content;
+                    }
                 });
                 resultObj.time = new Date().toLocaleString();
-                if(hasAtleastSomeContent){
-                  resultObj.value = replyForKeyword[Math.floor(Math.random() * replyForKeyword.length)];
-                  resultArray.push(resultObj);
-                  resultObj.keywordResponse =true;
-                  sendResponse(true, resultArray);
-                }
-                else{
-                  resultObj.value = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
-                  resultArray.push(resultObj);
-                  sendResponse(true, resultArray);
+                if (hasAtleastSomeContent) {
+                    resultObj.value = replyForKeyword[Math.floor(Math.random() * replyForKeyword.length)];
+                    resultArray.push(resultObj);
+                    resultObj.keywordResponse = true;
+                    sendResponse(true, resultArray);
+                } else {
+                    resultObj.value = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
+                    resultArray.push(resultObj);
+                    sendResponse(true, resultArray);
                 }
             }
         })

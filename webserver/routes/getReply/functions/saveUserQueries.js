@@ -1,8 +1,10 @@
+// it is use to save user queries in mongodb
 let UserChatHistory = require('../../../models/userChatHistory');
 module.exports = function(email,isUnAnswered, question, answerObj) {
     UserChatHistory.findOne({
         email: email
     }, function(err, data) {
+      // if data is not present then initialize a new UserChatHistory or add in existing database
         if (!data) {
             let newUserChatHistory = new UserChatHistory();
             newUserChatHistory.email = email;

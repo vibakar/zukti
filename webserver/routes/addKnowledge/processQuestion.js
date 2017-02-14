@@ -59,8 +59,7 @@ module.exports = function(sentence) {
             keywords.push(keyword.join(' '));
         }
     }
-    console.log(intents);
-    console.log(keywords);
+  
     return {
         keywords,
         intents

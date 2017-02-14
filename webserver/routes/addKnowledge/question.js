@@ -4,11 +4,11 @@ let processQuestion = require('./processQuestion');
 let voteAnswer = require('./voteAnswer');
 let router = express.Router();
 
+// router to verify input question has keyword or not
 router.post('/verifyQuestion', function(req, res) {
     let question = req.body.question;
     let questionInfo = processQuestion(question);
-    console.log(questionInfo);
-    if (questionInfo.keywords.length === 0) {
+        if (questionInfo.keywords.length === 0) {
         res.json({
             isValidQuestion: false,
             errorMessage:'The question must have a keyword'
@@ -33,16 +33,15 @@ router.post('/addQuestionAnswer', function(req, res) {
             id: id
         });
     };
+    // function call to save question and answer in neo4j database
     saveQuestionAnswer(req,questionsAnswerSavedCallback);
 });
-
+  // router to rate answer which user liked
 router.post('/rateAnswer',function(req,res){
   let liked = req.body.liked;
   let type = req.body.type;
   let value = req.body.value;
-  console.log(type);
-  console.log(value);
-  console.log(liked);
+  //method to save user preference in neo4j
   voteAnswer(liked,type,value);
   res.send('liked');
 });

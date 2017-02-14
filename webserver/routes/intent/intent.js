@@ -14,6 +14,7 @@ router.get('/baseIntents', function(req, res) {
     };
     fetchBaseIntents(resultCallback);
 });
+//router to get same intents
 router.get('/getSameAsIntents', function(req, res) {
     let baseIntent = req.query.baseIntent;
     let resultCallback = function(sameAsIntents) {
@@ -23,6 +24,7 @@ router.get('/getSameAsIntents', function(req, res) {
     };
     fetchSameAsIntents(baseIntent, resultCallback);
 });
+// roter to add new intent which is same to base intent
 router.post('/addNewSameAsIntent', function(req, res) {
     let baseIntent = req.body.baseIntent;
     let newSameAsIntent = req.body.newSameAsIntent;
@@ -31,6 +33,7 @@ router.post('/addNewSameAsIntent', function(req, res) {
     };
     addNewSameAsIntent(baseIntent, newSameAsIntent, resultCallback);
 });
+//router to create new intent
 router.post('/createIntent', function(req, res) {
     let NewIntent = req.body.NewIntent;
     let resultCallback = function(result) {

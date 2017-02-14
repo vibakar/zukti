@@ -1,7 +1,8 @@
+// this route is used to save,get and delte bookmarked answers in database
 var express = require('express');
 var router = express.Router();
 const UserBookmarks = require('../../models/userBookmarks');
-
+// router to get user bookmarked answers from mongodb
 router.get('/',function(req,res){
   let email = req.user.local.email||req.user.facebook.email||req.user.google.email;
   UserBookmarks.find({email:email},function(err,userBookmarks){
@@ -13,15 +14,15 @@ router.get('/',function(req,res){
     }
   })
 });
-
+// router to save bookmarks in database
 router.post('/', function(req, res, next) {
     let email = req.user.local.email || req.user.facebook.email || req.user.google.email;
     let question = req.body.question;
     let responseType = req.body.responseType;
     let savedResponse = req.body.savedResponse;
     let date = req.body.date;
-    console.log(email);
-    UserBookmarks.findOne({
+    //finding in UserBookmarks mongo model with email
+      UserBookmarks.findOne({
         email: email
     }, function(err, userBookmarks) {
         if (!userBookmarks) {
@@ -31,8 +32,7 @@ router.post('/', function(req, res, next) {
             userBookmarks.bookmarks=bookmark;
             userBookmarks.save(function(err, data) {
                 console.log("saved")
-                console.log(data)
-            });
+                });
         } else {
               let bookmark ={question:question,responseType:responseType,savedResponse:savedResponse,date:date};
             let bookmarks = userBookmarks.bookmarks;
@@ -49,7 +49,7 @@ router.post('/', function(req, res, next) {
         }
     });
 });
-
+// router to delete bookmarked answers from mongodb
 router.delete('/:bookmarkId',function(req, res) {
     let email = req.user.local.email||req.user.facebook.email||req.user.google.email;
     UserBookmarks.update(

@@ -1,3 +1,4 @@
+// to save unanswered Query
 let UnansweredQuery = require('../../../models/unansweredQuery');
 module.exports = function(username, email, question, keywords, intents) {
     let unansweredQuery = new UnansweredQuery();

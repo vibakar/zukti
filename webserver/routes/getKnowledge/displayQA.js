@@ -7,10 +7,8 @@ module.exports = function(resultCallback) {
 
     session.run(query)
         .then((result) => {
-
             session.close();
             resultCallback(result.records);
-          
         })
         .catch((error) => {
             console.log(error);

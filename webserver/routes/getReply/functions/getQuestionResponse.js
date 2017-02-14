@@ -1,8 +1,6 @@
+// get reaponse of the question asked by user from neo4j database
 let getNeo4jDriver = require('../../../neo4j/connection');
 module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundCallback) {
-
-    //intents.push('what');
-
     let query = `UNWIND ${JSON.stringify(intents)} AS token
                  MATCH (n:intent)
                  WHERE n.name = token
@@ -32,11 +30,10 @@ module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundC
         .then(function(result) {
             // Completed!
             session.close();
-            console.log(result);
-            if (result.records.length === 0) {
+                  if (result.records.length === 0) {
                 noAnswerFoundCallback();
             } else {
-                console.log(result);
+
                 let answerObj = {};
                 answerObj.time = new Date().toLocaleString();
                 let resultArray = result.records.forEach((record) => {
@@ -49,7 +46,7 @@ module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundC
                         }
                     });
                 });
-                console.log(answerObj);
+//sending the answer to callback
                 answerFoundCallback(answerObj);
             }
         })

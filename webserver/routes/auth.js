@@ -522,7 +522,6 @@ module.exports = function(app, passport) {
     }), (req, res) => {
         res.json(req.user);
     });
-
     // the callback after google has authorized the user
     app.get('/auth/google/callback', passport.authenticate('google', {failureRedirect: '/#/'}), (req, res) => {
         res.cookie('token', req.user.google.token);
