@@ -43,7 +43,7 @@ const userSchema = mongoose.Schema({
 
 });
 // generating a hash
-userSchema.methods.generateHash = function(password) {
+userSchema.statics.generateHash = function(password) {
     console.log("Inside generating hashing method");
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
