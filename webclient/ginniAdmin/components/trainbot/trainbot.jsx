@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Button, Icon, Card, Divider} from 'semantic-ui-react';
+import {Grid, Card, Divider} from 'semantic-ui-react';
 import IntentDropDown from './IntentDropDown';
 import InputNewSameAsIntent from './inputNewSameAsIntent';
 import SameAsIntents from './sameAsIntents';
@@ -14,7 +14,7 @@ export default class TrainBot extends React.Component {
             sameAsIntentsDisplay: [],
             baseIntent: '',
             open: false
-        }
+        };
     }
     setSameAsIntents(baseIntent, intents) {
         // map sameAs intents with baseIntent
@@ -23,7 +23,7 @@ export default class TrainBot extends React.Component {
         });
         this.setState({sameAsIntentsDisplay: sameAsIntentsDisplay, baseIntent: baseIntent});
     }
-    addNewSameAsIntent(intent){
+    addNewSameAsIntent(intent) {
       let length = this.state.sameAsIntentsDisplay.length;
       this.state.sameAsIntentsDisplay.push(<SameAsIntents key={length} intent={intent}/>);
       this.setState({sameAsIntentsDisplay: this.state.sameAsIntentsDisplay});
@@ -52,7 +52,7 @@ export default class TrainBot extends React.Component {
                         <Divider />
                     </Grid.Row>
                     <Grid.Row>
-                        <Grid.Column width={5}></Grid.Column>
+                        <Grid.Column width={5} />
                         <Grid.Column width={6}>
                             <IntentDropDown handlerForSameAsIntents={this.setSameAsIntents}/>
                         </Grid.Column>
@@ -62,20 +62,19 @@ export default class TrainBot extends React.Component {
                   <a><h5 onClick={this.handleopen} id='addintent'> Add More Intent ?</h5></a><br/>
                   { this.state.open ? <NewIntentText open={ this.handleclose}/> : null}
                 </Grid.Row>
-                    <br/>  <br/>
+                    <br/><br/>
                     <Grid.Row>
-                        <Grid.Column width={5}></Grid.Column>
+                        <Grid.Column width={5} />
                         <Grid.Column width={6}>
-                            <InputNewSameAsIntent baseIntent={this.state.baseIntent} handlerAddNewIntent={this.addNewSameAsIntent}/>
+                        <InputNewSameAsIntent baseIntent={this.state.baseIntent}
+                          handlerAddNewIntent={this.addNewSameAsIntent}/>
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row />
-                    <br/>  <br/>
+                    <br/><br/>
                     <Grid.Row>
-                        <Grid.Column width={5}></Grid.Column>
-                        <Grid.Column width={6} >
-                            
-                        </Grid.Column>
+                        <Grid.Column width={5} />
+                        <Grid.Column width={6} />
                     </Grid.Row>
                     <Grid.Row />
                   </Grid.Column>

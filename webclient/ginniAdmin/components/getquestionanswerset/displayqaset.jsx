@@ -13,28 +13,26 @@ export default class DisplayQAset extends React.Component {
         let answers = [];
         let url = Config.url + '/getknowledge';
         Axios.get(url).then((response) => {
-
-            //separate questions and answers
+            // separate questions and answers
             let questionset = response.data.questionanswerSet;
 
             let set = [];
-
             questionset.map((data, index) => {
                 let blogArray = [],
                     textArray = [],
                     videoArray = [];
                 data._fields[1].map((data1, i) => {
-                    if (data1[0] === "blog") {
+                    if (data1[0] === 'blog') {
                         blogArray.push(data1[1])
                     }
                 });
                 data._fields[1].map((data1, i) => {
-                    if (data1[0] === "text") {
+                    if (data1[0] === 'text') {
                         textArray.push(data1[1]);
                     }
                 });
                 data._fields[1].map((data1, i) => {
-                    if (data1[0] === "video") {
+                    if (data1[0] === 'video') {
                         videoArray.push(data1[1]);
                     }
                 });
@@ -45,20 +43,18 @@ export default class DisplayQAset extends React.Component {
                         texts: textArray,
                         videos: videoArray
                     }
-                })
-            })
-
-            console.log(set);
+                });
+            });
             this.props.handlerdisplayQASet(set);
         }).catch((error) => {
-            alert(error);
+            console.log(error);
         });
-
     }
     render() {
         return (
             <div >
-                <Button onClick={this.displayQuestionSetBlock} color='red'><Icon name='find'/>Display Question Answer Set</Button>
+                <Button onClick={this.displayQuestionSetBlock} color='red'>
+                  <Icon name='find'/>Display Question Answer Set</Button>
             </div>
         );
     }

@@ -17,8 +17,12 @@ export default class MailNotSend extends React.Component {
       <Grid.Column width={9} />
       <Grid.Column width={5}>
       <h2>
-      <Button className="buttonlogin" circular style={{backgroundColor: 'white'}} ><a href="#/login" id="head" style={{color: 'black'}}>LOGIN</a></Button>
-      &nbsp;&nbsp;<Button className="buttonsignin" circular style={{backgroundColor: 'white'}} ><a href="#/signup" id="head" style={{color:'black'}}>SIGNUP</a></Button></h2>
+      <Button className="buttonlogin" circular
+        style={{backgroundColor: 'white'}} >
+        <a href="#/login" id="head" style={{color: 'black'}}>LOGIN</a></Button>
+      &nbsp;&nbsp;<Button className="buttonsignin" circular
+        style={{backgroundColor: 'white'}} >
+        <a href="#/signup" id="head" style={{color: 'black'}}>SIGNUP</a></Button></h2>
       </Grid.Column>
       </Grid.Row>
       <Grid.Row/>

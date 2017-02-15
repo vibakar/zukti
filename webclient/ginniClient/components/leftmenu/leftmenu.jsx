@@ -15,7 +15,6 @@ import Cookie from 'react-cookie';
 import {hashHistory} from 'react-router';
 import Config from '../../../../config/url';
 import './leftmenu.css';
-
 export default class LeftMenu extends Component {
     constructor(props) {
         super(props);
@@ -29,7 +28,7 @@ export default class LeftMenu extends Component {
             name: '',
             photo: '',
             counter: 0
-        }
+        };
         this.onSubmitEmail = this.onSubmitEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
         this.getNotificationCount = this.getNotificationCount.bind(this);
@@ -37,7 +36,7 @@ export default class LeftMenu extends Component {
     }
     handleItemClick = ((e, {name}) => {
         if (this.state.activeItem === 'notifications') {
-            let url = Config.url + '/getbroadcastmessage/updateCount'
+            let url = Config.url + '/getbroadcastmessage/updateCount';
             this.state.counter = 0;
             Axios.post(url).then((response) => {}).catch((error) => {
                 console.log(error);
@@ -57,9 +56,7 @@ export default class LeftMenu extends Component {
     }
     getNotificationCount() {
         let url = Config.url + '/getbroadcastmessage/count';
-
         Axios.get(url).then((response) => {
-
             this.setState({counter: response.data.count});
         }).catch((error) => {
             console.log(error);
@@ -68,81 +65,95 @@ export default class LeftMenu extends Component {
     // to fetch the information about the user
     getUserInformation() {
         let self = this;
-        Axios({url: "http://localhost:8080/userProfile", method: 'GET', data: 'json'}).then(function(response) {
-            let authType = Cookie.load("authType");
-
-            if (authType == "facebook") {
-
-                self.setState({name: response.data.user.facebook.displayName, email: response.data.user.facebook.email, photo: response.data.user.facebook.photos, usertype: false});
-            } else if (authType == "google") {
-
-                self.setState({name: response.data.user.google.name, email: response.data.user.google.email, photo: response.data.user.google.photos, usertype: false});
-            } else if (authType == "local") {
-                self.setState({name: response.data.user.local.name, email: response.data.user.local.email, photo: response.data.user.local.photos, usertype: true});
+        Axios({
+          url: 'http://localhost:8080/userProfile',
+          method: 'GET',
+          data: 'json'}).then(function(response) {
+            let authType = Cookie.load('authType');
+            if (authType === 'facebook') {
+                self.setState({name: response.data.user.facebook.displayName,
+                  email: response.data.user.facebook.email,
+                  photo: response.data.user.facebook.photos, usertype: false});
+            } else if (authType === 'google') {
+                self.setState({name: response.data.user.google.name,
+                  email: response.data.user.google.email,
+                  photo: response.data.user.google.photos, usertype: false});
+            } else if (authType === 'local') {
+                self.setState({name: response.data.user.local.name,
+                email: response.data.user.local.email,
+                photo: response.data.user.local.photos, usertype: true});
             }
         }).catch(function(error) {
-            console.log("error", error);
+            console.log(error);
         });
     }
     onSubmitEmail() {
-        hashHistory.push('/profile')
+        hashHistory.push('/profile');
     }
     // redirects to changepassword page
     onChangePassword() {
-        hashHistory.push('/change')
+        hashHistory.push('/change');
     }
     render() {
         const activeItem = this.state.activeItem;
         const customername = this.state.name;
         let trigger;
-        let authType = Cookie.load("authType");
-        if (authType == "local") {
-            let profilepicture = Cookie.load("profilepicture");
-
+        let authType = Cookie.load('authType');
+        if (authType === 'local') {
+            let profilepicture = Cookie.load('profilepicture');
             trigger = (
                 <span>
-                    <Image avatar src={require('../../../../webserver/images/' + profilepicture)}/> {name = customername}
+                    <Image avatar src={require('../../../../webserver/images/' + profilepicture)}/>
+                    {name = customername}
                 </span>
             );
-        } else if (authType == "facebook") {
-
+        } else if (authType === 'facebook') {
             trigger = (
                 <span>
-                    <Image avatar src={this.state.photo}/> {name = customername}
+                    <Image avatar src={this.state.photo}/>
+                    {name = customername}
                 </span>
             );
-        } else if (authType == "google") {
+        } else if (authType === 'google') {
             trigger = (
                 <span>
-                    <Image avatar src={this.state.photo}/> {name = customername}
+                    <Image avatar src={this.state.photo}/>
+                     {name = customername}
                 </span>
             );
         }
         return (
             <div id="leftbarmenu">
-                <Sidebar as={Menu} className='fixed' animation='slide along' width='thin' visible={true} icon='labeled' vertical inverted>
-                    <Menu.Item name='Genie' active={activeItem === 'Genie'} onClick={this.handleItemClick}>
+                <Sidebar as={Menu} className='fixed' animation='slide along' width='thin'
+                   visible={true} icon='labeled' vertical inverted>
+                    <Menu.Item name='Genie' active={activeItem === 'Genie'}
+                      onClick={this.handleItemClick}>
                         <a href="#/clienthome">
                             <Image src='../../images/ginianim.gif' size='tiny' avatar/></a>
                     </Menu.Item>
-                    <Menu.Item name='Home' active={activeItem === 'Home'} onClick={this.handleItemClick}>
+                    <Menu.Item name='Home' active={activeItem === 'Home'}
+                      onClick={this.handleItemClick}>
                         <Icon name='home' color='teal'/>
                         Home
                     </Menu.Item>
-                    <Menu.Item name='ChatBot' active={activeItem === 'ChatBot'} onClick={this.handleItemClick}>
+                    <Menu.Item name='ChatBot' active={activeItem === 'ChatBot'}
+                      onClick={this.handleItemClick}>
                         <Icon name='discussions' color='teal'/>
                         Let's Explore
                     </Menu.Item>
-                    <Menu.Item name='Bookmarks' active={activeItem === 'Bookmarks'} onClick={this.handleItemClick}>
+                    <Menu.Item name='Bookmarks' active={activeItem === 'Bookmarks'}
+                      onClick={this.handleItemClick}>
                         <Icon name='save' color='teal'/>
                         Bookmarks
                     </Menu.Item>
-                    <Menu.Item name='notifications' active={activeItem === 'notifications'} onClick={this.handleItemClick}>
+                    <Menu.Item name='notifications' active={activeItem === 'notifications'}
+                      onClick={this.handleItemClick}>
                         <Label color='red' floating-left>{this.state.counter}</Label>
                         <Icon name='alarm' color='teal'/>
                         Notifications
                     </Menu.Item>
-                    <Menu.Item name='LogOut' active={activeItem === 'LogOut'} onClick={this.handleItemClick}>
+                    <Menu.Item name='LogOut' active={activeItem === 'LogOut'}
+                      onClick={this.handleItemClick}>
                         <Icon name='sign out' color='teal'/>
                         <a href='#/logout'>Log out</a>
                     </Menu.Item>
@@ -153,10 +164,12 @@ export default class LeftMenu extends Component {
                             <Menu secondary>
                                 <Menu.Item>
                                     <a href="#/clienthome">
-                                        <Popup trigger={< Icon name = "arrow circle left" size = "large" circular color = 'black' />} content='Back' size='mini'/>
+                                        <Popup trigger={< Icon name = "arrow circle left"
+                                          size = "large" circular color = 'black' />}
+                                          content='Back' size='mini'/>
                                     </a>
                                 </Menu.Item>
-                                <Menu.Item position='right'></Menu.Item>
+                                <Menu.Item position='right' />
                                 <Menu.Item/><Menu.Item/>
                                 <Menu.Item>
                                     <h3>GENIE</h3>
@@ -164,8 +177,12 @@ export default class LeftMenu extends Component {
                                 <Menu.Item position='right'>
                                     <Dropdown trigger={trigger} pointing='top right' icon={null}>
                                         <Dropdown.Menu >
-                                            <Dropdown.Item text='Edit Profile' icon='user' disabled={(!this.state.usertype)} onClick={this.onSubmitEmail}/>
-                                            <Dropdown.Item text='Change Password' icon='lock' disabled={(!this.state.usertype)} onClick={this.onChangePassword}/>
+                                            <Dropdown.Item text='Edit Profile' icon='user'
+                                              disabled={(!this.state.usertype)}
+                                              onClick={this.onSubmitEmail}/>
+                                            <Dropdown.Item text='Change Password' icon='lock'
+                                              disabled={(!this.state.usertype)}
+                                              onClick={this.onChangePassword}/>
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </Menu.Item>

@@ -5,7 +5,7 @@ import {
     Card,
     Feed,
     Statistic
-} from 'semantic-ui-react'
+} from 'semantic-ui-react';
 import GraphData from './graphData';
 let count = 0;
 let count1 = 0;
@@ -24,18 +24,20 @@ export default class Info extends React.Component {
     }
     componentDidMount() {
         let self = this;
-        count=0;
-        count1=0;
-        Axios({url: 'http://localhost:8080/viewall', method: 'GET'}).then((response)=> {
-          console.log(response.data.length);
-          count=response.data.length;
+        count = 0;
+        count1 = 0;
+        Axios({
+          url: 'http://localhost:8080/viewall',
+          method: 'GET'})
+          .then((response)=> {
+            count = response.data.length;
             self.setState({countvalue: count});
         }).catch(function(err) {
             console.log(err);
         });
-        Axios({url: 'http://localhost:8080/viewallonlineuser', method: 'GET'}).then((response)=> {
-          console.log(response.data.length);
-          count1=response.data.length;
+        Axios({
+          url: 'http://localhost:8080/viewallonlineuser', method: 'GET'}).then((response)=> {
+              count1 = response.data.length;
             self.setState({countonline: count1});
         }).catch(function(err) {
             console.log(err);
@@ -43,21 +45,21 @@ export default class Info extends React.Component {
 
         Axios.get('http://localhost:8080/analytics').
         then((response)=>{
-          this.state.queryCount=response.data.queryCount;
-          this.setState({queryCount:this.state.queryCount});
+          this.state.queryCount = response.data.queryCount;
+          this.setState({queryCount: this.state.queryCount});
         }).
         catch((error)=>{
           console.log(error);
         });
         //
-        let socket=io();
+        let socket = io();
         socket.on('incrementQueryCount', (data) => {
-          this.state.queryCount =this.state.queryCount+1;
-          this.setState({queryCount:this.state.queryCount});
+          this.state.queryCount = this.state.queryCount + 1;
+          this.setState({queryCount: this.state.queryCount});
         });
-        socket.on('userLoggedIncount',(data)=>{
-          this.state.countonline = this.state.countonline+data.value;
-          this.setState({countonline:this.state.countonline});
+        socket.on('userLoggedIncount', (data)=>{
+          this.state.countonline = this.state.countonline + data.value;
+          this.setState({countonline: this.state.countonline});
         })
     }
     render() {
@@ -82,8 +84,8 @@ export default class Info extends React.Component {
                                             <Feed.Summary>
                                                 <Statistic>
                                                     <Statistic.Value>
-                                                        <i className="inverted circular teal users icon"></i>
-                                                        <a>{this.state.countvalue}</a>
+                                                  <i className="inverted circular teal users icon"/>
+                                                    <a>{this.state.countvalue}</a>
                                                     </Statistic.Value>
                                                     <Statistic.Label>Members</Statistic.Label>
                                                 </Statistic>
@@ -106,7 +108,7 @@ export default class Info extends React.Component {
                                             <Feed.Summary>
                                                 <Statistic>
                                                     <Statistic.Value>
-                                                        <i className="inverted circular green users icon"></i>
+                                                <i className="inverted circular green users icon"/>
                                                         <a>{this.state.countonline}</a>
                                                     </Statistic.Value>
                                                     <Statistic.Label>Members</Statistic.Label>
@@ -130,8 +132,7 @@ export default class Info extends React.Component {
                                             <Feed.Summary>
                                                 <Statistic>
                                                     <Statistic.Value>
-
-                                                        <i className="inverted circular red idea icon"></i>
+                                                <i className="inverted circular red idea icon"/>
                                                         <a>{this.state.queryCount}</a>
                                                     </Statistic.Value>
                                                     <Statistic.Label>Queries</Statistic.Label>
@@ -149,6 +150,6 @@ export default class Info extends React.Component {
                 </Grid.Row>
             </Grid>
           </div>
-        )
+        );
     }
 }

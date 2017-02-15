@@ -57,18 +57,19 @@ export default class Signup extends React.Component {
             }).then(function(msg) {
                 hashHistory.push('/mail');
             }).catch(function(err) {
-              alert(email);
-              // In case of any network error in between signup process it deletes the user from database if it is stored without sending verification link
+              /* In case of any network error in between signup process it
+              deletes the user from database if it is stored without sending
+              verification link*/
                 Axios({
                     url: ' http://localhost:8080/deleteuser',
                     method: 'delete',
                     data: {
                         data: email
                       }
-                      }).then(function(msg){
+                      }).then(function(msg) {
                           hashHistory.push('/mailnotsend');
-                      }).catch(function(err){
-                        console.log("error");
+                      }).catch(function(err) {
+                        console.log(err);
                       })
             })
         }
@@ -76,9 +77,9 @@ export default class Signup extends React.Component {
     onRegisterUser(e, value) {
       e.preventDefault();
       // checks the equlity between password and confirm password field
-      if(value.formData.password===value.formData.repassword)
+      if(value.formData.password === value.formData.repassword)
         {
-          this.setState({opendimmer:true});
+          this.setState({opendimmer: true});
           // signup
           Axios({
             url: 'http://localhost:8080/signup',
@@ -94,7 +95,7 @@ export default class Signup extends React.Component {
         }
         // if password and confirm password field not matched it shows error
         else{
-             this.setState({openSnackbar: true, snackbarMsg:"check password field"});
+             this.setState({openSnackbar: true, snackbarMsg: 'check password field'});
         }
   }
   handleRequestClose = () => {
@@ -128,7 +129,7 @@ export default class Signup extends React.Component {
         this.setState({email: event.target.value});
         // console.log(event.target.value);
         // check whether the user is alreay exists or not
-        if(event.target.value.length>=0){
+        if(event.target.value.length >= 0) {
         if (validator.isEmail(event.target.value)) {
           let self = this;
             Axios({
@@ -141,15 +142,15 @@ export default class Signup extends React.Component {
                     if (response.data.userexists) {
                       self.setState({userexists: 'Already Exists'});
                       self.setState({mailexists: false});
-                        // console.log(msg);
+
                     } else {
-                        // console.log(msg);
+
                         self.setState({userexists: ' '});
                         self.setState({mailexists: true});
                     }
                 }).catch(function(err) {
-                    // console.log(err);
-                });
+                  console.log(err);
+                  });
             this.setState({erroremail: false});
             this.setState({errormessageemail: false});
         } else {
@@ -168,21 +169,23 @@ export default class Signup extends React.Component {
         let has_caps = new RegExp('[A-Z]');
         let has_numbers = new RegExp('[0-9]');
           if(event.target.value.length >4){
-        if (has_letter.test(password_info) && points >= 6 && has_caps.test(password_info) && has_numbers.test(password_info)) {
+        if (has_letter.test(password_info) && points >= 6 &&
+        has_caps.test(password_info) && has_numbers.test(password_info)) {
             this.setState({errorpassword: false});
             this.setState({errormessagepassword: false});
               this.setState({verifypassword: true});
         } else {
             this.setState({errorpassword: true});
             this.setState({verifypassword: false});
-            this.setState({errormessagepassword: 'Password should contain numbers,letters(A&a) and minimum length 6'});
+            this.setState({errormessagepassword:
+              'Password should contain numbers,letters(A&a) and minimum length 6'});
         }
       }
     }
     // validation for confirmpassword
     ChangeRepassword = (event) => {
         this.setState({repassword: event.target.value});
-          if(event.target.value.length >2){
+          if(event.target.value.length > 2) {
             if (validator.equals(event.target.value, this.state.password)) {
           // checking equality between password and confirmpassword
           this.setState({errorrepassword: false});
@@ -197,35 +200,49 @@ export default class Signup extends React.Component {
   }
 }
 render() {
-    const {open, dimmer,active} = this.state;
+    const {open, dimmer, active} = this.state;
     return (
         <div>
-        <Modal  dimmer={dimmer} open={open} onClose={this.close} size="small" closeIcon="close" id='modalsignupcss'>
-        <Modal.Header id="signup"><Image src="../../images/ginianim.gif" avatar/>Sign Up</Modal.Header>
+        <Modal dimmer={dimmer} open={open} onClose={this.close}
+          size="small" closeIcon="close" id='modalsignupcss'>
+        <Modal.Header id="signup"><Image src="../../images/ginianim.gif" avatar/>
+        Sign Up</Modal.Header>
         <Modal.Content>
         <Form id="formfield" onSubmit={this.onRegisterUser}>
         <Form.Field id="formfield">
-        <Form.Input label='First Name' name='firstName' placeholder='First Name' type='text' onChange={this.ChangeFirst} error={this.state.errorfirst} required/>
+        <Form.Input label='First Name' name='firstName' placeholder='First Name'
+          type='text' onChange={this.ChangeFirst} error={this.state.errorfirst} required/>
         <p id="textcolor">{this.state.errormessagefirst}</p>
         </Form.Field>
         <Form.Field id="formfield">
-        <Form.Input label='Last Name' id="input" name="lastName" placeholder='Last Name' type='text' onChange={this.ChangeLast.bind(this)} error={this.state.errorlast} required/>
+        <Form.Input label='Last Name' id="input" name="lastName" placeholder='Last Name'
+          type='text' onChange={this.ChangeLast.bind(this)} error={this.state.errorlast} required/>
         <p id="textcolor">{this.state.errormessagelast}</p>
         </Form.Field>
         <Form.Field id="formfield">
-        <Form.Input label='Email' id="to" name="email" placeholder='Email-ID' type='text' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
+        <Form.Input label='Email' id="to" name="email" placeholder='Email-ID'
+          type='text' onChange={this.ChangeEmail.bind(this)}
+          error={this.state.erroremail} required/>
         <p id="textcolor">{this.state.errormessageemail}</p>
         <p id="textcolor">{this.state.userexists}</p>
         </Form.Field>
         <Form.Field id="formfield">
-        <Form.Input label='Password' id="input" name="password" placeholder='Password' type='password' onChange={this.ChangePassword.bind(this)} error={this.state.errorpassword} required/>
+        <Form.Input label='Password' id="input" name="password" placeholder='Password'
+          type='password' onChange={this.ChangePassword.bind(this)}
+          error={this.state.errorpassword} required/>
         <p id="textcolor">{this.state.errormessagepassword}</p>
         </Form.Field>
         <Form.Field id="formfield">
-        <Form.Input label='Confirm Password' id="input" name="repassword" type='password' placeholder='Confirm Password' onChange={this.ChangeRepassword.bind(this)} error={this.state.errorrepassword} required/>
+        <Form.Input label='Confirm Password' id="input" name="repassword" type='password'
+          placeholder='Confirm Password' onChange={this.ChangeRepassword.bind(this)}
+          error={this.state.errorrepassword} required/>
         <p id="textcolor">{this.state.errormessage}</p>
         </Form.Field>
-        <Button type='submit' id='buttonstyle' onClick={this.handleOpen} circular disabled={(!this.state.firstname) || (!this.state.lastname) || (!this.state.email) || (!this.state.password) || (!this.state.repassword) || (!this.state.mailexists) || (!this.state.verifypassword) || (!this.state.confirmpassword)}>SET UP YOUR ACCOUNT</Button>
+        <Button type='submit' id='buttonstyle' onClick={this.handleOpen} circular
+          disabled={(!this.state.firstname) || (!this.state.lastname) || (!this.state.email) ||
+             (!this.state.password) || (!this.state.repassword) || (!this.state.mailexists) ||
+             (!this.state.verifypassword) || (!this.state.confirmpassword)}>
+             SET UP YOUR ACCOUNT</Button>
         {this.state.opendimmer?<Dimmer
                  active={active}
                  onClickOutside={this.handleClose}
@@ -233,7 +250,9 @@ render() {
 
                 <Header as='h2' icon inverted>
                   <Image src='../images/mail.gif' size="small" />
-                   <Header.Subheader><h3>Please hold for a minute to get verification mail......</h3></Header.Subheader>
+                   <Header.Subheader>
+                     <h3>Please hold for a minute to get verification mail......</h3>
+                   </Header.Subheader>
                  </Header>
         </Dimmer>:null}
         <span id="message"/>
@@ -243,8 +262,10 @@ render() {
         </Form>
         </Modal.Content>
         </Modal>
-        {this.state.openSnackbar?<Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={1200} onRequestClose={this.handleRequestClose}/>
-        :null}
+        {this.state.openSnackbar ?
+          <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg}
+            autoHideDuration={1200} onRequestClose={this.handleRequestClose}/>
+        : null}
         </div>
         );
 }

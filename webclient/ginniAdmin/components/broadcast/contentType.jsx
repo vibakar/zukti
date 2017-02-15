@@ -1,15 +1,13 @@
 import React from 'react';
-import { Icon, Label, Menu, Input, Segment,Feed } from 'semantic-ui-react'
+import { Menu, Segment} from 'semantic-ui-react';
 import AddContent from './addContent';
-import Embedly from 'react-embedly';
-
-export default class ContentType extends React.Component{
-  constructor(props){
+export default class ContentType extends React.Component {
+  constructor(props) {
     super(props);
   }
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-    handleAdminInput = (username,text,date) => {
-        this.props.handlercontent(username,text,date);
+    handleAdminInput = (username, text, date) => {
+        this.props.handlercontent(username, text, date);
       }
     render() {
       return (
@@ -21,6 +19,6 @@ export default class ContentType extends React.Component{
             <AddContent handleAdminInput ={this.handleAdminInput}/>
           </Segment>
         </div>
-      )
+      );
     }
   }
