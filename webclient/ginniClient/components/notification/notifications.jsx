@@ -18,10 +18,10 @@ export default class Notifications extends React.Component {
         let socket = io();
         let url = Config.url + '/getbroadcastmessage';
         axios.get(url).then((response) => {
-            this.state.messages= response.data.map((msg, index)=>{
+            this.state.messages = response.data.map((msg, index)=>{
               let msgContentView = this.processInputNotification(msg.value);
               return <Notificationfeed key={index} date={msg.date}
-                msgSender={msg.username} dispData={msgContentView} msgSenderemail={msg.email}/>
+                msgSender={msg.username} dispData={msgContentView} msgSenderemail={msg.email}/>;
             });
             this.state.messages.reverse();
             this.setState({messages: this.state.messages});
@@ -31,12 +31,12 @@ export default class Notifications extends React.Component {
         socket.on('update label', (data) => {
             let msgContentView = this.processInputNotification(data.value);
             this.state.messages.unshift(
-              <Notificationfeed key={this.state.messages.length-1} date={data.date}
+              <Notificationfeed key={this.state.messages.length - 1} date={data.date}
                 msgSender={data.username} dispData={msgContentView}/>);
             this.setState({messages: this.state.messages});
         });
     }
-    processInputNotification(value){
+    processInputNotification(value) {
       let urlRegex = /(\b(?:(https?|ftp):\/\/)?((?:www\d{0,3}\.)?([a-z0-9.-]+\.(?:[a-z]{2,4}|museum|travel)(?:\/[^\/\s]+)*))\b)/gi;
       let match = value.match(urlRegex);
       let inputTokens = value.split(' ');

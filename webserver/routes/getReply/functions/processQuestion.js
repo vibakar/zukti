@@ -7,7 +7,6 @@ module.exports = function(sentence) {
     let str = nlp.text(sentence);
     // split str into individual words
     let tokens = str.root().split(' ');
-    console.log(tokens);
     // keywords array will contain keywords extracted from question
     let keywords = [];
     // intent array will contain intents extracted from question
@@ -60,8 +59,6 @@ module.exports = function(sentence) {
             keywords.push(keyword.join(' '));
         }
     }
-    console.log(intents);
-    console.log(keywords);
     return {
         keywords,
         intents

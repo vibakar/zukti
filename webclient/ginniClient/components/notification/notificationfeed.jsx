@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {Feed, Image} from 'semantic-ui-react';
 import './notifications.css';
 import Axios from 'axios';
@@ -26,7 +26,6 @@ export default class Notificationfeed extends React.Component {
         });
     }
   render() {
-   let imagename = this.state.photo;
         return (
             <Feed>
                 <Feed.Event>

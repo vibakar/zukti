@@ -4,19 +4,18 @@ import Axios from 'axios';
 export default class AssistantGinniOptions extends React.Component {
     constructor(props) {
         super(props);
-        ///  this.saveForReference = this.saveForReference.bind(this);
+        // this.saveForReference = this.saveForReference.bind(this);
         this.state = {
             likeEnabled: true,
             dislikeEnabled: true,
-            saved:false,
-            likeDislikeMsg: ' ',
-        }
+            saved: false,
+            likeDislikeMsg: ' '
+        };
         this.upvoteAnswer = this.upvoteAnswer.bind(this);
         this.downVoteAnswer = this.downVoteAnswer.bind(this);
         this.savedQuery = this.savedQuery.bind(this);
     }
     upvoteAnswer(type, value) {
-        console.log('inside upvoteAnswer');
         if (this.state.likeEnabled) {
             Axios.post('/qa/rateAnswer', {
                 liked: true,
@@ -47,37 +46,38 @@ export default class AssistantGinniOptions extends React.Component {
 
     savedQuery(message)
     {
-      console.log(this.props.value);
-      console.log(this.props.question);
       let question = this.props.question;
       let savedResponse = this.props.value;
       let responseType = this.props.type;
       let date = new Date().toLocaleString();
-      Axios.post('/bookmarks',{question:question,savedResponse:savedResponse,responseType:responseType,date:date}).
+      Axios.post('/bookmarks',
+      {question: question, savedResponse: savedResponse, responseType: responseType, date: date}).
       then((response)=>{
         console.log(response);
       }).
       catch((error)=>{
         console.log(error);
       });
-      this.setState({saved:true});
+      this.setState({saved: true});
     }
     render() {
         let likeDislikeMsg = this.state.likeDislikeMsg;
-        console.log(likeDislikeMsg);
         return (
 
             <Feed.Meta>
-                <Popup trigger={< Icon circular name = 'flag' color = 'purple' />} content='Flag' size='mini'/>
-                {!this.state.saved?<Popup trigger={< Icon circular name = 'save' color = 'green' onClick={this.savedQuery} />} content='save this message' size='mini'/>:''}
-                {this.state.saved?<Label as='a' inverted color='teal' circular>Saved</Label>:''}
+                <Popup trigger={< Icon circular name = 'flag' color = 'purple' />}
+                 content='Flag' size='mini'/>
+                {!this.state.saved ? <Popup trigger={< Icon circular name = 'save' color = 'green'
+                   onClick={this.savedQuery} />} content='save this message' size='mini'/> : ''}
+                {this.state.saved ? <Label as='a' inverted color='teal' circular>Saved</Label> : ''}
                  {this.state.likeEnabled && this.state.dislikeEnabled
-                    ? <Popup trigger={< Icon circular name = 'like outline' color = 'blue' onClick = {
-                            this.upvoteAnswer
+                    ? <Popup trigger={< Icon circular name = 'like outline' color = 'blue'
+                      onClick = {this.upvoteAnswer
                         } />} content='like' size='mini'/>
                     : ''}
                 {this.state.likeEnabled && this.state.dislikeEnabled
-                    ? <Popup trigger={< Icon circular name = 'dislike outline' color = 'blue' onClick = {
+                    ? <Popup trigger={< Icon circular name = 'dislike outline'
+                       color = 'blue' onClick = {
                             this.downVoteAnswer
                         } />} content='dislike' size='mini'/>
                     : ''}
@@ -85,6 +85,6 @@ export default class AssistantGinniOptions extends React.Component {
                     ? <Label as='a' inverted color='green' circular>{likeDislikeMsg}</Label>
                     : ''}
             </Feed.Meta>
-        )
+        );
     }
 }

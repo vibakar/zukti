@@ -1,6 +1,6 @@
 let getNeo4jDriver = require('../neo4j/connection');
 let fs = require('fs');
-delete require.cache[require.resolve('./intentLexicon.json')]; 
+delete require.cache[require.resolve('./intentLexicon.json')];
 function createLexiconFiles(result) {
     let intentTerms = result.records[0]._fields[0].sort();
     let reactTerms = result.records[0]._fields[1].sort();

@@ -29,7 +29,7 @@ export default class blogAnswer extends React.Component {
     }
     render() {
       let inputs = this.props.blogs.map((input, index)=>{
-            console.log(index+'index');
+            console.log(index + 'index');
         return (
           <div>
           <TextArea style={{ width: '90%', marginBottom: '8px'}} value={input}

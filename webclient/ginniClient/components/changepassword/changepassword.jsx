@@ -43,7 +43,8 @@ export default class ChangePassword extends React.Component {
             } else {
                 this.setState({errorpassword: true});
                 this.setState({verifypassword: false});
-                this.setState({errormessagepassword: 'Password should contain numbers,letters(A&a) and minimum length is  6'});
+                this.setState({errormessagepassword:
+                  'Password should contain numbers,letters(A&a) and minimum length is  6'});
             }
         }
     }
@@ -64,9 +65,9 @@ export default class ChangePassword extends React.Component {
         }
     }
     close = () => hashHistory.push('/chat');
-    // function is used to send the new password to the server and it will be updated in the user database
+    /* function is used to send the new password to the server
+    and it will be updated in the user database*/
     passwordchange(e, value) {
-        let self = this;
         e.preventDefault();
         Axios({
             url: ' http://localhost:8080/resetpassword',
@@ -77,30 +78,38 @@ export default class ChangePassword extends React.Component {
         }).then(function(msg) {
             hashHistory.push('/chat');
         }).catch(function(error) {
-            alert('check the details');
+            console.log(error);
         });
     }
     render() {
         const {open, trigger, closeOnRootNodeClick} = this.state
         return (
             <div>
-                <Modal trigger={trigger} open={true} onClose={this.close} closeOnRootNodeClick={false} size='small' closeIcon="close">
+                <Modal trigger={trigger} open={true} onClose={this.close}
+                  closeOnRootNodeClick={false} size='small' closeIcon="close">
                     <Modal.Header id="headerchange">
                         <h1>Change Password</h1>
                     </Modal.Header>
                     <Modal.Content>
                         <Form onSubmit={this.passwordchange.bind(this)}>
                             <Form.Field width={8} id='forminput'>
-                                <Form.Input placeholder='new password' type='password' name='password' icon='lock' iconPosition='left' onChange={this.ChangePassword.bind(this)}/>
+                                <Form.Input placeholder='new password' type='password'
+                                   name='password' icon='lock' iconPosition='left'
+                                    onChange={this.ChangePassword.bind(this)}/>
                                 <p id="errormessages">{this.state.errormessagepassword}</p>
                             </Form.Field>
                             <Form.Field width={8} id='forminput'>
-                                <Form.Input type='password' placeholder='confirm password' name='confirmpassword' icon='lock' iconPosition='left' onChange={this.ChangeRepassword.bind(this)}/>
+                                <Form.Input type='password' placeholder='confirm password'
+                                  name='confirmpassword' icon='lock' iconPosition='left'
+                                   onChange={this.ChangeRepassword.bind(this)}/>
                                 <p id="errormessages">{this.state.errormessage}</p>
                             </Form.Field><br/>
                             <Form.Field>
                                 <a href="#/chat">
-                                    <Button color='green' type='submit' disabled={(!this.state.password) || (!this.state.repassword) || (!this.state.verifypassword) || (!this.state.confirmpassword)} inverted id='resetbutton'>
+                                    <Button color='green' type='submit'
+                                      disabled={(!this.state.password) || (!this.state.repassword) ||
+                                        (!this.state.verifypassword) || (!this.state.confirmpassword)}
+                                        inverted id='resetbutton'>
                                         <Icon name='checkmark'/>
                                         Reset
                                     </Button>

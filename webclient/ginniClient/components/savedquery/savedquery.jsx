@@ -22,7 +22,7 @@ export default class SavedQuery extends React.Component {
     };
       componentDidMount()
       {
-        let self=this;
+        let self = this;
         Axios({
             url: ' http://localhost:8080/clientinformation',
             method: 'get'
@@ -33,8 +33,8 @@ export default class SavedQuery extends React.Component {
                   data: {email: response.data[0].local.email}
                 }).then(function(msg) {
                 self.setState({ userinformation: msg.data[0].savedquery});
-            }.bind(this)).
-                catch(function(err) {
+            }
+          ).catch(function(err) {
                     console.log(err);
                     });
                 });
@@ -42,7 +42,7 @@ export default class SavedQuery extends React.Component {
   deletesavequery(queries)
         {
           this.setState({openSnackbar: true, snackbarMsg: 'Deleted'});
-          let self=this;
+          let self = this;
           Axios({
               url: ' http://localhost:8080/clientinformation',
               method: 'get'
@@ -64,7 +64,7 @@ export default class SavedQuery extends React.Component {
                   });
                     }
   render() {
-    const {open} = this.state
+    const {open} = this.state;
     var user = this.state.userinformation.map(function(newsdata) {
   return (
  <div>

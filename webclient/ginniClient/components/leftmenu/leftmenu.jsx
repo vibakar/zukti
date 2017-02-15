@@ -49,7 +49,6 @@ export default class LeftMenu extends Component {
         this.getNotificationCount();
         let socket = io();
         socket.on('update label', (data) => {
-
             this.state.counter = this.state.counter + 1;
             this.setState({counter: this.state.counter});
         });
@@ -60,7 +59,7 @@ export default class LeftMenu extends Component {
             this.setState({counter: response.data.count});
         }).catch((error) => {
             console.log(error);
-        })
+        });
     }
     // to fetch the information about the user
     getUserInformation() {

@@ -1,23 +1,22 @@
 import React from 'react';
-import {Feed, Icon,Label,Card,Grid,Popup,Divider} from 'semantic-ui-react';
+import {Feed, Icon, Label, Grid, Popup, Divider} from 'semantic-ui-react';
 import Axios from 'axios';
 import Snackbar from 'material-ui/Snackbar';
 import UnfurlLink from './unfurlLink';
 export default class BookmarkView extends React.Component {
     constructor(props) {
         super(props);
-        this.state={
-          saved:false,
+        this.state = {
+          saved: false,
           openSnackbar: false,
           snackbarMsg: ''
-        }
+        };
         this.deleteBookmark = this.deleteBookmark.bind(this);
     }
-    deleteBookmark(e,data) {
-      this.setState({openSnackbar: true, snackbarMsg:"Deleted"});
-      let id= data.id;
+    deleteBookmark(e, data) {
+      this.setState({openSnackbar: true, snackbarMsg: 'Deleted'});
+      let id = data.id;
       Axios.delete(`bookmarks/${id}`).then((response) => {
-        console.log(response);
             this.props.handlerRemoveBookmarkFromView(id);
         }).catch((error) => {
           console.log(error);
@@ -32,14 +31,14 @@ export default class BookmarkView extends React.Component {
         let savedResponse = bookmark.savedResponse;
         let responseType = bookmark.responseType;
         let date = bookmark.date;
-        let id =bookmark._id;
+        let id = bookmark._id;
         let responseView;
         if (responseType === 'text') {
             responseView = savedResponse;
         } else if (responseType === 'blog') {
-            responseView = <UnfurlLink url={savedResponse}/>
+            responseView = <UnfurlLink url={savedResponse}/>;
         } else if (responseType === 'video') {
-            responseView = <UnfurlLink url={savedResponse}/>
+            responseView = <UnfurlLink url={savedResponse}/>;
         }
         return (
           <Grid vertically>
@@ -55,8 +54,11 @@ export default class BookmarkView extends React.Component {
  <Feed.Event>
     <Feed.Content>
       <Feed.Summary>
-        <Label as='a' style={{background:'transparent'}} size='medium'  onClick={this.deleteBookmark} id={id}>
-                <Popup positioning='left center' offset={20} inverted trigger={<Icon name='delete' circular  style={{background:'white',color:'red'}}/>} size='mini' content='Delete'></Popup>
+        <Label as='a' style={{background: 'transparent'}}
+          size='medium' onClick= {this.deleteBookmark} id={id}>
+                <Popup positioning='left center' offset={20}
+                inverted trigger={<Icon name='delete' circular
+                style={{background: 'white', color: 'red'}}/>} size='mini' content='Delete'/>
            </Label>
  <Feed.User><h3>{question}</h3></Feed.User>
    <Feed.Date >{date}</Feed.Date>
@@ -82,9 +84,9 @@ export default class BookmarkView extends React.Component {
   </Grid.Column>
   <Grid.Column width={2}/>
   </Grid.Row>
-  <Snackbar  open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={1200} onRequestClose={this.handleRequestClose}/>
+  <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg}
+    autoHideDuration={1200} onRequestClose={this.handleRequestClose}/>
 </Grid>
-
         );
     }
 }

@@ -14,7 +14,7 @@ export default class TextAnswer extends React.Component {
           this.setState({emptyInput: false});
         this.props.handlerForSaveAnswerToParentState('text', data.value, data.id);
     }
-    removeAnswer(e, data ){
+    removeAnswer(e, data) {
       let index = data.id;
       this.props.handlerRemoveAnswer('text',  index);
     }
@@ -29,25 +29,28 @@ export default class TextAnswer extends React.Component {
     }
     render() {
       let inputs = this.props.texts.map((input, index)=> {
-        console.log(index+'index');
+        console.log(index + 'index');
         return (
           <div>
           <TextArea style={{width: '90%', marginBottom: '8px'}} value={input}
             id={index} onChange={this.getInputData} placeholder='enter a text answer' autoHeight />
-          {this.props.texts.length === 1 ? '':
+          {this.props.texts.length === 1 ? '' :
           <Button id={index} onClick={this.removeAnswer}
              style={{marginLeft: '2%', backgroundColor: 'white', color: 'red'}}>
              <Icon name='minus' circular/></Button>}
           </div>
-        )
-      })
+        );
+      });
         return (
             <div>
               <Form>
                 {inputs}
               </Form>
-              <Popup offset={10} inverted positioning='left center' trigger={<Button onClick={this.addNewAnswer} icon style={{backgroundColor:'white',color:'blue',marginLeft:'85%'}}><Icon name='plus' circular/></Button>} content='Add' size='mini'></Popup>
-              {this.state.emptyInput?<p style={{color:'red'}}>Fill the above input field first</p>:''}
+              <Popup offset={10} inverted positioning='left center'
+                trigger={<Button onClick={this.addNewAnswer} icon
+                  style={{backgroundColor: 'white', color: 'blue', marginLeft: '85%'}}>
+                  <Icon name='plus' circular/></Button>} content='Add' size='mini'></Popup>
+              {this.state.emptyInput ? <p style = {{color: 'red'}}>Fill the above input field first</p> : ''}
             </div>
         );
     }
