@@ -13,14 +13,18 @@ export default class LogoutAdmin extends React.Component
     // all the cookies stored while login will be cleared and user will be logged out
     handleLogout()
     {
-        Axios({method: 'GET', url: 'http://localhost:8080/signout', data: 'json'}).then(function(response) {
+        Axios({
+          method: 'GET',
+          url: 'http://localhost:8080/signout',
+          data: 'json'})
+          .then(function(response) {
             Cookie.remove('authType');
             Cookie.remove('token');
             Cookie.remove('username');
             Cookie.remove('profilepicture');
             hashHistory.push('/logoutfile');
         }).catch(function(error) {});
-        console.log("error", err);
+        console.log(error);
     }
     render() {
         const {open} = this.state;
@@ -33,7 +37,8 @@ export default class LogoutAdmin extends React.Component
                 <Modal.Content>
                     <Modal.Description id="logoutdescription">
                         <a href="#/logoutfile">
-                            <Button size="small" color='blue' onClick={this.handleLogout.bind(this)}>Yes</Button>
+                      <Button size="small" color='blue' onClick={this.handleLogout.bind(this)}>
+                              Yes</Button>
                         </a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <Button size="small" color='red' onClick={this.close}>No</Button>
                     </Modal.Description>

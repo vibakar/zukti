@@ -8,7 +8,7 @@ export default class IntentDropDown extends React.Component {
         this.handleDropdownChange = this.handleDropdownChange.bind(this);
         this.state = {
             options: []
-        }
+        };
     }
     // bind the dropdown with base intents from neo4j databse
     componentDidMount() {

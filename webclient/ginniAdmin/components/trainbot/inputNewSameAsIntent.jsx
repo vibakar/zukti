@@ -8,40 +8,37 @@ import Snackbar from 'material-ui/Snackbar';
 export default class InputNewsSameAsIntent extends React.Component {
     constructor(props) {
         super(props);
-        this.state={
-          opensnackbar:false,
-          snackbarMsg:''
-        }
+        this.state = {
+          opensnackbar: false,
+          snackbarMsg: ''
+        };
         this.addNewSameAsIntent = this.addNewSameAsIntent.bind(this);
     }
     handleRequestClose=()=>{
-      this.setState({opensnackbar:false});
+      this.setState({opensnackbar: false});
     }
     addNewSameAsIntent(e) {
         e.preventDefault();
-        //getting the value of new same as intent from text field
+        // getting the value of new same as intent from text field
         let newSameAsIntent = ReactDOM.findDOMNode(this.refs.newSameAsIntent).value;
-        //clearing the input newSameAsIntent text field
+        // clearing the input newSameAsIntent text field
         ReactDOM.findDOMNode(this.refs.newSameAsIntent).value = '';
         // ajax call to save new sameas intent to the base Intent
-        let url = Config.url + '/intent/addNewSameAsIntent'
-
-        if(this.props.baseIntent !== ''){
+        let url = Config.url + '/intent/addNewSameAsIntent';
+        if(this.props.baseIntent !== '') {
         Axios.post(url, {
             baseIntent: this.props.baseIntent,
             newSameAsIntent: newSameAsIntent
         }).then((response) => {
-            console.log(response.data);
             this.props.handlerAddNewIntent(newSameAsIntent);
         }).catch((error) => {
             console.log(error);
         });
     }
     else if (this.props.baseIntent === '') {
-      this.setState({opensnackbar:true,snackbarMsg:'Select base Intent First!'})
+      this.setState({opensnackbar: true, snackbarMsg: 'Select base Intent First!'})
     }
   }
-
     render() {
         return (
             <Form onSubmit={this.addNewSameAsIntent}>
@@ -49,13 +46,15 @@ export default class InputNewsSameAsIntent extends React.Component {
                     <label>
                         <h4>Relevant To</h4>
                     </label>
-                    <input autoComplete='off' type='text' name='newSameAsIntent' ref='newSameAsIntent' placeholder='Type new same as intent value'/>
+                    <input autoComplete='off' type='text' name='newSameAsIntent'
+                      ref='newSameAsIntent' placeholder='Type new same as intent value'/>
                 </Form.Field>
                 <Button color="facebook" fluid onClick={this.addNewSameAsIntent}>
                     <Icon name='plus circle'>Add
                     </Icon>
                 </Button>
-                  <Snackbar open={this.state.opensnackbar} message={this.state.snackbarMsg} autoHideDuration={1200} onRequestClose={this.handleRequestClose}/>
+                  <Snackbar open={this.state.opensnackbar} message={this.state.snackbarMsg}
+                    autoHideDuration={1200} onRequestClose={this.handleRequestClose}/>
             </Form>
         );
     }

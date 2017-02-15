@@ -125,11 +125,14 @@ export default class ForgotPassword extends React.Component
                             <h4 style={{
                                 color: 'white',
                                 fontStyle: 'italic'
-                            }}>Forgot your password? No worries!! Give your registered mail to get reset link</h4>
+                            }}>Forgot your password?
+                            No worries!! Give your registered mail to get reset link</h4>
                         </p>
                         <Form onSubmit={this.onSubmitData}>
                             <Form.Field id="forgotfield">
-                                <Form.Input placeholder='email id' name="email" icon='mail outline' iconPosition='left' onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required/>
+                                <Form.Input placeholder='email id' name="email" icon='mail outline'
+                                  iconPosition='left' onChange={this.ChangeEmail.bind(this)}
+                                  error={this.state.erroremail} required/>
                                 <p style={{
                                     color: 'red',
                                     textAlign: 'center'
@@ -139,7 +142,9 @@ export default class ForgotPassword extends React.Component
                                     textAlign: 'center'
                                 }}>{this.state.errormessageemail}</p>
                             </Form.Field>
-                            <Button type='submit' id='buttonstylefor' onClick={this.handleOpen} circular disabled={(!this.state.email) || (!this.state.checkmail)}>Send</Button>
+                            <Button type='submit' id='buttonstylefor' onClick={this.handleOpen}
+                              circular disabled= {(!this.state.email) || (!this.state.checkmail)}>
+                              Send</Button>
                             <Dimmer active={active} onClickOutside={this.handleClose} page>
 
                                 <Header as='h2' icon inverted>

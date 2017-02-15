@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Icon, Divider, Grid,Popup} from 'semantic-ui-react';
+import {Image, Icon, Divider, Grid, Popup} from 'semantic-ui-react';
 import {hashHistory} from 'react-router';
 import Axios from 'axios';
 import Cookie from 'react-cookie';

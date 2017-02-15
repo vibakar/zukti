@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Card, Modal,Divider,List,Icon} from 'semantic-ui-react';
+import {Button, Modal, Divider, List, Icon} from 'semantic-ui-react';
 import Config from '../../../../config/url';
 import Axios from 'axios';
 import './viewuserchat.css';
@@ -9,10 +9,10 @@ export default class ViewUserChat extends React.Component {
         super(props);
         this.state = {
             conversations: [],
-            open:false,
+            open: false,
             openSnackbar: false,
             snackbarMsg: ''
-        }
+        };
           // function to retrive chat of a given user
         this.getUserChats = this.getUserChats.bind(this);
     }
@@ -22,26 +22,25 @@ export default class ViewUserChat extends React.Component {
    getUserChats() {
         let url = Config.url + '/retriveChat?email=' + this.props.userEmail;
         Axios.get(url).then((response) => {
-            //console.log(response.data);
             this.setState({conversations: response.data.chats});
-            console.log(response.data.chats)
-            //console.log(response.data.chats[0].question)
-            this.setState({ open: true })
+            this.setState({ open: true });
         }).catch((error) => {
-              this.setState({openSnackbar: true, snackbarMsg: 'No chats available with this specific user'});
+      this.setState({openSnackbar: true,
+        snackbarMsg: 'No chats available with this specific user'});
         });
     }
     handleRequestClose = () => {
             this.setState({openSnackbar: false});
         };
     render() {
-      const { open, size } = this.state
+      const { open, size } = this.state;
         let chats = this.state.conversations.map((conversation)=> {
-            console.log(conversation.question);
             return (
                 <div>
                   <List as='ol'>
-                            <List.Item as='li' value='?'>{conversation.question.value}&nbsp;&nbsp;&nbsp;{conversation.question.time}</List.Item>
+                        <List.Item as='li' value='?'>
+                          {conversation.question.value}&nbsp;&nbsp;&nbsp;
+                          {conversation.question.time}</List.Item>
                             <Divider/>
                           </List>
         </div>
@@ -49,18 +48,20 @@ export default class ViewUserChat extends React.Component {
           });
         return (
             <div>
-                <Button  color='green' onClick={this.getUserChats} circular><Icon name='history'/>CHATS</Button>
-                <Modal size={size} open={open} onClose={this.close}  closeIcon='close'>
+                <Button color='green' onClick={this.getUserChats} circular>
+                  <Icon name='history'/>CHATS</Button>
+                <Modal size={size} open={open} onClose={this.close} closeIcon='close'>
           <Modal.Header id='viewuserchat'>
             <Icon name='question circle outline'/>
            QUESTIONS ASKED
           </Modal.Header>
           <Modal.Content id='viewuserchatcontent'>
-            <b>{chats?chats:'hiiii '}</b>
+            <b>{chats ? chats : 'hiiii'}</b>
           </Modal.Content>
         </Modal>
-        <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
+        <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg}
+           autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
             </div>
-        )
+        );
     }
 }

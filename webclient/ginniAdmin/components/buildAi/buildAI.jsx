@@ -9,7 +9,6 @@ export default class QuestionSetDisplay extends React.Component {
 
     constructor() {
         super();
-
     }
     render() {
         return (
@@ -18,14 +17,17 @@ export default class QuestionSetDisplay extends React.Component {
                     width: '95%',
                     margin: 'auto'
                 }}>
-                    <Grid.Row columns={1}>
-                    </Grid.Row>
+                    <Grid.Row columns={1} />
                     <Grid.Row columns={1}>
                         <div style={{
                             width: '100%'
                         }}>
-                            <p id="textpara">It is a set of questions and the corresponding bot replies.I will understand user questions similar to those you’ve set up and reply with a appropiate answer.</p>
-                            <Divider fitted/>
+                  <p id="textpara">
+                  It is a set of questions and the corresponding bot replies.
+                 I will understand user questions similar to those you’ve set up and reply
+                 with a appropiate answer.
+                 </p>
+                  <Divider fitted/>
                         </div>
                     </Grid.Row>
                     <Grid.Row>

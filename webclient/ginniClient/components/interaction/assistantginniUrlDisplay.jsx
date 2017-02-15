@@ -16,7 +16,7 @@ export default class AssistantGinniMixedReply extends React.Component {
     blogsResponseArray.shift();
     blogsResponseArray.forEach((blog)=>{
       ginniReply.push(<AssistantGinniMoreBlogsView
-        question={this.props.question} value={blog.value}/>)
+        question={this.props.question} value={blog.value}/>);
     });
     this.props.handleGinniReply(ginniReply);
   }
@@ -35,7 +35,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                           <Label.Group >
                               {this.props.blogs.length > 1
                                   ? <Label onClick={this.displayMoreBlogs} basic color='orange' id='cursor'>
-                                    View more blogs ({this.props.blogs.length-1})</Label>
+                                    View more blogs ({this.props.blogs.length - 1})</Label>
                                   : ''}
                           </Label.Group>
                         </Feed.Extra>

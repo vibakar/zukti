@@ -51,7 +51,8 @@ export default class AddContent extends React.Component {
             <div>
                 <h3>Enter your message for users</h3>
                 <Form onSubmit={this.handleSubmitText}>
-                    <TextArea placeholder='Tell us more' autoHeight name='text' ref='text' required/><br/><br/>
+                    <TextArea placeholder='Tell us more' autoHeight
+                      name='text' ref='text' required/><br/><br/>
                     <Button color='green' type='submit' animated style={{
                         width: '50%'
                     }}>
@@ -62,6 +63,6 @@ export default class AddContent extends React.Component {
                     </Button>
                 </Form>
             </div>
-        )
+        );
     }
 }

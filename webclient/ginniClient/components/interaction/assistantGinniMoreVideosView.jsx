@@ -9,7 +9,7 @@ export default class AssistantGinniMoreVideosView extends React.Component {
         super(props);
         this.playVideo = this.playVideo.bind(this);
     }
-    playVideo(){
+    playVideo() {
       let videoUrl = this.props.value;
       this.props.handleGinniReply([<VideoPlayer url={videoUrl}/>]);
     }

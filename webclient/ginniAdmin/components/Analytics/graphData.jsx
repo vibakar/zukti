@@ -1,16 +1,16 @@
 import React from 'react';
-import {Line} from "react-chartjs";
-import {Grid,Container} from 'semantic-ui-react';
+import {Line} from 'react-chartjs';
+import {Grid} from 'semantic-ui-react';
 import {Bar} from 'react-chartjs';
-var styles = {
-    "graphContainer": {
-        "height": "350px",
-        "width": "450px",
-        "marginTop": "15px",
-        "padding": "20px"
+let styles = {
+    graphContainer: {
+        height: '350px',
+        width: '450px',
+        marginTop: '15px',
+        padding: '20px'
     }
 };
-var chartOptions = {
+let chartOptions = {
     bezierCurve: false,
     datasetFill: false,
     pointDotStrokeWidth: 4,
@@ -23,27 +23,27 @@ export default class GraphData extends React.Component {
         this.state = {
             chartData: {
                 labels: [
-                    "January",
-                    "February",
-                    "March",
-                    "April",
-                    "May",
-                    "June",
-                    "July",
-                    "August",
-                    "September",
-                    "October",
-                    "November",
-                    "December"
+                    'January',
+                    'February',
+                    'March',
+                    'April',
+                    'May',
+                    'June',
+                    'July',
+                    'August',
+                    'September',
+                    'October',
+                    'November',
+                    'December'
                 ],
                 datasets: [
                     {
-                        fillColor: "#25BDFF ",
-                        strokeColor: "#25BDFF ",
-                        pointColor: "#25BDFF ",
-                        pointStrokeColor: "#fff",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "#25BDFF ",
+                        fillColor: '#25BDFF',
+                        strokeColor: '#25BDFF',
+                        pointColor: '#25BDFF',
+                        pointStrokeColor: '#fff',
+                        pointHighlightFill: '#fff',
+                        pointHighlightStroke: '5BDFF',
                         data: [
                             28,
                             48,
@@ -61,79 +61,79 @@ export default class GraphData extends React.Component {
                     }
                 ]
             },
-            chartData1 :{
+            chartData1: {
                 labels: [
-                    "January",
-                    "February",
-                    "March",
-                    "April",
-                    "May",
-                    "June",
-                    "July",
-                    "August",
-                    "September",
-                    "October",
-                    "November",
-                    "December"
+                  'January',
+                  'February',
+                  'March',
+                  'April',
+                  'May',
+                  'June',
+                  'July',
+                  'August',
+                  'September',
+                  'October',
+                  'November',
+                  'December'
                 ],
                 datasets: [
                     {
-                        label: "My Second dataset",
+                        label: 'My Second dataset',
                         fillColor: [
-                            "rgba(255,0,0,0.3)",
-                            "rgba(0,255,0,0.3)",
-                            "rgba(0,0,255,0.3)",
-                            " rgba(192,192,192,0.3)",
-                            "rgba(255,255,0,0.3)",
-                            "rgba(255,0,255,0.3)",
-                            "rgba(255,0,0,0.3)",
-                            "rgba(0,255,0,0.3)",
-                            "rgba(0,0,255,0.3)",
-                            "rgba(192,192,192,0.3)",
-                            "rgba(255,255,0,0.3)",
-                            "rgba(255,0,255,0.3)"
+                            'rgba(255,0,0,0.3)',
+                            'rgba(0,255,0,0.3)',
+                            'rgba(0,0,255,0.3)',
+                            'rgba(192,192,192,0.3)',
+                            'rgba(255,255,0,0.3)',
+                            'rgba(255,0,255,0.3)',
+                            'rgba(255,0,0,0.3)',
+                            'rgba(0,255,0,0.3)',
+                            'rgba(0,0,255,0.3)',
+                            'rgba(192,192,192,0.3)',
+                            'rgba(255,255,0,0.3)',
+                            'rgba(255,0,255,0.3)'
                         ],
                         strokeColor: [
-                            "rgba(255,0,0,0.3)",
-                            "rgba(0,255,0,0.3)",
-                            "rgba(0,0,255,0.3)",
-                            " rgba(192,192,192,0.3)",
-                            "rgba(255,255,0,0.3)",
-                            "rgba(255,0,255,0.3)",
-                            "rgba(255,0,0,0.3)",
-                            "rgba(0,255,0,0.3)",
-                            "rgba(0,0,255,0.3)",
-                            "rgba(192,192,192,0.3)",
-                            "rgba(255,255,0,0.3)",
-                            "rgba(255,0,255,0.3)"
+                            'rgba(255,0,0,0.3)',
+                            'rgba(0,255,0,0.3)',
+                            'rgba(0,0,255,0.3)',
+                            'rgba(192,192,192,0.3)',
+                            'rgba(255,255,0,0.3)',
+                            'rgba(255,0,0,0.3)',
+                            'rgba(255,0,255,0.3)',
+                            'rgba(0,255,0,0.3)',
+                            'rgba(0,0,255,0.3)',
+                            'rgba(192,192,192,0.3)',
+                            'rgba(255,255,0,0.3)',
+                            'rgba(255,0,255,0.3)'
                         ],
                         highlightFill: [
-                            "rgba(255,0,0,0.3)",
-                            "rgba(0,255,0,0.3)",
-                            "rgba(0,0,255,0.3)",
-                            " rgba(192,192,192,0.3)",
-                            "rgba(255,255,0,0.3)",
-                            "rgba(255,0,255,0.3)",
-                            "rgba(255,0,0,0.3)",
-                            "rgba(0,255,0,0.3)",
-                            "rgba(0,0,255,0.3)",
-                            "rgba(192,192,192,0.3)",
-                            "rgba(255,255,0,0.3)",
-                            "rgba(255,0,255,0.3)"
+                            'rgba(255,0,0,0.3)',
+                            'rgba(0,255,0,0.3)',
+                            'rgba(0,0,255,0.3)',
+                            'rgba(192,192,192,0.3)',
+                            'rgba(255,0,255,0.3)',
+                            'rgba(255,255,0,0.3)',
+                            'rgba(255,0,0,0.3)',
+                            'rgba(0,255,0,0.3)',
+                            'rgba(0,0,255,0.3)',
+                            'rgba(192,192,192,0.3)',
+                            'rgba(255,255,0,0.3)',
+                            'rgba(255,0,255,0.3)'
                         ],
                         highlightStroke: [
-                            "rgba(255,0,0,0.3)",
-                            "rgba(0,255,0,0.3)",
-                            "rgba(0,0,255,0.3)",
-                            " rgba(192,192,192,0.3)",
-                            "rgba(255,255,0,0.3)",
-                            "rgba(255,0,255,0.3)",
-                            "rgba(255,0,0,0.3)",
-                            "rgba(0,255,0,0.3)",
-                            "rgba(0,0,255,0.3)",
-                            "rgba(192,192,192,0.3)",
-                            "rgba(255,255,0,0.3)",
-                            "rgba(255,0,255,0.3)"
+                            'rgba(255,0,0,0.3)',
+                            'rgba(0,0,255,0.3)',
+                            'rgba(0,255,0,0.3)',
+                            'rgba(192,192,192,0.3)',
+                            'rgba(255,255,0,0.3)',
+                            'rgba(0,255,0,0.3)',
+                            'rgba(255,0,255,0.3)',
+                            'rgba(255,0,0,0.3)',
+                            'rgba(0,0,255,0.3)',
+                            'rgba(192,192,192,0.3)',
+                            'rgba(255,255,0,0.3)',
+                            'rgba(255,0,255,0.3)'
                         ],
                         data: [
                             28,

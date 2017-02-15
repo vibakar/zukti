@@ -1,5 +1,5 @@
 import React from 'react';
-import {Feed} from 'semantic-ui-react';
+import {Feed, Label} from 'semantic-ui-react';
 import AssistantGinniMoreVideosView from './assistantGinniMoreVideosView';
 import AssistantGinniOptions from './assistantGinniOptions';
 import VideoPlayer from './videoPlayer';
@@ -21,7 +21,7 @@ import './chatcontainerstyle.css';
       videosResponseArray.shift();
       videosResponseArray.forEach((video)=>{
         ginniReply.push(<AssistantGinniMoreVideosView
-          question={this.props.question} value={video.value}/>)
+          question={this.props.question} value={video.value}/>);
       });
       this.props.handleGinniReply(ginniReply);
     }

@@ -55,10 +55,10 @@ export default class NewPassword extends React.Component {
             }).then(function(response) {
                 hashHistory.push('/login');
             }).catch(function(error) {
-                // alert('check the details');
-            });
+              console.log(error);
+              });
         } else {
-            this.setState({openSnackbar: true, snackbarMsg: "check password field"});
+            this.setState({openSnackbar: true, snackbarMsg: 'check password field'});
         }
     }
     // validation for password
@@ -78,7 +78,8 @@ export default class NewPassword extends React.Component {
             } else {
                 this.setState({errorpassword: true});
                 this.setState({verifypassword: false});
-                this.setState({errormessagepassword: 'Password should contain numbers,letters(A&a) and minimum length 6'});
+                this.setState({errormessagepassword:
+                  'Password should contain numbers,letters(A&a) and minimum length 6'});
             }
         }
     }
@@ -107,21 +108,33 @@ export default class NewPassword extends React.Component {
                 <br/><br/><br/><br/><br/><br/><br/>
                 <Form onSubmit={this.onSubmitData}>
                     <Form.Field >
-                        <h3 id='heading'><Icon name='lock' id='icon'/>Reset your password</h3><Divider id='divider'/>
+                        <h3 id='heading'>
+                          <Icon name='lock' id='icon'/>
+                          Reset your password</h3>
+                          <Divider id='divider'/>
                         <h3 style={{
                             color: 'white',
                             fontStyle: 'italic'
                         }}>Enter new password
                         </h3><br/>
-                        <Form.Input type='password' placeholder='new password' circular id='fields' icon='key' iconPosition='left' name="password" onChange={this.ChangePassword.bind(this)} error={this.state.errorpassword} required/><br/>
+                        <Form.Input type='password' placeholder='new password' circular
+                          id='fields' icon='key' iconPosition='left' name="password"
+                          onChange={this.ChangePassword.bind(this)} error={this.state.errorpassword}
+                          required/><br/>
                         <p style={{
                             color: 'red'
                         }}>{this.state.errormessagepassword}</p>
-                        <Form.Input type='password' placeholder='confirm password' id='fields' icon='key' iconPosition='left' name="repassword" onChange={this.ChangeRepassword.bind(this)} error={this.state.errorrepassword} required/><br/>
+                        <Form.Input type='password' placeholder='confirm password'
+                          id='fields' icon='key' iconPosition='left' name="repassword"
+                          onChange={this.ChangeRepassword.bind(this)}
+                           error={this.state.errorrepassword} required/><br/>
                         <p style={{
                             color: 'red'
                         }}>{this.state.errormessage}</p>
-                        <Button type='submit' id='submit' onClick={this.handleOpen} circular disabled={(!this.state.repassword) || (!this.state.password) || (!this.state.verifypassword) || (!this.state.confirmpassword)}>submit</Button>
+                        <Button type='submit' id='submit' onClick={this.handleOpen} circular
+                          disabled={(!this.state.repassword) || (!this.state.password)
+                            || (!this.state.verifypassword) || (!this.state.confirmpassword)}>
+                            submit</Button>
                         {this.state.opendimmer
                             ? <Dimmer active={active} onClickOutside={this.handleClose} page>
 
@@ -136,7 +149,8 @@ export default class NewPassword extends React.Component {
 
                 </Form>
                 {this.state.openSnackbar
-                    ? <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={1200} onRequestClose={this.handleRequestClose}/>
+                    ? <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg}
+                      autoHideDuration={1200} onRequestClose={this.handleRequestClose}/>
                     : null}
             </div>
         );

@@ -6,50 +6,48 @@ import {
 import './buildAi.css';
 import AddQuestionAnswerSet from './addQuestionAnswerSet';
 import DisplayQAset from '../getquestionanswerset/displayqaset';
-import Display from '../getquestionanswerset/displayaccordion';
 import BuildAI from './BuildAI';
 import Pagination from '../getquestionanswerset/pagination';
-
-
 export default class QuestionSetDisplay extends React.Component {
-
     constructor() {
         super();
         this.state = {
-          type:'',
-          data:[],
-          displayQuestionAnswer :[]
-            }
+          type: '',
+          data: [],
+          displayQuestionAnswer: []
+        };
             this.addQuestionAnswerSet = this.addQuestionAnswerSet.bind(this);
             this.displayQuestionAnswerSet = this.displayQuestionAnswerSet.bind(this);
         }
 
   //  function to add a Question answer set to display
     addQuestionAnswerSet() {
-        this.setState({type:'add'});
+        this.setState({type: 'add'});
       }
 // function display question and answer
-      displayQuestionAnswerSet(data){
-        this.setState({type:'display'});
-        this.setState({displayQuestionAnswer:<Pagination data={data}/>});
+      displayQuestionAnswerSet(data) {
+        this.setState({type: 'display'});
+        this.setState({displayQuestionAnswer: <Pagination data={data}/>});
             }
 
     render() {
         return (
             <div id="backgroundimage" style={{
                 backgroundImage: "url('../../images/background.jpg')",height: '100%'
-            }}>
+             }}>
                 <Grid style={{
                     width: '95%',
                     margin: 'auto'
                 }}>
-                    <Grid.Row columns={1}>
-                    </Grid.Row>
+                    <Grid.Row columns={1} />
                     <Grid.Row columns={1}>
                         <div style={{
                             width: '100%'
                         }}>
-                            <p id="textpara">It is a set of questions and the corresponding bot replies. Ginni will understand user questions similar to those you’ve set up and reply with a appropiate answer.</p>
+                            <p id="textpara">
+                              It is a set of questions and the corresponding bot replies.
+                               Ginni will understand user questions similar to those you’ve
+                               set up and reply with a appropiate answer.</p>
                             <Divider fitted/>
                         </div>
                     </Grid.Row>
@@ -63,7 +61,7 @@ export default class QuestionSetDisplay extends React.Component {
                     </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
-                     {(this.state.type === "add") ? (<BuildAI />):(this.state.displayQuestionAnswer)}
+                 {(this.state.type === 'add') ? (<BuildAI />) : (this.state.displayQuestionAnswer)}
                    </Grid.Row>
                 </Grid>
             </div>

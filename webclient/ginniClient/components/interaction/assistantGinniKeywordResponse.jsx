@@ -13,7 +13,7 @@ export default class AssistantGinniMixedReply extends React.Component {
     displayVideos() {
         let ginniReply = [];
         let videos = this.props.data.video.map((item, index)=>{
-            return {value: item}
+            return {value: item};
           });
         videos.shift();
         ginniReply.push(<AssistantGinniVideoDisplay
@@ -24,7 +24,7 @@ export default class AssistantGinniMixedReply extends React.Component {
     displayBlogs() {
         let ginniReply = [];
         let blogs = this.props.data.blog.map((item, index)=>{
-            return {value: item}
+            return {value: item};
         });
         blogs.shift();
         ginniReply.push(<AssistantGinniUrlDisplay
@@ -45,7 +45,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                         </Feed.Extra>
                         <Feed.Extra>
                             <Label.Group>
-                                {this.props.data.blog.length-1>0
+                                {this.props.data.blog.length - 1 > 0
                                     ? <Label onClick={this.displayBlogs}
                                       basic color='orange' id='cursor'>Blogs</Label>
                                     : ''}

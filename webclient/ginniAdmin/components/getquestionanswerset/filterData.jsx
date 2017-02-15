@@ -9,7 +9,7 @@ export default class FilterData extends React.Component {
         this.handleDropdownChange = this.handleDropdownChange.bind(this);
         this.state = {
             options: []
-        }
+        };
     }
     // bind the dropdown with base intents from neo4j databse
     componentDidMount() {
@@ -37,7 +37,7 @@ export default class FilterData extends React.Component {
                         <h4 id="dropdown">Choose Intent</h4>
                     </label>
                     <Input>
-                        <Dropdown  options={this.state.options} placeholder='Intent'
+                        <Dropdown options={this.state.options} placeholder='Intent'
                         search selection onChange={this.handleDropdownChange}/>
                     </Input>
                 </Form.Field>

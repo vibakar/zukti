@@ -30,7 +30,7 @@ export default class BookmarkList extends React.Component {
     }
     render() {
         let bookmarkView = this.state.bookmarks.map((bookmark, index)=>{
-          return <BookmarkView key={index} bookmark={bookmark} 
+          return <BookmarkView key={index} bookmark={bookmark}
             handlerRemoveBookmarkFromView={this.removeBookmarkFromView}/>
         });
         return (

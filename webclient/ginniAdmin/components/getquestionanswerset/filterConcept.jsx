@@ -9,14 +9,13 @@ export default class FilterConcept extends React.Component {
         this.handleDropdownChange = this.handleDropdownChange.bind(this);
         this.state = {
             options: []
-        }
+        };
     }
     // show the dropdown with concepts from neo4j databse
     componentDidMount() {
         let url = Config.url + '/concept';
         Axios.get(url).then((response) => {
             let concepts = response.data.concepts;
-            console.log(concepts);
             concepts.forEach((concepts) => {
                 this.state.options.push({text: concepts, value: concepts});
             });

@@ -8,10 +8,10 @@ router.get('/', function(req, res) {
       console.log(err);
     }
     else if(data) {
-        res.json({queryCount: data.queriesAsked})
+        res.json({queryCount: data.queriesAsked});
       }
       else{
-        res.json({queryCount: 0})
+        res.json({queryCount: 0});
       }
   });
 });

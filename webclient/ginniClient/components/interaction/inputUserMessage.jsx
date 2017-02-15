@@ -42,7 +42,7 @@ export default class InputUserMesaage extends React.Component {
                 else{
                   response.data.answerObj.forEach((reply)=>{
                     ginniReply.push(<AssistantGinniPlainText value={reply.value}/>);
-                    if(reply.keywordResponse){
+                    if(reply.keywordResponse) {
                       ginniReply.push(<AssistantGinniKeywordResponse
                         handleGinniReply={this.props.handleGinniReply} question={message.value}
                         data={reply}/>);

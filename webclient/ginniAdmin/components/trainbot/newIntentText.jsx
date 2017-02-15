@@ -1,43 +1,40 @@
 import React from 'react';
-import {Form, Input, Divider, Button, Icon} from 'semantic-ui-react';
+import {Form, Divider, Button, Icon} from 'semantic-ui-react';
 import Snackbar from 'material-ui/Snackbar';
-import TrainBot from './trainbot';
 import ReactDOM from 'react-dom';
 import Axios from 'axios';
 import Config from '../../../../config/url';
 export default class NewIntentText extends React.Component {
     constructor(props) {
         super(props);
-        this.state={
-          opensnackbar:false,
-          snakbarmsg:''
-        }
+        this.state = {
+          opensnackbar: false,
+          snakbarmsg: ''
+        };
         this.createNewIntent = this.createNewIntent.bind(this);
-
     }
     createNewIntent(e) {
         e.preventDefault();
-        //getting the value of new intent from text field
+        // getting the value of new intent from text field
         let newIntent = ReactDOM.findDOMNode(this.refs.newIntent).value;
-      
-        //checking for empty field since empty node is not required
+
+        //  checking for empty field since empty node is not required
         if (newIntent) {
-            //clearing the input newSameAsIntent text field
+            // clearing the input newSameAsIntent text field
             ReactDOM.findDOMNode(this.refs.newIntent).value = '';
-            //ajax call for saving new intents in graph databse
-            let url = Config.url + '/intent/createIntent'
+            // ajax call for saving new intents in graph databse
+            let url = Config.url + '/intent/createIntent';
             Axios.post(url, {NewIntent: newIntent}).then((response) => {
-                console.log(response.data);
             }).catch((error) => {
                 console.log(error);
             });
         } else {
-            this.setState({opensnackbar:true,snakbarmsg:'The field is empty'})
+            this.setState({opensnackbar: true, snakbarmsg: 'The field is empty'});
         }
     }
     handleRequestClose=()=>
     {
-      this.setState({opensnackbar:false});
+      this.setState({opensnackbar: false});
     };
     closeNewIntent=()=>{
       this.props.open();
@@ -48,12 +45,13 @@ export default class NewIntentText extends React.Component {
     // function to handle dropdown change
 
     render() {
-      const{open}=this.state;
+      const{open} = this.state;
         return (
             <Form >
                 <Form.Field >
                     <h4>ADD A NEW INTENT
-                          <Icon name='remove' color='red' size='large' style={{marginLeft:'55%'}} onClick={this.closeNewIntent}></Icon></h4>
+                    <Icon name='remove' color='red' size='large' style={{marginLeft: '55%'}}
+                             onClick={this.closeNewIntent}/></h4>
                     <Divider/>
                     <label>
                         <h4>Enter The New Intent</h4>
@@ -67,8 +65,8 @@ export default class NewIntentText extends React.Component {
                     </Button><br/>
 
                 </Form.Field>
-                <Snackbar open={this.state.opensnackbar} message={this.state.snakbarmsg} autoHIdeDuration={400} onRequestClose={this.handleRequestClose}/>
-
+                <Snackbar open={this.state.opensnackbar} message={this.state.snakbarmsg}
+                   autoHIdeDuration={400} onRequestClose={this.handleRequestClose}/>
             </Form>
         );
     }

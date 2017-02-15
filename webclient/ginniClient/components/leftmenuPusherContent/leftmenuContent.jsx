@@ -11,24 +11,24 @@ export default class LeftMenuContent extends React.Component {
         switch (this.props.sidebarItemSelected) {
             case 'Build':
                 {
-                    return <DefaultPage/>
+                    return <DefaultPage/>;
                 }
             case 'Home':
                 {
-                    return <DefaultPage/>
+                    return <DefaultPage/>;
                 }
             case 'ChatBot':
                 {
-                    return <AssistanView/>
+                    return <AssistanView/>;
                 }
 
             case 'Bookmarks':
                 {
-                    return <BookmarkList/>
+                    return <BookmarkList/>;
                 }
             case 'notifications':
                 {
-                    return <Notifications/>
+                    return <Notifications/>;
                 }
         }
     }

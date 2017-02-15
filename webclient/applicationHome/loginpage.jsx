@@ -31,8 +31,7 @@ export default class LoginPage extends React.Component
     }
     // function to post login data to Server
     onSubmitLoginData(e, value) {
-        console.log(value.formData);
-        e.preventDefault();
+          e.preventDefault();
         $.ajax({
                 url: 'http://localhost:8080/login',
                 type: 'POST',
@@ -50,10 +49,11 @@ export default class LoginPage extends React.Component
                   else{
                     hashHistory.push('/clienthome');
                     let socket = io();
-                    socket.emit('userLoginStatus', {value:1});
+                    socket.emit('userLoginStatus', {value: 1});
                   }
                 },
-                // It throws a error message in case of any error like password incorrect or no such emailid registered
+                /* It throws a error message in case of any error like password
+                incorrect or no such emailid registered*/
                 error: function(err) {
                     this.setState({openSnackbar: true, snackbarMsg: err.responseText});
                 }.bind(this)
@@ -66,7 +66,7 @@ export default class LoginPage extends React.Component
     ChangeEmail = (event) => {
         this.setState({email: event.target.value});
         // check whether the user is alreay exists or not
-        if(event.target.value.length> 7){
+        if(event.target.value.length > 7) {
         if (validator.isEmail(event.target.value)) {
             this.setState({erroremail: false});
             this.setState({validemail: true});
@@ -84,7 +84,8 @@ export default class LoginPage extends React.Component
         const {open, dimmer} = this.state;
         return (
             <div>
-            <Modal dimmer={dimmer} open={open} onClose={this.close} closeOnRootNodeClick={false} size="small" closeIcon='close' id='modallogincss'>
+            <Modal dimmer={dimmer} open={open} onClose={this.close}
+              closeOnRootNodeClick={false} size="small" closeIcon='close' id='modallogincss'>
             <Modal.Header id="headerstyle">
             <h1><Image src='../../images/ginianim.gif' avatar/>Welcome to Genie</h1>
             </Modal.Header>
@@ -101,15 +102,19 @@ export default class LoginPage extends React.Component
             <Segment basic>
             <Form onSubmit={this.onSubmitLoginData}>
             <Form.Field id="formfieldlogin">
-            <Form.Input name= "userName" placeholder= 'Email-ID' icon='user' iconPosition='left' id="formstyle" onChange={this.ChangeEmail.bind(this)} error={this.state.erroremail} required />
+            <Form.Input name= "userName" placeholder= 'Email-ID' icon='user'
+               iconPosition='left' id="formstyle" onChange={this.ChangeEmail.bind(this)}
+               error={this.state.erroremail} required />
             <p style={{color: '#a54f4f'}}>{this.state.errormessageemail}</p>
             </Form.Field>
             <Form.Field id="formfieldlogin"><br/>
-            <Form.Input type='password' name="password" placeholder='Password' icon='lock' iconPosition='left' id="formstyle" required/>
+            <Form.Input type='password' name="password" placeholder='Password'
+               icon='lock' iconPosition='left' id="formstyle" required/>
             <a href="#/forgotpassword" id='forgotpassword'>Forgot Password?</a>
             </Form.Field><br/><br/><br/>
             <Modal.Actions>
-            <Button color='teal' id="buttonwidth1" circular disabled={(!this.state.email) || (!this.state.validemail)}>
+            <Button color='teal' id="buttonwidth1" circular
+              disabled={(!this.state.email) || (!this.state.validemail)}>
             <Button.Content type='submit' ><Icon name='sign in'/>Login</Button.Content>
             </Button><br/><br/>
             <p id="footer">Not yet registered?&nbsp;
@@ -139,7 +144,8 @@ export default class LoginPage extends React.Component
             </Modal.Description>
             </Modal.Content>
             </Modal>
-            <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
+            <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg}
+              autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
             </div>
             );
 }

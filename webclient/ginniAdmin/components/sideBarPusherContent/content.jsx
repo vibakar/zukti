@@ -1,11 +1,10 @@
 import React from 'react';
-import SetUpBot from '../buildAi/setUpBot'
+import SetUpBot from '../buildAi/setUpBot';
 import UserTable from '../users/usertable';
 import Analytics from '../Analytics/info';
 import BroadCast from '../broadCast/broadCast';
 import TrainBot from '../trainbot/trainbot';
 import UnansweredQueries from '../unansweredqueries/unansweredqueries';
-
 export default class Content extends React.Component {
     constructor(props) {
         super(props);
@@ -14,31 +13,27 @@ export default class Content extends React.Component {
         switch (this.props.sidebarItemSelected) {
             case 'SetupAi':
                 {
-                    return <SetUpBot/>
+                    return <SetUpBot/>;
                 }
             case 'BroadCast':
                 {
-                    return <BroadCast/>
+                    return <BroadCast/>;
                 }
             case 'Users':
                 {
-                    return <UserTable/>
+                    return <UserTable/>;
                 }
             case 'Analyze':
                 {
-                    return <Analytics/>
+                    return <Analytics/>;
                 }
-            case 'UseTheBot':
-                {
-                    return <BuildAi/>
-                }
-                case 'TrainBot':
+                  case 'TrainBot':
                     {
-                        return <TrainBot/>
+                        return <TrainBot/>;
                     }
                     case 'Unanswered Queries':
                         {
-                            return <UnansweredQueries/>
+                            return <UnansweredQueries/>;
                         }
         }
     }
