@@ -19,11 +19,11 @@ router.post('/', function(req, res) {
     messages.save((error) => {
         if (error) {
             res.json({
-                'saved': false
+                saved: false
             });
         } else {
             res.json({
-                'saved': true
+                saved: true
             });
         }
     });

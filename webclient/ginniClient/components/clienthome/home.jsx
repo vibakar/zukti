@@ -5,7 +5,8 @@ import Axios from 'axios';
 import Cookie from 'react-cookie';
 import './homestyle.css';
 export default class ClientHome extends React.Component {
-// if the user clicks logout it clears all the cookies which is stored when user login and redirect to apphome
+/* if the user clicks logout it clears all the cookies
+which is stored when user login and redirect to apphome*/
     handleLogout()
     {
       Axios({
@@ -13,17 +14,17 @@ export default class ClientHome extends React.Component {
               url: 'http://localhost:8080/signout',
               data: 'json'
             }).then(function (response) {
-              Cookie.remove("authType");
-              Cookie.remove("token");
+              Cookie.remove('authType');
+              Cookie.remove('token');
               hashHistory.push('/');
             })
              .catch(function (error) {
-                 console.log("error",err);
+                 console.log(error);
             });
     }
     // redirects to chat page
     onSubmitEmail() {
-        hashHistory.push('/chat')
+        hashHistory.push('/chat');
     }
     render() {
         return (
@@ -36,11 +37,15 @@ export default class ClientHome extends React.Component {
                         <Grid.Column width={2}/>
                         <Grid.Column width={10}/>
                         <Grid.Column width={4}>
-                            <Popup offset={-140} positioning='left center' trigger={<center><Icon name='sign out' size='large' inverted id='iconstyle' onClick={this.handleLogout.bind(this)}/></center>} content='Logout'/>
+                            <Popup offset={-140} positioning='left center' trigger={<center>
+                              <Icon name='sign out' size='large' inverted id='iconstyle'
+                                 onClick={this.handleLogout.bind(this)}/>
+                               </center>} content='Logout'/>
                         </Grid.Column>
                     </Grid.Row>
                     <Divider horizontal inverted>
-                        <h2 id='headsparkle'>I AM GENIE GIVING DAZZLING SOLUTIONS <br/>TO YOUR PROBLEMS
+                        <h2 id='headsparkle'>I AM GENIE GIVING DAZZLING SOLUTIONS
+                          <br/>TO YOUR PROBLEMS
                         </h2>
                     </Divider>
                     <Grid.Row divided vertically>
@@ -48,12 +53,14 @@ export default class ClientHome extends React.Component {
                         <Grid.Column width={4} centered={true}>
                             <Grid.Row>
                                 <center>
-                                    <Image className="imagepointer" src='../../images/react.jpg' size='small' avatar onClick={this.onSubmitEmail.bind(this)}/>
+                                    <Image className="imagepointer" src='../../images/react.jpg'
+                                    size='small' avatar onClick={this.onSubmitEmail.bind(this)}/>
                                 </center>
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                    <h2 className="heading1" onClick={this.onSubmitEmail.bind(this)}>REACT</h2>
+                                    <h2 className="heading1"
+                                      onClick={this.onSubmitEmail.bind(this)}>REACT</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>

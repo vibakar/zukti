@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const qaSchema=mongoose.Schema(
+const qaSchema = mongoose.Schema(
   {
-    question: {type:String},
-    answer: {type:String},date: {type:String}
-},{ _id :true})
+    question: {type: String},
+    answer: {type: String}, date: {type: String}
+}, { _id: true});
 const savedQuerySchema = mongoose.Schema({
     email: String,
     savedquery: [qaSchema]

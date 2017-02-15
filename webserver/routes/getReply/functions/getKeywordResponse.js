@@ -29,9 +29,10 @@ module.exports = function(keywords, sendResponse) {
             session.close();
           // condition to handle when no result is found
             if (result.records[0] === 0) {
-              //randomly generating answer and send response
-                let foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
-                resultArray = [];
+              // randomly generating answer and send response
+                let foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() *
+                  answerNotFoundReply.length)];
+                let resultArray = [];
                 let resultObj = {};
                 resultObj.value = foundNoAnswer;
                 resultObj.time = new Date().toLocaleString();
@@ -45,19 +46,21 @@ module.exports = function(keywords, sendResponse) {
                     let field = record._fields;
                     let contentType = field[0][0];
                     let content = field[1];
-                        if (content.length != 0) {
+                        if (content.length !== 0) {
                         hasAtleastSomeContent = true;
                         resultObj[contentType] = content;
                     }
                 });
                 resultObj.time = new Date().toLocaleString();
                 if (hasAtleastSomeContent) {
-                    resultObj.value = replyForKeyword[Math.floor(Math.random() * replyForKeyword.length)];
+                    resultObj.value = replyForKeyword[Math.floor(Math.random() *
+                       replyForKeyword.length)];
                     resultArray.push(resultObj);
                     resultObj.keywordResponse = true;
                     sendResponse(true, resultArray);
                 } else {
-                    resultObj.value = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
+                    resultObj.value = answerNotFoundReply[Math.floor(Math.random() *
+                       answerNotFoundReply.length)];
                     resultArray.push(resultObj);
                     sendResponse(true, resultArray);
                 }

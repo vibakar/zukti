@@ -33,7 +33,6 @@ let isAuthenticated = function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    console.log('Not authenticated');
     res.redirect('/#/');
 };
 
@@ -61,7 +60,8 @@ db.once('open', function() {
 
 // required for passport
 app.use(session({
-    secret: 'dfsdfd', // session secret
+    secret: 'dfsdfd',
+    // session secret
     resave: true,
     saveUninitialized: true
 }));
@@ -81,25 +81,21 @@ require('./webserver/routes/auth.js')(app, passport);
 
 // our routes will be given here
 // login routes
-
-//Ruotes
+// Routes
 app.use('/', uploadimage);
-
-//Routes
-app.use('/analytics',analytics);
-app.use('/savebroadcastmessage',isAuthenticated, savebroadcastmessage);
-app.use('/getbroadcastmessage',isAuthenticated, getbroadcastmessage);
-app.use('/getadmin',isAuthenticated, getAdmin);
+app.use('/analytics', analytics);
+app.use('/savebroadcastmessage', isAuthenticated, savebroadcastmessage);
+app.use('/getbroadcastmessage', isAuthenticated, getbroadcastmessage);
+app.use('/getadmin', isAuthenticated, getAdmin);
 app.use('/intent', intent);
-app.use('/concept',concept);
-
-app.use('/question',isAuthenticated, askQuestion);
-app.use('/retriveChat',isAuthenticated, retriveChat)
+app.use('/concept', concept);
+app.use('/question', isAuthenticated, askQuestion);
+app.use('/retriveChat', isAuthenticated, retriveChat);
 app.use('/qa', addKnowledge);
 app.use('/question', askQuestion);
-app.use('/getknowledge',getKnowledge);
-app.use('/retriveChat',retriveChat)
-app.use('/bookmarks',bookmarks);
+app.use('/getknowledge', getKnowledge);
+app.use('/retriveChat', retriveChat);
+app.use('/bookmarks', bookmarks);
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     publicPath: config.output.publicPath,
@@ -113,30 +109,24 @@ app.use(webpackDevMiddleware(compiler, {
 }));
 
 app.use(webpackHotMiddleware(compiler));
-
-
-//Listening to port 8080
-var server = app.listen(8080, '0.0.0.0', function(err, result) {
+// Listening to port 8080
+let server = app.listen(8080, '0.0.0.0', function(err, result) {
     if (err) {
         console.error("Error ", err);
     }
-
     console.log("Server started at 8080");
 });
-
-
-
 let io = require('socket.io')(server);
 // socket.io demo
 io.on('connection', function(socket) {
     socket.emit('server event', {
         foo: 'bar'
     });
-    socket.on('newQuery',function(data){
-      socket.broadcast.emit('incrementQueryCount',data);
+    socket.on('newQuery', function(data) {
+      socket.broadcast.emit('incrementQueryCount', data);
     });
-    socket.on('userLoginStatus',function(data){
-      socket.broadcast.emit('userLoggedIncount',data);
+    socket.on('userLoginStatus', function(data) {
+      socket.broadcast.emit('userLoggedIncount', data);
     });
 
     socket.on('client event', function(data) {

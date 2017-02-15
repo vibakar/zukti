@@ -9,7 +9,6 @@ import AssistantGinniMixedReply from './assistantGinniMixedReply';
 import AssistantGinniPlainText from './assistantGinniPlainText';
 import AssistantGinniKeywordResponse from './AssistantGinniKeywordResponse';
 import AssistantUserView from './assistantUserView';
-import Config from '../../../../config/url';
 import './chatcontainerstyle.css';
 export default class AssistantChatContainer extends React.Component {
 
@@ -31,14 +30,14 @@ export default class AssistantChatContainer extends React.Component {
         // Scroll to the bottom on initialization
         let username = Cookie.load('username');
         let authType = Cookie.load('authType');
-        console.log(authType);
         if (authType === 'local') {
             if (username) {
                 this.state.username = username;
             }
             let profilePicture = Cookie.load('profilepicture');
             if (profilePicture) {
-                this.state.profilePicture = require('../../../../webserver/images/' + profilePicture);
+                this.state.profilePicture =
+                require('../../../../webserver/images/' + profilePicture);
             }
             //    this.retriveChat();
         } else if (authType === 'facebook') {
@@ -60,13 +59,10 @@ export default class AssistantChatContainer extends React.Component {
     }
     componentDidUpdate() {
         // Scroll as new elements come along
-        var len = this.state.messages.length - 1;
-        console.log(len);
+        let len = this.state.messages.length - 1;
         const node = ReactDOM.findDOMNode(this['_div' + len]);
-        console.log(node);
         if (node) {
             node.scrollIntoView(false);
-            //node.scrollIntoView();
         }
     }
     retriveChat() {
@@ -76,7 +72,9 @@ export default class AssistantChatContainer extends React.Component {
                     let length = this.state.messages.length;
                     this.state.messages.push(
                         <div ref={(ref) => this['_div' + length] = ref}>
-                            <AssistantUserView msgDate={chat.question.time} userName={this.state.username} userMessage={chat.question.value} profilePicture={this.state.profilePicture}/>
+                            <AssistantUserView msgDate={chat.question.time}
+                              userName={this.state.username} userMessage={chat.question.value}
+                              profilePicture={this.state.profilePicture}/>
                         </div>
                     );
                     if (chat.isUnAnswered) {
@@ -91,7 +89,9 @@ export default class AssistantChatContainer extends React.Component {
                                 let length = this.state.messages.length;
                                 this.state.messages.push(
                                     <div ref={(ref) => this['_div' + length] = ref}>
-                                        <AssistantGinniKeywordResponse handleGinniReply ={this.pushGinniMessages} question={chat.question.value} data={answer}/>
+                                        <AssistantGinniKeywordResponse
+                                          handleGinniReply ={this.pushGinniMessages}
+                                           question={chat.question.value} data={answer}/>
                                     </div>
                                 );
                             }
@@ -100,16 +100,15 @@ export default class AssistantChatContainer extends React.Component {
                         let length = this.state.messages.length;
                         this.state.messages.push(
                             <div ref={(ref) => this['_div' + length] = ref}>
-                                <AssistantGinniMixedReply question={chat.question.value} data={chat.answerObj} handleGinniReply={this.pushGinniMessages}/>
+                                <AssistantGinniMixedReply question={chat.question.value}
+                                   data={chat.answerObj} handleGinniReply={this.pushGinniMessages}/>
                             </div>
                         );
-
                     }
                 });
             }
             this.setState({messages: this.state.messages, loaderActive: false});
         }).catch((err) => {
-            console.log(err);
             this.setState({messages: this.state.messages, loaderActive: false});
         });
     }
@@ -132,7 +131,8 @@ export default class AssistantChatContainer extends React.Component {
         let length = this.state.messages.length;
         let userMessageDisplay = (
             <div ref={(ref) => this['_div' + length] = ref} key={length}>
-                <AssistantUserView msgDate={message.time} userName={this.state.username} userMessage={message.value} profilePicture={this.state.profilePicture}/>
+                <AssistantUserView msgDate={message.time} userName={this.state.username}
+                   userMessage={message.value} profilePicture={this.state.profilePicture}/>
             </div>
         );
         this.state.messages.push(userMessageDisplay);
@@ -140,7 +140,6 @@ export default class AssistantChatContainer extends React.Component {
     }
 
     render() {
-        console.log('In render');
         return (
             <div className='formstyle' style={{
                 backgroundImage: "url('../../images/background.jpg')"
@@ -153,19 +152,23 @@ export default class AssistantChatContainer extends React.Component {
                     <Menu.Item position='left'>
                         <Input className='icon' style={{
                             width: 400
-                        }} icon={< Icon name = 'search' color = 'red' circular link />} placeholder='Search your content' focus/>
+                        }} icon={< Icon name = 'search' color = 'red' circular link />}
+                        placeholder='Search your content' focus/>
                     </Menu.Item>
                 </Menu>
-                <Scrollbars id='ginni' renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
-                    display: "none",
-                    position: "right",
-                    minHeight: "516px"
+                <Scrollbars id='ginni' renderTrackHorizontal={props => <div {...props}
+                  className="track-horizontal" style={{
+                    display: 'none',
+                    position: 'right',
+                    minHeight: '516px'
                 }}/>} autoHeight autoHeightMin={506}>
                     <div id='messagechat'>
                         {this.state.messages}
                     </div>
                 </Scrollbars>
-                <InputUserMessage username={this.state.username} handlerUserReply={this.pushUserMessages} handleGinniReply={this.pushGinniMessages}/>
+                <InputUserMessage username={this.state.username}
+                  handlerUserReply={this.pushUserMessages}
+                  handleGinniReply={this.pushGinniMessages}/>
             </div>
         );
     }

@@ -1,6 +1,6 @@
 // it is use to save user queries in mongodb
 let UserChatHistory = require('../../../models/userChatHistory');
-module.exports = function(email,isUnAnswered, question, answerObj) {
+module.exports = function(email, isUnAnswered, question, answerObj) {
     UserChatHistory.findOne({
         email: email
     }, function(err, data) {
@@ -15,7 +15,6 @@ module.exports = function(email,isUnAnswered, question, answerObj) {
             newUserChatHistory.chats = [];
             newUserChatHistory.chats.push(chat);
             newUserChatHistory.save(function(err, data) {
-                console.log('saved');
                 console.log(data);
             });
         } else {
@@ -25,8 +24,8 @@ module.exports = function(email,isUnAnswered, question, answerObj) {
             chat.answerObj = answerObj;
             chat.answerDate = new Date().toLocaleString();
             data.chats.push(chat);
-            data.save(function(err) {
-                if (err) {
+            data.save(function(error) {
+                if (error) {
                     console.log('Error in saving chat');
                 }
             });

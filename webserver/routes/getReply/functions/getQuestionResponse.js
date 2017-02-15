@@ -22,7 +22,7 @@ module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundC
                  WHERE TYPE(r)=intent
                  WITH a as a, rel as rel
                  ORDER BY rel.rating DESC
-                 RETURN LABELS(a),COLLECT(a.value) `
+                 RETURN LABELS(a),COLLECT(a.value) `;
 
     let session = getNeo4jDriver().session();
     session
@@ -33,20 +33,19 @@ module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundC
                   if (result.records.length === 0) {
                 noAnswerFoundCallback();
             } else {
-
                 let answerObj = {};
                 answerObj.time = new Date().toLocaleString();
                 let resultArray = result.records.forEach((record) => {
                     let field = record._fields;
                     answerObj[field[0][0]] = field[1].map((value, index) => {
-                        if (value != '') {
+                        if (value !== '') {
                             return {
                                 value: value
-                            }
+                            };
                         }
                     });
                 });
-//sending the answer to callback
+// sending the answer to callback
                 answerFoundCallback(answerObj);
             }
         })

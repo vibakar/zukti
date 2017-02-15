@@ -4,9 +4,9 @@ let nlp = require('nlp_compromise');
 let getNeo4jDriver = require('../../../neo4j/connection');
 let getLexicon = require('../../../lexicon/getLexicon');
 
-module.exports = function( NewIntent, resultCallback) {
+module.exports = function(NewIntent, resultCallback) {
     let newIntent = nlp.text(NewIntent).root();
-    let query =`MERGE (n: intent {name:${JSON.stringify(newIntent)}})-[:same_as]->(n)`;
+    let query = `MERGE (n: intent {name:${JSON.stringify(newIntent)}})-[:same_as]->(n)`;
     let session = getNeo4jDriver().session();
     session.run(query)
         .then((result) => {
@@ -17,12 +17,10 @@ module.exports = function( NewIntent, resultCallback) {
             resultCallback({
                 saved: true
             });
-
         })
         .catch((error) => {
             resultCallback({
                 saved: false
             });
-            console.log(error);
         });
 };

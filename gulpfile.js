@@ -5,7 +5,8 @@ const htmlhint = require('gulp-htmlhint');
 gulp.task('lint', ['eslint', 'htmlhint']);
 
 gulp.task('eslint', function() {
-  return gulp.src(['webclient/**/*', 'webserver/**/*', '!node_modules/**/*', '!webclient/dist/**/*'])
+  return gulp.src(
+    ['webclient/**/*', 'webserver/**/*', '!node_modules/**/*', '!webclient/dist/**/*'])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());

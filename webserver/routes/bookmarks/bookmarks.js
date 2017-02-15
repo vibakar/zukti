@@ -1,18 +1,18 @@
 // this route is used to save,get and delte bookmarked answers in database
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const UserBookmarks = require('../../models/userBookmarks');
 // router to get user bookmarked answers from mongodb
-router.get('/',function(req,res){
-  let email = req.user.local.email||req.user.facebook.email||req.user.google.email;
-  UserBookmarks.find({email:email},function(err,userBookmarks){
-    if(err){
+router.get('/', function(req, res) {
+  let email = req.user.local.email || req.user.facebook.email || req.user.google.email;
+  UserBookmarks.find({email: email}, function(err, userBookmarks) {
+    if(err) {
       res.status(500).send('Error in retriving saved bookmarks');
     }
     else{
       res.json(userBookmarks);
     }
-  })
+  });
 });
 // router to save bookmarks in database
 router.post('/', function(req, res, next) {
@@ -21,37 +21,39 @@ router.post('/', function(req, res, next) {
     let responseType = req.body.responseType;
     let savedResponse = req.body.savedResponse;
     let date = req.body.date;
-    //finding in UserBookmarks mongo model with email
+    // finding in UserBookmarks mongo model with email
       UserBookmarks.findOne({
         email: email
     }, function(err, userBookmarks) {
         if (!userBookmarks) {
-            let bookmark =[{question:question,responseType:responseType,savedResponse:savedResponse,date:date}];
-            var userBookmarks = new UserBookmarks();
-            userBookmarks.email=email;
-            userBookmarks.bookmarks=bookmark;
+            let bookmark = [{question: question, responseType: responseType,
+               savedResponse: savedResponse, date: date}];
+            let userBookmarks = new UserBookmarks();
+            userBookmarks.email = email;
+            userBookmarks.bookmarks = bookmark;
             userBookmarks.save(function(err, data) {
-                console.log("saved")
+                console.log('saved');
                 });
         } else {
-              let bookmark ={question:question,responseType:responseType,savedResponse:savedResponse,date:date};
+            let bookmark = {question: question, responseType: responseType,
+              savedResponse: savedResponse, date: date};
             let bookmarks = userBookmarks.bookmarks;
             bookmarks.unshift(bookmark);
             userBookmarks.bookmarks = bookmarks;
-            userBookmarks.save(function(err){
-              if(err){
-                console.log(err);
+            userBookmarks.save(function(error) {
+              if(error) {
+                console.log(error);
               }
               else {
                 console.log('saved');
               }
-            })
+            });
         }
     });
 });
 // router to delete bookmarked answers from mongodb
-router.delete('/:bookmarkId',function(req, res) {
-    let email = req.user.local.email||req.user.facebook.email||req.user.google.email;
+router.delete('/: bookmarkId', function(req, res) {
+    let email = req.user.local.email || req.user.facebook.email || req.user.google.email;
     UserBookmarks.update(
     {email: email},
     {
@@ -60,9 +62,9 @@ router.delete('/:bookmarkId',function(req, res) {
           _id: req.params.bookmarkId
         }
       }
-    }, false,function(err){
-      if(err){
-        res.status(500).send('Error in deleting bookmark')
+    }, false, function(err) {
+      if(err) {
+        res.status(500).send('Error in deleting bookmark');
       }
       else{
         res.send('saved');

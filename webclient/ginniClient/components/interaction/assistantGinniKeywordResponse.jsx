@@ -1,6 +1,5 @@
 import React from 'react';
-import {Feed, Icon, Label} from 'semantic-ui-react';
-import {Popup, Comment} from 'semantic-ui-react';
+import {Feed, Label} from 'semantic-ui-react';
 import AssistantGinniUrlDisplay from './assistantGinniUrlDisplay';
 import AssistantGinniVideoDisplay from './assistantGinniVideoDisplay';
 import AssistantGinniOptions from './assistantGinniOptions';
@@ -13,20 +12,24 @@ export default class AssistantGinniMixedReply extends React.Component {
     }
     displayVideos() {
         let ginniReply = [];
-        let videos = this.props.data.video.map((item,index)=>{
-            return {value:item}
+        let videos = this.props.data.video.map((item, index)=>{
+            return {value: item}
           });
         videos.shift();
-        ginniReply.push(<AssistantGinniVideoDisplay question={this.props.question} handleGinniReply={this.props.handleGinniReply} videos={videos}/>);
+        ginniReply.push(<AssistantGinniVideoDisplay
+          question={this.props.question}
+          handleGinniReply={this.props.handleGinniReply} videos={videos}/>);
         this.props.handleGinniReply(ginniReply);
     }
     displayBlogs() {
         let ginniReply = [];
-        let blogs = this.props.data.blog.map((item,index)=>{
-            return {value:item}
+        let blogs = this.props.data.blog.map((item, index)=>{
+            return {value: item}
         });
         blogs.shift();
-        ginniReply.push(<AssistantGinniUrlDisplay question={this.props.question} handleGinniReply={this.props.handleGinniReply} blogs={blogs}/>);
+        ginniReply.push(<AssistantGinniUrlDisplay
+          question={this.props.question} handleGinniReply={this.props.handleGinniReply}
+          blogs={blogs}/>);
         this.props.handleGinniReply(ginniReply);
     }
     render() {
@@ -43,14 +46,17 @@ export default class AssistantGinniMixedReply extends React.Component {
                         <Feed.Extra>
                             <Label.Group>
                                 {this.props.data.blog.length-1>0
-                                    ? <Label onClick={this.displayBlogs} basic color='orange' id='cursor'>Blogs</Label>
+                                    ? <Label onClick={this.displayBlogs}
+                                      basic color='orange' id='cursor'>Blogs</Label>
                                     : ''}
                                 {this.props.data.video
-                                    ? <Label onClick={this.displayVideos} basic color='orange' id='cursor'>Videos</Label>
+                                    ? <Label onClick={this.displayVideos}
+                                      basic color='orange' id='cursor'>Videos</Label>
                                     : ''}
                             </Label.Group>
                         </Feed.Extra>
-                        <AssistantGinniOptions question={this.props.question} type='blog' value={blog}/>
+                        <AssistantGinniOptions question={this.props.question}
+                          type='blog' value={blog}/>
                     </Feed.Content>
                 </Feed.Event>
               </Feed>

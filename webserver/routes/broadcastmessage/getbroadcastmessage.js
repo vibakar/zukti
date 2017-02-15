@@ -1,15 +1,17 @@
-//this is used to get messages saved in mongodb
+// this is used to get messages saved in mongodb
 let express = require('express');
 let router = express.Router();
 let Broadcast = require('../../models/broadcast');
 let UserNotificationCount = require('../../models/userNotificationCount');
-//get broadcast messages saved in mongodb
+// get broadcast messages saved in mongodb
 router.get('/', function(req, res) {
     Broadcast.find(function(err, broadcast) {
-        if (err)
+        if (err) {
             res.send(err);
-        else
+          }
+        else {
             res.json(broadcast);
+          }
     });
 });
 // router to get count of notification in client side
@@ -23,13 +25,13 @@ router.get('/count', function(req, res) {
             totalBroadCastCount = count;
             UserNotificationCount.findOne({
                 email: email
-            }, function(err, data) {
+            }, function(error, data) {
                 if (!data) {
                     let userNotificationCount = new UserNotificationCount();
                     userNotificationCount.email = email;
                     userNotificationCount.count = 0;
                     userNotificationCount.save(function(err) {
-                        if (err) {
+                        if (error) {
                             console.log('Error in saving new user notification count');
                         }
                         res.json({
@@ -56,11 +58,11 @@ router.post('/updateCount', function(req, res) {
             totalBroadCastCount = count;
                 UserNotificationCount.findOne({
                 email: email
-            }, function(err, data) {
+            }, function(error, data) {
                 if (data) {
                     data.count = totalBroadCastCount;
-                    data.save(function(err) {
-                        if (err) {
+                    data.save(function(errorvalue) {
+                        if (errorvalue) {
                             console.log('Error in saving  user notification count');
                         }
                     });

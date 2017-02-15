@@ -40,10 +40,8 @@ export default class ClientProfile extends React.Component
         files.forEach((file) => {
             this.state.allFiles.push(file);
         });
-        console.log(this.state.allFiles);
-        this.setState({changeImage: false})
+        this.setState({changeImage: false});
         this.setState({allFiles: this.state.allFiles[0]});
-        console.log(this.state.allFiles);
     }
 // to save the image in server
     uploadImage()
@@ -53,13 +51,10 @@ export default class ClientProfile extends React.Component
         let self = this;
           // sending the image to server
         request.post('/upload').send(photo).end(function(err, resp) {
-            console.log('save')
             if (err) {
                 console.error(err);
             } else {
-                console.log(self.state.allFiles)
                 self.saveImage(resp.text);
-                //this.setState({ allFiles:[]});
                 return resp;
             }
         });
@@ -68,36 +63,33 @@ export default class ClientProfile extends React.Component
     saveImage(image) {
         Axios({
             method: 'POST',
-            url: "http://localhost:8080/uploadImage",
+            url: 'http://localhost:8080/uploadImage',
             data: {
                 data: image
             }
         }).then(function(response) {
             hashHistory.push('/chat');
         }).catch(function(err) {
-            console.log("error", err);
+            console.log(err);
         });
     }
       // if user profile updated successfully it redirects to react page
     profile()
     {
-        hashHistory.push('/chat')
+        hashHistory.push('/chat');
     }
       // get the information about the user like fetches emailid
     componentDidMount() {
-        const self = this;
-        Axios({url: ' http://localhost:8080/clientinformation', method: 'get'}).then(function(response) {
-            console.log(response.data[0].local);
-            console.log("email" + response.data[0].local.email);
+        let self = this;
+        Axios({url: ' http://localhost:8080/clientinformation',
+        method: 'get'}).then(function(response) {
             self.setState({email: response.data[0].local.email});
-
         }).catch(function(err) {
-            // alert("bjhbj"+err);
+            console.log(err);
         });
     }
       // edited details will be sent to server
     OnSubmitData(e, value) {
-        const self = this;
         e.preventDefault();
         Axios({
             url: ' http://localhost:8080/updateprofile',
@@ -110,7 +102,7 @@ export default class ClientProfile extends React.Component
         }).then(function(msg) {
             show('small');
         }).catch(function(err) {
-            // alert("update"+err);
+            console.log(err);
         })
     }
     show = (size) => () => this.setState({size, open: true})
@@ -149,9 +141,11 @@ export default class ClientProfile extends React.Component
     render() {
         let imagechange = null;
         const {open, size} = this.state;
-        let profilepicture = Cookie.load("profilepicture");
+        let profilepicture = Cookie.load('profilepicture');
         if (this.state.changeImage) {
-            imagechange = (<Image src={require('../../../../webserver/images/' + profilepicture)} size='large' style={{
+            imagechange = (
+              <Image src = {require('../../../../webserver/images/' + profilepicture)}
+               size='large' style= {{
                 height: 204
             }}/>);
         } else {
@@ -160,11 +154,14 @@ export default class ClientProfile extends React.Component
             }}/>);
         }
         return (
-            <Modal size='small' open={true} onClose={this.close} closeOnRootNodeClick={false} closeIcon='close'>
+            <Modal size='small' open={true} onClose={this.close}
+              closeOnRootNodeClick={false} closeIcon='close'>
                 <Modal.Header id="updateheader"><Icon name='user'/>Edit Profile</Modal.Header>
                 <Modal.Content image>
                     <Image wrapped size='medium'>
-                        <Dropzone ref='dropzone' multiple={false} default={'../../images/user.png'} accept={'image/*'} onDrop={this.onDrop}>
+                        <Dropzone ref='dropzone' multiple={false}
+                           default={'../../images/user.png'} accept={'image/*'}
+                            onDrop={this.onDrop}>
                             {imagechange}
                         </Dropzone><br/>
                         <Button primary onClick={this.uploadImage}>
@@ -176,27 +173,33 @@ export default class ClientProfile extends React.Component
                             <Form.Field>
                                 <label>First Name</label>
                             </Form.Field>
-                            <Form.Input name="firstName" onChange={this.ChangeFirst} placeholder='First Name'/>
+                            <Form.Input name="firstName" onChange={this.ChangeFirst}
+                               placeholder='First Name'/>
                             <Form.Field>
                                 <label>Last Name</label>
-                                <Form.Input name="lastName" onChange={this.ChangeLast.bind(this)} placeholder='Last Name'/>
+                                <Form.Input name="lastName" onChange={this.ChangeLast.bind(this)}
+                                   placeholder='Last Name'/>
                             </Form.Field>
                             <Form.Field>
                                 <label>Email</label>
-                                <Form.Input placeholder='email' name="email" value={this.state.email} disabled/>
-
+                                <Form.Input placeholder='email' name="email"
+                                   value={this.state.email} disabled/>
                                 <Divider/>
                             </Form.Field>
-                            <Button onClick={this.show('small')} disabled={(!this.state.firstname) || (!this.state.lastname)} color='blue' type='submit'>Save</Button>
+                            <Button onClick={this.show('small')}
+                               disabled={(!this.state.firstname) || (!this.state.lastname)}
+                                color='blue' type='submit'>Save</Button>
                         </Form>
                         <Modal size={size} open={open}>
                             <Modal.Header id="updateheader">
                                 <h2>
-                                    <Image src='../../images/thumb.gif' size="small" avatar/>Updated Suceessfully</h2>
+                                    <Image src='../../images/thumb.gif' size="small" avatar/>
+                                    Updated Suceessfully</h2>
                             </Modal.Header>
                             <Modal.Actions>
                                 <Button color='gray' onClick={this.profile.bind(this)}>
-                                    <Button.Content visible><Icon name='thumbs up'/>Ok</Button.Content>
+                                    <Button.Content visible>
+                                      <Icon name='thumbs up'/>Ok</Button.Content>
                                 </Button>
                             </Modal.Actions>
                         </Modal>

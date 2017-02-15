@@ -1,12 +1,8 @@
 const RegisteredUser = require('../models/user');
 const UnansweredQuery = require('../models/unansweredQuery');
 const nodemailer = require('nodemailer');
-var VIDcheck;
 module.exports = function(app, passport) {
-    var rand,
-        mailOptions,
-        host,
-        link;
+    let rand, mailOptions, host, link;
     app.post('/login', passport.authenticate('local', {failureRedirect: '/'}), (req, res) => {
         res.cookie('token', req.user);
         res.cookie('username', req.user.name);
@@ -14,7 +10,8 @@ module.exports = function(app, passport) {
         res.cookie('profilepicture', req.user.photos);
         res.send(req.user);
     });
-    //logout - all the user informations will be cleared in cookie and loggedin status will be changed to false
+    /* logout - all the user informations will be
+    cleared in cookie and loggedin status will be changed to false*/
     app.get('/signout', function(req, res) {
         res.clearCookie('token');
         res.clearCookie('authType');
@@ -29,7 +26,7 @@ module.exports = function(app, passport) {
             }
         }, function(err) {
             if (err) {
-                console.log("status not updated");
+                console.log('status not updated');
             } else {
                 req.logout();
             }
@@ -42,21 +39,18 @@ module.exports = function(app, passport) {
         }, function(err, alldetails) {
             if (err) {
                 res.send(err);
-                console.log('error ocuured');
             } else {
-                console.log(alldetails);
                 res.send(alldetails);
             }
         });
     });
     app.get('/viewallonlineuser', function(req, res) {
             RegisteredUser.find(
-              {'local.loggedinStatus': 'true','local.localType': 'Customer'}, function(err, alldetails) {
+              {'local.loggedinStatus': 'true', 'local.localType': 'Customer'},
+               function(err, alldetails) {
                 if (err) {
                     res.send(err);
-                    console.log('error ocuured');
                 } else {
-                  console.log(alldetails);
                     res.send(alldetails);
                 }
             });
@@ -67,14 +61,15 @@ module.exports = function(app, passport) {
         let newUser = new RegisteredUser();
         String.prototype.capitalizeFirstLetter = function() {
             return this.charAt(0).toUpperCase() + this.slice(1);
-        }
+        };
         rand = Math.floor((Math.random() * 100) + 54);
         newUser.local.verificationID = RegisteredUser.generateHashVID(rand);
-        newUser.local.name = (req.body.firstName.toLowerCase().capitalizeFirstLetter() + ' ' + req.body.lastName.toLowerCase().capitalizeFirstLetter());
+        newUser.local.name = req.body.firstName.toLowerCase().capitalizeFirstLetter() + ' '
+        + req.body.lastName.toLowerCase().capitalizeFirstLetter();
         newUser.local.email = req.body.email;
         newUser.local.password = RegisteredUser.generateHash(req.body.password);
-        newUser.local.firstname = (req.body.firstName).toLowerCase().capitalizeFirstLetter();
-        newUser.local.lastname = (req.body.lastName).toLowerCase().capitalizeFirstLetter();
+        newUser.local.firstname = req.body.firstName.toLowerCase().capitalizeFirstLetter();
+        newUser.local.lastname = req.body.lastName.toLowerCase().capitalizeFirstLetter();
         newUser.local.localType = 'Customer';
         newUser.local.authType = 'local';
         newUser.local.loggedinStatus = false;
@@ -85,21 +80,19 @@ module.exports = function(app, passport) {
             if (err) {
                 res.send('Error in registration');
             } else {
-
                 res.send('Successfully registered');
             }
         });
     });
     // adminsignup- all the details entered by admin in postman will be saved in database
     app.post('/adminsignup', function(req, res) {
-
         let newUser = new RegisteredUser();
         rand = Math.floor((Math.random() * 100) + 54);
-
         String.prototype.capitalizeFirstLetter = function() {
             return this.charAt(0).toUpperCase() + this.slice(1);
-        }
-        newUser.local.name = (req.body.firstName.toLowerCase().capitalizeFirstLetter() + " " + req.body.lastName.toLowerCase().capitalizeFirstLetter());
+        };
+        newUser.local.name = (req.body.firstName.toLowerCase().capitalizeFirstLetter() + ' ' +
+        req.body.lastName.toLowerCase().capitalizeFirstLetter());
         newUser.local.email = req.body.email;
         newUser.local.password = RegisteredUser.generateHash(req.body.password);
         newUser.local.firstname = (req.body.firstName).toLowerCase().capitalizeFirstLetter();
@@ -124,36 +117,30 @@ module.exports = function(app, passport) {
         UnansweredQuery.find({}, function(err, alldetails) {
             if (err) {
                 res.send(err);
-                console.log('error ocuured');
             } else {
                 res.send(alldetails);
             }
         });
     });
-    /*------------------Routing Started ------------------------*/
-    /*------------------Verifiocation Mail send to the mail------------------------*/
-    var host,
-        link,
-        mailOptions;
+    /* ------------------Routing Started ------------------------*/
+    /* ------------------Verifiocation Mail send to the mail------------------------*/
     // send the verification mail to the user while signup to activate his account
     app.post('/send', function handleSayHello(req, res) {
-        console.log(req.body.data);
         RegisteredUser.find({
             'local.email': req.body.data
         }, function(err, profile) {
-
             if (err) {
                 res.send(err);
-                console.log('error ocuured');
-
             } else {
                 // module to send email
-                var transporter = nodemailer.createTransport({
+                let transporter = nodemailer.createTransport({
                     service: 'Gmail',
                     secure: false,
                     auth: {
-                        user: 'geniegenie0001@gmail.com', // Your email id
-                        pass: 'genie123' // Your password
+                        user: 'geniegenie0001@gmail.com',
+                        // Your email id
+                        pass: 'genie123'
+                        // Your password
                     },
                     tls: {
                         rejectUnauthorized: false
@@ -161,53 +148,47 @@ module.exports = function(app, passport) {
                 });
 
                 host = req.get('host');
-                console.log(profile);
-                //var hashVID = bcrypt.hashSync(profile[0].local.verificationID, 10);
-                var VID = RegisteredUser.generateHashVID(profile[0].local.verificationID);
-                VIDcheck = VID;
-                var linkEmail = RegisteredUser.generateHashEmail(profile[0].local.email);
-                console.log(VID + " is the VID");
-                link = "http://" + req.get('host') + "/verify?id=" + VID + "&email=" + profile[0].local.email;
-                var text = 'Hello from \n\n' + req.body.data;
+                let VID = RegisteredUser.generateHashVID(profile[0].local.verificationID);
+                let VIDcheck = VID;
+                let linkEmail = RegisteredUser.generateHashEmail(profile[0].local.email);
+                link = 'http://' + req.get('host') + '/verify?id=' +
+                 VID + '&email=' + profile[0].local.email;
+                let text = 'Hello from \n\n' + req.body.data;
                 mailOptions = {
-                    from: 'geniegenie0001@gmail.com', // sender address
-                    to: profile[0].local.email, // list of receivers
-                    subject: 'Verify your Email with Genie', // Subject line
+                    from: 'geniegenie0001@gmail.com',
+                     // sender address
+                    to: profile[0].local.email,
+                     // list of receivers
+                    subject: 'Verify your Email with Genie',
+                    // Subject line
                     text: text,
                     html: "<center><h1>Welcome to Genie</h1></center><br><br><br>Hi,<br><br>To complete Signup Click on the button to verify yourself.<br><br><br><a href=" + link + " style='background-color:#44c767;-moz-border-radius:28px;-webkit-border-radius:28px;border-radius:28px;border:1px solid #18ab29;display:inline-block;padding:16px 31px;color:#ffffff;text-shadow:0px 1px 0px #2f6627;text-decoration:none;'> Verify </a><br><br><b>Why verify?</b><br><br>For using Genie we require a verified email to prevent spam.<br><br>Verifying lets you join Genie quickly and easily.<br><br>Cheers,<br><br><b>Team Genie</b><br><br><small><i>This link is valid for an hour.This is an Auto-generated mail,please do not reply</i></small>"
                 };
-                console.log(mailOptions + host);
                 transporter.sendMail(mailOptions, function(error, info) {
                     if (error) {
                         console.log(error);
-                        console.log("Error")
                     } else {
-                        console.log('Message sent: ' + info.response);
                         res.json({yo: info.response});
                     }
                 });
             }
         });
-
     });
-    // deleteuser-in case of any network error while signup the user data will be deleted in database if email is not sent to a particular user
-    app.delete("/deleteuser", function(req, res) {
-        request = req.body.data;
-        console.log(request);
+    /* deleteuser-in case of any network error while signup the user data
+    will be deleted in database if email is not sent to a particular user*/
+    app.delete(' /deleteuser', function(req, res) {
+        let request = req.body.data;
         RegisteredUser.remove({
             'local.email': request
         }, function(err) {
             if (err) {
-                console.log("no")
-                res.send("Error in deleting the data");
+                res.send('Error in deleting the data');
             } else {
-                console.log("deleted")
-
-                res.send("Data is deleted successfully");
+                res.send('Data is deleted successfully');
             }
         });
     });
-    /*verify the link which sent to  user email*/
+    /* verify the link which sent to  user email*/
     // verification link cannot be used more than once (will be expired once it is used)
     app.get('/verify', function(req, res) {
         let checkID = req.query.id;
@@ -215,16 +196,12 @@ module.exports = function(app, passport) {
         RegisteredUser.find({
             'local.email': req.query.email
         }, function(err, profile) {
-            console.log(profile[0]);
             if (err) {
                 res.send(err);
-                console.log('error occured');
             } else {
-                console.log(req.protocol + ":/" + req.get('host') + ":" + ("http://" + host));
-                if ((req.protocol + "://" + req.get('host')) == ("http://" + host)) {
-                    console.log("Domain is matched. Information is from Authentic email");
-                    if (profile[0].local.verificationID !=0) {
-                        console.log("email is verified");
+                if ((req.protocol + '://' + req.get('host')) === ('http://' + host)) {
+                    console.log('Domain is matched. Information is from Authentic email');
+                    if (profile[0].local.verificationID !== 0) {
                         RegisteredUser.update({
                             'local.email': req.query.email
                         }, {
@@ -232,32 +209,28 @@ module.exports = function(app, passport) {
                                 'local.isEmailVerified': true,
                                 'local.verificationID': 0
                             }
-                        }, function(err) {
-                            if (err) {
-                                console.log(err);
+                        }, function(error) {
+                            if (error) {
+                                console.log(error);
                             } else {
-                                console.log("Account Verified and Changed to true");
+                                console.log('Account Verified and Changed to true');
                             }
                         });
                         res.redirect('/#/successfullyregistered');
                     } else {
-                        console.log("email is not verified");
                         res.redirect('/#/expiryLink');
                     }
                 } else {
-                    console.log("email is not verified");
-                    //res.end("<h1>Link expired</h1>");
                     res.redirect('/#/expiryLink');
                 }
             }
         });
     });
-    //send verification link to the user mail for forgotpassword and this link is not valid more than once
+    /* send verification link to the user mail for
+    forgotpassword and this link is not valid more than once*/
     app.post('/forgetpassword', function password(req, res) {
         rand = Math.floor((Math.random() * 100) + 54);
-        let encryptRand =RegisteredUser.generateHashVID(rand);
-        console.log('Verfication ID for forget password');
-        console.log(encryptRand);
+        let encryptRand = RegisteredUser.generateHashVID(rand);
         RegisteredUser.update({
             'local.email': req.body.email
         }, {
@@ -267,9 +240,8 @@ module.exports = function(app, passport) {
         }, function(err) {
             if (err) {
                 console.log(err);
-                console.log("error :(");
             } else {
-                console.log("id changed");
+                console.log('id changed');
             }
         });
         // find whether the user exists with that email id
@@ -278,26 +250,30 @@ module.exports = function(app, passport) {
         }, function(err, profile) {
             if (err) {
                 res.send(err);
-                console.log('not registered sign up please');
             } else {
-                console.log(profile);
-                var transporter = nodemailer.createTransport({
+                let transporter = nodemailer.createTransport({
                     service: 'Gmail',
                     secure: false,
                     auth: {
-                        user: 'geniegenie0001@gmail.com', // Your email id
-                        pass: 'genie123' // Your password
+                        user: 'geniegenie0001@gmail.com',
+                        // Your email id
+                        pass: 'genie123'
+                        // Your password
                     },
                     tls: {
                         rejectUnauthorized: false
                     }
                 });
                 host = req.get('host');
-                link = "http://" + req.get('host') + "/newPassword?id=" + encryptRand + "&email=" + profile[0].local.email;
+                link = 'http://' + req.get('host') + '/newPassword?id=' +
+                 encryptRand + '&email=' + profile[0].local.email;
                 mailOptions = {
-                    from: 'geniegenie0001@gmail.com', // sender address
-                    to: profile[0].local.email, // list of receivers
-                    subject: 'Password reset for Genie account', // Subject line
+                    from: 'geniegenie0001@gmail.com',
+                     // sender address
+                    to: profile[0].local.email,
+                     // list of receivers
+                    subject: 'Password reset for Genie account',
+                     // Subject line
                     html: "<center><h1>Welcome to Genie</h1></center><br><br><br>Hi,<br><br>Forgot password??<br><br> No worries, click on the button to reset right away !!.<br><br><br><a href=" + link + " style='background-color:#FF0000;-moz-border-radius:28px;-webkit-border-radius:28px;border-radius:28px;border:1px solid #FF0000;display:inline-block;padding:16px 31px;color:#ffffff;text-shadow:0px 1px 0px #2f6627;text-decoration:none;'>Reset password</a><br><br>Cheers,<br><br><b>Team Genie</b><br><br><small><i>This link is valid for an hour.This is an Auto-generated mail,please do not reply</i></small>"
                 };
                 transporter.sendMail(mailOptions, function(error, info) {
@@ -306,30 +282,24 @@ module.exports = function(app, passport) {
                     } else {
                         console.log('Message sent: ' + info.response);
                         res.json({yo: info.response});
-                    };
+                    }
                 });
             }
         });
     });
-    /*verify the link which sent to  user email for forgotpassword*/
+    /* verify the link which sent to  user email for forgotpassword*/
     app.get('/newPassword', function(req, res) {
-      console.log(req.query.email);
-        RegisteredUser.find({
+      RegisteredUser.find({
             'local.email': req.query.email
         }, function(err, profile) {
             if (err) {
                 res.send(err);
-                console.log('error occured');
-            } else {
-                console.log(profile);
-                if (profile[0].local.verificationID != 0) {
+            } else
+                if (profile[0].local.verificationID !== 0) {
                     res.redirect('/#/newpassword?id=' + req.query.id);
                 } else {
-                    console.log("email is not verified");
-                    //res.end("<h1>Link expired</h1>");
                     res.redirect('/#/expiryLink');
                 }
-            }
         });
     });
     // once new password is changed it will be updated in user Information
@@ -339,73 +309,62 @@ module.exports = function(app, passport) {
         }, function(err, profile) {
             if (err) {
                 res.send(err);
-                console.log('error occured');
             } else {
-                console.log(req.protocol + ":/" + req.get('host') + ":" + ("http://" + host));
                 // checks whether the link is valid or expired
-                if ((req.protocol + "://" + req.get('host')) == ("http://" + host)) {
-                    console.log("Domain is matched. Information is from Authentic email");
-                    console.log("req.body.id" + req.body.id);
-                    console.log("verificationId" + profile[0].local.verificationID);
-                    if (profile[0].local.verificationID != 0) {
-                        console.log("email is verified");
+                if ((req.protocol + '://' + req.get('host')) === ('http://' + host)) {
+                    if (profile[0].local.verificationID !== 0) {
                         RegisteredUser.update({
                             'local.verificationID': req.body.id
                         }, {
-                            // using the verification id password updated in particular user Information
+                            /* using the verification id password
+                             updated in particular user Information */
                             $set: {
                                 'local.password': RegisteredUser.generateHash(req.body.pass),
                                 'local.verificationID': 0
                             }
-                        }, function(err) {
-                            if (err) {
-                                console.log(err);
+                        }, function(error) {
+                            if (error) {
+                                console.log(error);
                             } else {
                                 res.redirect('/#/');
                             }
                         });
                     } else {
-                        console.log("email is not verified");
-                        //res.end("<h1>Link expired</h1>");
                         res.redirect('/#/expiryLink');
                     }
                 } else {
-                    res.end("<h1>Request is from unknown source");
+                    res.redirect('/#/expiryLink');
                 }
             }
         });
     });
-    //check whether the user already exists or not during signup
+    // check whether the user already exists or not during signup
     app.post('/checkuser', function(req, res) {
         RegisteredUser.find({
             'local.email': req.body.email
         }, function(err, profile) {
             // checks email already exist or not
             if (profile.length) {
-                console.log(req.body.email);
-                console.log(profile.length);
-                res.json({'userexists': true});
+                res.json({ userexists: true});
             } else {
-                console.log(req.body.email);
-                console.log(profile.length);
-                res.json({'userexists': false});
+                res.json({ userexists: false});
             }
             if (err) {
                 res.send(err);
             }
         });
     });
-
-    //profileupdation for both user and admin
+    // profileupdation for both user and admin
     app.put('/updateprofile', function(req, res) {
         String.prototype.capitalizeFirstLetter = function() {
             return this.charAt(0).toUpperCase() + this.slice(1);
-        }
+        };
         if (req.body) {
-            request1 = req.body.email;
-            request2 = (req.body.firstname.toLowerCase().capitalizeFirstLetter() + " " + req.body.lastname.toLowerCase().capitalizeFirstLetter());
-            request3 = req.body.firstname.toLowerCase().capitalizeFirstLetter();
-            request4 = req.body.lastname.toLowerCase().capitalizeFirstLetter();
+            let request1 = req.body.email;
+            let request2 = (req.body.firstname.toLowerCase().capitalizeFirstLetter() + ' ' +
+             req.body.lastname.toLowerCase().capitalizeFirstLetter());
+            let request3 = req.body.firstname.toLowerCase().capitalizeFirstLetter();
+            let request4 = req.body.lastname.toLowerCase().capitalizeFirstLetter();
             RegisteredUser.update({
                 'local.email': request1
             }, {
@@ -419,7 +378,7 @@ module.exports = function(app, passport) {
                 if (err) {
                     res.send(err);
                 } else {
-                    res.send("updated Successfully");
+                    res.send('updated Successfully');
                 }
             });
         }
@@ -427,7 +386,7 @@ module.exports = function(app, passport) {
     // user can reset password after login to the application
     app.put('/resetpassword', function(req, res) {
         if (req.body) {
-            request1 = req.body.password;
+            let request1 = req.body.password;
             RegisteredUser.update({
                 'local.email': req.user.local.email
             }, {
@@ -439,7 +398,7 @@ module.exports = function(app, passport) {
                 if (err) {
                     res.send(err);
                 } else {
-                    res.send("Password changed Successfully");
+                    res.send('Password changed Successfully');
                 }
             });
         }
@@ -447,7 +406,6 @@ module.exports = function(app, passport) {
     // uploading image for localstratergy
     app.post('/uploadImage', function(req, res) {
         res.cookie('profilepicture', req.body.data);
-        console.log(req.body.data, "vgbhnjk");
         RegisteredUser.update({
             'local.email': req.user.local.email
         }, {
@@ -459,20 +417,17 @@ module.exports = function(app, passport) {
             if (err) {
                 res.send(err);
             } else {
-                res.send("Successfully Updated");
+                res.send('Successfully Updated');
             }
         });
-
     });
     // customer Information
     app.get('/clientinformation', function(req, res) {
         let email = req.user.local.email;
         // using email can fetch all the information about the user
-        console.log(email);
         RegisteredUser.find({
             'local.email': email
         }, function(err, profile) {
-            console.log(profile)
             res.send(profile);
             if (err) {
                 res.send(err);
@@ -481,14 +436,11 @@ module.exports = function(app, passport) {
     });
     // Admin Information
     app.post('/admindetails', function(req, res) {
-        console.log("entered details")
         let email = req.body.data;
         // using email can fetch all the information about the admin
-        console.log(email);
         RegisteredUser.find({
             'local.email': email
         }, function(err, profile) {
-            console.log(profile)
             res.send(profile);
             if (err) {
                 res.send(err);
@@ -509,7 +461,8 @@ module.exports = function(app, passport) {
     });
 
     // handle the callback after facebook has authenticated the user
-    app.get('/auth/facebook/callback', passport.authenticate('facebook', {failureRedirect: '/#/'}), (req, res) => {
+    app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {failureRedirect: '/#/'}), (req, res) => {
         res.cookie('token', req.user.facebook.token);
         res.cookie('authType', req.user.facebook.authType);
         res.cookie('username', req.user.facebook.displayName);
@@ -518,7 +471,6 @@ module.exports = function(app, passport) {
     });
     // userprofile-in which all the user informations will be stored
     app.get('/userProfile', function(req, res) {
-        console.log(req.user);
         res.json({user: req.user});
     });
     // *******************************************
@@ -532,7 +484,8 @@ module.exports = function(app, passport) {
         res.json(req.user);
     });
     // the callback after google has authorized the user
-    app.get('/auth/google/callback', passport.authenticate('google', {failureRedirect: '/#/'}), (req, res) => {
+    app.get('/auth/google/callback',
+    passport.authenticate('google', {failureRedirect: '/#/'}), (req, res) => {
         res.cookie('token', req.user.google.token);
         res.cookie('username', req.user.google.name);
         res.cookie('authType', req.user.google.authType);

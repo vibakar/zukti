@@ -11,17 +11,17 @@ router.post('/verifyQuestion', function(req, res) {
         if (questionInfo.keywords.length === 0) {
         res.json({
             isValidQuestion: false,
-            errorMessage:'The question must have a keyword'
+            errorMessage: 'The question must have a keyword'
         });
     }
     else if (questionInfo.intents.length === 0) {
         res.json({
-            isValidQuestion:false,
-            errorMessage:'The question must have an intent'
+            isValidQuestion: false,
+            errorMessage: 'The question must have an intent'
         });
       }
     else{
-      res.json({isValidQuestion:true});
+      res.json({isValidQuestion: true});
     }
 });
 // router to add a question answer set to Ginni knowledge base
@@ -34,17 +34,15 @@ router.post('/addQuestionAnswer', function(req, res) {
         });
     };
     // function call to save question and answer in neo4j database
-    saveQuestionAnswer(req,questionsAnswerSavedCallback);
+    saveQuestionAnswer(req, questionsAnswerSavedCallback);
 });
   // router to rate answer which user liked
-router.post('/rateAnswer',function(req,res){
+router.post('/rateAnswer', function(req, res) {
   let liked = req.body.liked;
   let type = req.body.type;
   let value = req.body.value;
-  //method to save user preference in neo4j
-  voteAnswer(liked,type,value);
+  // method to save user preference in neo4j
+  voteAnswer(liked, type, value);
   res.send('liked');
 });
-
-
 module.exports = router;
