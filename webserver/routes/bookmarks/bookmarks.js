@@ -52,7 +52,7 @@ router.post('/', function(req, res, next) {
     });
 });
 // router to delete bookmarked answers from mongodb
-router.delete('/: bookmarkId', function(req, res) {
+router.delete('/:bookmarkId', function(req, res) {
     let email = req.user.local.email || req.user.facebook.email || req.user.google.email;
     UserBookmarks.update(
     {email: email},
@@ -71,5 +71,4 @@ router.delete('/: bookmarkId', function(req, res) {
       }
     });
 });
-
 module.exports = router;
