@@ -1,8 +1,8 @@
 import React from 'react';
 import SetUpBot from '../buildAi/setUpBot';
-import UserTable from '../users/usertable';
+import UserTable from '../users/userTable';
 import Analytics from '../Analytics/info';
-import BroadCast from '../broadCast/broadCast';
+import Broadcast from '../broadcast/broadcast';
 import TrainBot from '../trainbot/trainbot';
 import UnansweredQueries from '../unansweredqueries/unansweredqueries';
 export default class Content extends React.Component {
@@ -17,7 +17,7 @@ export default class Content extends React.Component {
                 }
             case 'BroadCast':
                 {
-                    return <BroadCast/>;
+                    return <Broadcast/>;
                 }
             case 'Users':
                 {

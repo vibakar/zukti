@@ -18,13 +18,12 @@ import LeftMenu from './ginniClient/components/leftmenu/leftmenu.jsx';
 import LogoutAdmin from './ginniAdmin/components/logout/logout';
 import ChangePassword from './ginniClient/components/changepassword/changepassword.jsx';
 import ClientProfile from './ginniClient/components/clientprofile/clientprofile';
-import DrawerExample from './ginniClient/components/slider/blogsvideoslider.jsx';
 import Logout from './ginniClient/components/logout/logout';
 import ForgetpasswordEmail from './applicationHome/forgetpasswordEmail';
 import SentMailPage from './applicationHome/SentMailPage';
 import ExpiryLink from './applicationHome/expiryLink';
 import SuccessfullyRegistered from './applicationHome/successfullyregistered';
-import AdminProfilePage from './ginniAdmin/components/admin/adminprofile';
+import AdminProfilePage from './ginniAdmin/components/admin/adminProfile';
 import Cookie from 'react-cookie';
 import MailNotSend from './applicationHome/mailnotsend.jsx';
 injectTapEventPlugin();
@@ -57,7 +56,6 @@ ReactDOM.render(
         <Route path='/forgetmail' component={ForgetpasswordEmail} />
         <Route path='/signup' component={Signup}/>
         <Route path='/mail' component={SentMailPage} />
-        <Route path='/slider' component={DrawerExample} />
         <Route path='/chat' component={LeftMenu} onEnter={requireAuth.bind(this)}/>
         <Route path='/change' component={ChangePassword} onEnter={requireAuth.bind(this)}/>
         <Route path='/profile' component={ClientProfile} onEnter={requireAuth.bind(this)}/>

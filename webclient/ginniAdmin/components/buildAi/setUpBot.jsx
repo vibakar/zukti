@@ -6,7 +6,7 @@ import {
 import './buildAi.css';
 import AddQuestionAnswerSet from './addQuestionAnswerSet';
 import DisplayQAset from '../getquestionanswerset/displayqaset';
-import BuildAI from './BuildAI';
+import BuildAI from './buildAI';
 import Pagination from '../getquestionanswerset/pagination';
 export default class QuestionSetDisplay extends React.Component {
     constructor() {

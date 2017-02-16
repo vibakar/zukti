@@ -4,7 +4,7 @@ import {
     Button
 } from 'semantic-ui-react';
 import './applicationHome.css';
-import SentMail from '../config/SentMail.json';
+import SentMail from '../config/sentMail.json';
 export default class SentMailPage extends React.Component {
     constructor() {
         super();

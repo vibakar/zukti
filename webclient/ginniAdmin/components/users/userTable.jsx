@@ -2,7 +2,7 @@ import React from 'react';
 import {Grid, Image, Divider} from 'semantic-ui-react';
 import Axios from 'axios';
 import ViewUserChat from './viewUserChat';
-import './usertable.css';
+import './userTable.css';
 import {Scrollbars} from 'react-custom-scrollbars';
 export default class UserTable extends React.Component
 {

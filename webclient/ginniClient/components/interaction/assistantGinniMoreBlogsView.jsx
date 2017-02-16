@@ -1,7 +1,7 @@
 import React from 'react';
 import {Feed} from 'semantic-ui-react';
-import UnfurlLink from './UnfurlLink';
-import AssistantGinniOptions from './AssistantGinniOptions';
+import UnfurlLink from './unfurlLink';
+import AssistantGinniOptions from './assistantGinniOptions';
 export default class AssistantGinniMoreBlogsView extends React.Component {
     // props validation
     constructor(props) {

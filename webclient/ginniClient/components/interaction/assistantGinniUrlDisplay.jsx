@@ -2,7 +2,7 @@ import React from 'react';
 import {Feed, Label} from 'semantic-ui-react';
 import AssistantGinniMoreBlogsView from './assistantGinniMoreBlogsView';
 import AssistantGinniOptions from './assistantGinniOptions';
-import UnfurlLink from './UnfurlLink';
+import UnfurlLink from './unfurlLink';
 import './chatcontainerstyle.css';
 
 export default class AssistantGinniMixedReply extends React.Component {

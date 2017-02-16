@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Modal, Divider, List, Icon} from 'semantic-ui-react';
 import Config from '../../../../config/url';
 import Axios from 'axios';
-import './viewuserchat.css';
+import './viewUserChat.css';
 import Snackbar from 'material-ui/Snackbar';
 export default class ViewUserChat extends React.Component {
     constructor(props) {

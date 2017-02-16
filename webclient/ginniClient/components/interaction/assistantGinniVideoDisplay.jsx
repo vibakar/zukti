@@ -3,7 +3,7 @@ import {Feed, Label} from 'semantic-ui-react';
 import AssistantGinniMoreVideosView from './assistantGinniMoreVideosView';
 import AssistantGinniOptions from './assistantGinniOptions';
 import VideoPlayer from './videoPlayer';
-import UnfurlLink from './UnfurlLink';
+import UnfurlLink from './unfurlLink';
 import './chatcontainerstyle.css';
   export default class AssistantGinniMixedReply extends React.Component {
     constructor(props) {

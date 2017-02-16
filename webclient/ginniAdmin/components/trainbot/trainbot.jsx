@@ -1,6 +1,6 @@
 import React from 'react';
 import {Grid, Card, Divider} from 'semantic-ui-react';
-import IntentDropDown from './IntentDropDown';
+import IntentDropDown from './intentDropDown';
 import InputNewSameAsIntent from './inputNewSameAsIntent';
 import SameAsIntents from './sameAsIntents';
 import NewIntentText from './newIntentText';

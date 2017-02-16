@@ -7,7 +7,7 @@ import Cookie from 'react-cookie';
 import Axios from 'axios';
 import AssistantGinniMixedReply from './assistantGinniMixedReply';
 import AssistantGinniPlainText from './assistantGinniPlainText';
-import AssistantGinniKeywordResponse from './AssistantGinniKeywordResponse';
+import AssistantGinniKeywordResponse from './assistantGinniKeywordResponse';
 import AssistantUserView from './assistantUserView';
 import './chatcontainerstyle.css';
 export default class AssistantChatContainer extends React.Component {

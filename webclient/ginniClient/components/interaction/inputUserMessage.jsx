@@ -4,7 +4,7 @@ import {Form} from 'semantic-ui-react';
 import Axios from 'axios';
 import AssistantGinniMixedReply from './assistantGinniMixedReply';
 import AssistantGinniPlainText from './assistantGinniPlainText';
-import AssistantGinniKeywordResponse from './AssistantGinniKeywordResponse';
+import AssistantGinniKeywordResponse from './assistantGinniKeywordResponse';
 import LoadingDots from './loadingDots';
 import Config from '../../../../config/url';
 export default class InputUserMesaage extends React.Component {
