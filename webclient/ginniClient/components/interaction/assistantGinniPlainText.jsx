@@ -1,5 +1,6 @@
 import React from 'react';
 import {Feed} from 'semantic-ui-react';
+import CodeAssistantConfig from '../../../config/codeAssistant.json'
 import './chatcontainerstyle.css';
 
 export default class AssistantView extends React.Component {
@@ -12,7 +13,7 @@ export default class AssistantView extends React.Component {
                 <Feed.Event>
                     <Feed.Label image='../../images/geniebot.jpg'/>
                     <Feed.Content>
-                        <Feed.Summary date={new Date().toLocaleString()} user='Genie'/>
+                        <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistantConfig.name}/>
                         <Feed.Extra text>
                             {this.props.value}
                         </Feed.Extra>

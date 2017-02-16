@@ -118,7 +118,7 @@ module.exports = function(passport) {
                         newUser.facebook.email = (profile.emails[0].value || '').toLowerCase();
                         newUser.facebook.displayName = profile.displayName.toLowerCase().capitalize();
                           newUser.facebook.photos = profile.photos[0].value;
-                          user.facebook.authType = 'facebook';
+                          newUser.facebook.authType = 'facebook';
                         newUser.save(function(error) {
                             if (error) {
                                 return done(error);
@@ -189,7 +189,7 @@ module.exports = function(passport) {
                     newUser.google.photos = profile.photos[0].value;
                     newUser.google.email = (profile.emails[0].value || '').toLowerCase();
                     // pull the first email
-                    user.google.authType = 'google';
+                    newUser.google.authType = 'google';
                     newUser.save(function(error) {
                         if (error) {
                             return done(error);

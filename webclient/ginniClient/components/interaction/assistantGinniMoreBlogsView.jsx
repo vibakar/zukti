@@ -2,6 +2,7 @@ import React from 'react';
 import {Feed} from 'semantic-ui-react';
 import UnfurlLink from './unfurlLink';
 import AssistantGinniOptions from './assistantGinniOptions';
+import CodeAssistantConfig from '../../../config/codeAssistant.json'
 export default class AssistantGinniMoreBlogsView extends React.Component {
     // props validation
     constructor(props) {
@@ -14,7 +15,7 @@ export default class AssistantGinniMoreBlogsView extends React.Component {
                 <Feed.Event>
                     <Feed.Label image='../../images/geniebot.jpg'/>
                     <Feed.Content>
-                        <Feed.Summary date={new Date().toLocaleString()} user='Genie'/>
+                        <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistantConfig.name}/>
                         <Feed.Extra images>
                             <UnfurlLink url={this.props.value} />
                         </Feed.Extra>

@@ -16,7 +16,7 @@ export default class AdminWelcomePage extends React.Component {
                     <Grid.Row/>
                     <Grid.Row>
                         <Grid.Column width={2}>
-                            <h1 id="genie">GENIE</h1>
+                            <h1 id="genie">Zukti</h1>
                         </Grid.Column>
                         <Grid.Column width={9}/>
                         <Grid.Column width={5}>
