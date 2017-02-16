@@ -11,7 +11,7 @@ which is stored when user login and redirect to apphome*/
     {
       Axios({
               method: 'GET',
-              url: 'http://localhost:8080/signout',
+              url: '/signout',
               data: 'json'
             }).then(function (response) {
               Cookie.remove('authType');

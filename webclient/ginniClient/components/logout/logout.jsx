@@ -15,7 +15,7 @@ export default class Logout extends React.Component
     {
         Axios({
           method: 'GET',
-          url: 'http://localhost:8080/signout',
+          url: '/signout',
           data: 'json'})
           .then(function(response) {
             let socket = io();

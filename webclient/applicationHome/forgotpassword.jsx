@@ -34,7 +34,7 @@ export default class ForgotPassword extends React.Component
     onSubmitData(e, value) {
         e.preventDefault();
         Axios({
-            url: ' http://localhost:8080/forgetpassword',
+            url: '/forgetpassword',
             method: 'post',
             data: {
                 email: value.formData.email
@@ -55,7 +55,7 @@ export default class ForgotPassword extends React.Component
             if (validator.isEmail(event.target.value)) {
                  let self = this;
                 Axios({
-                    url: ' http://localhost:8080/checkuser',
+                    url: '/checkuser',
                     method: 'POST',
                     data: {
                         email: event.target.value

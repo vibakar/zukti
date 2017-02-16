@@ -46,7 +46,7 @@ export default class NewPassword extends React.Component {
         if (value.formData.password === value.formData.repassword) {
             this.setState({opendimmer: true});
             Axios({
-                url: ' http://localhost:8080/updatepassword',
+                url: ' /updatepassword',
                 method: 'post',
                 data: {
                     id: this.props.location.query.id,

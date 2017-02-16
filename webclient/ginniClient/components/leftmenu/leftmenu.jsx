@@ -13,7 +13,6 @@ import {
 import Axios from 'axios';
 import Cookie from 'react-cookie';
 import {hashHistory} from 'react-router';
-import Config from '../../../../config/url';
 import './leftmenu.css';
 export default class LeftMenu extends Component {
     constructor(props) {
@@ -54,7 +53,7 @@ export default class LeftMenu extends Component {
         });
     }
     getNotificationCount() {
-        let url = Config.url + '/getbroadcastmessage/count';
+        let url = '/getbroadcastmessage/count';
         Axios.get(url).then((response) => {
             this.setState({counter: response.data.count});
         }).catch((error) => {
@@ -65,7 +64,7 @@ export default class LeftMenu extends Component {
     getUserInformation() {
         let self = this;
         Axios({
-          url: 'http://localhost:8080/userProfile',
+          url: '/userProfile',
           method: 'GET',
           data: 'json'}).then(function(response) {
             let authType = Cookie.load('authType');

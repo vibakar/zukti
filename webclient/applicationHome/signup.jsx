@@ -49,7 +49,7 @@ export default class Signup extends React.Component {
     // send email verification link to user to activate user account
     sentemail(email) {
         Axios({
-            url: ' http://localhost:8080/send',
+            url: ' /send',
             method: 'post',
             data: {
                 data: email
@@ -61,7 +61,7 @@ export default class Signup extends React.Component {
               deletes the user from database if it is stored without sending
               verification link*/
                 Axios({
-                    url: ' http://localhost:8080/deleteuser',
+                    url: '/deleteuser',
                     method: 'delete',
                     data: {
                         data: email
@@ -82,7 +82,7 @@ export default class Signup extends React.Component {
           this.setState({opendimmer: true});
           // signup
           Axios({
-            url: 'http://localhost:8080/signup',
+            url: '/signup',
             method: 'post',
             data: value.formData
           }).then(function(msg) {
@@ -133,7 +133,7 @@ export default class Signup extends React.Component {
         if (validator.isEmail(event.target.value)) {
           let self = this;
             Axios({
-                url: ' http://localhost:8080/checkuser',
+                url: '/checkuser',
                 method: 'POST',
                 data: {
                     email: event.target.value

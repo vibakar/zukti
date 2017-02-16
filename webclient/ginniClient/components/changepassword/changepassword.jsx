@@ -70,7 +70,7 @@ export default class ChangePassword extends React.Component {
     passwordchange(e, value) {
         e.preventDefault();
         Axios({
-            url: ' http://localhost:8080/resetpassword',
+            url: '/resetpassword',
             method: 'put',
             data: {
                 password: value.formData.password

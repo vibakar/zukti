@@ -6,7 +6,6 @@ import AssistantGinniMixedReply from './assistantGinniMixedReply';
 import AssistantGinniPlainText from './assistantGinniPlainText';
 import AssistantGinniKeywordResponse from './assistantGinniKeywordResponse';
 import LoadingDots from './loadingDots';
-import Config from '../../../../config/url';
 export default class InputUserMesaage extends React.Component {
     constructor(props) {
         super(props);
@@ -25,7 +24,7 @@ export default class InputUserMesaage extends React.Component {
         message.time = new Date().toLocaleString();
         this.props.handlerUserReply(message);
         ReactDOM.findDOMNode(this.refs.userInput).value = '';
-        let url = Config.url + '/question/askQuestion';
+        let url = '/question/askQuestion';
         this.props.handleGinniReply([<LoadingDots/>]);
         Axios.post(url, {
             username: this.props.username,

@@ -63,7 +63,7 @@ export default class ClientProfile extends React.Component
     saveImage(image) {
         Axios({
             method: 'POST',
-            url: 'http://localhost:8080/uploadImage',
+            url: '/uploadImage',
             data: {
                 data: image
             }
@@ -81,7 +81,7 @@ export default class ClientProfile extends React.Component
       // get the information about the user like fetches emailid
     componentDidMount() {
         let self = this;
-        Axios({url: ' http://localhost:8080/clientinformation',
+        Axios({url: '/clientinformation',
         method: 'get'}).then(function(response) {
             self.setState({email: response.data[0].local.email});
         }).catch(function(err) {
@@ -92,7 +92,7 @@ export default class ClientProfile extends React.Component
     OnSubmitData(e, value) {
         e.preventDefault();
         Axios({
-            url: ' http://localhost:8080/updateprofile',
+            url: '/updateprofile',
             method: 'put',
             data: {
                 email: this.state.email,
