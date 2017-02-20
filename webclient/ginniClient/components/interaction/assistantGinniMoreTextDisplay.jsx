@@ -1,6 +1,8 @@
 import React from 'react';
 import {Feed} from 'semantic-ui-react';
 import AssistantGinniOptions from './assistantGinniOptions';
+import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
+
 export default class AssistantGinniMoreTextView extends React.Component {
     // props validation
     constructor(props) {
@@ -12,7 +14,7 @@ export default class AssistantGinniMoreTextView extends React.Component {
                 <Feed.Event>
                     <Feed.Label image='../../images/geniebot.jpg'/>
                     <Feed.Content>
-                        <Feed.Summary date={new Date().toLocaleString()} user='Genie'/>
+                        <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
                         <Feed.Extra text>
                             {this.props.textValue}
                         </Feed.Extra>

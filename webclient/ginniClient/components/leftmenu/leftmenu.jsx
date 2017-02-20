@@ -36,7 +36,7 @@ export default class LeftMenu extends Component {
     }
     handleItemClick = ((e, {name}) => {
         if (this.state.activeItem === 'notifications') {
-            let url = Config.url + '/getbroadcastmessage/updateCount';
+            let url = '/getbroadcastmessage/updateCount';
             this.state.counter = 0;
             Axios.post(url).then((response) => {}).catch((error) => {
                 console.log(error);

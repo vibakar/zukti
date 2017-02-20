@@ -8,6 +8,7 @@ import AssistantGinniOptions from './assistantGinniOptions';
 //import CodeAssistantConfig from '../../../config/codeAssistant.json'
 
 import './chatcontainerstyle.css';
+import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
 
 export default class AssistantGinniMixedReply extends React.Component {
     // props validation
@@ -54,7 +55,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                 <Feed.Event>
                     <Feed.Label image='../../images/geniebot.jpg'/>
                     <Feed.Content>
-                        <Feed.Summary date={this.props.data.time} user='Genie'/>
+                        <Feed.Summary date={this.props.data.time} user={CodeAssistant.Interaction.name}/>
                         <Feed.Extra text>
                             {text}
                         </Feed.Extra>

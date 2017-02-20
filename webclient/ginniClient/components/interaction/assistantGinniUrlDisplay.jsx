@@ -4,6 +4,7 @@ import AssistantGinniMoreBlogsView from './assistantGinniMoreBlogsView';
 import AssistantGinniOptions from './assistantGinniOptions';
 import UnfurlLink from './unfurlLink';
 import './chatcontainerstyle.css';
+import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
 
 export default class AssistantGinniMixedReply extends React.Component {
   constructor(props) {
@@ -27,7 +28,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                 <Feed.Event>
                     <Feed.Label image='../../images/geniebot.jpg'/>
                     <Feed.Content>
-                        <Feed.Summary date={new Date().toLocaleString()} user='Genie'/>
+                        <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
                         <Feed.Extra images>
                             <UnfurlLink url ={blogUrl}/>
                         </Feed.Extra>

@@ -3,6 +3,8 @@ import {Feed} from 'semantic-ui-react';
 import UnfurlLink from './unfurlLink';
 import AssistantGinniOptions from './assistantGinniOptions';
 import VideoPlayer from './videoPlayer';
+import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
+
 export default class AssistantGinniMoreVideosView extends React.Component {
     // props validation
     constructor(props) {
@@ -19,7 +21,7 @@ export default class AssistantGinniMoreVideosView extends React.Component {
                 <Feed.Event>
                     <Feed.Label image='../../images/geniebot.jpg'/>
                     <Feed.Content>
-                        <Feed.Summary date={new Date().toLocaleString()} user='Genie'/>
+                        <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
                         <Feed.Extra images>
                             <UnfurlLink url={this.props.value} />
                         </Feed.Extra>
