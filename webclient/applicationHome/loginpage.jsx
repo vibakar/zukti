@@ -34,7 +34,7 @@ export default class LoginPage extends React.Component
     onSubmitLoginData(e, value) {
           e.preventDefault();
         $.ajax({
-                url: 'http://localhost:8080/login',
+                url: '/login',
                 type: 'POST',
                 data: {
                     email: value.formData.userName,

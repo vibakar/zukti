@@ -15,7 +15,7 @@ export default class Notificationfeed extends React.Component {
       let self=this;
       Axios({
           method: 'post',
-          url: 'http://localhost:8080/admindetails',
+          url: '/admindetails',
           data: {data: self.props.msgSenderemail}
         }).then(function (response) {
           self.setState({photo: require('../../../../webserver/images/' +
