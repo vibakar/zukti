@@ -191,7 +191,7 @@ export default class ClientProfile extends React.Component
                                 color='blue' type='submit'>Save</Button>
                         </Form>
                         <Modal size={size} open={open}>
-                            <Modal.Header id="updateheader">
+                            <Modal.Header >
                                 <h2>
                                     <Image src='../../images/thumb.gif' size="small" avatar/>
                                     Updated Suceessfully</h2>
