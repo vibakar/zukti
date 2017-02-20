@@ -4,6 +4,7 @@ import {hashHistory} from 'react-router';
 import Axios from 'axios';
 import Cookie from 'react-cookie';
 import './homestyle.css';
+import AdminHomePage from '../../../Multi_Lingual/Wordings.json';
 export default class FrontPage extends React.Component {
     componentDidMount()
     {
@@ -47,7 +48,7 @@ export default class FrontPage extends React.Component {
                         </Grid.Column>
                     </Grid.Row>
                     <Divider horizontal inverted>
-                        <h2 id='sparkleadmin'>WELCOME &nbsp;&nbsp;ADMIN &nbsp;&nbsp;
+                        <h2 id='sparkleadmin'>{AdminHomePage.AdminHome.Heading1} &nbsp;&nbsp;{AdminHomePage.AdminHome.Heading2} &nbsp;&nbsp;
                         </h2>
                     </Divider>
                     <Grid.Row divided vertically>
@@ -62,7 +63,7 @@ export default class FrontPage extends React.Component {
                             <Grid.Row>
                                 <center>
                                   <h2 className="heading1" onClick={this.onSubmitEmail.bind(this)}>
-                                      REACT</h2>
+                                      {AdminHomePage.AdminHome.Topic1}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -74,7 +75,7 @@ export default class FrontPage extends React.Component {
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                    <h2 className="heading2">EXPRESS</h2>
+                                    <h2 className="heading2">{AdminHomePage.AdminHome.Topic2}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -86,7 +87,7 @@ export default class FrontPage extends React.Component {
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                    <h2 className="heading3">JAVA</h2>
+                                    <h2 className="heading3">{AdminHomePage.AdminHome.Topic3}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -102,7 +103,7 @@ export default class FrontPage extends React.Component {
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                    <h2 className="heading4">JAVASCRIPT</h2>
+                                    <h2 className="heading4">{AdminHomePage.AdminHome.Topic4}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -114,7 +115,7 @@ export default class FrontPage extends React.Component {
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                    <h2 className="heading5">NODE</h2>
+                                    <h2 className="heading5">{AdminHomePage.AdminHome.Topic5}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -126,7 +127,7 @@ export default class FrontPage extends React.Component {
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                    <h2 className="heading6">ADD BOT</h2>
+                                    <h2 className="heading6">{AdminHomePage.AdminHome.Topic6}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>

@@ -4,7 +4,7 @@ import {
     Button
 } from 'semantic-ui-react';
 import './applicationHome.css';
-import SentMail from '../config/sentMail.json';
+import EmailsentPage from '../Multi_Lingual/Wordings.json';
 export default class SentMailPage extends React.Component {
     constructor() {
         super();
@@ -19,7 +19,7 @@ export default class SentMailPage extends React.Component {
                     <Grid.Row/>
                     <Grid.Row>
                         <Grid.Column width={2}>
-                            <h1 id="genie">GENIE</h1>
+                            <h1 id="genie">{EmailsentPage.Emailsent.Heading1}</h1>
                         </Grid.Column>
                         <Grid.Column width={9}/>
                         <Grid.Column width={5}>
@@ -50,9 +50,9 @@ export default class SentMailPage extends React.Component {
                             textAlign: 'center'
                         }}>
                             <p id='head1'>
-                              {SentMail.head1}<br/>
-                                <h3 id='headlink'>{SentMail.head2}</h3>
-                                <h1 id='head4'>{SentMail.head3}</h1>
+                              {EmailsentPage.Emailsent.Heading2}<br/>
+                                <h3 id='headlink'>{EmailsentPage.Emailsent.Heading3}</h3>
+                                <h1 id='head4'>{EmailsentPage.Emailsent.Heading4}</h1>
 
                             </p>
                         </Grid.Column>

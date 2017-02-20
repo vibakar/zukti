@@ -9,6 +9,7 @@ import {
   } from 'semantic-ui-react';
 import './menu.css';
 import TopMenuBot from './topmenubot';
+import AdminMenu from '../../../Multi_Lingual/Wordings.json';
 export default class SidebarBot extends Component {
     constructor() {
         super();
@@ -32,36 +33,36 @@ export default class SidebarBot extends Component {
                     <Menu.Item name='SetupAi' active={activeItem === 'SetupAi'}
                       onClick={this.handleItemClick}>
                         <Icon name='book' color='teal'/>
-                        Setup Q&A
+                        {AdminMenu.AdminMenu.Topic1}
                     </Menu.Item>
                     <Menu.Item name='BroadCast' active={activeItem === 'BroadCast'}
                       onClick={this.handleItemClick}>
                         <Icon name='announcement' color='teal'/>
-                        Broadcast
+                        {AdminMenu.AdminMenu.Topic2}
                     </Menu.Item>
                     <Menu.Item name='Users' active={activeItem === 'Users'}
                       onClick={this.handleItemClick}>
                         <Icon name='users' color='teal'/>
-                        Users
+                        {AdminMenu.AdminMenu.Topic3}
                     </Menu.Item>
                     <Menu.Item name='Analyze' active={activeItem === 'Analyze'}
                       onClick={this.handleItemClick}>
                         <Icon name='spy' color='teal'/>
-                        Analyze
+                        {AdminMenu.AdminMenu.Topic4}
                     </Menu.Item>
                     <Menu.Item name='TrainBot' active={activeItem === 'UseTheBot'}
                       onClick={this.handleItemClick}>
                         <Icon name='child' color='teal'/>
-                        Train Intent
+                        {AdminMenu.AdminMenu.Topic5}
                     </Menu.Item>
                   <Menu.Item name='Unanswered Queries' active={activeItem === 'Unanswered Queries'}
                       onClick={this.handleItemClick}>
                         <Icon name='help' color='teal'/>
-                        Unanswered Queries
+                        {AdminMenu.AdminMenu.Topic6}
                     </Menu.Item>
                     <Menu.Item name='LogOut'>
                         <Icon name='sign out' color='teal'/>
-                        <a href='#/log'>Logout</a>
+                        <a href='#/log'>{AdminMenu.AdminMenu.Topic7}</a>
                     </Menu.Item>
                 </Sidebar>
                 <Sidebar.Pusher className='container' style={{

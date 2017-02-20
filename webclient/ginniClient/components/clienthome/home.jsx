@@ -4,6 +4,7 @@ import {hashHistory} from 'react-router';
 import Axios from 'axios';
 import Cookie from 'react-cookie';
 import './homestyle.css';
+import ClientHomePage from '../../../Multi_Lingual/Wordings.json';
 export default class ClientHome extends React.Component {
 /* if the user clicks logout it clears all the cookies
 which is stored when user login and redirect to apphome*/
@@ -44,8 +45,8 @@ which is stored when user login and redirect to apphome*/
                         </Grid.Column>
                     </Grid.Row>
                     <Divider horizontal inverted>
-                        <h2 id='headsparkle'>I AM GENIE GIVING DAZZLING SOLUTIONS
-                          <br/>TO YOUR PROBLEMS
+                        <h2 id='headsparkle'>{ClientHomePage.ClientHome.Heading1}
+                          <br/>{ClientHomePage.ClientHome.Heading2}
                         </h2>
                     </Divider>
                     <Grid.Row divided vertically>
@@ -60,7 +61,7 @@ which is stored when user login and redirect to apphome*/
                             <Grid.Row>
                                 <center>
                                     <h2 className="heading1"
-                                      onClick={this.onSubmitEmail.bind(this)}>REACT</h2>
+                                      onClick={this.onSubmitEmail.bind(this)}>{ClientHomePage.ClientHome.Topic1}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -72,7 +73,7 @@ which is stored when user login and redirect to apphome*/
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                        <h2 className="heading2">EXPRESS</h2>
+                                        <h2 className="heading2">{ClientHomePage.ClientHome.Topic2}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -84,7 +85,7 @@ which is stored when user login and redirect to apphome*/
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                        <h2 className="heading3">JAVA</h2>
+                                        <h2 className="heading3">{ClientHomePage.ClientHome.Topic3}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -100,7 +101,7 @@ which is stored when user login and redirect to apphome*/
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                        <h2 className="heading4">JAVA SCRIPT</h2>
+                                        <h2 className="heading4">{ClientHomePage.ClientHome.Topic4}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -112,7 +113,7 @@ which is stored when user login and redirect to apphome*/
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                        <h2 className="heading5">NODE</h2>
+                                        <h2 className="heading5">{ClientHomePage.ClientHome.Topic5}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -123,7 +124,7 @@ which is stored when user login and redirect to apphome*/
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                        <h2 className="heading6">ADD BOT</h2>
+                                        <h2 className="heading6">{ClientHomePage.ClientHome.Topic6}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>

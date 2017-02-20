@@ -1,7 +1,7 @@
 import React from 'react';
 import {Grid, Button} from 'semantic-ui-react';
 import './applicationHome.css';
-import Home from '../config/Home.json';
+import ApplicationHome from '../Multi_Lingual/Wordings.json';
 export default class AdminWelcomePage extends React.Component {
     constructor() {
         super();
@@ -16,7 +16,7 @@ export default class AdminWelcomePage extends React.Component {
                     <Grid.Row/>
                     <Grid.Row>
                         <Grid.Column width={2}>
-                            <h1 id="genie">Zukti</h1>
+                            <h1 id="genie">{ApplicationHome.ApplicationContent.Heading}</h1>
                         </Grid.Column>
                         <Grid.Column width={9}/>
                         <Grid.Column width={5}>
@@ -46,10 +46,10 @@ export default class AdminWelcomePage extends React.Component {
                         <Grid.Column style={{
                             textAlign: 'center'
                         }}>
-                            <p id='head1'>{Home.head1}<br/>
-                                <h5 id='head2'>{Home.head2}</h5>
+                            <p id='head1'>{ApplicationHome.ApplicationContent.Line1}<br/>
+                              <h5 id='head2'>{ApplicationHome.ApplicationContent.Line2}</h5>
                                 <h5 id='head3'>
-                                    <i>{Home.head3}</i>
+                                    <i>{ApplicationHome.ApplicationContent.Line3}</i>
                                 </h5>
                             </p>
                         </Grid.Column>

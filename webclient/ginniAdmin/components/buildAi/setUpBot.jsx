@@ -8,6 +8,7 @@ import AddQuestionAnswerSet from './addQuestionAnswerSet';
 import DisplayQAset from '../getquestionanswerset/displayqaset';
 import BuildAI from './buildAI';
 import Pagination from '../getquestionanswerset/pagination';
+import SetUp from '../../../Multi_Lingual/Wordings.json';
 export default class QuestionSetDisplay extends React.Component {
     constructor() {
         super();
@@ -45,9 +46,7 @@ export default class QuestionSetDisplay extends React.Component {
                             width: '100%'
                         }}>
                             <p id="textpara">
-                              It is a set of questions and the corresponding bot replies.
-                               Ginni will understand user questions similar to those you’ve
-                               set up and reply with a appropiate answer.</p>
+                              {SetUp.SetUp.Heading}</p>
                             <Divider fitted/>
                         </div>
                     </Grid.Row>

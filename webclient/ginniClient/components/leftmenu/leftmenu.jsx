@@ -15,6 +15,7 @@ import Cookie from 'react-cookie';
 import {hashHistory} from 'react-router';
 import Config from '../../../../config/url';
 import './leftmenu.css';
+import LeftMenuPage from '../../../Multi_Lingual/Wordings.json';
 export default class LeftMenu extends Component {
     constructor(props) {
         super(props);
@@ -133,28 +134,28 @@ export default class LeftMenu extends Component {
                     <Menu.Item name='Home' active={activeItem === 'Home'}
                       onClick={this.handleItemClick}>
                         <Icon name='home' color='teal'/>
-                        Home
+                        {LeftMenuPage.LeftMenu.Menu1}
                     </Menu.Item>
                     <Menu.Item name='ChatBot' active={activeItem === 'ChatBot'}
                       onClick={this.handleItemClick}>
                         <Icon name='discussions' color='teal'/>
-                        Let's Explore
+                        {LeftMenuPage.LeftMenu.Menu2}
                     </Menu.Item>
                     <Menu.Item name='Bookmarks' active={activeItem === 'Bookmarks'}
                       onClick={this.handleItemClick}>
                         <Icon name='save' color='teal'/>
-                        Bookmarks
+                        {LeftMenuPage.LeftMenu.Menu3}
                     </Menu.Item>
                     <Menu.Item name='notifications' active={activeItem === 'notifications'}
                       onClick={this.handleItemClick}>
                         <Label color='red' floating-left>{this.state.counter}</Label>
                         <Icon name='alarm' color='teal'/>
-                        Notifications
+                        {LeftMenuPage.LeftMenu.Menu4}
                     </Menu.Item>
                     <Menu.Item name='LogOut' active={activeItem === 'LogOut'}
                       onClick={this.handleItemClick}>
                         <Icon name='sign out' color='teal'/>
-                        <a href='#/logout'>Log out</a>
+                        <a href='#/logout'>{LeftMenuPage.LeftMenu.Menu5}</a>
                     </Menu.Item>
                 </Sidebar>
                 <Sidebar.Pusher id="sidebarpusher">
@@ -171,7 +172,7 @@ export default class LeftMenu extends Component {
                                 <Menu.Item position='right' />
                                 <Menu.Item/><Menu.Item/>
                                 <Menu.Item>
-                                    <h3>GENIE</h3>
+                                    <h3>{LeftMenuPage.LeftMenu.Heading}</h3>
                                 </Menu.Item>
                                 <Menu.Item position='right'>
                                     <Dropdown trigger={trigger} pointing='top right' icon={null}>

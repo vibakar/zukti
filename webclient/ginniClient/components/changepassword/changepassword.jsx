@@ -4,6 +4,7 @@ import {hashHistory} from 'react-router';
 import Axios from 'axios';
 import validator from 'validator';
 import './changepassword.css';
+import ChangePasswordPage from '../../../Multi_Lingual/Wordings.json';
 export default class ChangePassword extends React.Component {
     constructor(props) {
         super(props);
@@ -88,7 +89,7 @@ export default class ChangePassword extends React.Component {
                 <Modal trigger={trigger} open={true} onClose={this.close}
                   closeOnRootNodeClick={false} size='small' closeIcon="close">
                     <Modal.Header id="headerchange">
-                        <h1>Change Password</h1>
+                        <h1>{ChangePasswordPage.ChangePassword.Heading}</h1>
                     </Modal.Header>
                     <Modal.Content>
                         <Form onSubmit={this.passwordchange.bind(this)}>

@@ -9,7 +9,7 @@ import {
     Icon,
     Popup
 } from 'semantic-ui-react';
-
+import TopmenuPage from '../../../Multi_Lingual/Wordings.json';
 export default class TopMenuBot extends React.Component {
     constructor() {
         super();
@@ -64,7 +64,7 @@ export default class TopMenuBot extends React.Component {
                     <Menu.Item/>
                     <Menu.Item/>
                     <Menu.Item >
-                        <h3>GENIE</h3>
+                        <h3>{TopmenuPage.Topmenu.Heading}</h3>
                     </Menu.Item>
                     <Menu.Item position='right'>
                         <Dropdown trigger={trigger} pointing='top right' icon={null}>

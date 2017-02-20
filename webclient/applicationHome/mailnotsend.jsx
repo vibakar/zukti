@@ -1,6 +1,7 @@
 import React from 'react';
 import {Grid, Button} from 'semantic-ui-react';
 import './applicationHome.css';
+import MailnotsendPage from '../Multi_Lingual/Wordings.json';
 export default class MailNotSend extends React.Component {
   constructor() {
     super();
@@ -12,7 +13,7 @@ export default class MailNotSend extends React.Component {
       <Grid.Row/>
       <Grid.Row>
       <Grid.Column width={2}>
-      <h1 id="genie">GENIE</h1>
+      <h1 id="genie">{MailnotsendPage.Mailnotsend.Heading1}</h1>
       </Grid.Column>
       <Grid.Column width={9} />
       <Grid.Column width={5}>
@@ -31,9 +32,9 @@ export default class MailNotSend extends React.Component {
       <Grid.Row/>
       <Grid.Row>
       <Grid.Column style={{textAlign: 'center'}}>
-      <p id='head1'>Oops! Mail not Send, Due to some Network Error !!<br/>
-      <h2> Check your Network Connection ! </h2>
-      <h3>Please, Sign up again...</h3>
+      <p id='head1'>{MailnotsendPage.Mailnotsend.Heading2}<br/>
+      <h2> {MailnotsendPage.Mailnotsend.Heading3} </h2>
+      <h3>{MailnotsendPage.Mailnotsend.Heading4}</h3>
    </p>
       </Grid.Column>
       </Grid.Row>

@@ -2,7 +2,7 @@ import React from 'react';
 import {Feed} from 'semantic-ui-react';
 import UnfurlLink from './unfurlLink';
 import AssistantGinniOptions from './assistantGinniOptions';
-import CodeAssistantConfig from '../../../config/codeAssistant.json'
+//import CodeAssistantConfig from '../../../config/codeAssistant.json'
 export default class AssistantGinniMoreBlogsView extends React.Component {
     // props validation
     constructor(props) {

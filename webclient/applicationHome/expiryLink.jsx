@@ -1,7 +1,7 @@
 import React from 'react';
 import {Grid, Button} from 'semantic-ui-react';
 import './applicationHome.css';
-import Expiry from '../config/expiryLink.json';
+import ApplicationHome from '../Multi_Lingual/Wordings.json';
 export default class ExpiryLink extends React.Component {
     constructor() {
         super();

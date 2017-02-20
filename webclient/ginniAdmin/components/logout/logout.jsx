@@ -4,6 +4,7 @@ import {hashHistory} from 'react-router';
 import './logout.css';
 import Axios from 'axios';
 import Cookie from 'react-cookie';
+import LogoutPage from '../../../Multi_Lingual/Wordings.json';
 export default class LogoutAdmin extends React.Component
 {
     state = {
@@ -32,7 +33,7 @@ export default class LogoutAdmin extends React.Component
             <Modal open={open} onClose={this.close} closeOnRootNodeClick={false} size='small' basic>
                 <Modal.Header id="logoutheader">
                     <Image src='../../images/logout.gif' size='tiny' avatar/>
-                    Are You Sure?You want to Logout?
+                    {LogoutPage.LogoutPage.Heading1}
                 </Modal.Header>
                 <Modal.Content>
                     <Modal.Description id="logoutdescription">

@@ -3,6 +3,7 @@ import {Grid, Image, Button, Label} from 'semantic-ui-react';
 import {Scrollbars} from 'react-custom-scrollbars';
 import Axios from 'axios';
 import BookmarkView from './bookmarkView';
+import Bookmarkspage from '../../../Multi_Lingual/Wordings.json';
 export default class BookmarkList extends React.Component {
     constructor(props) {
         super(props);
@@ -54,7 +55,7 @@ export default class BookmarkList extends React.Component {
                                     width: '98%',
                                     height: '50%'
                                 }}>
-                                    <h3 style={{color:'black',textAlign:'center'}}>BOOKMARKED RESPONSES</h3>
+                                    <h3 style={{color:'black',textAlign:'center'}}>{Bookmarkspage.Bookmarks.Heading}</h3>
                                     {bookmarkView}
                                 </div>
                             </Scrollbars>

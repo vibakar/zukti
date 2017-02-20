@@ -13,6 +13,7 @@ import {hashHistory} from 'react-router';
 import './loginpage.css';
 import validator from 'validator';
 import $ from 'jquery';
+import Login from '../Multi_Lingual/Wordings.json';
 export default class LoginPage extends React.Component
 {
     constructor(props) {
@@ -87,14 +88,14 @@ export default class LoginPage extends React.Component
             <Modal dimmer={dimmer} open={open} onClose={this.close}
               closeOnRootNodeClick={false} size="small" closeIcon='close' id='modallogincss'>
             <Modal.Header id="headerstyle">
-            <h1><Image src='../../images/ginianim.gif' avatar/>Welcome to Genie</h1>
+            <h1><Image src='../../images/ginianim.gif' avatar/>{Login.LoginPage.Heading}</h1>
             </Modal.Header>
             <Modal.Content>
             <p id="para">
             <h2>
-            Great to have you back!
+            {Login.LoginPage.Line1}
             </h2>
-            <h2>Go ahead and sign in</h2>
+            <h2>{Login.LoginPage.Line2}</h2>
           </p>
             <Modal.Description>
             <Grid columns={2} stackable>
@@ -117,8 +118,8 @@ export default class LoginPage extends React.Component
               disabled={(!this.state.email) || (!this.state.validemail)}>
             <Button.Content type='submit' ><Icon name='sign in'/>Login</Button.Content>
             </Button><br/><br/>
-            <p id="footer">Not yet registered?&nbsp;
-            <a href="#/signup">Create Now</a>
+            <p id="footer">{Login.LoginPage.Line3}&nbsp;
+            <a href="#/signup">{Login.LoginPage.Line4}</a>
             </p>
             </Modal.Actions>
             </Form>

@@ -6,6 +6,7 @@ import Embedly from 'react-embedly';
 import {Grid} from 'semantic-ui-react';
 import {Scrollbars} from 'react-custom-scrollbars';
 import './notifications.css';
+import NotificationsPage from '../../../Multi_Lingual/Wordings.json';
 export default class Notifications extends React.Component {
     constructor(props) {
         super(props);
@@ -73,7 +74,7 @@ export default class Notifications extends React.Component {
                   position: 'right'
               }}/>} autoHeight autoHeightMin={555}>
                   <div style={{width: '98%', height: '50%'}} >
-                    <h3 style={{color: 'black', textAlign: 'center'}}>MESSAGE FROM ADMIN</h3>
+                    <h3 style={{color: 'black', textAlign: 'center'}}>{NotificationsPage.Notifications.Heading}</h3>
                                 {this.state.messages}
       </div></Scrollbars>
                       </Grid.Column>

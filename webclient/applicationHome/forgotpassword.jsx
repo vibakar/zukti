@@ -14,6 +14,7 @@ import validator from 'validator';
 import {hashHistory} from 'react-router';
 import './forgotpassword.css';
 import Axios from 'axios';
+import ForgetPasswordPage from '../Multi_Lingual/Wordings.json';
 export default class ForgotPassword extends React.Component
 {
     constructor() {
@@ -98,7 +99,7 @@ export default class ForgotPassword extends React.Component
                                 <h1 style={{
                                     fontFamily: 'monospace',
                                     color: 'white'
-                                }}>GENIE</h1>
+                                }}>{ForgetPasswordPage.ForgetPassword.Heading1}</h1>
                             </Menu.Item>
                             <Menu.Menu position='right'>
                                 <Menu.Item>
@@ -118,15 +119,14 @@ export default class ForgotPassword extends React.Component
                     </Grid.Column>
                     <Grid.Column Width={6} id="gridstyle">
                         <Header id="headerstylefor">
-                            <h2 id='request'><Icon name='mail' id='mailicon'/>Password Reset</h2>
+                            <h2 id='request'><Icon name='mail' id='mailicon'/>{ForgetPasswordPage.ForgetPassword.Heading2}</h2>
                         </Header>
                         <Divider/>
                         <p id="textstyle">
                             <h4 style={{
                                 color: 'white',
                                 fontStyle: 'italic'
-                            }}>Forgot your password?
-                            No worries!! Give your registered mail to get reset link</h4>
+                            }}>{ForgetPasswordPage.ForgetPassword.Heading3}</h4>
                         </p>
                         <Form onSubmit={this.onSubmitData}>
                             <Form.Field id="forgotfield">

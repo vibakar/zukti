@@ -5,7 +5,7 @@ import AssistantGinniVideoDisplay from './assistantGinniVideoDisplay';
 import AssistantGinniMoreTextDisplay from './assistantGinniMoreTextDisplay';
 import AssistantGinniPlainText from './assistantGinniPlainText';
 import AssistantGinniOptions from './assistantGinniOptions';
-import CodeAssistantConfig from '../../../config/codeAssistant.json'
+//import CodeAssistantConfig from '../../../config/codeAssistant.json'
 
 import './chatcontainerstyle.css';
 

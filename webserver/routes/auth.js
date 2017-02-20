@@ -176,10 +176,10 @@ module.exports = function(app, passport) {
     });
     /* deleteuser-in case of any network error while signup the user data
     will be deleted in database if email is not sent to a particular user*/
-    app.delete(' /deleteuser', function(req, res) {
-        let request = req.body.data;
+    app.delete('/deleteuser', function(req, res) {
+      //  let request = req.body.data;
         RegisteredUser.remove({
-            'local.email': request
+            'local.email': req.body.data
         }, function(err) {
             if (err) {
                 res.send('Error in deleting the data');

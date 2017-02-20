@@ -1,6 +1,6 @@
 import React from 'react';
 import {Feed} from 'semantic-ui-react';
-import CodeAssistantConfig from '../../../config/codeAssistant.json'
+//import CodeAssistantConfig from '../../../config/codeAssistant.json'
 import './chatcontainerstyle.css';
 
 export default class AssistantView extends React.Component {

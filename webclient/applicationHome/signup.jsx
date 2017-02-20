@@ -6,6 +6,7 @@ import validator from 'validator';
 import Axios from 'axios';
 import Snackbar from 'material-ui/Snackbar';
 import './signup.css';
+import SignupPage from '../Multi_Lingual/Wordings.json';
 export default class Signup extends React.Component {
     constructor()
     {
@@ -206,7 +207,7 @@ render() {
         <Modal dimmer={dimmer} open={open} onClose={this.close}
           size="small" closeIcon="close" id='modalsignupcss'>
         <Modal.Header id="signup"><Image src="../../images/ginianim.gif" avatar/>
-        Sign Up</Modal.Header>
+        {SignupPage.Signup.Heading}</Modal.Header>
         <Modal.Content>
         <Form id="formfield" onSubmit={this.onRegisterUser}>
         <Form.Field id="formfield">
@@ -256,8 +257,8 @@ render() {
                  </Header>
         </Dimmer>:null}
         <span id="message"/>
-        <h4 id="text">Already a member?&nbsp;<a href='#/login' id='space'>
-        Sign in here</a>
+        <h4 id="text">{SignupPage.Signup.Line1}&nbsp;<a href='#/login' id='space'>
+        {SignupPage.Signup.Line2}</a>
         </h4>
         </Form>
         </Modal.Content>
