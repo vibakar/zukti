@@ -36,7 +36,6 @@ module.exports = {
             // other loader
         ]
     },
-    watch: true,
     resolve: {
         extensions: ['', '.js', '.jsx', '/index.js', '/index.jsx']
     },
