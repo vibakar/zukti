@@ -22,7 +22,7 @@
   // Specification
   "doctype-html5": true,
   "id-class-value": false,
-  "style-disabled": true,
+  "style-disabled": false,
   "inline-style-disabled": true,
   "inline-script-disabled": true,
   "space-tab-mixed-disabled": true,
