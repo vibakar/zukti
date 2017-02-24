@@ -1,28 +1,28 @@
 // get reaponse of the question asked by user from neo4j database
 let getNeo4jDriver = require('../../../neo4j/connection');
 module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundCallback) {
-    let query = `UNWIND ${JSON.stringify(intents)} AS token
-                 MATCH (n:intent)
-                 WHERE n.name = token
-                 OPTIONAL MATCH (n)-[r:same_as]->(main)
-                 WITH  LAST(COLLECT(main.name)) AS intent
-                 UNWIND ${JSON.stringify(keywords)} AS token
-                 MATCH (n:concept)
-                 WHERE n.name = token
-                 OPTIONAL MATCH (n)-[r:same_as]->(main)
-                 WITH COLLECT(main) AS baseWords,intent AS intent
-                 UNWIND baseWords AS token
-                 MATCH (token)-[r:subconcept*]->(:concept {name:'react'})
-                 WITH MAX(SIZE(r)) AS max,baseWords AS baseWords,intent AS intent
-                 UNWIND baseWords AS bw
-                 MATCH (bw)-[r:subconcept*]->(:concept {name:'react'})
-                 WHERE SIZE(r) = max WITH COLLECT(bw) AS bws,intent AS intent
-                 UNWIND bws AS keywords
-                 MATCH (keywords)<-[r]-(q:question)-[rel:answer]->(a)
-                 WHERE TYPE(r)=intent
-                 WITH a as a, rel as rel
-                 ORDER BY rel.rating DESC
-                 RETURN LABELS(a),COLLECT(a.value) `;
+              let domain = 'design pattern';
+              let query = `UNWIND ${JSON.stringify(intents)} AS token
+              MATCH (n:intent)
+              WHERE n.name = token
+              OPTIONAL MATCH (n)-[r:same_as]->(main)
+              WITH  LAST(COLLECT(main.name)) AS intent
+              UNWIND ${JSON.stringify(keywords)} AS token
+              MATCH (n:concept)
+              WHERE n.name = token
+              OPTIONAL MATCH (n)-[r:same_as]->(main)
+              WITH COLLECT(main) AS baseWords,intent AS intent
+              UNWIND baseWords AS token
+              MATCH p=(token)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
+              WITH length(p) AS max,baseWords AS baseWords,intent AS intent
+              UNWIND baseWords AS bw
+              match p=(bw)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
+              WHERE length(p) = max WITH COLLECT(bw) AS bws,intent AS intent
+              UNWIND bws AS keywords
+              MATCH (keywords)<-[r]-(q:question)-[rel:answer]->(a)
+              WHERE TYPE(r)=intent
+              WITH a as a, rel as rel
+              RETURN LABELS(a),COLLECT(a.value) `;
 
     let session = getNeo4jDriver().session();
     session
