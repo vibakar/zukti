@@ -6,6 +6,11 @@ import Cookie from 'react-cookie';
 import './homestyle.css';
 import ClientHomePage from '../../../Multi_Lingual/Wordings.json';
 export default class ClientHome extends React.Component {
+
+  constructor() {
+      super();
+      this.onSubmitEmail = this.onSubmitEmail.bind(this);
+  }
 /* if the user clicks logout it clears all the cookies
 which is stored when user login and redirect to apphome*/
     handleLogout()
@@ -24,8 +29,17 @@ which is stored when user login and redirect to apphome*/
             });
     }
     // redirects to chat page
-    onSubmitEmail() {
-        hashHistory.push('/chat');
+    onSubmitEmail(e) {
+      switch(e.target.alt) {
+        case 'react':
+          hashHistory.push('/chat/react');
+          break;
+        case 'design patterns':
+          hashHistory.push('/chat/design patterns');
+          break;
+        default:
+          break;
+      }
     }
     render() {
         return (
@@ -33,7 +47,6 @@ which is stored when user login and redirect to apphome*/
                 backgroundImage: "url('../../images/homepage.jpg')"
             }}>
                 <Grid>
-                    <Grid.Row/>
                     <Grid.Row>
                         <Grid.Column width={2}/>
                         <Grid.Column width={10}/>
@@ -55,25 +68,28 @@ which is stored when user login and redirect to apphome*/
                             <Grid.Row>
                                 <center>
                                     <Image className="imagepointer" src='../../images/react.jpg'
-                                    size='small' avatar onClick={this.onSubmitEmail.bind(this)}/>
+                                    alt='react' size='small' avatar onClick={this.onSubmitEmail}/>
                                 </center>
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
                                     <h2 className="heading1"
-                                      onClick={this.onSubmitEmail.bind(this)}>{ClientHomePage.ClientHome.Topic1}</h2>
+                          onClick={this.onSubmitEmail}>{ClientHomePage.ClientHome.Topic1}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
-                        <Grid.Column width={4}>
+                        <Grid.Column width={4} centered={true}>
                             <Grid.Row>
                                 <center>
-                                  <Image src='../../images/express.png' size='small' avatar/>
+                          <Image className="imagepointer" src='../../images/designlogo.png'
+                          alt='design patterns' size='small' avatar onClick={this.onSubmitEmail}/>
                                 </center>
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                        <h2 className="heading2">{ClientHomePage.ClientHome.Topic2}</h2>
+                                    <h2 className="heading2"
+
+                              onClick={this.onSubmitEmail1}>{ClientHomePage.ClientHome.Topic2}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -85,7 +101,7 @@ which is stored when user login and redirect to apphome*/
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                        <h2 className="heading3">{ClientHomePage.ClientHome.Topic3}</h2>
+<h2 className="heading3">{ClientHomePage.ClientHome.Topic3}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -101,7 +117,7 @@ which is stored when user login and redirect to apphome*/
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                        <h2 className="heading4">{ClientHomePage.ClientHome.Topic4}</h2>
+                        <h2 className="heading4">{ClientHomePage.ClientHome.Topic4}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -113,7 +129,7 @@ which is stored when user login and redirect to apphome*/
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                        <h2 className="heading5">{ClientHomePage.ClientHome.Topic5}</h2>
+                                <h2 className="heading5">{ClientHomePage.ClientHome.Topic5}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -124,7 +140,7 @@ which is stored when user login and redirect to apphome*/
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                        <h2 className="heading6">{ClientHomePage.ClientHome.Topic6}</h2>
+                                  <h2 className="heading6">{ClientHomePage.ClientHome.Topic6}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>

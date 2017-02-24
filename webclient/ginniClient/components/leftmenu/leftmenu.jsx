@@ -188,7 +188,7 @@ export default class LeftMenu extends Component {
                             </Menu>
                         </div>
                         <div id='leftmenucontentdiv'>
-                            <LeftMenuContent sidebarItemSelected={activeItem}/>
+              <LeftMenuContent sidebarItemSelected={activeItem} domain={this.props.params.domain}/>
                         </div>
                     </Segment>
                 </Sidebar.Pusher>

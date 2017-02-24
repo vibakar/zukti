@@ -5,7 +5,7 @@
   cursor: pointer;
 }
 .heading2{
-  color:grey;
+  color:white;
 }
 .heading3{
   color:grey;
@@ -24,7 +24,7 @@
   font-size: 40px;
     -webkit-text-fill-color: transparent;
   background: -webkit-linear-gradient(teal, transparent),
-             url(http://www.myspacehippo.com/files/glitterbacks/bg345.gif) repeat;
+             url(http://www.myspacehippo.com/files/glitterbacks/fdgf34.gif) repeat;
   background: -o-linear-gradient(transparent, transparent);
   -webkit-background-clip: text;
 }
