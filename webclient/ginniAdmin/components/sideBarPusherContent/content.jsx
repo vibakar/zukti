@@ -4,6 +4,7 @@ import UserTable from '../users/userTable';
 import Analytics from '../Analytics/info';
 import Broadcast from '../broadcast/broadcast';
 import TrainBot from '../trainbot/trainbot';
+import AddConcept from '../addConcept/addConcepts';
 import UnansweredQueries from '../unansweredqueries/unansweredqueries';
 export default class Content extends React.Component {
     constructor(props) {
@@ -35,6 +36,10 @@ export default class Content extends React.Component {
                         {
                             return <UnansweredQueries/>;
                         }
+                        case 'AddConcept':
+                            {
+                                return <AddConcept/>;
+                            }
         }
     }
 }

@@ -50,7 +50,7 @@ export default class SidebarBot extends Component {
                         <Icon name='spy' color='teal'/>
                         {AdminMenu.AdminMenu.Topic4}
                     </Menu.Item>
-                    <Menu.Item name='TrainBot' active={activeItem === 'UseTheBot'}
+                    <Menu.Item name='TrainBot' active={activeItem === 'TrainBot'}
                       onClick={this.handleItemClick}>
                         <Icon name='child' color='teal'/>
                         {AdminMenu.AdminMenu.Topic5}
@@ -63,6 +63,10 @@ export default class SidebarBot extends Component {
                     <Menu.Item name='LogOut'>
                         <Icon name='sign out' color='teal'/>
                         <a href='#/log'>{AdminMenu.AdminMenu.Topic7}</a>
+                    </Menu.Item>
+                    <Menu.Item name='AddConcept' active={activeItem === 'AddConcept'} onClick={this.handleItemClick}>
+                        <Icon name='plus' color='teal'/>
+                        AddConcept
                     </Menu.Item>
                 </Sidebar>
                 <Sidebar.Pusher className='container' style={{
