@@ -20,7 +20,10 @@ let getbroadcastmessage = require('./webserver/routes/broadcastmessage/getbroadc
 let getKnowledge = require('./webserver/routes/getKnowledge/getKnowledgeBase');
 let analytics = require('./webserver/routes/analyticsData/analytics');
 let bookmarks = require('./webserver/routes/bookmarks/bookmarks');
-let concept = require('./webserver/routes/concept/getConcept');
+let concept = require('./webserver/routes/concept/concept');
+
+let user = require('./webserver/routes/user/user');
+
 let app = express();
 let compiler = webpack(config);
 
@@ -81,7 +84,7 @@ require('./webserver/routes/auth.js')(app, passport);
 
 // our routes will be given here
 // login routes
-// Routes
+// Routes -- version 1
 app.use('/', uploadimage);
 app.use('/analytics', analytics);
 app.use('/savebroadcastmessage', isAuthenticated, savebroadcastmessage);
@@ -96,6 +99,10 @@ app.use('/question', askQuestion);
 app.use('/getknowledge', getKnowledge);
 app.use('/retriveChat', retriveChat);
 app.use('/bookmarks', bookmarks);
+
+// Routes -- version 2
+app.use('/user', user);
+
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     publicPath: config.output.publicPath,

@@ -6,8 +6,13 @@ import Cookie from 'react-cookie';
 import './homestyle.css';
 import ClientHomePage from '../../../Multi_Lingual/Wordings.json';
 export default class ClientHome extends React.Component {
+
+  constructor() {
+      super();
+      this.onSubmitEmail = this.onSubmitEmail.bind(this);
+  }
 /* if the user clicks logout it clears all the cookies
-which is stored when user login and redirect to apphome*/
+which is stored when user login and redirect to apphome */
     handleLogout()
     {
       Axios({
@@ -24,8 +29,41 @@ which is stored when user login and redirect to apphome*/
             });
     }
     // redirects to chat page
-    onSubmitEmail() {
-        hashHistory.push('/chat');
+    onSubmitEmail(e) {
+      console.log(Cookie.load('email'));
+      switch(e.target.alt) {
+        case 'react':
+        Axios({
+                method: 'PUT',
+                url: '/user/setlogindomain',
+                data: { email: Cookie.load('email'), domain: 'react'}
+              }).then(function (response) {
+                console.log(response);
+                console.log(`User's current domain: ${e.target.alt}`);
+              })
+               .catch(function (error) {
+                   console.log(error);
+              });
+          Cookie.save('domain','react');
+          console.log(Cookie.load('domain'));
+          hashHistory.push('/chat/react');
+          break;
+        case 'design pattern':
+        Axios({
+                method: 'PUT',
+                url: '/user/setlogindomain',
+                data: { email: Cookie.load('email'), domain: 'design pattern'}
+              }).then(function (response) {
+                console.log(`User's current domain: ${e.target.alt}`);
+              })
+               .catch(function (error) {
+                   console.log(error);
+              });
+          hashHistory.push('/chat/design pattern');
+          break;
+        default:
+          break;
+      }
     }
     render() {
         return (
@@ -33,7 +71,6 @@ which is stored when user login and redirect to apphome*/
                 backgroundImage: "url('../../images/homepage.jpg')"
             }}>
                 <Grid>
-                    <Grid.Row/>
                     <Grid.Row>
                         <Grid.Column width={2}/>
                         <Grid.Column width={10}/>
@@ -55,37 +92,39 @@ which is stored when user login and redirect to apphome*/
                             <Grid.Row>
                                 <center>
                                     <Image className="imagepointer" src='../../images/react.jpg'
-                                    size='small' avatar onClick={this.onSubmitEmail.bind(this)}/>
+                                    alt='react' size='small' avatar onClick={this.onSubmitEmail}/>
                                 </center>
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
                                     <h2 className="heading1"
-                                      onClick={this.onSubmitEmail.bind(this)}>{ClientHomePage.ClientHome.Topic1}</h2>
+                          onClick={this.onSubmitEmail}>{ClientHomePage.ClientHome.Topic1}</h2>
+                                </center>
+                            </Grid.Row>
+                        </Grid.Column>
+                        <Grid.Column width={4} centered={true}>
+                            <Grid.Row>
+                                <center>
+                          <Image className="imagepointer" src='../../images/designlogo.png'
+                          alt='design pattern' size='small' avatar onClick={this.onSubmitEmail}/>
+                                </center>
+                            </Grid.Row>
+                            <Grid.Row>
+                                <center>
+                                    <h2 className="heading2"
+                              onClick={this.onSubmitEmail1}>{ClientHomePage.ClientHome.Topic2}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
                         <Grid.Column width={4}>
                             <Grid.Row>
                                 <center>
-                                  <Image src='../../images/express.png' size='small' avatar/>
+                                    <Image src='../../images/java.jpg' size='small' avatar/>
                                 </center>
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                        <h2 className="heading2">{ClientHomePage.ClientHome.Topic2}</h2>
-                                </center>
-                            </Grid.Row>
-                        </Grid.Column>
-                        <Grid.Column width={4}>
-                            <Grid.Row>
-                                <center>
-                                    <Image src='../../images/java.png' size='small' avatar/>
-                                </center>
-                            </Grid.Row>
-                            <Grid.Row>
-                                <center>
-                                        <h2 className="heading3">{ClientHomePage.ClientHome.Topic3}</h2>
+<h2 className="heading3">{ClientHomePage.ClientHome.Topic3}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -101,7 +140,7 @@ which is stored when user login and redirect to apphome*/
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                        <h2 className="heading4">{ClientHomePage.ClientHome.Topic4}</h2>
+                        <h2 className="heading4">{ClientHomePage.ClientHome.Topic4}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -113,7 +152,7 @@ which is stored when user login and redirect to apphome*/
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                        <h2 className="heading5">{ClientHomePage.ClientHome.Topic5}</h2>
+                                <h2 className="heading5">{ClientHomePage.ClientHome.Topic5}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
@@ -124,7 +163,7 @@ which is stored when user login and redirect to apphome*/
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                        <h2 className="heading6">{ClientHomePage.ClientHome.Topic6}</h2>
+                                  <h2 className="heading6">{ClientHomePage.ClientHome.Topic6}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>

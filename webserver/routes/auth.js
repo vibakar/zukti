@@ -4,10 +4,12 @@ const nodemailer = require('nodemailer');
 module.exports = function(app, passport) {
     let rand, mailOptions, host, link;
     app.post('/login', passport.authenticate('local', {failureRedirect: '/'}), (req, res) => {
-        res.cookie('token', req.user);
+        res.cookie('token', req.user.token); // v2
         res.cookie('username', req.user.name);
         res.cookie('authType', req.user.authType);
         res.cookie('profilepicture', req.user.photos);
+        res.cookie('email', req.user.email); // v2
+        res.cookie('domain', 'nil'); // v2
         res.send(req.user);
     });
     /* logout - all the user informations will be
@@ -17,6 +19,7 @@ module.exports = function(app, passport) {
         res.clearCookie('authType');
         res.clearCookie('username');
         res.clearCookie('profilepicture');
+        res.clearCookie('email'); // v2
         res.json({logout: 'Successfully LogOut'});
         RegisteredUser.update({
             'local.email': req.user.local.email

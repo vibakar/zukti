@@ -1,7 +1,10 @@
+let Cookie =require('react-cookie');
 // get reaponse of the question asked by user from neo4j database
 let getNeo4jDriver = require('../../../neo4j/connection');
+let Domain = require('./../../../domain/Domain'); //v2
+
 module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundCallback) {
-              let domain = 'design pattern';
+              let domain = Domain.getDomain();
               let query = `UNWIND ${JSON.stringify(intents)} AS token
               MATCH (n:intent)
               WHERE n.name = token

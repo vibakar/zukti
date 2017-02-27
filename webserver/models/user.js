@@ -18,7 +18,12 @@ const userSchema = mongoose.Schema({
         loggedinStatus: Boolean,
         isEmailVerified: Boolean,
         verificationID: String,
-        photos: String
+        photos: String,
+        loggedinDomain: {
+          type: String,
+          default: 'nil'
+        },
+        domain: Array
     },
     facebook: {
         id: String,
@@ -28,7 +33,6 @@ const userSchema = mongoose.Schema({
         displayName: String,
         photos: String,
         authType: String
-
     },
     google: {
         id: String,

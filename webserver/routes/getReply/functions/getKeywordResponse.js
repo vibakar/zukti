@@ -2,9 +2,12 @@
 let getNeo4jDriver = require('../../../neo4j/connection');
 let answerNotFoundReply = require('../../../config/answerNotFoundReply');
 let replyForKeyword = require('../../../config/replyForKeyword.json');
+let Domain = require('./../../../domain/Domain'); //v2
+
+
 module.exports = function(keywords, sendResponse) {
 // query to extract data
-    let domain='design pattern';
+    let domain = Domain.getDomain();
     let query = `UNWIND ${JSON.stringify(keywords)} AS token
                  MATCH (n:concept)
                  WHERE n.name = token

@@ -70,19 +70,19 @@ export default class FrontPage extends React.Component {
                         <Grid.Column width={4}>
                             <Grid.Row>
                                 <center>
-                                    <Image src='../../images/express.png' size='small' avatar/>
+                                    <Image src='../../images/designlogo.png' size='small' avatar onClick={this.onSubmitEmail.bind(this)}/>
                                 </center>
                             </Grid.Row>
                             <Grid.Row>
                                 <center>
-                                    <h2 className="heading2">{AdminHomePage.AdminHome.Topic2}</h2>
+                                    <h2 className="heading2" onClick={this.onSubmitEmail.bind(this)}>{AdminHomePage.AdminHome.Topic2}</h2>
                                 </center>
                             </Grid.Row>
                         </Grid.Column>
                         <Grid.Column width={4}>
                             <Grid.Row>
                                 <center>
-                                    <Image src='../../images/java.png' size='small' avatar/>
+                                    <Image src='../../images/java.jpg' size='small' avatar/>
                                 </center>
                             </Grid.Row>
                             <Grid.Row>
