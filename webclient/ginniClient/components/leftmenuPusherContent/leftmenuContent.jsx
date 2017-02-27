@@ -9,25 +9,13 @@ export default class LeftMenuContent extends React.Component {
     }
     render() {
         switch (this.props.sidebarItemSelected) {
-            case 'Home':
             case 'Build':
                 {
-                    let domain = this.props.domain;
-                    let dataSource;
-                    let image;
-                    switch(domain) {
-                      case 'react':
-                        dataSource = 'wordings_react.json';
-                        image = 'reactlogo.png';
-                        break;
-                      case 'design patterns':
-                        dataSource = 'wordings_design_pattern.json';
-                        image = 'design.png';
-                        break;
-                      default:
-                        break;
-                    }
-                    return <DefaultPage dataSource={dataSource} image={image}/>;
+                    return <DefaultPage/>;
+                }
+            case 'Home':
+                {
+                    return <DefaultPage/>;
                 }
             case 'ChatBot':
                 {

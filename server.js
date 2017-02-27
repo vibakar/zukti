@@ -20,7 +20,7 @@ let getbroadcastmessage = require('./webserver/routes/broadcastmessage/getbroadc
 let getKnowledge = require('./webserver/routes/getKnowledge/getKnowledgeBase');
 let analytics = require('./webserver/routes/analyticsData/analytics');
 let bookmarks = require('./webserver/routes/bookmarks/bookmarks');
-let concept = require('./webserver/routes/concept/concept');
+let concept = require('./webserver/routes/concept/getConcept');
 let app = express();
 let compiler = webpack(config);
 
