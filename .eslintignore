@@ -1,7 +1,5 @@
 webclient/index.html
 webclient/Multi_Lingual/Wordings.json
-webclient/Multi_Lingual/wordings_react.json
-webclient/Multi_Lingual/wordings_design_pattern.json
 webclient/applicationHome/applicationHome.css
 webclient/applicationHome/applicationHome.jsx
 webclient/applicationHome/expiryLink.jsx
