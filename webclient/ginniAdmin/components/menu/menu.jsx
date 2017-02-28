@@ -60,13 +60,23 @@ export default class SidebarBot extends Component {
                         <Icon name='help' color='teal'/>
                         {AdminMenu.AdminMenu.Topic6}
                     </Menu.Item>
+                    <Menu.Item name='Add Concept' active={activeItem === 'Add Concept'}
+                      onClick={this.handleItemClick}>
+                        <Icon name='plus' color='teal'/>
+                        {AdminMenu.AdminMenu.Topic8}
+                    </Menu.Item>
+                    <Menu.Item name='View Graph' active={activeItem === 'View Graph'}
+                      onClick={this.handleItemClick}>
+                        <Icon name='find' color='teal'/>
+                        {AdminMenu.AdminMenu.Topic9}
+                    </Menu.Item>
+                    <Menu.Item name='Test Graph' active={activeItem === 'Test Graph'}
+                      onClick={this.handleItemClick}>
+                        <Icon name='find' color='teal'/>{AdminMenu.AdminMenu.Topic10}
+                    </Menu.Item>
                     <Menu.Item name='LogOut'>
                         <Icon name='sign out' color='teal'/>
                         <a href='#/log'>{AdminMenu.AdminMenu.Topic7}</a>
-                    </Menu.Item>
-                    <Menu.Item name='AddConcept' active={activeItem === 'AddConcept'} onClick={this.handleItemClick}>
-                        <Icon name='plus' color='teal'/>
-                        AddConcept
                     </Menu.Item>
                 </Sidebar>
                 <Sidebar.Pusher className='container' style={{

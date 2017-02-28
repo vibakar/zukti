@@ -102,6 +102,9 @@ app.use('/bookmarks', bookmarks);
 
 // Routes -- version 2
 app.use('/user', user);
+app.get('/graphie', function(req, res) {
+    res.sendfile('graph.html');
+});
 
 app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
