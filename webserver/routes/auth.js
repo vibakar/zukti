@@ -140,9 +140,9 @@ module.exports = function(app, passport) {
                     service: 'Gmail',
                     secure: false,
                     auth: {
-                        user: 'geniegenie0001@gmail.com',
+                        user: 'zuktibot@gmail.com',
                         // Your email id
-                        pass: 'genie123'
+                        pass: 'zuktiwave15'
                         // Your password
                     },
                     tls: {
@@ -158,14 +158,14 @@ module.exports = function(app, passport) {
                  VID + '&email=' + profile[0].local.email;
                 let text = 'Hello from \n\n' + req.body.data;
                 mailOptions = {
-                    from: 'geniegenie0001@gmail.com',
+                    from: 'zuktibot@gmail.com',
                      // sender address
                     to: profile[0].local.email,
                      // list of receivers
-                    subject: 'Verify your Email with Genie',
+                    subject: 'Verify your Email with Zukti',
                     // Subject line
                     text: text,
-                    html: "<center><h1>Welcome to Genie</h1></center><br><br><br>Hi,<br><br>To complete Signup Click on the button to verify yourself.<br><br><br><a href=" + link + " style='background-color:#44c767;-moz-border-radius:28px;-webkit-border-radius:28px;border-radius:28px;border:1px solid #18ab29;display:inline-block;padding:16px 31px;color:#ffffff;text-shadow:0px 1px 0px #2f6627;text-decoration:none;'> Verify </a><br><br><b>Why verify?</b><br><br>For using Genie we require a verified email to prevent spam.<br><br>Verifying lets you join Genie quickly and easily.<br><br>Cheers,<br><br><b>Team Genie</b><br><br><small><i>This link is valid for an hour.This is an Auto-generated mail,please do not reply</i></small>"
+                    html: "<center><h1>Welcome to Zukti</h1></center><br><br><br>Hi,<br><br>To complete Signup Click on the button to verify yourself.<br><br><br><a href=" + link + " style='background-color:#44c767;-moz-border-radius:28px;-webkit-border-radius:28px;border-radius:28px;border:1px solid #18ab29;display:inline-block;padding:16px 31px;color:#ffffff;text-shadow:0px 1px 0px #2f6627;text-decoration:none;'> Verify </a><br><br><b>Why verify?</b><br><br>For using Zukti we require a verified email to prevent spam.<br><br>Verifying lets you join Zukti quickly and easily.<br><br>Cheers,<br><br><b>Team Zukti</b><br><br><small><i>This link is valid for an hour.This is an Auto-generated mail,please do not reply</i></small>"
                 };
                 transporter.sendMail(mailOptions, function(error, info) {
                     if (error) {
@@ -258,9 +258,9 @@ module.exports = function(app, passport) {
                     service: 'Gmail',
                     secure: false,
                     auth: {
-                        user: 'geniegenie0001@gmail.com',
+                        user: 'zuktibot@gmail.com',
                         // Your email id
-                        pass: 'genie123'
+                        pass: 'zuktiwave15'
                         // Your password
                     },
                     tls: {
@@ -271,13 +271,13 @@ module.exports = function(app, passport) {
                 link = 'http://' + req.get('host') + '/newPassword?id=' +
                  encryptRand + '&email=' + profile[0].local.email;
                 mailOptions = {
-                    from: 'geniegenie0001@gmail.com',
+                    from: 'zuktibot@gmail.com',
                      // sender address
                     to: profile[0].local.email,
                      // list of receivers
-                    subject: 'Password reset for Genie account',
+                    subject: 'Password reset for Zukti account',
                      // Subject line
-                    html: "<center><h1>Welcome to Genie</h1></center><br><br><br>Hi,<br><br>Forgot password??<br><br> No worries, click on the button to reset right away !!.<br><br><br><a href=" + link + " style='background-color:#FF0000;-moz-border-radius:28px;-webkit-border-radius:28px;border-radius:28px;border:1px solid #FF0000;display:inline-block;padding:16px 31px;color:#ffffff;text-shadow:0px 1px 0px #2f6627;text-decoration:none;'>Reset password</a><br><br>Cheers,<br><br><b>Team Genie</b><br><br><small><i>This link is valid for an hour.This is an Auto-generated mail,please do not reply</i></small>"
+                    html: "<center><h1>Welcome to Zukti</h1></center><br><br><br>Hi,<br><br>Forgot password??<br><br> No worries, click on the button to reset right away !!.<br><br><br><a href=" + link + " style='background-color:#FF0000;-moz-border-radius:28px;-webkit-border-radius:28px;border-radius:28px;border:1px solid #FF0000;display:inline-block;padding:16px 31px;color:#ffffff;text-shadow:0px 1px 0px #2f6627;text-decoration:none;'>Reset password</a><br><br>Cheers,<br><br><b>Team Zukti</b><br><br><small><i>This link is valid for an hour.This is an Auto-generated mail,please do not reply</i></small>"
                 };
                 transporter.sendMail(mailOptions, function(error, info) {
                     if (error) {
