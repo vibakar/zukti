@@ -3,7 +3,7 @@
 
   "ExpiryLink":{"ExpiryLink":"Expired Link or Invalid URL"},
 
-  "ApplicationContent":{"Heading":"ZUKTI","Line1":"HERE COMES YOUR ZUKTI","Line2":"ANY QUERY HITS YOU HARDER? THEN I AM HERE TO PROVIDE YOU DAZZLING SOLUTIONS","Line3":"To iterate is human, to recurse divine"},
+  "ApplicationContent":{"Heading":"ZUKTI","Line1":"HERE COMES YOUR ZUKTI","Line2":"ANY QUERY HITS YOU HARDER? THEN I AM HERE TO PROVIDE YOU DAZZLING SOLUTIONS","Line3":"To iterate is human, to recurse is divine"},
 
   "Logout":{"Heading1":"ZUKTI","Heading2":"Thanks For Your Visit !!","Heading3":"~~~COME BACK SOON~~~"},
 
@@ -37,7 +37,7 @@
 
   "LogoutPage":{"Heading1":"Are You Sure?You want to Logout?"},
 
-  "AdminMenu":{"Topic1":"Setup Q&A","Topic2":"Broadcast","Topic3":"Users","Topic4":"Analyze","Topic5":"Train Intent","Topic6":"Unanswered Queries","Topic7":"Logout"},
+  "AdminMenu":{"Topic1":"Setup Q&A","Topic2":"Broadcast","Topic3":"Users","Topic4":"Analyze","Topic5":"Train Intent","Topic6":"Unanswered Queries","Topic7":"Logout","Topic8":"Add Concept","Topic9":"View Graph","Topic10":"Test Graph"},
 
   "SetUp":{"Heading":"It is a set of questions and the corresponding bot replies.Zukti will understand user questions similar to those you’ve set up and reply with a appropiate answer."}
 

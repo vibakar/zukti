@@ -1,9 +1,10 @@
 import React from 'react';
-import {Grid, Image, Divider} from 'semantic-ui-react';
+import {Grid, Divider} from 'semantic-ui-react';
 import Axios from 'axios';
 import ViewUserChat from './viewUserChat';
-import './userTable.css';
+import './usertable.css';
 import {Scrollbars} from 'react-custom-scrollbars';
+import UserAvatar from './userAvatar';
 export default class UserTable extends React.Component
 {
   constructor() {
@@ -12,40 +13,51 @@ export default class UserTable extends React.Component
         name: [],
         email: [],
         userinformation: []
-      };
+       };
+  this.eventclick = this.eventclick.bind(this);
+    }
+    eventclick(e,n)
+    {
+      console.log(e + '!i am clicked'+ n );
     }
     componentDidMount() {
-      var self=this;
+      let self = this;
       Axios({
       url: 'http://localhost:8080/viewall',
       method: 'GET'
     }).then(function(response) {
-    self.setState({ userinformation: response.data});
-}).
-    catch(function(err) {
-        console.log(err);
-        });
-    }
-    history(email) {
-     console.log(email);
+    self.setState({ userinformation: response.data });
+    console.log(response.data);
+});
+   }
+    history(email)
+    {
+      alert(email);
     }
 
 render() {
+
     let user = this.state.userinformation.map(function(newsdata) {
+      console.log(newsdata);
+
+    let textStyle = {
+      paddingTop: '7px',
+      paddingLeft: '2px'
+    };
 return (
   <div id='eachcardstyle'>
     <Grid>
       <Grid.Row>
       <Grid.Column width={3}>
-        <center>
-          <Image avatar src={require('../../../../webserver/images/' + newsdata.local.photos)}/>
-      </center>
-    </Grid.Column>
+  <UserAvatar loginStatus={newsdata.local.loggedinStatus}
+   photo={newsdata.local.photos} name={newsdata.local.name} email={newsdata.local.email}>
+ </UserAvatar>
+ </Grid.Column>
           <Grid.Column width={4}>
-          <h4><b>{newsdata.local.name}</b></h4>
+          <div style={textStyle}><h4><b style={{margin: '0px'}}>{newsdata.local.name}</b></h4></div>
         </Grid.Column>
         <Grid.Column width={5}>
-          <b style={{color: 'blue'}}>{newsdata.local.email}</b>
+          <div style={textStyle}><b style={{color: 'blue'}}>{newsdata.local.email}</b></div>
         </Grid.Column>
 <Grid.Column width={3}>
           <div>
@@ -65,8 +77,8 @@ return(
     }}>
   <Grid divided='vertically'>
       <Grid.Row columns={3}>
-        <Grid.Column width={1}/>
-      <Grid.Column width={14} >
+        <Grid.Column width={1}></Grid.Column>
+     <Grid.Column width={14} >
           <Scrollbars renderTrackHorizontal={props => <div {...props}
             className="track-horizontal" style={{
               display: 'none',
@@ -75,8 +87,9 @@ return(
               <div style={{width: '98%', height: '50%'}} >
                 <h3 style={{color: 'red', fontStyle: 'bold'}}>USER DETAILS</h3>
                 <Divider/>
-                           {user}
-             </div></Scrollbars>
+
+                          {user}
+  </div></Scrollbars>
                   </Grid.Column>
               </Grid.Row>
             </Grid>
