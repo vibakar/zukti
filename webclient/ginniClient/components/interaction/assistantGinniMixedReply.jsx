@@ -56,6 +56,9 @@ export default class AssistantGinniMixedReply extends React.Component {
                     <Feed.Label image='../../images/geniebot.jpg'/>
                     <Feed.Content>
                         <Feed.Summary date={this.props.data.time} user={CodeAssistant.Interaction.name}/>
+                        <Feed.Extra extras>
+                           {this.props.data.extras}
+                         </Feed.Extra>
                         <Feed.Extra text>
                             {text}
                         </Feed.Extra>
