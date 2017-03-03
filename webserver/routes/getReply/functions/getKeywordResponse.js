@@ -5,7 +5,7 @@ let replyForKeyword = require('../../../config/replyForKeyword.json');
 let Domain = require('./../../../domain/Domain'); //v2
 
 
-module.exports = function(keywords, sendResponse) {
+module.exports = function(keywords, sendResponse, flag, correctedQuestion) {
 // query to extract data
     let domain = Domain.getDomain();
     let query = `UNWIND ${JSON.stringify(keywords)} AS token
@@ -57,8 +57,13 @@ module.exports = function(keywords, sendResponse) {
                 });
                 resultObj.time = new Date().toLocaleString();
                 if (hasAtleastSomeContent) {
+                  if(flag == 1){
+                    resultObj.value = 'Showing results for : ' + "\""+correctedQuestion+"\"" + ' instead';
+                  }
+                  else{
                     resultObj.value = replyForKeyword[Math.floor(Math.random() *
                        replyForKeyword.length)];
+                     }
                     resultArray.push(resultObj);
                     resultObj.keywordResponse = true;
                     sendResponse(true, resultArray);

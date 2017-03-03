@@ -3,7 +3,7 @@ let Cookie =require('react-cookie');
 let getNeo4jDriver = require('../../../neo4j/connection');
 let Domain = require('./../../../domain/Domain'); //v2
 
-module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundCallback) {
+module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundCallback,flag, correctedQuestion) {
               let domain = Domain.getDomain();
               let query = `UNWIND ${JSON.stringify(intents)} AS token
               MATCH (n:intent)
@@ -38,6 +38,9 @@ module.exports = function(intents, keywords, answerFoundCallback, noAnswerFoundC
             } else {
                 let answerObj = {};
                 answerObj.time = new Date().toLocaleString();
+                if(flag == 1){
+                  answerObj.extras = 'Showing results for : ' + "\""+correctedQuestion+"\"" + ' instead';
+                }
                 let resultArray = result.records.forEach((record) => {
                     let field = record._fields;
                     answerObj[field[0][0]] = field[1].map((value, index) => {
