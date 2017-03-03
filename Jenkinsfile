@@ -3,7 +3,7 @@ node {
   sh "env"
 
   stage 'Checkout Repository'
-  git url: 'https://gitlab-dev.stackroute.in/wave13/Code-Asst/tree/Wave-15_Jukti', branch: "${env.BRANCH_NAME}"
+  git url: 'https://gitlab-dev.stackroute.in/wave13/Code-Asst', branch: "Wave-15_Jukti"
 
   stage 'Installing Dependencies'
   sh "npm prune"
