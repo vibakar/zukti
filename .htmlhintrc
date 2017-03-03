@@ -12,13 +12,10 @@
   "id-unique": true,
   "src-not-empty": true,
   "title-require": true,
-
   // Performance
   "head-script-disabled": true,
-
   // Accessibility
   "alt-require": true,
-
   // Specification
   "doctype-html5": true,
   "id-class-value": false,

@@ -9,6 +9,7 @@ module.exports = function (question) {
 	let tokenizer = new natural.WordTokenizer();
 	var text = fs.readFileSync('lotsofwords.txt', 'utf-8');
 	var corpus = tokenizer.tokenize(text);
+
 	let spellcheck = new natural.Spellcheck(corpus);
 	let spellChecked = '';
   let flag = 0;
@@ -31,4 +32,4 @@ if(!spellchecker.check(word)){
     question,
     flag
   };
-}
+};

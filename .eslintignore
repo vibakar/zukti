@@ -169,3 +169,8 @@ webserver/routes/retriveChats/chats.js
 webserver/routes/auth.js
 webserver/routes/uploadimage.js
 webserver/Testing/test.js
+webserver/routes/spellChecker/functions/hunspell-spellchecker.min.js
+webserver/routes/spellChecker/functions/lotsofwords.txt
+webserver/routes/spellChecker/functions/en_US.aff
+webserver/routes/spellChecker/functions/en_US.dic
+webserver/routes/spellChecker/functions/hunspell-spellchecker.js

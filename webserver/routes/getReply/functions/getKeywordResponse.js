@@ -2,6 +2,7 @@
 let getNeo4jDriver = require('../../../neo4j/connection');
 let answerNotFoundReply = require('../../../config/answerNotFoundReply');
 let replyForKeyword = require('../../../config/replyForKeyword.json');
+let User = require('./../../../models/user');
 
 module.exports = function(keywords, email, sendResponse, flag, correctedQuestion) {
     // query to extract data
