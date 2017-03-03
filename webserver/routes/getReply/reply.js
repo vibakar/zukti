@@ -11,14 +11,18 @@ let saveUserQueries = require('./functions/saveUserQueries');
 let saveAnalyticsData = require('./functions/saveAnalyticsData');
 // getKeywordResponse json file containing statements for keyword responses
 let getKeywordResponse = require('./functions/getKeywordResponse');
+//spell checker
+let getSpellChecker = require('../spellChecker/functions/spellChecker');
+
 // router to take question and give reply to user
 router.post('/askQuestion', function(req, res) {
     // get the user email
     let email = req.user.local.email || req.user.facebook.email || req.user.google.email;
     let username = req.body.username;
     let question = req.body.question;
+    let spellResponse = getSpellChecker(question.value);console.log('in reply  '+spellResponse.question+'flag'+spellResponse.flag);
     // extract intents and keywords from the question
-    let query = processQuestion(question.value.toLowerCase());
+    let query = processQuestion(spellResponse.question.toLowerCase());
     let keywords = query.keywords;
     let intents = query.intents;
     // function used to send final response
@@ -59,11 +63,11 @@ router.post('/askQuestion', function(req, res) {
     else if(intents.length === 0) {
       saveUnansweredQuery(username, email, question.value);
       // if no intent is found in the question then get a keyword response
-      getKeywordResponse(keywords, sendResponse);
+      getKeywordResponse(keywords, email, sendResponse, spellResponse.flag, spellResponse.question);
     }
      else {
        // function to get response when both  intents and keywords are present
-        getQuestionResponse(intents, keywords, answerFoundCallback, noAnswerFoundCallback);
+        getQuestionResponse(intents, keywords, email, answerFoundCallback, noAnswerFoundCallback,spellResponse.flag, spellResponse.question);
     }
 });
 module.exports = router;

@@ -2,13 +2,17 @@
 let getNeo4jDriver = require('../../../neo4j/connection');
 let answerNotFoundReply = require('../../../config/answerNotFoundReply');
 let replyForKeyword = require('../../../config/replyForKeyword.json');
-let Domain = require('./../../../domain/Domain'); //v2
 
-
-module.exports = function(keywords, sendResponse) {
-// query to extract data
-    let domain = Domain.getDomain();
-    let query = `UNWIND ${JSON.stringify(keywords)} AS token
+module.exports = function(keywords, email, sendResponse, flag, correctedQuestion) {
+    // query to extract data
+    User.findOne({
+        'local.email': email
+    }, function(error, data) {
+        if (error) {
+            return error;
+        }
+        let domain = data.local.loggedinDomain;
+        let query = `UNWIND ${JSON.stringify(keywords)} AS token
                  MATCH (n:concept)
                  WHERE n.name = token
                  OPTIONAL MATCH (n)-[r:same_as]->(main)
@@ -25,17 +29,14 @@ module.exports = function(keywords, sendResponse) {
                  ORDER BY rel.rating DESC
                  RETURN LABELS(n)as contentType ,COLLECT(distinct n.value) `;
 
-    let session = getNeo4jDriver().session();
-    session
-        .run(query)
-        .then(function(result) {
+        let session = getNeo4jDriver().session();
+        session.run(query).then(function(result) {
             // Completed!
             session.close();
-          // condition to handle when no result is found
+            // condition to handle when no result is found
             if (result.records[0] === 0) {
-              // randomly generating answer and send response
-                let foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() *
-                  answerNotFoundReply.length)];
+                // randomly generating answer and send response
+                let foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
                 let resultArray = [];
                 let resultObj = {};
                 resultObj.value = foundNoAnswer;
@@ -50,27 +51,30 @@ module.exports = function(keywords, sendResponse) {
                     let field = record._fields;
                     let contentType = field[0][0];
                     let content = field[1];
-                        if (content.length !== 0) {
+                    if (content.length !== 0) {
                         hasAtleastSomeContent = true;
                         resultObj[contentType] = content;
                     }
                 });
                 resultObj.time = new Date().toLocaleString();
                 if (hasAtleastSomeContent) {
-                    resultObj.value = replyForKeyword[Math.floor(Math.random() *
-                       replyForKeyword.length)];
+                    if (flag == 1) {
+                        resultObj.value = 'Showing results for : ' +
+                            "\"" + correctedQuestion + "\"" + ' instead';
+                    } else {
+                        resultObj.value = replyForKeyword[Math.floor(Math.random() * replyForKeyword.length)];
+                    }
                     resultArray.push(resultObj);
                     resultObj.keywordResponse = true;
                     sendResponse(true, resultArray);
                 } else {
-                    resultObj.value = answerNotFoundReply[Math.floor(Math.random() *
-                       answerNotFoundReply.length)];
+                    resultObj.value = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
                     resultArray.push(resultObj);
                     sendResponse(true, resultArray);
                 }
             }
-        })
-        .catch(function(error) {
+        }).catch(function(error) {
             console.log(error);
         });
+    });
 };
