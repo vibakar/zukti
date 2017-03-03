@@ -121,7 +121,7 @@ export default class AssistantChatContainer extends React.Component {
             let displayItem = (
                 <div ref={(ref) => this['_div' + length] = ref} key={length}>
                     {reply}
-                </div >
+                </div>
             );
             this.state.messages.push(displayItem);
         });
