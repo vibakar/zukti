@@ -214,6 +214,10 @@ export default class AssistantChatContainer extends React.Component {
     }
     pushUserMessages(message) {
         let length = this.state.messages.length;
+        // this.setState({
+        //   searchContent:false
+        // });
+        // this.retriveChat();
         let userMessageDisplay = (
             <div ref={(ref) => this['_div' + length] = ref} key={length}>
                 <AssistantUserView msgDate={message.time} userName={this.state.username}
