@@ -1,28 +1,50 @@
-# This file is a template, and might need editing before it works on your project.
-# Official framework image. Look for the different tagged releases at:
 # https://hub.docker.com/r/library/node/tags/
-image: node:latest
+image: node:argon
 
-# Pick zero or more services to be used on all builds.
-# Only needed when using a docker container to run your tests in.
-# Check out: http://docs.gitlab.com/ce/ci/docker/using_docker_images.html#what-is-service
-services:
-  - mysql:latest
-  - redis:latest
-  - postgres:latest
+before_script:
+  - apt-get -qq update
+  - apt-get -qq install -y python2.7 python2.7-dev build-essential make gcc g++ libicu-dev
+  - npm -g install npm --silent
+  - npm set progress=false
+  - npm install --silent
 
-# This folder is cached between builds
-# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
-cache:
-  paths:
-  - node_modules/
+stages:
+  - lint
+  - test
+  - build
+  - clean_up
 
-test_async:
+run_eslint:
+  stage: lint
   script:
-   - npm install
-   - node ./specs/start.js ./specs/async.spec.js
-
-test_db:
+    - npm run lint
+    
+run_tests:
+  stage: test
   script:
-   - npm install
-   - node ./specs/start.js ./specs/db-postgres.spec.js
+    - npm test
+
+build_and_package_for_prod:
+  stage: build
+  script:
+    - npm run build
+    - mkdir  dist/build
+    - tar czfC dist/build/latest.tar.gz dist/$CI_BUILD_REF_NAME/ .
+    - tar czfC dist/build/$CI_BUILD_REF.tar.gz dist/$CI_BUILD_REF_NAME/ .
+# CD to AWS
+#    - apt-get install -yqq ruby ruby-dev
+#    - gem install dpl
+#    - dpl --skip_cleanup --provider=s3 --region=eu-west-1 --access-key-id=$AWS_ACCESS_KEY --secret-access-key=$AWS_SECRET_KEY --bucket=$AWS_BUCKET --local-dir=dist/build/ --upload-dir=$CI_BUILD_REF_NAME
+#    artifacts:
+#    paths:
+#      - dist/$CI_BUILD_REF_NAME/
+#  only:
+#   - master
+#    - Wave-15_Jukti
+
+clean_up_job:
+  stage: clean_up
+  script:
+    - rm -rf node_modules
+    - rm -rf ~/.node-gyp
+  when: on_failure
