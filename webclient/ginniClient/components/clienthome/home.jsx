@@ -30,7 +30,7 @@ which is stored when user login and redirect to apphome */
     }
     // redirects to chat page
     onSubmitEmail(e) {
-      console.log(Cookie.load('email'));
+      console.log(Cookie.load('email')+" in home.jsx onSubmitEmail");
       switch(e.target.alt) {
         case 'react':
         Axios({
@@ -38,7 +38,7 @@ which is stored when user login and redirect to apphome */
                 url: '/user/setlogindomain',
                 data: { email: Cookie.load('email'), domain: 'react'}
               }).then(function (response) {
-                console.log(response);
+                console.log(response+" :response");
                 console.log(`User's current domain: ${e.target.alt}`);
               })
                .catch(function (error) {

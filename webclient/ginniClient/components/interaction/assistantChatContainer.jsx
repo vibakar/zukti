@@ -18,13 +18,24 @@ export default class AssistantChatContainer extends React.Component {
             messages: [],
             username: 'User',
             loaderActive: true,
-            profilePicture: ''
+            profilePicture: '',
+            searchContent: false,
+            searchValue: '',
+            SearchResult: ''
         };
         this.retriveChat = this.retriveChat.bind(this);
+        this.updateSearchValue = this.updateSearchValue.bind(this);
         // to display ginni messages
         this.pushGinniMessages = this.pushGinniMessages.bind(this);
         // to display user messages
         this.pushUserMessages = this.pushUserMessages.bind(this);
+    }
+    updateSearchValue(e) {
+      e.preventDefault();
+      this.setState({
+        searchValue: e.target.value,
+        searchContent: true
+      });
     }
     componentDidMount() {
         // Scroll to the bottom on initialization
@@ -65,7 +76,14 @@ export default class AssistantChatContainer extends React.Component {
             node.scrollIntoView(false);
         }
     }
-    retriveChat() {
+    retriveChat(e) {
+      console.log('Inside retrieve chat');
+      // e.preventDefault();
+      if(this.state.searchContent === false) {
+        this.setState({
+          messages: [],
+          SearchResult: ''
+        });
         Axios.get('/retriveChat').then((response) => {
             if (response.data) {
                 response.data.chats.forEach((chat) => {
@@ -98,6 +116,7 @@ export default class AssistantChatContainer extends React.Component {
                         });
                     } else {
                         let length = this.state.messages.length;
+                        console.log('length: ', length);
                         this.state.messages.push(
                             <div ref={(ref) => this['_div' + length] = ref}>
                                 <AssistantGinniMixedReply question={chat.question.value}
@@ -111,6 +130,72 @@ export default class AssistantChatContainer extends React.Component {
         }).catch((err) => {
             this.setState({messages: this.state.messages, loaderActive: false});
         });
+      }
+      else {
+        console.log('inside search in else');
+        this.setState({
+          messages: [],
+          SearchResult:`Search result for \"${this.state.searchValue}\"`
+        });
+
+        // for search content inside history
+        Axios.get('/retriveChat').then((response) => {
+          console.log('inside before response data');
+          console.log('response'+response);
+            if (response.data) {
+              console.log('inside before forEach');
+                response.data.chats.forEach((chat) => {
+                  console.log('Question: '+chat.question.value);
+                  console.log('search value: '+this.state.searchValue);
+                  if((chat.question.value).includes(this.state.searchValue)) {
+                    console.log('after checking content');
+                    let length = this.state.messages.length;
+                    this.state.messages.push(
+                        <div ref={(ref) => this['_div' + length] = ref}>
+                            <AssistantUserView msgDate={chat.question.time}
+                              userName={this.state.username} userMessage={chat.question.value}
+                              profilePicture={this.state.profilePicture}/>
+                        </div>
+                    );
+                    if (chat.isUnAnswered) {
+                        chat.answerObj.forEach((answer, index) => {
+                            let length = this.state.messages.length;
+                            this.state.messages.push(
+                                <div ref={(ref) => this['_div' + length] = ref}>
+                                    <AssistantGinniPlainText value={answer.value}/>
+                                </div>
+                            );
+                            if (answer.keywordResponse) {
+                                let length = this.state.messages.length;
+                                this.state.messages.push(
+                                    <div ref={(ref) => this['_div' + length] = ref}>
+                                        <AssistantGinniKeywordResponse
+                                          handleGinniReply ={this.pushGinniMessages}
+                                           question={chat.question.value} data={answer}/>
+                                    </div>
+                                );
+                            }
+                        });
+                    } else {
+                        let length = this.state.messages.length;
+                        console.log('length: ', length);
+                        this.state.messages.push(
+                            <div ref={(ref) => this['_div' + length] = ref}>
+                                <AssistantGinniMixedReply question={chat.question.value}
+                                   data={chat.answerObj} handleGinniReply={this.pushGinniMessages}/>
+                            </div>
+                        );
+                    }
+                  }
+
+                });
+            }
+            this.setState({messages: this.state.messages, loaderActive: false});
+        }).catch((err) => {
+            this.setState({messages: this.state.messages, loaderActive: false});
+        });
+      }
+
     }
     pushGinniMessages(ginniReply, loadingDots) {
         if (loadingDots) {
@@ -121,7 +206,7 @@ export default class AssistantChatContainer extends React.Component {
             let displayItem = (
                 <div ref={(ref) => this['_div' + length] = ref} key={length}>
                     {reply}
-                </div>
+                </div >
             );
             this.state.messages.push(displayItem);
         });
@@ -152,7 +237,7 @@ export default class AssistantChatContainer extends React.Component {
                     <Menu.Item position='left'>
                         <Input className='icon' style={{
                             width: 400
-                        }} icon={< Icon name = 'search' color = 'red' circular link />}
+                        }} onChange={this.updateSearchValue} icon={< Icon name = 'search' color = 'red' circular link onClick={this.retriveChat} />}
                         placeholder='Search your content' focus/>
                     </Menu.Item>
                 </Menu>
@@ -163,6 +248,7 @@ export default class AssistantChatContainer extends React.Component {
                     minHeight: '516px'
                 }}/>} autoHeight autoHeightMin={506}>
                     <div id='messagechat'>
+                        <div id="searchQuestion"><b>{this.state.SearchResult}</b></div><hr></hr>
                         {this.state.messages}
                     </div>
                 </Scrollbars>
