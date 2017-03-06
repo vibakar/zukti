@@ -63,13 +63,13 @@ export default class AdminWelcomePage extends React.Component {
                     <Grid.Row/>
                     <Grid.Row/>
                     <Grid.Row>
-                        <a href="http://www.pcadvisor.co.uk/feature/software/what-are-bots-facebook-messenger-skype-skyscanner-3638979/" id="head" style={{
+                        {/* <a href="http://www.pcadvisor.co.uk/feature/software/what-are-bots-facebook-messenger-skype-skyscanner-3638979/" id="head" style={{
                             color: 'black'
                         }}>
                             <Button className="buttonlogin" circular style={{
                                 backgroundColor: 'white'
                             }}>EXPLORE</Button>
-                        </a>
+                        </a> */}
                     </Grid.Row>
                     <Grid.Row/>
                     <Grid.Row/>
