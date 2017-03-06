@@ -29,6 +29,7 @@ export default class AssistantChatContainer extends React.Component {
         this.pushGinniMessages = this.pushGinniMessages.bind(this);
         // to display user messages
         this.pushUserMessages = this.pushUserMessages.bind(this);
+        this.onClickSearch = this.onClickSearch.bind(this);
     }
     updateSearchValue(e) {
       e.preventDefault();
@@ -36,6 +37,11 @@ export default class AssistantChatContainer extends React.Component {
         searchValue: e.target.value,
         searchContent: true
       });
+    }
+    onClickSearch(e) {
+        e.preventDefault();
+        
+        this.retriveChat();
     }
     componentDidMount() {
         // Scroll to the bottom on initialization
@@ -206,7 +212,7 @@ export default class AssistantChatContainer extends React.Component {
             let displayItem = (
                 <div ref={(ref) => this['_div' + length] = ref} key={length}>
                     {reply}
-                </div >
+                </div>
             );
             this.state.messages.push(displayItem);
         });
@@ -214,6 +220,14 @@ export default class AssistantChatContainer extends React.Component {
     }
     pushUserMessages(message) {
         let length = this.state.messages.length;
+        if(this.state.searchContent) {
+          this.setState({
+            searchContent:false,
+            messages: [],
+            SearchResult: ''
+          });
+          this.retriveChat();
+        }
         // this.setState({
         //   searchContent:false
         // });
@@ -241,7 +255,7 @@ export default class AssistantChatContainer extends React.Component {
                     <Menu.Item position='left'>
                         <Input className='icon' style={{
                             width: 400
-                        }} onChange={this.updateSearchValue} icon={< Icon name = 'search' color = 'red' circular link onClick={this.retriveChat} />}
+                        }} onChange={this.updateSearchValue} icon={< Icon name = 'search' color = 'red' circular link onClick={this.onClickSearch} />}
                         placeholder='Search your content' focus/>
                     </Menu.Item>
                 </Menu>
@@ -252,7 +266,7 @@ export default class AssistantChatContainer extends React.Component {
                     minHeight: '516px'
                 }}/>} autoHeight autoHeightMin={506}>
                     <div id='messagechat'>
-                        <div id="searchQuestion"><b>{this.state.SearchResult}</b></div><hr></hr>
+                        <div id="searchQuestion"><b>{this.state.SearchResult}</b></div><br></br>
                         {this.state.messages}
                     </div>
                 </Scrollbars>

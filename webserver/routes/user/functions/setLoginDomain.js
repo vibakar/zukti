@@ -1,6 +1,6 @@
 let User = require('./../../../models/user');
 let setLoginDomain = function(email, domain) {
-  console.log(email+" inside setLogin Domain");
+  console.log(email + ' inside setLogin Domain');
     User.findOneAndUpdate({
       $or: [{ 'local.email': email }, { 'google.email': email }, { 'facebook.email': email }]
   }, {
