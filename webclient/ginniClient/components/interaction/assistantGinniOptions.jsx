@@ -30,7 +30,7 @@ export default class AssistantGinniOptions extends React.Component {
         this.setState({likeEnabled: false, likeDislikeMsg: 'Liked'});
     }
     downVoteAnswer(type, value) {
-        if (this.state.disliked) {
+        if (this.state.dislikeEnabled) {
             Axios.post('/qa/rateAnswer', {
                 liked: false,
                 type: this.props.type,

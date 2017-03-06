@@ -44,7 +44,7 @@ which is stored when user login and redirect to apphome */
                .catch(function (error) {
                    console.log(error);
               });
-          Cookie.save('domain','react');
+          Cookie.save('domain','REACT');
           console.log(Cookie.load('domain'));
           hashHistory.push('/chat/react');
           break;
@@ -59,7 +59,9 @@ which is stored when user login and redirect to apphome */
                .catch(function (error) {
                    console.log(error);
               });
-          hashHistory.push('/chat/design pattern');
+              Cookie.save('domain','DESIGN PATTERN');
+              console.log(Cookie.load('domain'));
+              hashHistory.push('/chat/design pattern');
           break;
         default:
           break;

@@ -470,6 +470,7 @@ module.exports = function(app, passport) {
         res.cookie('authType', req.user.facebook.authType);
         res.cookie('username', req.user.facebook.displayName);
         res.cookie('profilepicture', req.user.facebook.photos);
+        res.cookie('email', req.user.facebook.email);
         res.redirect('/#/clienthome');
     });
     // userprofile-in which all the user informations will be stored
@@ -493,6 +494,7 @@ module.exports = function(app, passport) {
         res.cookie('username', req.user.google.name);
         res.cookie('authType', req.user.google.authType);
         res.cookie('profilepicture', req.user.google.photos);
+        res.cookie('email', req.user.google.email);
         res.redirect('/#/clienthome');
     });
 };

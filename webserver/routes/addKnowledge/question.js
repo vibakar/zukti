@@ -43,6 +43,11 @@ router.post('/rateAnswer', function(req, res) {
   let value = req.body.value;
   // method to save user preference in neo4j
   voteAnswer(liked, type, value);
-  res.send('liked');
+  if(liked === true) {
+    res.send('liked');
+  }
+  else {
+    res.send('disliked');
+  }
 });
 module.exports = router;
