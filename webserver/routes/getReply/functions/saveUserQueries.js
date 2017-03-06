@@ -4,7 +4,7 @@ let User = require('./../../../models/user');
 
 module.exports = function(email, isUnAnswered, question, answerObj) {
   User.findOne({
-    $or: [ { 'local.email': email }, { 'google.email': email }, { 'facebook.email': email } ]
+      'local.email': email
   }, function(error,data) {
   if (error) {
       return error;
