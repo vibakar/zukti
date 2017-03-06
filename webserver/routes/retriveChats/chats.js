@@ -9,7 +9,7 @@ router.get('/', function(req, res) {
      req.user.facebook.email || req.user.google.email;
 
      User.findOne({
-       $or: [ { 'local.email': email }, { 'google.email': email }, { 'facebook.email': email } ]
+         'local.email': email
      }, function(error,data) {
      if (error) {
          return error;

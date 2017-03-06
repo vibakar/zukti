@@ -4,19 +4,16 @@ let answerNotFoundReply = require('../../../config/answerNotFoundReply');
 let replyForKeyword = require('../../../config/replyForKeyword.json');
 let User = require('./../../../models/user');
 
-module.exports = function(keywords, email, types, sendResponse, flag, correctedQuestion) {
+module.exports = function(keywords, email, sendResponse, flag, correctedQuestion) {
     // query to extract data
     User.findOne({
-      $or: [ { 'local.email': email }, { 'google.email': email }, { 'facebook.email': email } ]
+        'local.email': email
     }, function(error, data) {
         if (error) {
             return error;
         }
         let domain = data.local.loggedinDomain;
-        let query = '';
-      if(types.length === 0)
-      {
-                query = `UNWIND ${JSON.stringify(keywords)} AS token
+        let query = `UNWIND ${JSON.stringify(keywords)} AS token
                  MATCH (n:concept)
                  WHERE n.name = token
                  OPTIONAL MATCH (n)-[r:same_as]->(main)
@@ -32,30 +29,6 @@ module.exports = function(keywords, email, types, sendResponse, flag, correctedQ
                  WITH bw as bw,n as n ,rel as rel
                  ORDER BY rel.rating DESC
                  RETURN LABELS(n)as contentType ,COLLECT(distinct n.value) `;
-            }
-            else {
-              query = `UNWIND ${JSON.stringify(types)} AS token
-              MATCH (n:type)
-              WHERE n.name = token
-              OPTIONAL MATCH (n)-[r:same_as]->(main)
-              WITH  LAST(COLLECT(main.name)) AS type
-              UNWIND ${JSON.stringify(keywords)} AS token
-               MATCH (n:concept)
-               WHERE n.name = token
-               OPTIONAL MATCH (n)-[r:same_as]->(main)
-               WITH COLLECT(main) AS baseWords, type as type
-               UNWIND baseWords AS token
-               MATCH p=(token)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
-               WITH length(p) AS max,baseWords AS baseWords,type as type
-               UNWIND baseWords AS bw
-               match p=(bw)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
-               WHERE length(p) = max
-               WITH bw as bw,type as type
-               MATCH (n)<-[rel:answer]-(q:question)-->(bw) where labels(n) = type
-               WITH bw as bw,n as n ,rel as rel
-               ORDER BY rel.rating DESC
-               RETURN LABELS(n)as contentType ,COLLECT(distinct n.value) `;
-            }
 
         let session = getNeo4jDriver().session();
         session.run(query).then(function(result) {
