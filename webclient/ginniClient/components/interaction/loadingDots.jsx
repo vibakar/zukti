@@ -9,20 +9,20 @@ export default class LoadingDots extends React.Component {
         super(props);
     }
     render() {
-        return (
-            <Feed id='assistantView'>
-                <Feed.Event>
-                    <Feed.Label image='../../images/geniebot.jpg'/>
-                    <Feed.Content>
-                        <Feed.Summary user={CodeAssistant.Interaction.name}/>
-                        <Feed.Extra text>
-                            <ThreeBounce timingFunction='linear'
-                               duration='1.5s' gutter={8} size={15} color='brown' />
-                        </Feed.Extra>
-                    </Feed.Content>
-                </Feed.Event>
-            </Feed>
+      return (
+          <Feed id='assistantView'>
+              <Feed.Event>
+                  <Feed.Content>
+                      <Feed.Summary>
+                        <ThreeBounce timingFunction='linear'
+                           duration='1.5s' gutter={8} size={15} color='brown' />
+                      </Feed.Summary>
+                      <Feed.Like>
+                      </Feed.Like>
+                  </Feed.Content>
+              </Feed.Event>
+          </Feed>
 
-        );
+      );
     }
 }
