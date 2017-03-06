@@ -107,6 +107,7 @@ export default class AssistantChatContainer extends React.Component {
                     }
                 });
             }
+            //should work here
             this.setState({messages: this.state.messages, loaderActive: false});
         }).catch((err) => {
             this.setState({messages: this.state.messages, loaderActive: false});
