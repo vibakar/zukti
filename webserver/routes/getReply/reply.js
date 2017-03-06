@@ -20,11 +20,13 @@ router.post('/askQuestion', function(req, res) {
     let email = req.user.local.email || req.user.facebook.email || req.user.google.email;
     let username = req.body.username;
     let question = req.body.question;
-    let spellResponse = getSpellChecker(question.value);console.log('in reply  '+spellResponse.question+'flag'+spellResponse.flag);
+    let spellResponse = getSpellChecker(question.value);
+    console.log('in reply  '+spellResponse.question+'flag'+spellResponse.flag);
     // extract intents and keywords from the question
     let query = processQuestion(spellResponse.question.toLowerCase());
     let keywords = query.keywords;
     let intents = query.intents;
+    let types = query.types;
     // function used to send final response
     let sendResponse = function(isUnAnswered, answerObj) {
       // function to save analytics data
@@ -32,12 +34,13 @@ router.post('/askQuestion', function(req, res) {
         // function to save user queries
         saveUserQueries(email, isUnAnswered, question, answerObj);
         // isUnAnswered used to indentify unanswered questions
+        console.log("reply "+isUnAnswered+"........"+answerObj+"......");
         res.json({isUnAnswered: isUnAnswered, answerObj: answerObj});
     };
     // callback if a answer is found in the graph database
     let answerFoundCallback = function(answerObj) {
-        sendResponse(false, answerObj);
-    };
+          sendResponse(false, answerObj);
+      };
     // callback method to tackle situation when answer is not present in database
     let noAnswerFoundCallback = function() {
         saveUnansweredQuery(username, email, question.value, keywords, intents);
@@ -63,11 +66,11 @@ router.post('/askQuestion', function(req, res) {
     else if(intents.length === 0) {
       saveUnansweredQuery(username, email, question.value);
       // if no intent is found in the question then get a keyword response
-      getKeywordResponse(keywords, email, sendResponse, spellResponse.flag, spellResponse.question);
+      getKeywordResponse(keywords, email, types, sendResponse, spellResponse.flag, spellResponse.question);
     }
      else {
        // function to get response when both  intents and keywords are present
-        getQuestionResponse(intents, keywords, email, answerFoundCallback, noAnswerFoundCallback,spellResponse.flag, spellResponse.question);
+        getQuestionResponse(intents, keywords, email, types, answerFoundCallback, noAnswerFoundCallback,spellResponse.flag, spellResponse.question);
     }
 });
 module.exports = router;

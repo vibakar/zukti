@@ -3,6 +3,7 @@ module.exports = function(sentence) {
   let nlp = require('nlp_compromise');
   let keywordLexicon = require('../../../lexicon/keywordLexicon.json');
   let intentLexicon = require('../../../lexicon/intentLexicon.json');
+  let typeLexicon = require('../../../lexicon/typeLexicon.json');
     //  console.log(intentLexicon);
     let str = nlp.text(sentence);
     // split str into individual words
@@ -11,11 +12,13 @@ module.exports = function(sentence) {
     let keywords = [];
     // intent array will contain intents extracted from question
     let intents = [];
+    let types = [];
     /* iterate over the tokens and search for keywords and intents (if a given token
     is keyword or intent then check the next words for kwyword or intent)*/
     for (let i = 0; i < tokens.length; i = i + 1) {
         let keyword = [];
         let intent = [];
+        let type = [];
         for (let m = 0; m < intentLexicon.length; m = m + 1) {
             let splitIntent = intentLexicon[m].split(' ');
             if (splitIntent[0] === tokens[i]) {
@@ -58,9 +61,23 @@ module.exports = function(sentence) {
             i = i + keyword.length - 1;
             keywords.push(keyword.join(' '));
         }
+        for (let y = 0; y < typeLexicon.length; y = y + 1) {
+            let splittype = typeLexicon[y].split(' ');
+            if (splittype[0] === tokens[i]) {
+                let typephraseLength = 1;
+                if (typephraseLength === splittype.length) {
+                    type = splittype;
+                }
+            }
+        }
+        if (type.length !== 0) {
+            i = i + type.length - 1;
+            types.push(type.join(' '));
+        }
     }
     return {
         keywords,
-        intents
+        intents,
+        types
     };
 };
