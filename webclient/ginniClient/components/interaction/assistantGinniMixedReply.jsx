@@ -68,10 +68,25 @@ export default class AssistantGinniMixedReply extends React.Component {
                         <Feed.Summary date={this.props.data.time} user={CodeAssistant.Interaction.name}/>
                         <Feed.Extra extras>
                            {this.props.data.extras}
-                         </Feed.Extra>
+                        </Feed.Extra>
                         <Feed.Extra text>
                             {text}
                         </Feed.Extra>
+                        <Feed.Extra>
+                          <hr/>
+                          Hope my answer helped you.
+                          You can also view blogs and videos on it
+                           <Label.Group>
+                               {this.props.data.blog
+                                   ? <Label onClick={this.displayBlogs}
+                                     basic color='orange' id='cursor'>Blogs</Label>
+                                   : ''}
+                               {this.props.data.video
+                                   ? <Label onClick={this.displayVideos}
+                                     basic color='orange' id='cursor'>Videos</Label>
+                                   : ''}
+                           </Label.Group>
+                       </Feed.Extra>
                         <AssistantGinniOptions question={this.props.question}
                           type='text' value={text}/>
                     </Feed.Content>

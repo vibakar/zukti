@@ -1,28 +1,32 @@
-# This file is a template, and might need editing before it works on your project.
-# Official framework image. Look for the different tagged releases at:
-# https://hub.docker.com/r/library/node/tags/
-image: node:latest
-
-# Pick zero or more services to be used on all builds.
-# Only needed when using a docker container to run your tests in.
-# Check out: http://docs.gitlab.com/ce/ci/docker/using_docker_images.html#what-is-service
-services:
-  - mysql:latest
-  - redis:latest
-  - postgres:latest
-
-# This folder is cached between builds
-# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+image: node:argon
+before_script:
+   - npm install --silent
 cache:
-  paths:
-  - node_modules/
-
-test_async:
-  script:
-   - npm install
-   - node ./specs/start.js ./specs/async.spec.js
-
-test_db:
-  script:
-   - npm install
-   - node ./specs/start.js ./specs/db-postgres.spec.js
+ paths:
+   - node_modules/
+stages:
+ - lint
+ - test
+ - build
+ - clean_up
+run_eslint:
+ stage: lint
+ script:
+    - npm run lint  
+run_tests:
+ stage: test
+ script:
+    - npm test
+build_and_package_for_prod:
+ stage: build
+ script:
+  - npm run build
+  - mkdir  dist/build
+  - tar czfC dist/build/latest.tar.gz dist/$CI_BUILD_REF_NAME/ .
+  - tar czfC dist/build/$CI_BUILD_REF.tar.gz dist/$CI_BUILD_REF_NAME/ .
+clean_up_job:
+ stage: clean_up
+ script:
+  - rm -rf node_modules
+  - rm -rf ~/.node-gyp
+ when: on_failure

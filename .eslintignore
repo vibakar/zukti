@@ -127,6 +127,7 @@ webserver/config/testing.json
 webserver/images/*
 webserver/lexicon/getLexicon.js
 webserver/lexicon/intentLexicon.json
+webserver/lexicon/typeLexicon.json
 webserver/lexicon/keywordLexicon.json
 webserver/middleware/requestAuthenticate.js
 webserver/models/broadcast.js
@@ -170,6 +171,7 @@ webserver/routes/auth.js
 webserver/routes/uploadimage.js
 webserver/Testing/test.js
 webserver/routes/spellChecker/functions/hunspell-spellchecker.min.js
+webserver/routes/spellChecker/functions/spellChecker.js
 webserver/routes/spellChecker/functions/lotsofwords.txt
 webserver/routes/spellChecker/functions/en_US.aff
 webserver/routes/spellChecker/functions/en_US.dic
