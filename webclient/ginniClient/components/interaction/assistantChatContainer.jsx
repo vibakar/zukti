@@ -68,6 +68,17 @@ export default class AssistantChatContainer extends React.Component {
     retriveChat() {
         Axios.get('/retriveChat').then((response) => {
             if (response.data) {
+              if(response.data.chats.length === 0)
+              {
+                this.state.messages.push(
+                  <div>
+                  <AssistantUserView msgDate='nil'
+                    userName='nil' userMessage='nil'
+                    profilePicture='nil'/>
+                </div>
+                );
+              }
+              else {
                 response.data.chats.forEach((chat) => {
                     let length = this.state.messages.length;
                     this.state.messages.push(
@@ -107,7 +118,17 @@ export default class AssistantChatContainer extends React.Component {
                     }
                 });
             }
-            //should work here
+          }
+          else {
+              this.state.messages.push(
+                <div>
+                <AssistantUserView msgDate='nil'
+                  userName='nil' userMessage='nil'
+                  profilePicture='nil'/>
+                  <hr/>
+              </div>
+              );
+          }
             this.setState({messages: this.state.messages, loaderActive: false});
         }).catch((err) => {
             this.setState({messages: this.state.messages, loaderActive: false});

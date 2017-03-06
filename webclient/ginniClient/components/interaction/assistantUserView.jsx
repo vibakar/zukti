@@ -1,12 +1,28 @@
 import React from 'react';
 import {Feed, Image} from 'semantic-ui-react';
 import './chatcontainerstyle.css';
+import Cookie from 'react-cookie';
 
 export default class AssistantView extends React.Component {
     constructor(props) {
         super(props);
     }
     render() {
+      if(this.props.userMessage === 'nil')
+      {
+        return (
+        <Feed id='assistantView'>
+          <Feed.Event>
+            <Feed.Content>
+              <Feed.Extra text>
+                  Hi! I'm Zukti and I'll try to answer your queries on {Cookie.load('domain')}.
+                <br/>Shall we get started?
+              </Feed.Extra>
+            </Feed.Content>
+         </Feed.Event>
+        </Feed>
+      );
+      }
         return (
             <Feed id='assistantView'>
                 <Feed.Event>
