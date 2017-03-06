@@ -9,21 +9,20 @@ export default class AssistantGinniMoreTextView extends React.Component {
         super(props);
     }
     render() {
-        return (
-            <Feed id="ginniview">
-                <Feed.Event>
-                    <Feed.Label image='../../images/geniebot.jpg'/>
-                    <Feed.Content>
-                        <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
-                        <Feed.Extra text>
-                            {this.props.textValue}
-                        </Feed.Extra>
-                        <Feed.Extra/>
-                      <AssistantGinniOptions question={this.props.question}
-                        type='text' value={this.props.textValue}/>
-                    </Feed.Content>
-                </Feed.Event>
-            </Feed>
-        );
+      return (
+        <Feed id="ginniview">
+            <Feed.Event>
+                <Feed.Content id = 'ginniviewKeyword'>
+                    <Feed.Summary>{this.props.textValue}</Feed.Summary>
+                    <Feed.Extra/>
+                  <AssistantGinniOptions question={this.props.question}
+                    type='text' value={this.props.textValue}/>
+                    <Feed.Extra id='assistantViewUserDate'>
+                        {new Date().toLocaleString()}
+                    </Feed.Extra>
+                </Feed.Content>
+            </Feed.Event>
+        </Feed>
+    );
     }
 }

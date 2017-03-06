@@ -31,27 +31,26 @@ export default class AssistantGinniMixedReply extends React.Component {
     render() {
         let videoUrl = this.props.videos[0].value;
         return (
-            <Feed id="ginniview">
-                <Feed.Event>
-                    <Feed.Label image='../../images/geniebot.jpg'/>
-                    <Feed.Content>
-                        <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
-                        <Feed.Extra images>
-                            <UnfurlLink url ={videoUrl}/>
-                        </Feed.Extra>
-                        <Feed.Extra>
-                            <Label.Group >
-                                {this.props.videos.length > 1
-                                    ? <Label onClick={this.displayMoreVideos} basic color='orange' id='cursor'>
-                                            View more videos ({this.props.videos.length - 1})</Label>
-                                    : ''}
-                                <Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>
-                            </Label.Group>
-                        </Feed.Extra>
-                        <AssistantGinniOptions question={this.props.question} type='video' value={videoUrl}/>
-                    </Feed.Content>
-                </Feed.Event>
-            </Feed>
-        );
+              <Feed id="ginniview">
+                  <Feed.Event>
+                      <Feed.Content id = 'ginniviewKeyword'>
+                          <Feed.Summary><UnfurlLink url ={videoUrl}/></Feed.Summary>
+                          <Feed.Extra>
+                              <Label.Group >
+                                  {this.props.videos.length > 1
+                                      ? <Label onClick={this.displayMoreVideos} basic color='orange' id='cursor'>
+                                              View more videos</Label>
+                                      : ''}
+                                  <Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>
+                              </Label.Group>
+                          </Feed.Extra>
+                          <AssistantGinniOptions question={this.props.question} type='video' value={videoUrl}/>
+                          <Feed.Extra id='assistantViewUserDate'>
+                              {new Date().toLocaleString()}
+                          </Feed.Extra>
+                      </Feed.Content>
+                  </Feed.Event>
+              </Feed>
+          );
     }
 }

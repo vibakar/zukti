@@ -12,19 +12,18 @@ export default class AssistantGinniMoreBlogsView extends React.Component {
 
     render() {
         return (
-            <Feed id="ginniview">
-                <Feed.Event>
-                    <Feed.Label image='../../images/geniebot.jpg'/>
-                    <Feed.Content>
-                        <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
-                        <Feed.Extra images>
-                            <UnfurlLink url={this.props.value} />
-                        </Feed.Extra>
-                            <AssistantGinniOptions question={this.props.question}
-                              type='blog' value={this.props.value}/>
-                    </Feed.Content>
-                </Feed.Event>
-            </Feed>
+          <Feed id="ginniview">
+              <Feed.Event>
+                  <Feed.Content id = 'ginniviewKeyword'>
+                      <Feed.Summary><UnfurlLink url={this.props.value} /></Feed.Summary>
+                          <AssistantGinniOptions question={this.props.question}
+                            type='blog' value={this.props.value}/>
+                            <Feed.Extra id='assistantViewUserDate'>
+                                {new Date().toLocaleString()}
+                            </Feed.Extra>
+                  </Feed.Content>
+              </Feed.Event>
+          </Feed>
         );
     }
 }

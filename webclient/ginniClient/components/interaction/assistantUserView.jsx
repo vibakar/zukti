@@ -11,33 +11,24 @@ export default class AssistantView extends React.Component {
       if(this.props.userMessage === 'nil')
       {
         return (
-        <Feed id='assistantView'>
-          <Feed.Event>
-            <Feed.Content>
-              <Feed.Extra text>
-                  Hi! I'm Zukti and I'll try to answer your queries on {Cookie.load('domain')}.
+        <div id='assistantView' >
+          <div id='assistantViewUser'>
+            Hi! I'm Zukti and I'll try to answer your queries on {Cookie.load('domain')}.
                 <br/>Shall we get started?
-              </Feed.Extra>
-            </Feed.Content>
-         </Feed.Event>
-        </Feed>
+              <div id='assistantViewUserDate'>{this.props.msgDate}
+              </div>
+          </div>
+        </div>
       );
       }
-        return (
-            <Feed id='assistantView'>
-                <Feed.Event>
-                    <Image avatar src={this.props.profilePicture} />
-                    <Feed.Content>
-                        <Feed.Summary date={this.props.msgDate}
-                          user={this.props.userName} style={{marginLeft: '15px'}}/>
-                        <Feed.Extra text style={{marginLeft: '15px'}}>
-                            {this.props.userMessage}
-                        </Feed.Extra>
-                        <Feed.Meta/>
-                    </Feed.Content>
-                </Feed.Event>
-            </Feed>
-
-        );
+      return (
+        <div id='assistantView' >
+          <div id='assistantViewUser'>
+              {this.props.userMessage}
+              <div id='assistantViewUserDate'>{this.props.msgDate}
+              </div>
+          </div>
+        </div>
+    );
     }
 }

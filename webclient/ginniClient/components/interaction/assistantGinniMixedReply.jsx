@@ -61,37 +61,34 @@ export default class AssistantGinniMixedReply extends React.Component {
         text = this.props.data.text[0].value;
 
         return (
-            <Feed id="ginniview">
-                <Feed.Event>
-                    <Feed.Label image='../../images/geniebot.jpg'/>
-                    <Feed.Content>
-                        <Feed.Summary date={this.props.data.time} user={CodeAssistant.Interaction.name}/>
-                        <Feed.Extra extras>
-                           {this.props.data.extras}
+              <Feed id="ginniview">
+              <Feed.Event>
+                  <Feed.Content id = 'ginniviewKeyword'>
+                      <Feed.Summary> {text} </Feed.Summary>
+                      <Feed.Extra>
+                        <hr/>
+                        <p>
+                        Hope my answer helped you.
+                        You can also view blogs and videos on it</p>
+                         <Label.Group>
+                             {this.props.data.blog
+                                 ? <Label onClick={this.displayBlogs}
+                                   basic color='orange' id='cursor'>Blogs</Label>
+                                 : ''}
+                             {this.props.data.video
+                                 ? <Label onClick={this.displayVideos}
+                                   basic color='orange' id='cursor'>Videos</Label>
+                                 : ''}
+                                 <AssistantGinniOptions question={this.props.question}
+                                   type='text' value={text}/>
+                         </Label.Group>
+                     </Feed.Extra>
+                        <Feed.Extra id='assistantViewUserDate'>
+                            {this.props.data.time}
                         </Feed.Extra>
-                        <Feed.Extra text>
-                            {text}
-                        </Feed.Extra>
-                        <Feed.Extra>
-                          <hr/>
-                          Hope my answer helped you.
-                          You can also view blogs and videos on it
-                           <Label.Group>
-                               {this.props.data.blog
-                                   ? <Label onClick={this.displayBlogs}
-                                     basic color='orange' id='cursor'>Blogs</Label>
-                                   : ''}
-                               {this.props.data.video
-                                   ? <Label onClick={this.displayVideos}
-                                     basic color='orange' id='cursor'>Videos</Label>
-                                   : ''}
-                           </Label.Group>
-                       </Feed.Extra>
-                        <AssistantGinniOptions question={this.props.question}
-                          type='text' value={text}/>
-                    </Feed.Content>
-                </Feed.Event>
-              </Feed>
+                  </Feed.Content>
+              </Feed.Event>
+            </Feed>
         );
       }
 
@@ -101,22 +98,18 @@ export default class AssistantGinniMixedReply extends React.Component {
       console.log(imageURL);
       text = <img src={imageURL}></img>
       return (
-          <Feed id="ginniview">
-              <Feed.Event>
-                  <Feed.Label image='../../images/geniebot.jpg' />
-                  <Feed.Content>
-                      <Feed.Summary date={this.props.data.time} user={CodeAssistant.Interaction.name}/>
-                      <Feed.Extra extras>
-                         {this.props.data.extras}
-                       </Feed.Extra>
-                      <Feed.Extra text>
-                          <a title='click to open the image in new tab' href={imageURL} target='_blank'>{text}</a>
-                      </Feed.Extra>
-                      <AssistantGinniOptions question={this.props.question}
-                        type='text' value={text}/>
-                  </Feed.Content>
-              </Feed.Event>
-            </Feed>
+        <Feed id="ginniview">
+        <Feed.Event>
+            <Feed.Content id = 'ginniviewKeyword'>
+                <Feed.Summary> {text} </Feed.Summary>
+                <AssistantGinniOptions question={this.props.question}
+                  type='text' value={text}/>
+                  <Feed.Extra id='assistantViewUserDate'>
+                      {this.props.data.time}
+                  </Feed.Extra>
+            </Feed.Content>
+        </Feed.Event>
+      </Feed>
       );
     }
       let blog = '';
@@ -124,19 +117,28 @@ export default class AssistantGinniMixedReply extends React.Component {
         blog = this.props.data.blog[0].value;
         console.log(blog);
       return (
-          <Feed id="ginniview">
-              <Feed.Event>
-                  <Feed.Label image='../../images/geniebot.jpg'/>
-                  <Feed.Content>
-                      <Feed.Summary date={this.props.data.time} user={CodeAssistant.Interaction.name}/>
-                      <Feed.Extra>
-                          <UnfurlLink url ={blog}/>
+            <Feed id="ginniview">
+            <Feed.Event>
+                <Feed.Content id = 'ginniviewKeyword'>
+                  <Feed.Extra>
+                    <UnfurlLink url ={blog}/>
+                </Feed.Extra>
+                <Feed.Extra>
+                    <Label.Group>
+                        {this.props.data.blog.length - 1 > 0
+                            ? <Label onClick={this.displayBlogs}
+                              basic color='orange' id='cursor'>Blogs</Label>
+                            : ''}
+                            <AssistantGinniOptions question={this.props.question}
+                              type='text' value={text}/>
+                    </Label.Group>
+                  </Feed.Extra>
+                      <Feed.Extra id='assistantViewUserDate'>
+                          {this.props.data.time}
                       </Feed.Extra>
-                      <AssistantGinniOptions question={this.props.question}
-                        type='blog' value={blog}/>
-                  </Feed.Content>
-              </Feed.Event>
-            </Feed>
+                </Feed.Content>
+            </Feed.Event>
+          </Feed>
       );
     }
     let video = '';
@@ -144,28 +146,29 @@ export default class AssistantGinniMixedReply extends React.Component {
       video = this.props.data.video[0].value;
       console.log(video);
     return (
-        <Feed id="ginniview">
-            <Feed.Event>
-                <Feed.Label image='../../images/geniebot.jpg'/>
-                <Feed.Content>
-                    <Feed.Summary date={this.props.data.time} user={CodeAssistant.Interaction.name}/>
-                    <Feed.Extra>
-                        <UnfurlLink url ={video}/>
+          <Feed id="ginniview">
+          <Feed.Event>
+              <Feed.Content id = 'ginniviewKeyword'>
+                <Feed.Extra>
+                  <UnfurlLink url ={video}/>
+              </Feed.Extra>
+              <Feed.Extra>
+                  <Label.Group>
+                      {this.props.data.video.length - 1 > 0
+                          ? <Label onClick={this.displayVideos}
+                            basic color='orange' id='cursor'>Videos</Label>
+                          : ''}
+                            <Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>
+                            <AssistantGinniOptions question={this.props.question}
+                              type='text' value={text}/>
+                  </Label.Group>
+              </Feed.Extra>
+                    <Feed.Extra id='assistantViewUserDate'>
+                        {this.props.data.time}
                     </Feed.Extra>
-                    <Feed.Extra>
-                        <Label.Group>
-                            {this.props.data.video.length - 1 > 0
-                                ? <Label onClick={this.displayVideos}
-                                  basic color='orange' id='cursor'>Videos</Label>
-                                : ''}
-                        </Label.Group>
-                        <Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>
-                    </Feed.Extra>
-                    <AssistantGinniOptions question={this.props.question}
-                      type='video' value={video}/>
-                </Feed.Content>
-            </Feed.Event>
-          </Feed>
+              </Feed.Content>
+          </Feed.Event>
+        </Feed>
     );
   }
       }

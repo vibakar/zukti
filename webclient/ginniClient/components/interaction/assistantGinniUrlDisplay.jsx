@@ -23,28 +23,27 @@ export default class AssistantGinniMixedReply extends React.Component {
   }
     render() {
       let blogUrl = this.props.blogs[0].value;
-        return (
-            <Feed id="ginniview">
-                <Feed.Event>
-                    <Feed.Label image='../../images/geniebot.jpg'/>
-                    <Feed.Content>
-                        <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
-                        <Feed.Extra images>
-                            <UnfurlLink url ={blogUrl}/>
+      return (
+          <Feed id="ginniview">
+              <Feed.Event>
+                  <Feed.Content id = 'ginniviewKeyword'>
+                      <Feed.Summary><UnfurlLink url ={blogUrl}/></Feed.Summary>
+                      <Feed.Extra>
+                        <Label.Group >
+                            {this.props.blogs.length > 1
+                                ? <Label onClick={this.displayMoreBlogs} basic color='orange' id='cursor'>
+                                  View more blogs</Label>
+                                : ''}
+                        </Label.Group>
+                      </Feed.Extra>
+                      <AssistantGinniOptions question={this.props.question}
+                        type='blog' value={blogUrl}/>
+                        <Feed.Extra id='assistantViewUserDate'>
+                            {new Date().toLocaleString()}
                         </Feed.Extra>
-                        <Feed.Extra>
-                          <Label.Group >
-                              {this.props.blogs.length > 1
-                                  ? <Label onClick={this.displayMoreBlogs} basic color='orange' id='cursor'>
-                                    View more blogs ({this.props.blogs.length - 1})</Label>
-                                  : ''}
-                          </Label.Group>
-                        </Feed.Extra>
-                        <AssistantGinniOptions question={this.props.question}
-                          type='blog' value={blogUrl}/>
-                    </Feed.Content>
-                </Feed.Event>
-            </Feed>
-        );
+                  </Feed.Content>
+              </Feed.Event>
+          </Feed>
+      );
     }
 }

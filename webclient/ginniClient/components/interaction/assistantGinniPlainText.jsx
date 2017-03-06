@@ -7,20 +7,20 @@ export default class AssistantView extends React.Component {
         super(props);
     }
     render() {
-        return (
-            <Feed id='assistantView'>
-                <Feed.Event>
-                    <Feed.Label image='../../images/geniebot.jpg'/>
-                    <Feed.Content>
-                        <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
-                        <Feed.Extra text>
-                            {this.props.value}
-                        </Feed.Extra>
-                        <Feed.Meta/>
-                    </Feed.Content>
-                </Feed.Event>
-            </Feed>
+      return (
+          <Feed id='assistantView'>
+              <Feed.Event>
+                  <Feed.Content id='assistantViewGenni'>
+                      <Feed.Summary>{this.props.value}
+                      </Feed.Summary>
+                      <Feed.Extra id='assistantViewUserDate'>
+                          {new Date().toLocaleString()}
+                      </Feed.Extra>
+                      <Feed.Meta/>
+                  </Feed.Content>
+              </Feed.Event>
+          </Feed>
 
-        );
+      );
     }
 }
