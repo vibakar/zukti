@@ -43,7 +43,7 @@
         var count = 1;
         function AjaxCall(json) {
         $.ajax({
-            url: "http://192.168.1.17:7474/db/data/cypher",
+            url: "http://192.168.1.5:7474/db/data/cypher",
             type: 'POST',
             data: {
                 "query": "match (n) return n"
@@ -84,7 +84,7 @@
                     entry.nodes.push(node);
                     $.ajax({
 
-                        url: `http://192.168.1.17:7474/db/data/node/${obj[0].metadata.id}/relationships/out`,
+                        url: `http://192.168.1.5:7474/db/data/node/${obj[0].metadata.id}/relationships/out`,
                         type: 'GET',
                         beforeSend: function(request) {
                             request.setRequestHeader("Authorization", "Basic " + btoa("neo4j:neo4js"));
