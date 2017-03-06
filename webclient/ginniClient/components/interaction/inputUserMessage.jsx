@@ -32,7 +32,7 @@ export default class InputUserMesaage extends React.Component {
         }).then((response) => {
           console.log(response);
             if (response.data) {
-              console.log(response.data);
+              console.log(response.data+"...........response");
                 if(!response.data.isUnAnswered) {
                       ginniReply.push(<AssistantGinniMixedReply
                         handleGinniReply={this.props.handleGinniReply} question={message.value}
