@@ -1,6 +1,6 @@
 import React from 'react';
 import SetUpBot from '../buildAi/setUpBot';
-import UserTable from '../users/userTable';
+import UserMenu from '../users/userMenu';
 import Analytics from '../Analytics/info';
 import Broadcast from '../broadcast/broadcast';
 import TrainBot from '../trainbot/trainbot';
@@ -25,7 +25,7 @@ export default class Content extends React.Component {
                 }
             case 'Users':
                 {
-                    return <UserTable/>;
+                    return <UserMenu/>;
                 }
             case 'Analyze':
                 {
@@ -39,7 +39,7 @@ export default class Content extends React.Component {
                 {
                     return <UnansweredQueries/>;
                 }
-            case 'Add Concept':
+            case 'Manage Concept':
                 {
                     return <AddConcept/>;
                 }

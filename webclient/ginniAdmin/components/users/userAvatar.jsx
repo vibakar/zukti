@@ -12,6 +12,7 @@ export default class UserAvatar extends React.Component
     let email = this.props.email;
     console.log(name + 'may i get click' + email);
   }
+
 render() {
 let color = this.props.loginStatus ? 'lime' : 'gainsboro';
 let p = this.props.photo;
