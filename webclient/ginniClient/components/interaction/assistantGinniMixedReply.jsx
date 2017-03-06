@@ -56,9 +56,10 @@ export default class AssistantGinniMixedReply extends React.Component {
             } />]);
     }
     render() {
-        let text = '';
-        if(this.props.data.text) {
-          text = this.props.data.text[0].value;
+      let text = '';
+      if(this.props.data.text) {
+        text = this.props.data.text[0].value;
+
         return (
             <Feed id="ginniview">
                 <Feed.Event>
@@ -93,6 +94,31 @@ export default class AssistantGinniMixedReply extends React.Component {
               </Feed>
         );
       }
+
+    else if (this.props.data.image) {
+      // text = this.props.data.image[0].value;
+      let imageURL = this.props.data.image[0].value;
+      console.log(imageURL);
+      text = <img src={imageURL}></img>
+      return (
+          <Feed id="ginniview">
+              <Feed.Event>
+                  <Feed.Label image='../../images/geniebot.jpg' />
+                  <Feed.Content>
+                      <Feed.Summary date={this.props.data.time} user={CodeAssistant.Interaction.name}/>
+                      <Feed.Extra extras>
+                         {this.props.data.extras}
+                       </Feed.Extra>
+                      <Feed.Extra text>
+                          <a title='click to open the image in new tab' href={imageURL} target='_blank'>{text}</a>
+                      </Feed.Extra>
+                      <AssistantGinniOptions question={this.props.question}
+                        type='text' value={text}/>
+                  </Feed.Content>
+              </Feed.Event>
+            </Feed>
+      );
+    }
       let blog = '';
       if(this.props.data.blog) {
         blog = this.props.data.blog[0].value;
