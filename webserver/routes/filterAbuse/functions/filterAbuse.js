@@ -1,4 +1,5 @@
-let Filter = require('bad-words'), filter = new Filter();
+let Filter = require('bad-words');
+let filter = new Filter();
 let count = 0;
 module.exports = function (word) {
   //  cleaning the sentence will replace the swear word with '*'
@@ -13,7 +14,7 @@ module.exports = function (word) {
     swearPresent = true;
     count = count + 1;
 }
-//if count is greater than 0 , swear is present so variable swearPresent becomes true
+// if count is greater than 0 , swear is present so variable swearPresent becomes true
 //  find out the swear word
 firstIndexOfAbuse = findAbuse.indexOf('*');
 lastIndexOfAbuse = findAbuse.lastIndexOf('*');

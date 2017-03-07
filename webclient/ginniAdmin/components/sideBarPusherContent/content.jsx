@@ -1,6 +1,6 @@
 import React from 'react';
 import SetUpBot from '../buildAi/setUpBot';
-import UserMenu from '../users/userMenu';
+import UserTable from '../users/userTable';
 import Analytics from '../Analytics/info';
 import Broadcast from '../broadcast/broadcast';
 import TrainBot from '../trainbot/trainbot';
@@ -25,7 +25,7 @@ export default class Content extends React.Component {
                 }
             case 'Users':
                 {
-                    return <UserMenu/>;
+                    return <UserTable/>;
                 }
             case 'Analyze':
                 {

@@ -3,6 +3,7 @@ import DefaultPage from './defaultpageclient';
 import AssistanView from '../interaction/assistantChatContainer';
 import Notifications from '../notification/notifications';
 import BookmarkList from '../bookmarks/bookmarkList';
+import LogOut from '../logout/logout.jsx';
 export default class LeftMenuContent extends React.Component {
     constructor(props) {
         super(props);
@@ -15,17 +16,17 @@ export default class LeftMenuContent extends React.Component {
                     let domain = this.props.domain;
                     let dataSource;
                     let image;
-                    switch(domain) {
-                      case 'react':
-                        dataSource = 'wordings_react.json';
-                        image = 'reactlogo.png';
-                        break;
-                      case 'design pattern':
-                        dataSource = 'wordings_design_pattern.json';
-                        image = 'design.png';
-                        break;
-                      default:
-                        break;
+                    switch (domain) {
+                        case 'react':
+                            dataSource = 'wordings_react.json';
+                            image = 'reactlogo.png';
+                            break;
+                        case 'design pattern':
+                            dataSource = 'wordings_design_pattern.json';
+                            image = 'design.png';
+                            break;
+                        default:
+                            break;
                     }
                     return <DefaultPage dataSource={dataSource} image={image}/>;
                 }
@@ -41,6 +42,10 @@ export default class LeftMenuContent extends React.Component {
             case 'notifications':
                 {
                     return <Notifications/>;
+                }
+            case 'LogOut':
+                {
+                    return <LogOut/>
                 }
         }
     }
