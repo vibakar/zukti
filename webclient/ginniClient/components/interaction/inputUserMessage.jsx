@@ -30,8 +30,12 @@ export default class InputUserMesaage extends React.Component {
             username: this.props.username,
             question: message
         }).then((response) => {
-          console.log(response);
-            if (response.data) {
+          if(response.data.abuseCount > 0){
+        console.log('abusinfcount and present '+response.data.abuseCount+response.data.abusePresent);
+        ginniReply.push(<AssistantGinniMixedReply
+          handleGinniReply={this.props.handleGinniReply} abuseCount={response.data.abuseCount} abusePresent={response.data.abusePresent} data={response.data}/>);
+      }
+      else  if (response.data) {
               console.log(response.data+"...........response");
                 if(!response.data.isUnAnswered) {
                       ginniReply.push(<AssistantGinniMixedReply

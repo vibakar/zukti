@@ -14,6 +14,7 @@ let saveAnalyticsData = require('./functions/saveAnalyticsData');
 let getKeywordResponse = require('./functions/getKeywordResponse');
 //spell checker
 let getSpellChecker = require('../spellChecker/functions/spellChecker');
+let detectSwear = require('../filterAbuse/functions/filterAbuse');
 
 // router to take question and give reply to user
 router.post('/askQuestion', function(req, res) {
@@ -21,9 +22,20 @@ router.post('/askQuestion', function(req, res) {
     let email = req.user.local.email || req.user.facebook.email || req.user.google.email;
     let username = req.body.username;
     let question = req.body.question;
+    //  passing the input to swear checker
+    let foundAbuse = detectSwear(question.value);
+//  if abuse found, issue a warning
+    let abuseCount = foundAbuse.count;
+    let abusePresent = foundAbuse.swearPresent;
+    console.log('abuse count is '+abuseCount);
+    if(abusePresent == true ) {
+      res.json({abuseCount : abuseCount, abusePresent : abusePresent});
+    }
+else{
     let spellResponse = getSpellChecker(question.value);
     console.log('in reply  '+spellResponse.question+'flag'+spellResponse.flag);
     // extract intents and keywords from the question
+
     let query = processQuestion(spellResponse.question.toLowerCase());
     let keywords = query.keywords;
     let intents = query.intents;
@@ -125,5 +137,6 @@ router.post('/askQuestion', function(req, res) {
             addKeywordToRedis(username,keywords[0]);
           }
     }
+  }
 });
 module.exports = router;
