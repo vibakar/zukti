@@ -69,7 +69,7 @@ export default class AssistantGinniMixedReply extends React.Component {
           /* redirect to logout function */
             this.logoutAfterWarning();
                   }
-          else if(abuseCount == 3 ) {
+          else if(abuseCount == 10 ) {
             /* Final warnining to the abuser */
             return (
                 <Feed id="ginniview">
