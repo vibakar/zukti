@@ -56,9 +56,7 @@ export default class AssistantGinniMixedReply extends React.Component {
   }
     playVideo() {
         let videoUrl = this.props.data.video[0].value;
-        this.props.handleGinniReply([< VideoPlayer url = {
-                videoUrl
-            } />]);
+        this.props.handleGinniReply([< VideoPlayer url = {videoUrl} />]);
     }
     render() {
           let text = '';
