@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form, Dropdown, Input} from 'semantic-ui-react';
 
-export default class ContentDropDown extends React.Component {
+export default class allConcepts extends React.Component {
     constructor(props) {
         super(props);
         this.handleConcept = this.handleConcept.bind(this);
@@ -18,16 +18,15 @@ export default class ContentDropDown extends React.Component {
                     </label>
                     <Input>
                         <Dropdown fluid options={this.props.concepts} placeholder='Concept'
-                          search selection onChange={this.handleConcept} value={this.props.value2}/>
+                          search selection onChange={this.handleConcept} value={this.props.value}/>
                     </Input>
-
                 </Form.Field>
             </Form>
         );
     }
 }
-ContentDropDown.propTypes = {
+allConcepts.propTypes = {
   concepts: React.PropTypes.array,
   handleConcept: React.PropTypes.function,
-  value2: React.PropTypes.string
+  value: React.PropTypes.string
 };

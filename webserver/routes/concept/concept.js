@@ -3,7 +3,6 @@ let router = express.Router();
 let fetchConcepts = require('./functions/fetchConcepts');
 let createConcept = require('./functions/createConcept');
 let getConceptsAndRelations = require('./functions/getConceptsAndRelations');
-// let deleteConcept = require('./functions/deleteConcept');
 let renameConcepts = require('./functions/renameConcept');
 
 router.get('/', function(req, res) {
@@ -24,7 +23,7 @@ router.post('/createConcept', function(req, res) {
     createConcept(newConcept, oldConcept, resultCallback);
 });
 
-// version 2
+// getting the relation and concepts
 router.get('/rc', function(req, res) {
     let resultCallback = function(rc) {
         res.json({

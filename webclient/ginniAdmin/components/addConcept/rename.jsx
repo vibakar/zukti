@@ -7,11 +7,12 @@ import {
     Divider
 } from 'semantic-ui-react';
 import AllConcepts from './allConcept';
-import './addConcept.css';
 import Config from '../../../../config/url';
 import Axios from 'axios';
 import Snackbar from 'material-ui/Snackbar';
-export default class rename extends React.Component {
+import './addConcept.css';
+
+export default class renameConcept extends React.Component {
     constructor(props) {
         super(props);
         this.getConcept = this.getConcept.bind(this);
@@ -24,7 +25,7 @@ export default class rename extends React.Component {
             concepts: []
                   };
     }
-    // bind the dropdown with all concepts from neo4j databse
+    // load the dropdown with all concepts from neo4j database
     componentDidMount() {
         let url = Config.url + '/concept/rc';
         Axios.get(url).then((response) => {
@@ -55,7 +56,7 @@ renameConcepts(e) {
     let existingConcept = this.state.conceptValue;
     // checking for empty field since empty node is not required
     if (renameConceptText && existingConcept) {
-        // ajax call for renaming concept in graph databse
+    // ajax call for renaming concept in graph databse
         let url = Config.url + '/concept/renameConcept';
         Axios.put(url, {
             renameConcept: renameConceptText,
@@ -98,11 +99,11 @@ renameConcepts(e) {
                             <Grid.Column width={6}>
                                 <AllConcepts
                                   concepts={this.state.concepts} handleConcept={this.getConcept}
-                                    value2={this.state.conceptValue}/>
+                                    value={this.state.conceptValue}/>
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
-                            <Grid.Column width={5} />
+                            <Grid.Column width={5}/>
                             <Grid.Column width={6}>
                                 <Form>
                                     <Form.Field>
@@ -121,12 +122,6 @@ renameConcepts(e) {
                                 <Icon name='refresh'>Rename</Icon>
                             </Button>
                         </Grid.Row>
-                        <br/>
-                        <br/>
-                        <Grid.Row/>
-                        <br/>
-                        <br/>
-                        <Grid.Row/>
                     </Grid.Column>
                 </Grid>
                 <Snackbar open={this.state.opensnackbar} message={this.state.snackbarMsg}

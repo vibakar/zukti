@@ -56,7 +56,7 @@ module.exports = function(keywords, email, types, sendResponse, flag, correctedQ
                ORDER BY rel.rating DESC
                RETURN LABELS(n)as contentType ,COLLECT(distinct n.value) `;
             }
-
+console.log("000",JSON.stringify(keywords));
         let session = getNeo4jDriver().session();
         session.run(query).then(function(result) {
             // Completed!
