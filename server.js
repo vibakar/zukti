@@ -142,4 +142,10 @@ io.on('connection', function(socket) {
     socket.on('client event', function(data) {
         socket.broadcast.emit('update label', data);
     });
+    
+    // v2
+    socket.on('updateUserList', function() {
+      socket.broadcast.emit('update userlist');
+    });
+
 });

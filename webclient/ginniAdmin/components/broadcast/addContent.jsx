@@ -54,7 +54,7 @@ export default class AddContent extends React.Component {
                     <TextArea placeholder='Tell us more' autoHeight
                       name='text' ref='text' required/><br/><br/>
                     <Button color='green' type='submit' animated style={{
-                        width: '50%'
+                        width: '100%'
                     }}>
                         <Button.Content visible>Submit</Button.Content>
                         <Button.Content hidden>
