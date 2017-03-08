@@ -1,10 +1,11 @@
 import React from 'react';
 import SetUpBot from '../buildAi/setUpBot';
-import UserMenu from '../users/userMenu';
+import UserTable from '../users/userTable';
 import Analytics from '../Analytics/info';
 import Broadcast from '../broadcast/broadcast';
 import TrainBot from '../trainbot/trainbot';
 import AddConcept from '../addConcept/addConcepts';
+import RenameConcept from '../addConcept/rename';
 import UnansweredQueries from '../unansweredqueries/unansweredqueries';
 import IndexComponent from '../views/viewGraph';
 import Graph from '../views/htmlGraph';
@@ -25,7 +26,7 @@ export default class Content extends React.Component {
                 }
             case 'Users':
                 {
-                    return <UserMenu/>;
+                    return <UserTable/>;
                 }
             case 'Analyze':
                 {
@@ -39,9 +40,13 @@ export default class Content extends React.Component {
                 {
                     return <UnansweredQueries/>;
                 }
-            case 'Manage Concept':
+            case 'Add Concept':
                 {
                     return <AddConcept/>;
+                }
+            case 'Rename Concept':
+                {
+                    return <RenameConcept/>;
                 }
             case 'View Graph':
                 {
