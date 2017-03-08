@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Divider} from 'semantic-ui-react';
+import {Grid, Divider, Icon} from 'semantic-ui-react';
 import Axios from 'axios';
 import ViewUserChat from './viewUserChat';
 import './usertable.css';
@@ -12,7 +12,8 @@ export default class UserTable extends React.Component
         this.state = {
             name: [],
             email: [],
-            userinformation: []
+            userinformation: [],
+            sentimentColor: {}
         };
     }
     componentDidMount() {
@@ -32,6 +33,34 @@ export default class UserTable extends React.Component
                 console.log(response.data);
             });
         });
+
+        var sentimentArray = this.state.sentimentColor;
+        let con = this;
+        socket.on('sentiment score', function(data) {
+            console.log('user' + JSON.stringify(data));
+            let email = data.email;
+            if (data.score == 0) {
+                sentimentArray[email] = 'black';
+            } else if (data.score == 1) {
+                sentimentArray[email] = 'olive';
+            } else if (data.score == 2) {
+                sentimentArray[email] = 'teal';
+            } else if (data.score == 3) {
+                sentimentArray[email] = 'blue';
+            } else if (data.score > 3) {
+                sentimentArray[email] = 'violet';
+            } else if (data.score == -1) {
+                sentimentArray[email] = 'yellow';
+            } else if (data.score == -2) {
+                sentimentArray[email] = 'orange';
+            } else if (data.score == -3) {
+                sentimentArray[email] = 'red';
+            } else if (data.score < -3) {
+                sentimentArray[email] = 'brown';
+            }
+            con.setState({sentimentColor: sentimentArray});
+            console.log(sentimentArray);
+        });
     }
     render() {
 
@@ -42,9 +71,44 @@ export default class UserTable extends React.Component
                 paddingTop: '7px',
                 paddingLeft: '2px'
             };
+            let emailindex = newsdata.local.email;
             return (
                 <div id='eachcardstyle' key={index}>
                     <Grid>
+                        <Grid.Row>
+                            <Grid.Column width={1}></Grid.Column>
+                            <Grid.Column width={1}></Grid.Column>
+                            <Grid.Column width={2}>
+                                <h3>Sentiment</h3>
+                            </Grid.Column>
+                            <Grid.Column width={1}>
+                                <Icon name='circle' size='large' color='violet'>4</Icon>
+                            </Grid.Column>
+                            <Grid.Column width={1}>
+                                <Icon name='circle' size='large' color='blue'>3</Icon>
+                            </Grid.Column>
+                            <Grid.Column width={1}>
+                                <Icon name='circle' size='large' color='teal'>2</Icon>
+                            </Grid.Column>
+                            <Grid.Column width={1}>
+                                <Icon name='circle' size='large' color='olive'>1</Icon>
+                            </Grid.Column>
+                            <Grid.Column width={1}>
+                                <Icon name='circle' size='large' color='black'>0</Icon>
+                            </Grid.Column>
+                            <Grid.Column width={1}>
+                                <Icon name='circle' size='large' color='yellow'>-1</Icon>
+                            </Grid.Column>
+                            <Grid.Column width={1}>
+                                <Icon name='circle' size='large' color='orange'>-2</Icon>
+                            </Grid.Column>
+                            <Grid.Column width={1}>
+                                <Icon name='circle' size='large' color='red'>-3</Icon>
+                            </Grid.Column>
+                            <Grid.Column width={1}>
+                                <Icon name='circle' size='large' color='brown'>-4</Icon>
+                            </Grid.Column>
+                        </Grid.Row>
                         <Grid.Row>
                             <Grid.Column width={3}>
                                 <UserAvatar loginStatus={newsdata.local.loggedinStatus} photo={newsdata.local.photos} name={newsdata.local.name} email={newsdata.local.email}></UserAvatar>
@@ -70,7 +134,13 @@ export default class UserTable extends React.Component
                                     <ViewUserChat userEmail={newsdata.local.email}/>
                                 </div>
                             </Grid.Column>
-                            <Grid.Column width={1}/>
+                            <Grid.Column width={1}>
+                                <div style={{
+                                    paddingTop: '5px'
+                                }}>
+                                    <Icon name='circle' size='large' color={this.state.sentimentColor[emailindex]}/>
+                                </div>
+                            </Grid.Column>
                         </Grid.Row>
                     </Grid>
                 </div>
