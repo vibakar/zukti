@@ -41,7 +41,7 @@
             "edges": []
         };
         var count = 1;
-        function AjaxCall(json) {
+        function AjaxCall() {
         $.ajax({
             url: "http://192.168.1.5:7474/db/data/cypher",
             type: 'POST',
@@ -51,6 +51,7 @@
             beforeSend: function(request) {
                 request.setRequestHeader("Authorization", "Basic " + btoa("neo4j:neo4js"));
             },
+            // Json creation for sigma
             success: function(data) {
                 var len = data.data.length;
                 for (var obj of data.data) {
