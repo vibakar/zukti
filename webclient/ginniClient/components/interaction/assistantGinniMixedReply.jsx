@@ -1,5 +1,6 @@
 import React from 'react';
 import {Feed, Label} from 'semantic-ui-react';
+import {hashHistory} from 'react-router';
 import AssistantGinniUrlDisplay from './assistantGinniUrlDisplay';
 import AssistantGinniVideoDisplay from './assistantGinniVideoDisplay';
 import AssistantGinniMoreTextDisplay from './assistantGinniMoreTextDisplay';
@@ -51,13 +52,11 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.props.handleGinniReply(ginniReply);
     }
     logoutAfterWarning(){
-     window.location.href = 'http://localhost:8080/#';
+     hashHistory.push('/');
   }
     playVideo() {
         let videoUrl = this.props.data.video[0].value;
-        this.props.handleGinniReply([< VideoPlayer url = {
-                videoUrl
-            } />]);
+        this.props.handleGinniReply([< VideoPlayer url = {videoUrl} />]);
     }
     render() {
           let text = '';
