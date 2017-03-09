@@ -59,16 +59,16 @@ export default class AssistantGinniMixedReply extends React.Component {
     }
     render() {
           let text = '';
-           /*  Mayanka: Initialize swear word count */
+           /*  @Mayanka: Initialize swear word count */
           let abuseCount = this.props.abuseCount;
-           /*  Mayanka: check if swear is present in the current query */
+           /*  @Mayanka: check if swear is present in the current query */
           let abusePresent = this.props.abusePresent;
           if (abuseCount > 3){
-          /*  Mayanka: redirect to logout function */
+          /*  @Mayanka: redirect to logout function */
             this.logoutAfterWarning();
                   }
           else if(abuseCount == 10 ) {
-            /*  Mayanka: Final warnining to the abuser */
+            /*  @Mayanka: Final warnining to the abuser */
             return (
                 <Feed id="ginniview">
                     <Feed.Event>
@@ -83,9 +83,9 @@ export default class AssistantGinniMixedReply extends React.Component {
                   </Feed>
             );
           }
-           /* check if swear is present in the current query and issue warning */
+           /* @Mayanka: check if swear is present in the current query and issue warning */
           else if(abusePresent == true) {
-            /*  Mayanka only 3 chances given the abuser  */
+            /*  @Mayanka only 3 chances given the abuser  */
             let warningCount = abuseCount ;
             return (
                 <Feed id="ginniview">
