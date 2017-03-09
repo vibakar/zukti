@@ -150,11 +150,12 @@ export default class AssistantGinniMixedReply extends React.Component {
           <Feed id="ginniview">
           <Feed.Event>
               <Feed.Content id = 'ginniviewKeyword'>
-                  <Feed.Summary> {text} </Feed.Summary>
-                  <AssistantGinniOptions question={this.props.question}
-                    type='text' value={text}/>
+                  <Feed.Summary> <a title='click to open the image in new tab'
+                    href={imageURL} target='_blank'>{text}</a>
+                 </Feed.Summary>
                     <Feed.Extra id='assistantViewUserDate'>
-                        {this.props.data.time}
+                      <AssistantGinniOptions question={this.props.question}
+                        type='text' value={text}/>  {this.props.data.time}
                     </Feed.Extra>
               </Feed.Content>
           </Feed.Event>
