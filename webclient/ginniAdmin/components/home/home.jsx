@@ -6,6 +6,7 @@ import Cookie from 'react-cookie';
 import './homestyle.css';
 import AdminHomePage from '../../../Multi_Lingual/Wordings.json';
 export default class FrontPage extends React.Component {
+
   constructor() {
       super();
       this.onSubmitEmail = this.onSubmitEmail.bind(this);

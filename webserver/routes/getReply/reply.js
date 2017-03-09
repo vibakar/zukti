@@ -57,7 +57,7 @@ else{
     let intents = query.intents;
     let types = query.types;
 
-    // add keyword to redis
+    // @vibakar: add keyword to redis
   let addKeywordToRedis = function(username,keyword){
     client.hmset(username, 'keywords', keyword, 'user', username, function(err, reply) {
         if (err) {
@@ -94,7 +94,7 @@ else{
         sendResponse(true, resultArray);
     };
     if (keywords.length === 0) {
-        // getting the previously saved keyword from redis
+        // @vibakar: getting the previously saved keyword from redis
       client.hget(username, 'keywords', function(err, value) {
           if (err) {
               console.log('Error in retrieving keyword ' + err);
@@ -119,12 +119,13 @@ else{
     else if(intents.length === 0) {
       saveUnansweredQuery(username, email, question.value);
       // if no intent is found in the question then get a keyword response
+      /* @yuvashree: added two more attributes for specifying the user and thier requested type type */
       getKeywordResponse(keywords, email, types, sendResponse, spellResponse.flag, spellResponse.question);
-      // adding keyword to redis
+      // @vibakar: adding keyword to redis
       addKeywordToRedis(username,keywords[0]);
     }
      else {
-       // checking whether the keywords arry contains this,it,that
+       // @vibakar: checking whether the keywords arry contains 'this,it,that'
           if(keywords.includes('it') || keywords.includes('that') || keywords.includes('this')) {
             var searchKeyword = ['this','it','that'];
              var k = '';
@@ -138,17 +139,19 @@ else{
                     if(err){
                       console.log(err);
                     }else{
-                      // removing the identified keyword
+                      // @vibakar: removing the identified keyword
                       var ind = keywords.splice(index,1);
-                      // pushing the previous keyword
+                      // @vibakar: pushing the previous keyword
                         keywords.push(value);
                         // function to get response when both  intents and keywords are present
+                        /* @yuvashree: added two more attributes for specifying the user and thier requested type type */
                         getQuestionResponse(intents, keywords, email, types, answerFoundCallback, noAnswerFoundCallback, spellResponse.flag, spellResponse.question);
                         addKeywordToRedis(username,keywords[keywords.length-1]);
                     }
                 });
           }else{
             // function to get response when both  intents and keywords are present
+            /* @yuvashree: added two more attributes for specifying the user and thier requested type type */
             getQuestionResponse(intents, keywords, email, types, answerFoundCallback, noAnswerFoundCallback, spellResponse.flag, spellResponse.question);
             addKeywordToRedis(username,keywords[0]);
           }

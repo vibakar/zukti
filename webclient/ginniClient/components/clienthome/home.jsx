@@ -21,7 +21,9 @@ which is stored when user login and redirect to apphome */
               data: 'json'
             }).then(function (response) {
               let socket = io();
-              socket.emit('updateUserList'); // v2
+              /* @ramvignesh: event to update the user list */
+              socket.emit('updateUserList');
+
               Cookie.remove('authType');
               Cookie.remove('token');
               hashHistory.push('/');

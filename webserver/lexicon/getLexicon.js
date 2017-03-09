@@ -11,6 +11,7 @@ function createLexiconFiles(result) {
 }
 module.exports = function() {
     // query to get all concept words, types and intents
+    /* @yuvashree: added query to find all the types */
     let query = `MATCH (concept:concept)WITH COLLECT(concept.name)as concepts
                  MATCH (type:type) WITH COLLECT(type.name) as types,concepts as concepts
                  MATCH (intent:intent) return COLLECT(intent.name),concepts,types`;

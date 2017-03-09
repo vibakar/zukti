@@ -10,10 +10,8 @@ import AssistantGinniKeywordResponse from './assistantGinniKeywordResponse';
 import VideoPlayer from './videoPlayer';
 import UnfurlLink from './unfurlLink';
 //import CodeAssistantConfig from '../../../config/codeAssistant.json'
-
 import './chatcontainerstyle.css';
 import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
-
 export default class AssistantGinniMixedReply extends React.Component {
     // props validation
     static propTypes = {
@@ -54,6 +52,7 @@ export default class AssistantGinniMixedReply extends React.Component {
     logoutAfterWarning(){
      hashHistory.push('/');
   }
+  /* @yuvashree: added function to play video on clicking the button */
     playVideo() {
         let videoUrl = this.props.data.video[0].value;
         this.props.handleGinniReply([< VideoPlayer url = {videoUrl} />]);
@@ -108,6 +107,7 @@ export default class AssistantGinniMixedReply extends React.Component {
            /* proper reply if no swear word */
   else {
         let text = '';
+        /* @yuvashree: edited code for text view */
         if(this.props.data.text) {
           text = this.props.data.text[0].value;
           return (
@@ -141,7 +141,7 @@ export default class AssistantGinniMixedReply extends React.Component {
               </Feed>
           );
         }
-
+        /* @threkashri: edited code for displaying image */
       else if (this.props.data.image) {
         // text = this.props.data.image[0].value;
         let imageURL = this.props.data.image[0].value;
@@ -163,6 +163,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         );
       }
         let blog = '';
+        /* @yuvashree: edited code for displaying blogs */
         if(this.props.data.blog) {
           blog = this.props.data.blog[0].value;
           console.log(blog);
@@ -192,6 +193,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         );
       }
       let video = '';
+      /* @yuvashree: edited code for displaying videos */
       if(this.props.data.video) {
         video = this.props.data.video[0].value;
         console.log(video);
@@ -208,7 +210,8 @@ export default class AssistantGinniMixedReply extends React.Component {
                             ? <Label onClick={this.displayVideos}
                               basic color='orange' id='cursor'>Videos</Label>
                             : ''}
-                              <Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>
+                            {/* @yuvashree: added button to play video */}
+                            <Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>
                               <AssistantGinniOptions question={this.props.question}
                                 type='text' value={text}/>
                     </Label.Group>
