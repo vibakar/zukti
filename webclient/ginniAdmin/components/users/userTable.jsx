@@ -145,34 +145,35 @@ export default class UserTable extends React.Component
                                               <h3>Sentiment</h3>
                                           </Grid.Column>
                                           <Grid.Column width={1}>
-                                              <Icon name='circle' size='large' color='violet'>4</Icon>
+                                              <Icon name='circle' size='large' color='violet'> 4</Icon>
                                           </Grid.Column>
                                           <Grid.Column width={1}>
-                                              <Icon name='circle' size='large' color='blue'>3</Icon>
+                                              <Icon name='circle' size='large' color='blue'> 3</Icon>
                                           </Grid.Column>
                                           <Grid.Column width={1}>
-                                              <Icon name='circle' size='large' color='teal'>2</Icon>
+                                              <Icon name='circle' size='large' color='teal'> 2</Icon>
                                           </Grid.Column>
                                           <Grid.Column width={1}>
-                                              <Icon name='circle' size='large' color='olive'>1</Icon>
+                                              <Icon name='circle' size='large' color='olive'> 1</Icon>
                                           </Grid.Column>
                                           <Grid.Column width={1}>
-                                              <Icon name='circle' size='large' color='black'>0</Icon>
+                                              <Icon name='circle' size='large' color='black'> 0</Icon>
                                           </Grid.Column>
                                           <Grid.Column width={1}>
-                                              <Icon name='circle' size='large' color='yellow'>-1</Icon>
+                                              <Icon name='circle' size='large' color='yellow'> -1</Icon>
                                           </Grid.Column>
                                           <Grid.Column width={1}>
-                                              <Icon name='circle' size='large' color='orange'>-2</Icon>
+                                              <Icon name='circle' size='large' color='orange'> -2</Icon>
                                           </Grid.Column>
                                           <Grid.Column width={1}>
-                                              <Icon name='circle' size='large' color='red'>-3</Icon>
+                                              <Icon name='circle' size='large' color='red'> -3</Icon>
                                           </Grid.Column>
                                           <Grid.Column width={1}>
-                                              <Icon name='circle' size='large' color='brown'>-4</Icon>
+                                              <Icon name='circle' size='large' color='brown'> -4</Icon>
                                           </Grid.Column>
                                       </Grid.Row>
-                                    </Grid>  
+                                    </Grid>
+                                    <br/><br/>
                                      {user}
                                 </div>
                             </Scrollbars>

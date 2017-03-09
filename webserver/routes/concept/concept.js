@@ -14,13 +14,15 @@ router.get('/', function(req, res) {
     fetchConcepts(resultCallback);
 });
 
+// @vibakar: Adding new concept to existing concepts
 router.post('/createConcept', function(req, res) {
-    let newConcept = req.body.newConcept;
-    let oldConcept = req.body.oldConcept;
-    let resultCallback = function(result) {
-        res.json(result);
-    };
-    createConcept(newConcept, oldConcept, resultCallback);
+   let newConcept = req.body.newConcept;
+   let relationship = req.body.relationship;
+   let oldConcept = req.body.oldConcept;
+   let resultCallback = function(result) {
+       res.json(result);
+   };
+   createConcept(newConcept, relationship, oldConcept, resultCallback);
 });
 
 // getting the relation and concepts
