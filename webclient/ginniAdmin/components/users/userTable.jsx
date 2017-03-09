@@ -26,14 +26,14 @@ export default class UserTable extends React.Component
             console.log(response.data);
         });
 
-        // updating the user list on login or logout @ Deepika
+        // @deepika: updating the user list on login or logout
         socket.on('update userlist', function() {
             Axios({url: 'http://localhost:8080/viewall', method: 'GET'}).then(function(response) {
                 self.setState({userinformation: response.data});
                 console.log(response.data);
             });
         });
-
+        /* @keerthana: Sentiment Color Code */
         var sentimentArray = this.state.sentimentColor;
         let con = this;
         socket.on('sentiment score', function(data) {
@@ -76,40 +76,6 @@ export default class UserTable extends React.Component
                 <div id='eachcardstyle' key={index}>
                     <Grid>
                         <Grid.Row>
-                            <Grid.Column width={1}></Grid.Column>
-                            <Grid.Column width={1}></Grid.Column>
-                            <Grid.Column width={2}>
-                                <h3>Sentiment</h3>
-                            </Grid.Column>
-                            <Grid.Column width={1}>
-                                <Icon name='circle' size='large' color='violet'>4</Icon>
-                            </Grid.Column>
-                            <Grid.Column width={1}>
-                                <Icon name='circle' size='large' color='blue'>3</Icon>
-                            </Grid.Column>
-                            <Grid.Column width={1}>
-                                <Icon name='circle' size='large' color='teal'>2</Icon>
-                            </Grid.Column>
-                            <Grid.Column width={1}>
-                                <Icon name='circle' size='large' color='olive'>1</Icon>
-                            </Grid.Column>
-                            <Grid.Column width={1}>
-                                <Icon name='circle' size='large' color='black'>0</Icon>
-                            </Grid.Column>
-                            <Grid.Column width={1}>
-                                <Icon name='circle' size='large' color='yellow'>-1</Icon>
-                            </Grid.Column>
-                            <Grid.Column width={1}>
-                                <Icon name='circle' size='large' color='orange'>-2</Icon>
-                            </Grid.Column>
-                            <Grid.Column width={1}>
-                                <Icon name='circle' size='large' color='red'>-3</Icon>
-                            </Grid.Column>
-                            <Grid.Column width={1}>
-                                <Icon name='circle' size='large' color='brown'>-4</Icon>
-                            </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row>
                             <Grid.Column width={3}>
                                 <UserAvatar loginStatus={newsdata.local.loggedinStatus} photo={newsdata.local.photos} name={newsdata.local.name} email={newsdata.local.email}></UserAvatar>
                             </Grid.Column>
@@ -138,6 +104,7 @@ export default class UserTable extends React.Component
                                 <div style={{
                                     paddingTop: '5px'
                                 }}>
+                                {/* @keerthana:Sentiment icon for each user */}
                                     <Icon name='circle' size='large' color={this.state.sentimentColor[emailindex]}/>
                                 </div>
                             </Grid.Column>
@@ -168,7 +135,46 @@ export default class UserTable extends React.Component
                                         color: 'red',
                                         fontStyle: 'bold'
                                     }}>USER DETAILS</h3>
-                                    <Divider/> {user}
+                                    <Divider/>
+                                    {/* @keerthana:Sentiment Indicator Chart display */}
+                                    <Grid>
+                                      <Grid.Row>
+                                          <Grid.Column width={1}></Grid.Column>
+                                          <Grid.Column width={1}></Grid.Column>
+                                          <Grid.Column width={2}>
+                                              <h3>Sentiment</h3>
+                                          </Grid.Column>
+                                          <Grid.Column width={1}>
+                                              <Icon name='circle' size='large' color='violet'> 4</Icon>
+                                          </Grid.Column>
+                                          <Grid.Column width={1}>
+                                              <Icon name='circle' size='large' color='blue'> 3</Icon>
+                                          </Grid.Column>
+                                          <Grid.Column width={1}>
+                                              <Icon name='circle' size='large' color='teal'> 2</Icon>
+                                          </Grid.Column>
+                                          <Grid.Column width={1}>
+                                              <Icon name='circle' size='large' color='olive'> 1</Icon>
+                                          </Grid.Column>
+                                          <Grid.Column width={1}>
+                                              <Icon name='circle' size='large' color='black'> 0</Icon>
+                                          </Grid.Column>
+                                          <Grid.Column width={1}>
+                                              <Icon name='circle' size='large' color='yellow'> -1</Icon>
+                                          </Grid.Column>
+                                          <Grid.Column width={1}>
+                                              <Icon name='circle' size='large' color='orange'> -2</Icon>
+                                          </Grid.Column>
+                                          <Grid.Column width={1}>
+                                              <Icon name='circle' size='large' color='red'> -3</Icon>
+                                          </Grid.Column>
+                                          <Grid.Column width={1}>
+                                              <Icon name='circle' size='large' color='brown'> -4</Icon>
+                                          </Grid.Column>
+                                      </Grid.Row>
+                                    </Grid>
+                                    <br/><br/>
+                                     {user}
                                 </div>
                             </Scrollbars>
                         </Grid.Column>
