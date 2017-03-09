@@ -17,6 +17,7 @@ module.exports = function(passport) {
             done(err, user);
         });
     });
+    //  @Mayanka: Not allowing to login abusive user
     let returnAbuseResponse = function(){
       const error = new Error('ABUSIVE USER');
       error.name = 'Your account has been suspended.... Because Abusers are not allowed here';
@@ -33,7 +34,7 @@ module.exports = function(passport) {
             User.findOne({
                 'local.email': email
             }, function(err, user) {
-
+  // @Mayanka: Check if user has been abusive and redirect
                if(user.abusecount == 4)  {
                  done(returnAbuseResponse());
               }
@@ -100,9 +101,12 @@ module.exports = function(passport) {
                 User.findOne({
                     'facebook.id': profile.id
                 }, function(err, user) {
+   // @Mayanka: Check if user has been abusive and redirect
+                  if(user != null){
                    if(user.abusecount == 4)  {
                     return done(returnAbuseResponse());
                   }
+                }
                   else  if (err) {
                         return done(err);}
                     if (user) {
@@ -174,9 +178,12 @@ module.exports = function(passport) {
         // check if the user is already logged in
         if (!req.user) {
             User.findOne({ 'google.id': profile.id }, function(err, user) {
+        // @Mayanka: Check if user has been abusive and redirect
+            if(user != null) {
               if(user.abusecount == 4)  {
-               return done(returnAbuseResponse());
+                return done(returnAbuseResponse());
              }
+           }
               else  if (err) {
                     return done(err);
                   }

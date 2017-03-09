@@ -9,7 +9,6 @@ import AssistantGinniOptions from './assistantGinniOptions';
 import AssistantGinniKeywordResponse from './assistantGinniKeywordResponse';
 import VideoPlayer from './videoPlayer';
 import UnfurlLink from './unfurlLink';
-//import CodeAssistantConfig from '../../../config/codeAssistant.json'
 import './chatcontainerstyle.css';
 import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
 export default class AssistantGinniMixedReply extends React.Component {
@@ -59,16 +58,16 @@ export default class AssistantGinniMixedReply extends React.Component {
     }
     render() {
           let text = '';
-           /* Initialize swear word count */
+           //  : Initialize swear word count */
           let abuseCount = this.props.abuseCount;
-           /* check if swear is present in the current query */
+           //  @Mayanka: check if swear is present in the current query
           let abusePresent = this.props.abusePresent;
           if (abuseCount > 3){
-          /* redirect to logout function */
+          //  @Mayanka: redirect to logout function
             this.logoutAfterWarning();
                   }
           else if(abuseCount == 10 ) {
-            /* Final warnining to the abuser */
+            //  @Mayanka: Final warnining to the abuser
             return (
                 <Feed id="ginniview">
                     <Feed.Event>
@@ -83,9 +82,9 @@ export default class AssistantGinniMixedReply extends React.Component {
                   </Feed>
             );
           }
-           /* check if swear is present in the current query and issue warning */
+           // @Mayanka: check if swear is present in the current query and issue warning
           else if(abusePresent == true) {
-            /* only 3 chances given the abuser  */
+            //  @Mayanka only 3 chances given the abuser
             let warningCount = abuseCount ;
             return (
                 <Feed id="ginniview">
@@ -104,7 +103,7 @@ export default class AssistantGinniMixedReply extends React.Component {
             );
             warningCount = warningCount - 1;
           }
-           /* proper reply if no swear word */
+           // @Mayanka: proper reply if no swear word
   else {
         let text = '';
         /* @yuvashree: edited code for text view */

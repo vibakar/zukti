@@ -93,10 +93,13 @@ module.exports = function(keywords, email, types, sendResponse, flag, correctedQ
                 });
                 resultObj.time = new Date().toLocaleString();
                 if (hasAtleastSomeContent) {
+                  //  @Mayanka: If spell check done show this message
                     if (flag == 1) {
                         resultObj.value = 'Showing results for : ' +
                             "\"" + correctedQuestion + "\"" + ' instead';
-                    } else {
+                    }
+                  //  @Mayanka: no matching keyword found
+                    else {
                         resultObj.value = replyForKeyword[Math.floor(Math.random() * replyForKeyword.length)];
                     }
                     resultArray.push(resultObj);

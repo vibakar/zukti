@@ -28,7 +28,7 @@ router.post('/askQuestion', function(req, res) {
 //  if abuse found, issue a warning
     let abuseCount = foundAbuse.count;
     let abusePresent = foundAbuse.swearPresent;
-//  @Mayanka: if abuse found, return true and count
+//  @Mayanka: update the abusive word count everytime in database
     if(abusePresent == true ) {console.log('inside database');
           User.findOneAndUpdate({
             $or: [{ 'local.email': email }, { 'google.email': email }, { 'facebook.email': email }]
@@ -44,9 +44,10 @@ router.post('/askQuestion', function(req, res) {
               console.log('updated');
               return 'Abuse Count updated successfully';
           });
-
+//  @Mayanka: if abuse found, return true and count
       res.json({abuseCount : abuseCount, abusePresent : abusePresent});
     }
+//  @Mayanka: process the input if no abuse is found
 else{
     let spellResponse = getSpellChecker(question.value);
     console.log('in reply  '+spellResponse.question+'flag'+spellResponse.flag);
@@ -57,7 +58,7 @@ else{
     let intents = query.intents;
     let types = query.types;
 
-    // @vibakar: add keyword to redis
+// @vibakar: add keyword to redis
   let addKeywordToRedis = function(username,keyword){
     client.hmset(username, 'keywords', keyword, 'user', username, function(err, reply) {
         if (err) {

@@ -76,11 +76,13 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
         session.run(query).then(function(result) {
             // Completed!
             session.close();
+            //  @Mayanka: No records found
             if (result.records.length === 0) {
                 noAnswerFoundCallback();
             } else {
                 let answerObj = {};
                 answerObj.time = new Date().toLocaleString();
+                //  @Mayanka: If spell check done show this message
                 if (flag == 1) {
                     answerObj.extras = 'Showing results for : ' +
                         "\"" + correctedQuestion + "\"" + ' instead';
