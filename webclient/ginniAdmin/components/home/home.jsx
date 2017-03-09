@@ -31,6 +31,7 @@ export default class FrontPage extends React.Component {
         });
     }
     // redirects to react home page
+    //Set the loggedinDomainStatus to the Admin @ Deepika
     onSubmitEmail(e) {
       console.log(Cookie.load('email')+" in home.jsx onSubmitEmail");
       switch(e.target.alt) {
@@ -63,7 +64,7 @@ export default class FrontPage extends React.Component {
               });
               Cookie.save('domain','DESIGN PATTERN');
               console.log(Cookie.load('domain'));
-              hashHistory.push('/designPattern');
+              hashHistory.push('/design pattern');
           break;
         default:
           break;
