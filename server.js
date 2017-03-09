@@ -22,6 +22,7 @@ let analytics = require('./webserver/routes/analyticsData/analytics');
 let bookmarks = require('./webserver/routes/bookmarks/bookmarks');
 let concept = require('./webserver/routes/concept/concept');
 
+/* @ramvignesh: requiring the user route */
 let user = require('./webserver/routes/user/user');
 
 let app = express();
@@ -101,7 +102,11 @@ app.use('/retriveChat', retriveChat);
 app.use('/bookmarks', bookmarks);
 
 // Routes -- version 2
+
+/* @ramvignesh: route to set user's current domain */
 app.use('/user', user);
+
+/* @keerthana: route to test graph */
 app.get('/graphie', function(req, res) {
     res.sendfile('graph.html');
 });
@@ -148,9 +153,8 @@ io.on('connection', function(socket) {
       socket.broadcast.emit('update userlist');
     });
 
-    // Sentiment
+    // @keerthana:Listening sentiment socket
     socket.on('sentiment', function(data) {
-        console.log("server"+JSON.stringify(data));
         socket.broadcast.emit('sentiment score', data);
     });
 

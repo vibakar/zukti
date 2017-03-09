@@ -6,12 +6,16 @@ import LogoutPage from '../Multi_Lingual/Wordings.json';
 export default class LogoutFile extends React.Component {
     constructor() {
         super();
+
+        /* @ramvignesh: binding methods to this component */
         this.logIn = this.logIn.bind(this);
         this.signUp = this.signUp.bind(this);
     }
+    /* @ramvignesh: redirecting to login page */
     logIn() {
         hashHistory.push('/login');
     }
+    /* @ramvignesh: redirecting to signup page */
     signUp() {
         hashHistory.push('/signup');
     }
@@ -29,12 +33,14 @@ export default class LogoutFile extends React.Component {
                         <Grid.Column width={9}/>
                         <Grid.Column width={5}>
                             <h2>
+                                {/* @ramvignesh: login button */}
                                 <Button onClick={this.logIn} className="buttonlogin" circular style={{
                                     backgroundColor: 'white'
                                 }}>
                                     LOGIN
                                 </Button>
                                 &nbsp;&nbsp;
+                                {/* @ramvignesh: signup button */}
                                 <Button onClick={this.signUp} className="buttonsignin" circular style={{
                                     backgroundColor: 'white'
                                 }}>

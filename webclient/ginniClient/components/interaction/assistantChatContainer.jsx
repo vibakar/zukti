@@ -227,6 +227,7 @@ export default class AssistantChatContainer extends React.Component {
     }
     pushUserMessages(message) {
         let length = this.state.messages.length;
+        /* @keerthana:sentiment analysis */
         let score = sentiment(message.value).score;
         var socket = io();
         socket.emit('sentiment', {
