@@ -50,7 +50,8 @@ export default class LoginPage extends React.Component
                   else{
                     hashHistory.push('/clienthome');
                     let socket = io();
-                    socket.emit('userLoginStatus', {value: 1});
+                    socket.emit('userLoginStatus', {value: 1}); // v1
+                    socket.emit('updateUserList'); // v2
                   }
                 },
                 /* It throws a error message in case of any error like password

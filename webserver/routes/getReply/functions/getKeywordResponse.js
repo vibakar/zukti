@@ -63,8 +63,7 @@ module.exports = function(keywords, email, types, sendResponse, flag, correctedQ
                WITH bw as bw,n as n ,rel as rel
                ORDER BY rel.rating DESC
                RETURN LABELS(n)as contentType ,COLLECT(distinct n.value) `;
-        }
-
+             }
         let session = getNeo4jDriver().session();
         session.run(query).then(function(result) {
             // Completed!

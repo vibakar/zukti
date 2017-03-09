@@ -142,4 +142,16 @@ io.on('connection', function(socket) {
     socket.on('client event', function(data) {
         socket.broadcast.emit('update label', data);
     });
+
+    // v2
+    socket.on('updateUserList', function() {
+      socket.broadcast.emit('update userlist');
+    });
+
+    // Sentiment
+    socket.on('sentiment', function(data) {
+        console.log("server"+JSON.stringify(data));
+        socket.broadcast.emit('sentiment score', data);
+    });
+
 });

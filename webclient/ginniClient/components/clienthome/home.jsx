@@ -20,6 +20,8 @@ which is stored when user login and redirect to apphome */
               url: '/signout',
               data: 'json'
             }).then(function (response) {
+              let socket = io();
+              socket.emit('updateUserList'); // v2
               Cookie.remove('authType');
               Cookie.remove('token');
               hashHistory.push('/');

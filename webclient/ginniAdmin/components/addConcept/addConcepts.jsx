@@ -12,7 +12,7 @@ import Config from '../../../../config/url';
 import Axios from 'axios';
 import Snackbar from 'material-ui/Snackbar';
 
-export default class addbot extends React.Component {
+export default class AddConcept extends React.Component {
     constructor(props) {
         super(props);
         this.getConcept = this.getConcept.bind(this);
@@ -95,13 +95,15 @@ export default class addbot extends React.Component {
             this.setState({opensnackbar: true, snackbarMsg: 'Please fill all the fields'});
         }
     }
+    // Adding The New Concept To The Existing Concept @ Deepika
     render() {
         return (
             <div style={{
                 backgroundImage: 'url(\'../../images/background.jpg\')',
                 height: '100%'
             }}>
-                <Grid >
+
+                <Grid>
                     <Grid.Column width={1}/>
                     <Grid.Column width={6}>
                         <Grid.Row/>
@@ -141,7 +143,7 @@ export default class addbot extends React.Component {
                             </Button>
 
                         </Grid.Row>
-                        <br/>
+                      <br/>
                         <br/>
                         <Grid.Row/>
                         <br/>

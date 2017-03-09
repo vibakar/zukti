@@ -13,7 +13,7 @@ module.exports = function(app, passport) {
         res.send(req.user);
     });
     /* logout - all the user informations will be
-    cleared in cookie and loggedin status will be changed to false*/
+    cleared in cookie and loggedin status will be changed to false */
     app.get('/signout', function(req, res) {
         res.clearCookie('token');
         res.clearCookie('authType');
