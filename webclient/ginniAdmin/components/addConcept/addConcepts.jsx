@@ -27,7 +27,7 @@ export default class addbot extends React.Component {
             concepts: []
         };
     }
-    // bind the dropdown with all concepts from neo4j databse
+    // @vibakar: bind the dropdown with all concepts and relationships from neo4j databse
     componentDidMount() {
         let url = Config.url + '/concept/rc';
         Axios.get(url).then((response) => {
@@ -63,14 +63,14 @@ export default class addbot extends React.Component {
     createNewConcept(e) {
         e.preventDefault();
 
-        // getting the value of new concept from text field
+        // @vibakar: getting the value of new concept from text field
         let newConceptText = this.refs.newConceptText.value;
         let existingConcept = this.state.conceptValue;
         let relation = this.state.relationValue;
 
-        // checking for empty field since empty node is not required
+        // @vibakar: checking for empty field since empty node is not required
         if (newConceptText && existingConcept && relation) {
-            // ajax call for saving new concept in graph databse
+            // @vibakar: saving new concept in graph databse
             let url = Config.url + '/concept/createConcept';
             Axios.post(url, {
                 newConcept: newConceptText,
@@ -84,7 +84,7 @@ export default class addbot extends React.Component {
                     this.setState({concepts: conceptsCopy});
                 }
 
-                // clearing the input fields
+                // @vibakar: clearing the input fields
                 this.refs.newConceptText.value = '';
                 this.setState({relationValue: ''});
                 this.setState({conceptValue: ''});

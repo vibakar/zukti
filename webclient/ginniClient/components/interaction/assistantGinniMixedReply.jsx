@@ -49,6 +49,7 @@ export default class AssistantGinniMixedReply extends React.Component {
           blogs={this.props.data.blog}/>);
         this.props.handleGinniReply(ginniReply);
     }
+    /* @yuvashree: added function to play video on clicking the button */
     playVideo() {
         let videoUrl = this.props.data.video[0].value;
         this.props.handleGinniReply([< VideoPlayer url = {
@@ -57,9 +58,9 @@ export default class AssistantGinniMixedReply extends React.Component {
     }
     render() {
       let text = '';
+      /* @yuvashree: edited code for text view */
       if(this.props.data.text) {
         text = this.props.data.text[0].value;
-
         return (
               <Feed id="ginniview">
               <Feed.Event>
@@ -91,7 +92,7 @@ export default class AssistantGinniMixedReply extends React.Component {
             </Feed>
         );
       }
-
+      /* @threkashri: edited code for displaying image */
     else if (this.props.data.image) {
       // text = this.props.data.image[0].value;
       let imageURL = this.props.data.image[0].value;
@@ -112,6 +113,7 @@ export default class AssistantGinniMixedReply extends React.Component {
       </Feed>
       );
     }
+    /* @yuvashree: edited code for displaying blogs */
       let blog = '';
       if(this.props.data.blog) {
         blog = this.props.data.blog[0].value;
@@ -141,6 +143,7 @@ export default class AssistantGinniMixedReply extends React.Component {
           </Feed>
       );
     }
+    /* @yuvashree: edited code for displaying videos */
     let video = '';
     if(this.props.data.video) {
       video = this.props.data.video[0].value;
@@ -158,6 +161,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                           ? <Label onClick={this.displayVideos}
                             basic color='orange' id='cursor'>Videos</Label>
                           : ''}
+                          {/* @yuvashree: added button to play video */}
                             <Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>
                             <AssistantGinniOptions question={this.props.question}
                               type='text' value={text}/>

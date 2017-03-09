@@ -6,10 +6,6 @@ import Cookie from 'react-cookie';
 import './homestyle.css';
 import AdminHomePage from '../../../Multi_Lingual/Wordings.json';
 export default class FrontPage extends React.Component {
-    componentDidMount()
-    {
-        this.getUserProfile();
-    }
     /* if the user clicks logout it clears all
     the cookies which is stored when user login and redirect to apphome */
     handleLogout()

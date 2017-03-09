@@ -40,7 +40,6 @@ export default class AssistantChatContainer extends React.Component {
     }
     onClickSearch(e) {
         e.preventDefault();
-        
         this.retriveChat();
     }
     componentDidMount() {
@@ -92,7 +91,15 @@ export default class AssistantChatContainer extends React.Component {
         });
         Axios.get('/retriveChat').then((response) => {
             if (response.data) {
-                response.data.chats.forEach((chat) => {
+              /* @yuvashree: welcome message if user is new to specific domain */
+              if(response.data.chats.length === 0) {
+                this.state.messages.push(
+                    <div ref={(ref) => this['_div' + length] = ref}>
+                        <AssistantUserView userMessage='nil'/>
+                    </div>
+                );
+              }
+              response.data.chats.forEach((chat) => {
                     let length = this.state.messages.length;
                     this.state.messages.push(
                         <div ref={(ref) => this['_div' + length] = ref}>
@@ -132,6 +139,14 @@ export default class AssistantChatContainer extends React.Component {
                     }
                 });
             }
+            /* @yuvashree: welcome message for new user */
+            else {
+              this.state.messages.push(
+                  <div ref={(ref) => this['_div' + length] = ref}>
+                      <AssistantUserView userMessage='nil'/>
+                  </div>
+              );
+            }
             this.setState({messages: this.state.messages, loaderActive: false});
         }).catch((err) => {
             this.setState({messages: this.state.messages, loaderActive: false});
@@ -150,6 +165,7 @@ export default class AssistantChatContainer extends React.Component {
           console.log('response'+response);
             if (response.data) {
               console.log('inside before forEach');
+
                 response.data.chats.forEach((chat) => {
                   console.log('Question: '+chat.question.value);
                   console.log('search value: '+this.state.searchValue);
@@ -196,6 +212,13 @@ export default class AssistantChatContainer extends React.Component {
 
                 });
             }
+            else {
+              this.state.messages.push(
+                    <div ref={(ref) => this['_div' + length] = ref}>
+                        <AssistantGinniMixedReply userMessage='nil'/>
+                    </div>
+                );
+              }
             this.setState({messages: this.state.messages, loaderActive: false});
         }).catch((err) => {
             this.setState({messages: this.state.messages, loaderActive: false});

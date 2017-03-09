@@ -13,6 +13,7 @@ router.get('/', function(req, res) {
     fetchConcepts(resultCallback);
 });
 
+// @vibakar: adding new concept to existing concept
 router.post('/createConcept', function(req, res) {
     let newConcept = req.body.newConcept;
     let relationship = req.body.relationship;
@@ -23,17 +24,7 @@ router.post('/createConcept', function(req, res) {
     createConcept(newConcept, relationship, oldConcept, resultCallback);
 });
 
-router.post('/createConcept', function(req, res) {
-    let newConcept = req.body.newConcept;
-    let relationship = req.body.relationship;
-    let oldConcept = req.body.oldConcept;
-    let resultCallback = function(result) {
-        res.json(result);
-    };
-    createConcept(newConcept, relationship, oldConcept, resultCallback);
-});
-
-// version 2
+// @vibakar: getting relationships and concepts from neo4j
 router.get('/rc', function(req, res) {
     let resultCallback = function(rc) {
         res.json({
