@@ -1,5 +1,6 @@
 // this route is used to get reply of questions asked by user
 let express = require('express');
+let User = require('./../../models/user');
 let router = express.Router();
 let processQuestion = require('./functions/processQuestion');
 let getQuestionResponse = require('./functions/getQuestionResponse');
@@ -27,8 +28,23 @@ router.post('/askQuestion', function(req, res) {
 //  if abuse found, issue a warning
     let abuseCount = foundAbuse.count;
     let abusePresent = foundAbuse.swearPresent;
-    console.log('abuse count is '+abuseCount);
-    if(abusePresent == true ) {
+//  @Mayanka: if abuse found, return true and count
+    if(abusePresent == true ) {console.log('inside database');
+          User.findOneAndUpdate({
+            $or: [{ 'local.email': email }, { 'google.email': email }, { 'facebook.email': email }]
+        }, {
+              $set: {
+                  'abusecount': abuseCount
+              }
+          }, function(error) {
+            console.log(error);
+              if (error) {
+                  return 'abuse count updation';
+              }
+              console.log('updated');
+              return 'Abuse Count updated successfully';
+          });
+
       res.json({abuseCount : abuseCount, abusePresent : abusePresent});
     }
 else{
