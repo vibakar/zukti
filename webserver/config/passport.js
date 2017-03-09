@@ -19,7 +19,7 @@ module.exports = function(passport) {
     });
     let returnAbuseResponse = function(){
       const error = new Error('ABUSIVE USER');
-      error.name = 'Your account has been suspended....\n Because Abusers are not allowed here';
+      error.name = 'Your account has been suspended.... Because Abusers are not allowed here';
       return error.name;
 
     }
@@ -33,7 +33,7 @@ module.exports = function(passport) {
             User.findOne({
                 'local.email': email
             }, function(err, user) {
-              console.log('erfgbhnrfgb'+user.abusecount);
+
                if(user.abusecount == 4)  {
                  done(returnAbuseResponse());
               }
