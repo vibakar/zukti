@@ -101,6 +101,7 @@ app.use('/retriveChat', retriveChat);
 app.use('/bookmarks', bookmarks);
 
 // Routes -- version 2
+/* @keerthana:route for test graph */
 app.use('/user', user);
 app.get('/graphie', function(req, res) {
     res.sendfile('graph.html');
@@ -148,9 +149,8 @@ io.on('connection', function(socket) {
       socket.broadcast.emit('update userlist');
     });
 
-    // Sentiment
+    // @keerthana:Listening sentiment socket
     socket.on('sentiment', function(data) {
-        console.log("server"+JSON.stringify(data));
         socket.broadcast.emit('sentiment score', data);
     });
 

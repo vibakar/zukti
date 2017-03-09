@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {Sigma, NeoCypher, EdgeShapes} from 'react-sigma';
 
 class ViewGraph extends React.Component {
