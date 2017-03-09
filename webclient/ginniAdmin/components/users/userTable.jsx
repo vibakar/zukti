@@ -26,7 +26,7 @@ export default class UserTable extends React.Component
             console.log(response.data);
         });
 
-        // updating the user list on login or logout
+        // updating the user list on login or logout @ Deepika
         socket.on('update userlist', function() {
             Axios({url: 'http://localhost:8080/viewall', method: 'GET'}).then(function(response) {
                 self.setState({userinformation: response.data});
