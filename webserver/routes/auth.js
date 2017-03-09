@@ -21,11 +21,12 @@ module.exports = function(app, passport) {
         res.clearCookie('profilepicture');
         res.clearCookie('email'); // v2
         res.json({logout: 'Successfully LogOut'});
+
         RegisteredUser.update({
             'local.email': req.user.local.email
         }, {
             $set: {
-                'local.loggedinStatus': false
+                'local.loggedinStatus': false, 'local.loggedinDomain':'nil'
             }
         }, function(err) {
             if (err) {
@@ -142,7 +143,7 @@ module.exports = function(app, passport) {
                     auth: {
                         user: 'zuktibot@gmail.com',
                         // Your email id
-                        pass: 'zuktiwave15'
+                        pass: 'wave15zukti'
                         // Your password
                     },
                     tls: {
@@ -260,7 +261,7 @@ module.exports = function(app, passport) {
                     auth: {
                         user: 'zuktibot@gmail.com',
                         // Your email id
-                        pass: 'zuktiwave15'
+                        pass: 'wave15zukti'
                         // Your password
                     },
                     tls: {

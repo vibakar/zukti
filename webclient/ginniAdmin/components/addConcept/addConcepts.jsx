@@ -144,10 +144,7 @@ export default class AddConcept extends React.Component {
 
                         </Grid.Row>
                       <br/>
-                        <br/>
-                        <Grid.Row/>
-                        <br/>
-                        <br/>
+                      <Grid.Row/>
                         <Grid.Row>
                             <Grid.Column width={5} />
                             <Grid.Column width={6} />

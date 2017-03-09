@@ -88,10 +88,6 @@ export default class SidebarBot extends Component {
                       onClick={this.handleItemClick}>
                         <Icon name='find' color='teal'/>{AdminMenu.AdminMenu.Topic10}
                     </Menu.Item>
-                    <Menu.Item name='LogOut'>
-                        <Icon name='sign out' color='teal'/>
-                        <a href='#/log'>{AdminMenu.AdminMenu.Topic7}</a>
-                    </Menu.Item>
                 </Sidebar>
                 <Sidebar.Pusher className='container' style={{
                     width: '90%',

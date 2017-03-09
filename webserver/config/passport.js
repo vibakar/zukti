@@ -17,7 +17,13 @@ module.exports = function(passport) {
             done(err, user);
         });
     });
-    passport.use(new LocalStrategy({
+    let returnAbuseResponse = function(){
+      const error = new Error('ABUSIVE USER');
+      error.name = 'Your account has been suspended.... Because Abusers are not allowed here';
+      return error.name;
+
+    }
+        passport.use(new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password',
         session: false,
@@ -27,7 +33,11 @@ module.exports = function(passport) {
             User.findOne({
                 'local.email': email
             }, function(err, user) {
-                if (err) {
+
+               if(user.abusecount == 4)  {
+                 done(returnAbuseResponse());
+              }
+              else  if (err) {
                     return done(err);
                 } else if (!user) {
                     const error = new Error('Your Email ID is not registered');
@@ -90,7 +100,10 @@ module.exports = function(passport) {
                 User.findOne({
                     'facebook.id': profile.id
                 }, function(err, user) {
-                    if (err) {
+                   if(user.abusecount == 4)  {
+                    return done(returnAbuseResponse());
+                  }
+                  else  if (err) {
                         return done(err);}
                     if (user) {
                         /* if there is a user id already but no token
@@ -156,11 +169,15 @@ module.exports = function(passport) {
     // allows us to pass in the req from our route (lets us check if a user is logged in or not)
 }, function(req, token, refreshToken, profile, done) {
     // asynchronous
+    console.log('in google sign');
     process.nextTick(function() {
         // check if the user is already logged in
         if (!req.user) {
             User.findOne({ 'google.id': profile.id }, function(err, user) {
-                if (err) {
+              if(user.abusecount == 4)  {
+               return done(returnAbuseResponse());
+             }
+              else  if (err) {
                     return done(err);
                   }
                 if (user) {
