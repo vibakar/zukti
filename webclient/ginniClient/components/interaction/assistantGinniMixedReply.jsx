@@ -94,7 +94,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                             <Feed.Summary date={this.props.data.time} user={CodeAssistant.Interaction.name}/>
                             <Feed.Extra>
                             </Feed.Extra>
-                            <Feed .Extra text style = {{color :" red"}}>
+                            <Feed.Extra text style = {{color :" red"}}>
                                {CodeAssistant.InitialWarning.message}{warningCount}
                              </Feed.Extra>
                         </Feed.Content>
