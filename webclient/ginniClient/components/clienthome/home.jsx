@@ -9,6 +9,7 @@ export default class ClientHome extends React.Component {
 
   constructor() {
       super();
+
       this.onSubmitEmail = this.onSubmitEmail.bind(this);
   }
 /* if the user clicks logout it clears all the cookies
@@ -35,6 +36,7 @@ which is stored when user login and redirect to apphome */
     // redirects to chat page
     onSubmitEmail(e) {
       console.log(Cookie.load('email')+" in home.jsx onSubmitEmail");
+      let socket = io();
       switch(e.target.alt) {
         case 'react':
         Axios({
@@ -50,6 +52,7 @@ which is stored when user login and redirect to apphome */
               });
           Cookie.save('domain','REACT');
           console.log(Cookie.load('domain'));
+          socket.emit('updateUserList');
           hashHistory.push('/chat/react');
           break;
         case 'design pattern':
@@ -65,11 +68,13 @@ which is stored when user login and redirect to apphome */
               });
               Cookie.save('domain','DESIGN PATTERN');
               console.log(Cookie.load('domain'));
+              socket.emit('updateUserList');
               hashHistory.push('/chat/design pattern');
           break;
         default:
           break;
       }
+
     }
     render() {
         return (

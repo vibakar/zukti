@@ -48,6 +48,19 @@ module.exports = function(app, passport) {
             }
         });
     });
+    //@Deepika :send Admin details
+    app.get('/adminProfile',function(req,res){
+      RegisteredUser.find({
+        'local.localType': 'Admin'
+      }, function(err, admindetails){
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(admindetails);
+        }
+      });
+    });
+
     app.get('/viewallonlineuser', function(req, res) {
             RegisteredUser.find(
               {'local.loggedinStatus': 'true', 'local.localType': 'Customer'},

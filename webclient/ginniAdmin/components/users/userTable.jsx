@@ -13,9 +13,13 @@ export default class UserTable extends React.Component
             name: [],
             email: [],
             userinformation: [],
-            sentimentColor: {}
+            admininDomainName: '',
+            sentimentColor: {},
         };
+
+
     }
+
     componentDidMount() {
         let self = this;
         let socket = io();
@@ -23,16 +27,21 @@ export default class UserTable extends React.Component
         // populating the user list for the first time
         Axios({url: 'http://localhost:8080/viewall', method: 'GET'}).then(function(response) {
             self.setState({userinformation: response.data});
-            console.log(response.data);
+            console.log(JSON.stringify(response.data));
+        });
+        //@Deepika: To Get the Admin Details
+        Axios({url: 'http://localhost:8080/adminProfile', method: 'GET'}).then(function(response){
+          self.setState({admininDomainName: response.data[0].local.loggedinDomain});
+          console.log('Admindtails'+ response.data[0].local.loggedinDomain);
         });
 
-        // @deepika: updating the user list on login or logout
+       // @deepika: updating the user list on login or logout
         socket.on('update userlist', function() {
             Axios({url: 'http://localhost:8080/viewall', method: 'GET'}).then(function(response) {
                 self.setState({userinformation: response.data});
                 console.log(response.data);
             });
-        });
+         });
         /* @keerthana: Sentiment Color Code */
         var sentimentArray = this.state.sentimentColor;
         let con = this;
@@ -65,9 +74,9 @@ export default class UserTable extends React.Component
     render() {
 
         let user = this.state.userinformation.map(function(newsdata, index) {
-            console.log(newsdata);
+          if(newsdata.local.domain.indexOf(this.state.admininDomainName) != -1){
 
-            let textStyle = {
+           let textStyle = {
                 paddingTop: '7px',
                 paddingLeft: '2px'
             };
@@ -112,6 +121,7 @@ export default class UserTable extends React.Component
                     </Grid>
                 </div>
             );
+          }
         }.bind(this));
         return (
             <div style={{
