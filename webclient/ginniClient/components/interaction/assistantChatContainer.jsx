@@ -194,7 +194,7 @@ export default class AssistantChatContainer extends React.Component {
                         <Input className='icon' style={{
                             width: 400
                         }} onChange={this.updateSearchValue} placeholder='Search your content' focus/>
-                      /* @santhosh: search the chat history */
+                      
                         &nbsp; <SearchUserChat searchValue={this.state.searchValue} messageHistort={this.state.messageHistort}/>
                     </Menu.Item>
                 </Menu>

@@ -4,7 +4,7 @@ import {Button, Modal, Divider, List, Icon, Accordion} from 'semantic-ui-react';
 import Config from '../../../../config/url';
 import Axios from 'axios';
 import Cookie from 'react-cookie';
-import './searchUserChat.css';
+import './chatcontainerstyle.css';
 import Snackbar from 'material-ui/Snackbar';
 import UnfurlLink from './unfurlLink';
 import AssistantGinniMixedReply from './assistantGinniMixedReply';
@@ -19,7 +19,7 @@ export default class ViewUserChat extends React.Component {
             openSnackbar: false,
             snackbarMsg: '',
             searchValue: '',
-            chat:[]
+            chat: []
         };
         // function to retrive chat of a given user
         this.getUserChats = this.getUserChats.bind(this);
@@ -29,16 +29,17 @@ export default class ViewUserChat extends React.Component {
     close = () => this.setState({open: false})
     /* @santhosh: search the chat history */
     getUserChats() {
-        this.state.chat.splice(0,this.state.chat.length);
-        if(this.props.messageHistort !== null && this.props.messageHistort.length !== 0 && this.props.searchValue.trim() !== '') {
+        this.state.chat.splice(0, this.state.chat.length);
+        if(this.props.messageHistort !== null && this.props.messageHistort.length !== 0
+           && this.props.searchValue.trim() !== '') {
           let messageHistort = this.props.messageHistort;
           let conversations = messageHistort.data.chats;
           conversations.forEach((conversation) => {
-
-            if((conversation.question.value).includes(this.props.searchValue.toLowerCase().trim())) {
+            let searchcontent = this.props.searchValue.toLowerCase().trim();
+            let isSearch = conversation.question.value.includes(searchcontent);
+        if(isSearch) {
               if (conversation.isUnAnswered) {
                 conversation.answerObj.forEach((answer, index) => {
-
                     if (answer.keywordResponse) {
                       if(answer.blog === undefined) {
                           let video = answer.video[0];
@@ -46,12 +47,12 @@ export default class ViewUserChat extends React.Component {
                                 <Accordion>
                                     <Accordion.Title>
                                       <Icon name='dropdown' />
-                                          {conversation.question.value} &nbsp;&nbsp;&nbsp; {conversation.question.time}
+                                          {conversation.question.value} &nbsp;&nbsp;&nbsp;
+                                          {conversation.question.time}
                                       </Accordion.Title>
-                                    <Accordion.Content>
-                                      <a title='click to open the video in new tab'
-                                        href={video} target='_blank'>  <UnfurlLink url ={video}/></a>
-
+                                  <Accordion.Content> <a title='click to open the video in new tab'
+                                        href={video} target='_blank'> <UnfurlLink
+                                          url ={video}/></a>
                                     </Accordion.Content>
                                 </Accordion>
                           );
@@ -62,12 +63,12 @@ export default class ViewUserChat extends React.Component {
                               <Accordion>
                                   <Accordion.Title>
                                     <Icon name='dropdown' />
-                                        {conversation.question.value} &nbsp;&nbsp;&nbsp; {conversation.question.time}
+                                        {conversation.question.value} &nbsp;&nbsp;&nbsp;
+                                        {conversation.question.time}
                                     </Accordion.Title>
                                   <Accordion.Content>
                                     <a title='click to open the blog in new tab'
                                       href={blog} target='_blank'><UnfurlLink url ={blog}/></a>
-
                                   </Accordion.Content>
                               </Accordion>
                         );
@@ -79,7 +80,8 @@ export default class ViewUserChat extends React.Component {
                             <Accordion>
                                 <Accordion.Title>
                                   <Icon name='dropdown' />
-                                      {conversation.question.value} &nbsp;&nbsp;&nbsp; {conversation.question.time}
+                                      {conversation.question.value} &nbsp;&nbsp;&nbsp;
+                                      {conversation.question.time}
                                     </Accordion.Title>
                                 <Accordion.Content>
                                     {answer.value}
@@ -89,14 +91,14 @@ export default class ViewUserChat extends React.Component {
                       );
                     }
                 });
-              } else {
-                if(conversation.answerObj.text) {
+              } else if(conversation.answerObj.text) {
                   let text = conversation.answerObj.text[0].value;
                   this.state.chat.push(
                         <Accordion>
                             <Accordion.Title>
                               <Icon name='dropdown' />
-                                  {conversation.question.value} &nbsp;&nbsp;&nbsp; {conversation.question.time}
+                                  {conversation.question.value} &nbsp;&nbsp;&nbsp;
+                                  {conversation.question.time}
                                 </Accordion.Title>
                             <Accordion.Content>
                               {text}
@@ -110,7 +112,8 @@ export default class ViewUserChat extends React.Component {
                         <Accordion>
                             <Accordion.Title>
                               <Icon name='dropdown' />
-                                  {conversation.question.value} &nbsp;&nbsp;&nbsp; {conversation.question.time}
+                                  {conversation.question.value} &nbsp;&nbsp;&nbsp;
+                                  {conversation.question.time}
                                 </Accordion.Title>
                             <Accordion.Content>
                               <a title='click to open the image in new tab'
@@ -120,15 +123,14 @@ export default class ViewUserChat extends React.Component {
                   );
               }
             }
-            }
-
           });
             this.setState({open: true});
         } else if (this.props.searchValue.trim() === '') {
           this.setState({openSnackbar: true, snackbarMsg: 'Please specify something to search'});
         }
          else {
-            this.setState({openSnackbar: true, snackbarMsg: 'No chats available with this specific user'});
+            this.setState({openSnackbar: true,
+               snackbarMsg: 'No chats available with this specific user'});
         }
     }
     handleRequestClose = () => {
@@ -148,12 +150,13 @@ export default class ViewUserChat extends React.Component {
                         Search Result for "{this.props.searchValue}"
                     </Modal.Header>
                     <Modal.Content id='viewuserchatcontent'>
-                        <b>{chat.length !==0
+                        <b>{chat.length !== 0
                                 ? chat
                                 : 'No results found!!'}</b>
                     </Modal.Content>
                 </Modal>
-                <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg} autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
+                <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg}
+                  autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
             </div>
         );
     }
