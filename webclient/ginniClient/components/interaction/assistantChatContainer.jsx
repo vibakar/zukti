@@ -10,6 +10,7 @@ import AssistantGinniMixedReply from './assistantGinniMixedReply';
 import AssistantGinniPlainText from './assistantGinniPlainText';
 import AssistantGinniKeywordResponse from './assistantGinniKeywordResponse';
 import AssistantUserView from './assistantUserView';
+import SearchUserChat from './searchUserChat';
 import './chatcontainerstyle.css';
 export default class AssistantChatContainer extends React.Component {
 
@@ -20,10 +21,10 @@ export default class AssistantChatContainer extends React.Component {
             username: 'User',
             loaderActive: true,
             profilePicture: '',
-            searchContent: false,
             searchValue: '',
             SearchResult: '',
-            email: ''
+            email: '',
+            messageHistort:[]
         };
         this.retriveChat = this.retriveChat.bind(this);
         this.updateSearchValue = this.updateSearchValue.bind(this);
@@ -31,16 +32,11 @@ export default class AssistantChatContainer extends React.Component {
         this.pushGinniMessages = this.pushGinniMessages.bind(this);
         // to display user messages
         this.pushUserMessages = this.pushUserMessages.bind(this);
-        this.onClickSearch = this.onClickSearch.bind(this);
+
     }
     updateSearchValue(e) {
         e.preventDefault();
-        this.setState({searchValue: e.target.value, searchContent: true});
-    }
-    onClickSearch(e) {
-        e.preventDefault();
-
-        this.retriveChat();
+        this.setState({searchValue: e.target.value});
     }
     componentDidMount() {
         // Scroll to the bottom on initialization
@@ -92,9 +88,6 @@ export default class AssistantChatContainer extends React.Component {
     }
     retriveChat(e) {
         console.log('Inside retrieve chat');
-        // e.preventDefault();
-        if (this.state.searchContent === false) {
-            this.setState({messages: [], SearchResult: ''});
             Axios.get('/retriveChat').then((response) => {
                 if (response.data) {
                   /* @yuvashree: welcome message if user is new to specific domain */
@@ -148,67 +141,10 @@ export default class AssistantChatContainer extends React.Component {
                         </div>
                     );
                   }
-                this.setState({messages: this.state.messages, loaderActive: false});
+                this.setState({messages: this.state.messages, loaderActive: false, messageHistort:response});
             }).catch((err) => {
                 this.setState({messages: this.state.messages, loaderActive: false});
             });
-        } else {
-            console.log('inside search in else');
-            this.setState({messages: [], SearchResult: `Search result for \"${this.state.searchValue}\"`});
-
-            // for search content inside history
-            Axios.get('/retriveChat').then((response) => {
-                console.log('inside before response data');
-                console.log('response' + response);
-                if (response.data) {
-                    console.log('inside before forEach');
-                    response.data.chats.forEach((chat) => {
-                        console.log('Question: ' + chat.question.value);
-                        console.log('search value: ' + this.state.searchValue);
-                        if ((chat.question.value).includes(this.state.searchValue)) {
-                            console.log('after checking content');
-                            let length = this.state.messages.length;
-                            this.state.messages.push(
-                                <div ref={(ref) => this['_div' + length] = ref}>
-                                    <AssistantUserView msgDate={chat.question.time} userName={this.state.username} userMessage={chat.question.value} profilePicture={this.state.profilePicture}/>
-                                </div>
-                            );
-                            if (chat.isUnAnswered) {
-                                chat.answerObj.forEach((answer, index) => {
-                                    let length = this.state.messages.length;
-                                    this.state.messages.push(
-                                        <div ref={(ref) => this['_div' + length] = ref}>
-                                            <AssistantGinniPlainText value={answer.value}/>
-                                        </div>
-                                    );
-                                    if (answer.keywordResponse) {
-                                        let length = this.state.messages.length;
-                                        this.state.messages.push(
-                                            <div ref={(ref) => this['_div' + length] = ref}>
-                                                <AssistantGinniKeywordResponse handleGinniReply ={this.pushGinniMessages} question={chat.question.value} data={answer}/>
-                                            </div>
-                                        );
-                                    }
-                                });
-                            } else {
-                                let length = this.state.messages.length;
-                                console.log('length: ', length);
-                                this.state.messages.push(
-                                    <div ref={(ref) => this['_div' + length] = ref}>
-                                        <AssistantGinniMixedReply question={chat.question.value} data={chat.answerObj} handleGinniReply={this.pushGinniMessages}/>
-                                    </div>
-                                );
-                            }
-                        }
-
-                    });
-                }
-                this.setState({messages: this.state.messages, loaderActive: false});
-            }).catch((err) => {
-                this.setState({messages: this.state.messages, loaderActive: false});
-            });
-        }
-
     }
     pushGinniMessages(ginniReply, loadingDots) {
         if (loadingDots) {
@@ -234,14 +170,7 @@ export default class AssistantChatContainer extends React.Component {
             email: this.state.email,
             score: score
         });
-        if (this.state.searchContent) {
-            this.setState({searchContent: false, messages: [], SearchResult: ''});
-            this.retriveChat();
-        }
-        // this.setState({
-        //   searchContent:false
-        // });
-        // this.retriveChat();
+
         let userMessageDisplay = (
             <div ref={(ref) => this['_div' + length] = ref} key={length}>
                 <AssistantUserView msgDate={message.time} userName={this.state.username} userMessage={message.value} profilePicture={this.state.profilePicture}/>
@@ -264,9 +193,9 @@ export default class AssistantChatContainer extends React.Component {
                     <Menu.Item position='left'>
                         <Input className='icon' style={{
                             width: 400
-                        }} onChange={this.updateSearchValue} icon={< Icon name = 'search' color = 'red' circular link onClick = {
-                            this.onClickSearch
-                        } />} placeholder='Search your content' focus/>
+                        }} onChange={this.updateSearchValue} placeholder='Search your content' focus/>
+                      /* @santhosh: search the chat history */
+                        &nbsp; <SearchUserChat searchValue={this.state.searchValue} messageHistort={this.state.messageHistort}/>
                     </Menu.Item>
                 </Menu>
                 <Scrollbars id='ginni' renderTrackHorizontal={props => <div {...props} className="track-horizontal" style={{
