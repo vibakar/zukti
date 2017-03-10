@@ -94,7 +94,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                             <Feed.Summary date={this.props.data.time} user={CodeAssistant.Interaction.name}/>
                             <Feed.Extra>
                             </Feed.Extra>
-                            <Feed.Extra text style = {{color :" red"}}>
+                            <Feed .Extra text style = {{color :" red"}}>
                                {CodeAssistant.InitialWarning.message}{warningCount}
                              </Feed.Extra>
                         </Feed.Content>
@@ -111,8 +111,14 @@ export default class AssistantGinniMixedReply extends React.Component {
           text = this.props.data.text[0].value;
           return (
                 <Feed id="ginniview">
-                <Feed.Event>
+                    <Feed.Event>
                     <Feed.Content id = 'ginniviewKeyword'>
+                      <Feed.Extra extras>
+                        <p>
+                           {this.props.data.extras}
+                       </p>
+                       <br/>
+                       </Feed.Extra>
                         <Feed.Summary> {text} </Feed.Summary>
                         <Feed.Extra>
                           <hr/>
@@ -150,6 +156,9 @@ export default class AssistantGinniMixedReply extends React.Component {
           <Feed id="ginniview">
           <Feed.Event>
               <Feed.Content id = 'ginniviewKeyword'>
+                <Feed.Extra extras>
+                           {this.props.data.extras}
+                 </Feed.Extra>
                   <Feed.Summary> <a title='click to open the image in new tab'
                     href={imageURL} target='_blank'>{text}</a>
                  </Feed.Summary>
@@ -171,6 +180,9 @@ export default class AssistantGinniMixedReply extends React.Component {
               <Feed id="ginniview">
               <Feed.Event>
                   <Feed.Content id = 'ginniviewKeyword'>
+                    <Feed.Extra extras>
+                           {this.props.data.extras}
+                         </Feed.Extra>
                     <Feed.Extra>
                       <UnfurlLink url ={blog}/>
                   </Feed.Extra>
@@ -201,6 +213,9 @@ export default class AssistantGinniMixedReply extends React.Component {
             <Feed id="ginniview">
             <Feed.Event>
                 <Feed.Content id = 'ginniviewKeyword'>
+                  <Feed.Extra extras>
+                           {this.props.data.extras}
+                         </Feed.Extra>
                   <Feed.Extra>
                     <UnfurlLink url ={video}/>
                 </Feed.Extra>
