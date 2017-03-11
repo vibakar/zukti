@@ -43,6 +43,18 @@ export default class AssistantGinniMixedReply extends React.Component {
             } />]);
     }
     render() {
+    let datelocal = this.props.data.time;
+    let storedTime;
+    if(datelocal[21] === 'M'){
+      storedTime = datelocal[11]+datelocal[12]+datelocal[13]
+      +datelocal[14]+datelocal[15]+datelocal[16]+datelocal[17]+datelocal[18]
+      +datelocal[19]+datelocal[20]+datelocal[21];
+      }
+      else{
+          storedTime = datelocal[11]+datelocal[12]+datelocal[13]
+          +datelocal[14]+datelocal[15]+datelocal[16]+datelocal[17]+datelocal[18]
+          +datelocal[19]+datelocal[20];
+      }
       /* @yuvashree: edited code for displaying videos */
       if(this.props.data.blog === undefined)
       {
@@ -68,7 +80,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                           </Label.Group>
                       </Feed.Extra>
                         <Feed.Extra id='assistantViewUserDate'>
-                            {this.props.data.time}
+                            {storedTime}
                         </Feed.Extra>
                   </Feed.Content>
               </Feed.Event>
@@ -98,7 +110,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                           </Label.Group>
                       </Feed.Extra>
                         <Feed.Extra id='assistantViewUserDate'>
-                            {this.props.data.time}
+                            {storedTime}
                         </Feed.Extra>
                   </Feed.Content>
               </Feed.Event>
