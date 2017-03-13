@@ -24,7 +24,6 @@ webclient/config/SentMail.Json
 webclient/config/successfullyregistered.json
 webclient/css/style.css
 webclient/ginniAdmin/components/addConcept/addConcept.css
-webclient/ginniAdmin/components/addConcept/addConcepts.jsx
 webclient/ginniAdmin/components/admin/adminprofile.css
 webclient/ginniAdmin/components/admin/adminprofile.jsx
 webclient/ginniAdmin/components/Analytics/graphData.jsx
@@ -126,7 +125,7 @@ webserver/config/passport.js
 webserver/config/replyForKeyword.json
 webserver/config/testing.json
 webserver/images/*
-webserver/lexicon/getLexicon.js
+webserver/lexicon/getLexicons.js
 webserver/lexicon/intentLexicon.json
 webserver/lexicon/typeLexicon.json
 webserver/lexicon/keywordLexicon.json

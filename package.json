@@ -1,9 +1,9 @@
 {
-  "name": "react-webapp-boilerplate",
+  "name": "zukti",
   "version": "1.0.0",
   "scripts": {
     "build": "node ./node_modules/webpack/bin/webpack.js",
-    "serv": "node server.js",
+    "serv": "node bin/www",
     "lint": "gulp lint"
   },
   "dependencies": {

@@ -58,18 +58,6 @@ export default class AssistantGinniMixedReply extends React.Component {
     }
     render() {
           let text = '';
-          let datelocal = this.props.data.time;
-          let storedTime;
-          if(datelocal[21] === 'M'){
-            storedTime = datelocal[11]+datelocal[12]+datelocal[13]
-            +datelocal[14]+datelocal[15]+datelocal[16]+datelocal[17]+datelocal[18]
-            +datelocal[19]+datelocal[20]+datelocal[21] ;
-            }
-            else{
-                storedTime = datelocal[11]+datelocal[12]+datelocal[13]
-                +datelocal[14]+datelocal[15]+datelocal[16]+datelocal[17]+datelocal[18]
-                +datelocal[19]+datelocal[20];
-            }
            //  : Initialize swear word count */
           let abuseCount = this.props.abuseCount;
            //  @Mayanka: check if swear is present in the current query
@@ -85,11 +73,9 @@ export default class AssistantGinniMixedReply extends React.Component {
                     <Feed.Event>
                         <Feed.Label image='../../images/geniebot.jpg'/>
                         <Feed.Content>
-                            <Feed.Summary warning style = {{color :" red"}}>
-                              {CodeAssistant.FinalWarning.message}
-                            </Feed.Summary>
-                            <Feed.Extra id='assistantViewUserDate'>
-                               {storedTime}
+                            <Feed.Summary date={this.props.data.time} user={CodeAssistant.Interaction.name}/>
+                            <Feed.Extra warning style = {{color :" red"}}>
+                               {CodeAssistant.FinalWarning.message}
                              </Feed.Extra>
                          </Feed.Content>
                      </Feed.Event>
@@ -103,12 +89,13 @@ export default class AssistantGinniMixedReply extends React.Component {
             return (
                 <Feed id="ginniview">
                     <Feed.Event>
+                        <Feed.Label image='../../images/geniebot.jpg'/>
                         <Feed.Content>
-                            <Feed.Summary text style = {{color :" red"}}>
-                              {CodeAssistant.InitialWarning.message}{warningCount}
-                            </Feed.Summary>
-                            <Feed.Extra id='assistantViewUserDate'>
-                               {storedTime}
+                            <Feed.Summary date={this.props.data.time} user={CodeAssistant.Interaction.name}/>
+                            <Feed.Extra>
+                            </Feed.Extra>
+                            <Feed.Extra text style = {{color :" red"}}>
+                               {CodeAssistant.InitialWarning.message}{warningCount}
                              </Feed.Extra>
                         </Feed.Content>
                      </Feed.Event>
@@ -152,7 +139,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                            </Label.Group>
                        </Feed.Extra>
                           <Feed.Extra id='assistantViewUserDate'>
-                              {storedTime}
+                              {this.props.data.time}
                           </Feed.Extra>
                     </Feed.Content>
                 </Feed.Event>
@@ -175,11 +162,9 @@ export default class AssistantGinniMixedReply extends React.Component {
                   <Feed.Summary> <a title='click to open the image in new tab'
                     href={imageURL} target='_blank'>{text}</a>
                  </Feed.Summary>
-
-                      <AssistantGinniOptions question={this.props.question}
-                        type='text' value={text}/>
                     <Feed.Extra id='assistantViewUserDate'>
-                         {storedTime}
+                      <AssistantGinniOptions question={this.props.question}
+                        type='text' value={text}/>  {this.props.data.time}
                     </Feed.Extra>
               </Feed.Content>
           </Feed.Event>
@@ -212,7 +197,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                       </Label.Group>
                     </Feed.Extra>
                         <Feed.Extra id='assistantViewUserDate'>
-                            {storedTime}
+                            {this.props.data.time}
                         </Feed.Extra>
                   </Feed.Content>
               </Feed.Event>
@@ -247,7 +232,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                     </Label.Group>
                 </Feed.Extra>
                       <Feed.Extra id='assistantViewUserDate'>
-                          {storedTime}
+                          {this.props.data.time}
                       </Feed.Extra>
                 </Feed.Content>
             </Feed.Event>

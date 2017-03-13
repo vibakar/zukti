@@ -1,6 +1,6 @@
 let nlp = require('nlp_compromise');
 let getNeo4jDriver = require('../../../neo4j/connection');
-let getLexicon = require('../../../lexicon/getLexicon');
+let getLexicon = require('../../../lexicon/getLexicons');
 
 module.exports = function(renameConceptText, oldConcept, resultCallback) {
     let conceptRename = nlp.text(renameConceptText).root();

@@ -1,7 +1,7 @@
 // add intent same as to some intent
 let nlp = require('nlp_compromise');
 let getNeo4jDriver = require('../../../neo4j/connection');
-let getLexicon = require('../../../lexicon/getLexicon');
+let getLexicon = require('../../../lexicon/getLexicons');
 module.exports = function(baseIntent, newSameAsIntent, resultCallback) {
     let newSameAsIntentNormalized = nlp.text(newSameAsIntent).root();
     // query to match intent and merge new intent with it

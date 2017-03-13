@@ -1,7 +1,7 @@
 // this route is used to get reply of questions asked by user
 let express = require('express');
-let User = require('./../../models/user');
 let router = express.Router();
+let User = require('./../../models/user');
 let processQuestion = require('./functions/processQuestion');
 let getQuestionResponse = require('./functions/getQuestionResponse');
 let commonReply = require('./../../config/commonReply');
@@ -13,6 +13,11 @@ let saveUserQueries = require('./functions/saveUserQueries');
 let saveAnalyticsData = require('./functions/saveAnalyticsData');
 // getKeywordResponse json file containing statements for keyword responses
 let getKeywordResponse = require('./functions/getKeywordResponse');
+//redis
+let intentRedis = require('./../redis/functions/getIntents');
+let keywordRedis = require('./../redis/functions/getKeywords');
+let typeRedis = require('./../redis/functions/getTypes');
+
 //spell checker
 let getSpellChecker = require('../spellChecker/functions/spellChecker');
 let detectSwear = require('../filterAbuse/functions/filterAbuse');
@@ -28,7 +33,7 @@ router.post('/askQuestion', function(req, res) {
 //  if abuse found, issue a warning
     let abuseCount = foundAbuse.count;
     let abusePresent = foundAbuse.swearPresent;
-//  @Mayanka: update the abusive word count everytime in database
+    //  @Mayanka: update the abusive word count everytime in database
     if(abusePresent == true ) {console.log('inside database');
           User.findOneAndUpdate({
             $or: [{ 'local.email': email }, { 'google.email': email }, { 'facebook.email': email }]
@@ -44,30 +49,69 @@ router.post('/askQuestion', function(req, res) {
               console.log('updated');
               return 'Abuse Count updated successfully';
           });
-//  @Mayanka: if abuse found, return true and count
-      res.json({abuseCount : abuseCount, abusePresent : abusePresent});
+          //  @Mayanka: if abuse found, return true and count
+          res.json({abuseCount : abuseCount, abusePresent : abusePresent});
     }
 //  @Mayanka: process the input if no abuse is found
 else{
     let spellResponse = getSpellChecker(question.value);
     console.log('in reply  '+spellResponse.question+'flag'+spellResponse.flag);
     // extract intents and keywords from the question
-
-    let query = processQuestion(spellResponse.question.toLowerCase());
+    // intentRedis(intentCallBack);
+    // function intentCallBack(intent)
+    // {
+    //   intentLexicon = intent;
+    //   keywordRedis(keywordCallBack);
+    //   function keywordCallBack(keyword)
+    //   {
+    //     keywordLexicon = keyword;
+    //   }
+    //   typeRedis(typeCallBack)
+    //   function typeCallBack(type)
+    //   {
+    //     typeLexicon = type;
+    //   }
+    //
+    //   finalCallBack();
+    // }
+    /* @navinprasad: fetch the keywords,intents,types from redis */
+    let intentLexicon = [];
+    let keywordLexicon = [];
+    let typeLexicon = [];
+    let count = 0;
+    let lexicon = function()
+    {
+      client.smembers('keywords', function(err, reply) {
+        keywordLexicon = reply;
+      });
+      client.smembers('intents', function(err, reply) {
+        intentLexicon = reply;
+      });
+      client.smembers('types', function(err, reply) {
+        typeLexicon = reply;
+        finalCallBack();
+      });
+    }
+    lexicon();
+    let finalCallBack = function()
+    {
+      // console.log("intents"+intentLexicon+"keywords"+keywordLexicon+"type"+typeLexicon);
+    // console.log(intentLexicon+"........here");
+    let query = processQuestion(spellResponse.question.toLowerCase(),intentLexicon,keywordLexicon,typeLexicon);
     let keywords = query.keywords;
     let intents = query.intents;
     let types = query.types;
 
-// @vibakar: add keyword to redis
-  let addKeywordToRedis = function(username,keyword,intent){
-    client.hmset(username, 'keywords', keyword, 'intents', intent, function(err, reply) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(reply);
-        }
-    });
-  }
+    // @vibakar: add keyword to redis
+    let addKeywordToRedis = function(username,keyword,intent){
+      client.hmset(username, 'keywords', keyword, 'intents', intent, function(err, reply) {
+          if (err) {
+              console.log(err);
+          } else {
+              console.log(reply);
+          }
+      });
+    }
     // function used to send final response
     let sendResponse = function(isUnAnswered, answerObj) {
       // function to save analytics data
@@ -121,12 +165,12 @@ else{
       saveUnansweredQuery(username, email, question.value);
       // if no intent is found in the question then get a keyword response
       /* @yuvashree: added two more attributes for specifying the user and thier requested type type */
-      getKeywordResponse(keywords, email, types, sendResponse, spellResponse.flag, spellResponse.question);
-      // @vibakar: adding keyword to redis
-      addKeywordToRedis(username,keywords[0],intents[0]);
+    getKeywordResponse(keywords, email, types, sendResponse, spellResponse.flag, spellResponse.question);
+    // @vibakar: adding keyword to redis
+    addKeywordToRedis(username,keywords[0],intents[0]);
     }
      else {
-       // @vibakar: checking whether the keywords arry contains 'this,it,that'
+       // @vibakar: checking whether the keywords arry contains 'this', 'it', 'that'
           if(keywords.includes('it') || keywords.includes('that') || keywords.includes('this')) {
             var searchKeyword = ['this','it','that'];
              var k = '';
@@ -140,7 +184,7 @@ else{
                     if(err){
                       console.log(err);
                     }else{
-                      // @vibakar: removing the identified keyword
+                      // @vibakar: emoving the identified keyword
                       var ind = keywords.splice(index,1);
                       // @vibakar: pushing the previous keyword
                         keywords.push(value);
@@ -157,6 +201,7 @@ else{
             addKeywordToRedis(username,keywords[0],intents[0]);
           }
     }
+  }
   }
 });
 module.exports = router;

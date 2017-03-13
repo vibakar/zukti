@@ -1,6 +1,6 @@
 let getNeo4jDriver = require('./../../neo4j/connection');
 let processQuestion = require('./processQuestion');
-let getLexicon = require('../../lexicon/getLexicon');
+let getLexicon = require('../../lexicon/getLexicons');
 module.exports = function(req, questionsAnswerSavedCallback) {
 
     //  let query = `CREATE (a:answer {textAnswer:'',videoAnswer:'',blogAnswer:'',CodeSnippetAnswer:''})

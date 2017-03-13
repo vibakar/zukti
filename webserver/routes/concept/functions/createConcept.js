@@ -1,6 +1,6 @@
 let nlp = require('nlp_compromise');
 let getNeo4jDriver = require('../../../neo4j/connection');
-let getLexicon = require('../../../lexicon/getLexicon');
+let getLexicon = require('../../../lexicon/getLexicons');
 
 module.exports = function(newConcept, relationship, oldConcept, resultCallback) {
     // @vibakar: cypher query for adding new concepts to existing concepts

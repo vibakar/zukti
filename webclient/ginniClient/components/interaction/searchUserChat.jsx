@@ -149,13 +149,11 @@ export default class ViewUserChat extends React.Component {
                         <Icon name='search'/>
                         Search Result for "{this.props.searchValue}"
                     </Modal.Header>
-                    <Accordion>
                     <Modal.Content id='viewuserchatcontent'>
-                        <b>{chat.length !== 0                          
+                        <b>{chat.length !== 0
                                 ? chat
                                 : 'No results found!!'}</b>
                     </Modal.Content>
-                    </Accordion>
                 </Modal>
                 <Snackbar open={this.state.openSnackbar} message={this.state.snackbarMsg}
                   autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>

@@ -1,8 +1,26 @@
+// let Axios = require('axios');
 let nlp = require('nlp_compromise');
+// let redis = require('redis');
+// let client = redis.createClient();
+
 module.exports = function(sentence) {
+
     let keywordLexicon = require('./../../lexicon/keywordLexicon.json');
     let intentLexicon = require('./../../lexicon/intentLexicon.json');
+    // let keywordLexicon = client.smembers('keywords');
+    // let intentLexicon  = client.smembers('intents');
+    //
+    // console.log('keywords from redis: ', keywordLexicon);
+    // console.log('intent from redis: ', intentLexicon);
+
     let str = nlp.text(sentence);
+    // Axios.get('/getKeywords').then((response) =>{
+    //   keywordLexicon = response;
+    // });
+    // Axios.get('/getIntents').then((response) =>{
+    //   intentLexicon = response;
+    // });
+
     // split str into individual words
     let tokens = str.root().split(' ');
     // keywords array will contain keywords extracted from question

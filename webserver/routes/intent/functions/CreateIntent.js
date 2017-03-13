@@ -2,7 +2,7 @@
 called from file intent.js (which pass NewIntent parameter to function) */
 let nlp = require('nlp_compromise');
 let getNeo4jDriver = require('../../../neo4j/connection');
-let getLexicon = require('../../../lexicon/getLexicon');
+let getLexicon = require('../../../lexicon/getLexicons');
 
 module.exports = function(NewIntent, resultCallback) {
     let newIntent = nlp.text(NewIntent).root();

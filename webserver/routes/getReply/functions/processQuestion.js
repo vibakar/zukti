@@ -1,9 +1,36 @@
-module.exports = function(sentence) {
-    let nlp = require('nlp_compromise');
-    let keywordLexicon = require('../../../lexicon/keywordLexicon.json');
-    let intentLexicon = require('../../../lexicon/intentLexicon.json');
-    /* @yuvashree: fetching the types from the Lexicons */
-    let typeLexicon = require('../../../lexicon/typeLexicon.json');
+// let client = require('./redis');
+// let intentRedis = require('./../../redis/functions/redisController');
+module.exports = function(sentence,intentLexicon,keywordLexicon,typeLexicon) {
+
+  console.log('inside getReply processQuestion...');
+
+  let nlp = require('nlp_compromise');
+  // let keywordLexicon = ;
+
+  // let redis = require('redis');
+  // let client = redis.createClient();
+  //
+  // let keywordLexicon = client.smembers('keywords');
+
+  // let intentLexicon  = intentRedis.getIntents();
+  // console.log(intentLexicon);
+
+  // let typeLexicon = client.smembers('types') ;
+  //
+  // console.log('keywords from redis: ', keywordLexicon);
+  // console.log('intent from redis: ', intentLexicon);
+  // console.log('type from redis: ', typeLexicon);
+
+  // Axios.get('./getKeywords').then((response) =>{
+  //   keywordLexicon = response;
+  // });
+  // Axios.get('./getIntents').then((response) =>{
+  //   intentLexicon = response;
+  // });
+  // Axios.get('./getTypes').then((response) =>{
+  //   typeLexicon = response;
+  // });
+
     //  console.log(intentLexicon);
     let str = nlp.text(sentence);
     // split str into individual words
@@ -76,6 +103,11 @@ module.exports = function(sentence) {
             i = i + type.length - 1;
             types.push(type.join(' '));
         }
+        console.log("its working");
     }
-    return {keywords, intents, types};
+    return {
+        keywords,
+        intents,
+        types
+    };
 };

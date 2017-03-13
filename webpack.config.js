@@ -44,5 +44,10 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
         new HtmlWebpackPlugin({template: path.resolve('./webclient/index.html')})
-    ]
+    ],
+    node: {
+      fs: 'empty',
+      net: 'empty',
+      tls: 'empty'
+    }
 };

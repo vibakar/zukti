@@ -19,7 +19,7 @@ export default class AssistantGinniMoreBlogsView extends React.Component {
                           <AssistantGinniOptions question={this.props.question}
                             type='blog' value={this.props.value}/>
                             <Feed.Extra id='assistantViewUserDate'>
-                                {new Date().toLocaleTimeString()}
+                                {new Date().toLocaleString()}
                             </Feed.Extra>
                   </Feed.Content>
               </Feed.Event>
