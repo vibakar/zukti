@@ -74,7 +74,7 @@ module.exports = {
     //
     "block-scoped-var": 0, // treat var statements as if they were block scoped (off by default). 0: deep destructuring is not compatible https://github.com/eslint/eslint/issues/1863
     "complexity": 0, // specify the maximum cyclomatic complexity allowed in a program (off by default)
-    "consistent-return": 2, // require return statements to either always or never specify values
+    // "consistent-return": 2, // require return statements to either always or never specify values
     "curly": 2, // specify curly brace conventions for all control statements
     "default-case": 2, // require default case in switch statements (off by default)
     "dot-notation": 2, // encourages use of dot notation whenever possible
@@ -141,7 +141,7 @@ module.exports = {
     "no-shadow-restricted-names": 2, // disallow shadowing of names such as arguments
     "no-undef": 2, // disallow use of undeclared variables unless mentioned in a /*global */ block
     "no-undef-init": 2, // disallow use of undefined when initializing variables
-    "no-undefined": 2, // disallow use of undefined variable (off by default)
+    // "no-undefined": 2, // disallow use of undefined variable (off by default)
     //"no-unused-vars": 2, // disallow declaration of variables that are not used in the code
     "no-use-before-define": 2, // disallow use of variables before they are defined
 
