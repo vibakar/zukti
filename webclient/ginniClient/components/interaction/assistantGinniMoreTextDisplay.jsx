@@ -18,9 +18,6 @@ export default class AssistantGinniMoreTextView extends React.Component {
                     <Feed.Extra/>
                   <AssistantGinniOptions question={this.props.question}
                     type='text' value={this.props.textValue}/>
-                    <Feed.Extra id='assistantViewUserDate'>
-                        {new Date().toLocaleString()}
-                    </Feed.Extra>
                 </Feed.Content>
             </Feed.Event>
         </Feed>

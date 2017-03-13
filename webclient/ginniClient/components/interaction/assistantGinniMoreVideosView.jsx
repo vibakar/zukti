@@ -26,9 +26,6 @@ export default class AssistantGinniMoreVideosView extends React.Component {
                     <Feed.Summary><UnfurlLink url={this.props.value}/></Feed.Summary>
                     <AssistantGinniOptions question={this.props.question} type='video' value={this.props.value}/>
                     <Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>
-                    <Feed.Extra id='assistantViewUserDate'>
-                        {new Date().toLocaleString()}
-                    </Feed.Extra>
                 </Feed.Content>
             </Feed.Event>
         </Feed>

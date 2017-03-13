@@ -14,9 +14,6 @@ export default class AssistantView extends React.Component {
                   <Feed.Content id='assistantViewGenni'>
                       <Feed.Summary>{this.props.value}
                       </Feed.Summary>
-                      <Feed.Extra id='assistantViewUserDate'>
-                          {new Date().toLocaleString()}
-                      </Feed.Extra>
                       <Feed.Meta/>
                   </Feed.Content>
               </Feed.Event>

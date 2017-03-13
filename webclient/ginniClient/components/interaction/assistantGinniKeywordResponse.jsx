@@ -67,9 +67,6 @@ export default class AssistantGinniMixedReply extends React.Component {
                                     type='blog' value={video}/>
                           </Label.Group>
                       </Feed.Extra>
-                        <Feed.Extra id='assistantViewUserDate'>
-                            {this.props.data.time}
-                        </Feed.Extra>
                   </Feed.Content>
               </Feed.Event>
             </Feed>
@@ -97,9 +94,6 @@ export default class AssistantGinniMixedReply extends React.Component {
                                     type='blog' value={blog}/>
                           </Label.Group>
                       </Feed.Extra>
-                        <Feed.Extra id='assistantViewUserDate'>
-                            {this.props.data.time}
-                        </Feed.Extra>
                   </Feed.Content>
               </Feed.Event>
             </Feed>

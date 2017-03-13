@@ -39,9 +39,6 @@ export default class AssistantGinniMixedReply extends React.Component {
                       </Feed.Extra>
                       <AssistantGinniOptions question={this.props.question}
                         type='blog' value={blogUrl}/>
-                        <Feed.Extra id='assistantViewUserDate'>
-                            {new Date().toLocaleString()}
-                        </Feed.Extra>
                   </Feed.Content>
               </Feed.Event>
           </Feed>

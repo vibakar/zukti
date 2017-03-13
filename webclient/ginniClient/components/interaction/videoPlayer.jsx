@@ -17,9 +17,6 @@ export default class AssistantView extends React.Component {
                       <Feed.Summary >
                           <ReactPlayer url={this.props.url} playing={false} controls={true}/>
                       </Feed.Summary>
-                      <Feed.Extra id='assistantViewUserDate'>
-                          {new Date().toLocaleString()}
-                      </Feed.Extra>
                   </Feed.Content>
               </Feed.Event>
           </Feed>

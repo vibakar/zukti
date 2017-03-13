@@ -71,9 +71,7 @@ export default class AssistantGinniMixedReply extends React.Component {
             return (
                 <Feed id="ginniview">
                     <Feed.Event>
-                        <Feed.Label image='../../images/geniebot.jpg'/>
                         <Feed.Content>
-                            <Feed.Summary date={this.props.data.time} user={CodeAssistant.Interaction.name}/>
                             <Feed.Extra warning style = {{color :" red"}}>
                                {CodeAssistant.FinalWarning.message}
                              </Feed.Extra>
@@ -89,9 +87,7 @@ export default class AssistantGinniMixedReply extends React.Component {
             return (
                 <Feed id="ginniview">
                     <Feed.Event>
-                        <Feed.Label image='../../images/geniebot.jpg'/>
                         <Feed.Content>
-                            <Feed.Summary date={this.props.data.time} user={CodeAssistant.Interaction.name}/>
                             <Feed.Extra>
                             </Feed.Extra>
                             <Feed.Extra text style = {{color :" red"}}>
@@ -138,9 +134,6 @@ export default class AssistantGinniMixedReply extends React.Component {
                                      type='text' value={text}/>
                            </Label.Group>
                        </Feed.Extra>
-                          <Feed.Extra id='assistantViewUserDate'>
-                              {this.props.data.time}
-                          </Feed.Extra>
                     </Feed.Content>
                 </Feed.Event>
               </Feed>
@@ -164,7 +157,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                  </Feed.Summary>
                     <Feed.Extra id='assistantViewUserDate'>
                       <AssistantGinniOptions question={this.props.question}
-                        type='text' value={text}/>  {this.props.data.time}
+                        type='text' value={text}/>
                     </Feed.Extra>
               </Feed.Content>
           </Feed.Event>
@@ -196,9 +189,6 @@ export default class AssistantGinniMixedReply extends React.Component {
                                 type='text' value={text}/>
                       </Label.Group>
                     </Feed.Extra>
-                        <Feed.Extra id='assistantViewUserDate'>
-                            {this.props.data.time}
-                        </Feed.Extra>
                   </Feed.Content>
               </Feed.Event>
             </Feed>
@@ -231,9 +221,6 @@ export default class AssistantGinniMixedReply extends React.Component {
                                 type='text' value={text}/>
                     </Label.Group>
                 </Feed.Extra>
-                      <Feed.Extra id='assistantViewUserDate'>
-                          {this.props.data.time}
-                      </Feed.Extra>
                 </Feed.Content>
             </Feed.Event>
           </Feed>
