@@ -101,6 +101,26 @@ export default class AssistantGinniMixedReply extends React.Component {
           }
            // @Mayanka: proper reply if no swear word
   else {
+    /* @yuvashree: for getting subconcepts */
+    let subconcepts = '';
+    if(this.props.data.concept) {
+      subconcepts = this.props.data.concept.value;
+      console.log(subconcepts);
+      return (
+            <Feed id="ginniview">
+            <Feed.Event>
+                <Feed.Content id = 'ginniviewKeyword'>
+                    <Feed.Summary> {subconcepts} </Feed.Summary>
+                      <Feed.Extra id='assistantViewUserDate'>
+                          {this.props.data.time}
+                      </Feed.Extra>
+                </Feed.Content>
+            </Feed.Event>
+          </Feed>
+      );
+    }
+    /* subconcept code ends here */
+    
         let text = '';
         /* @yuvashree: edited code for text view */
         if(this.props.data.text) {

@@ -25,27 +25,32 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
         /* @yuvashree: modified query for multiple relationships and different domain for normal question */
         if (types.length === 0) {
             query = `UNWIND ${JSON.stringify(intents)} AS token
-              MATCH (n:intent)
-              WHERE n.name = token
-              OPTIONAL MATCH (n)-[r:same_as]->(main)
-              WITH  LAST(COLLECT(main.name)) AS intent
-              UNWIND ${JSON.stringify(keywords)} AS token
-              MATCH (n:concept)
-              WHERE n.name = token
-              OPTIONAL MATCH (n)-[r:same_as]->(main)
-              WITH COLLECT(main) AS baseWords,intent AS intent
-              UNWIND baseWords AS token
-              MATCH p=(token)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
-              WITH length(p) AS max,baseWords AS baseWords,intent AS intent
-              UNWIND baseWords AS bw
-              match p=(bw)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain/* @yuvashree: modified query for multiple relationships and different domain for type specific question */}'})
-              WHERE length(p) = max WITH COLLECT(bw) AS bws,intent AS intent
-              UNWIND bws AS keywords
-              MATCH (keywords)<-[r]-(q:question)-[rel:answer]->(a)
-              WHERE TYPE(r)=intent
-              WITH a as a, rel as rel
-              RETURN LABELS(a),COLLECT(a.value) `;
-        } else {
+            MATCH (n:intent)
+            WHERE n.name = token
+            OPTIONAL MATCH (n)-[r:same_as]->(main)
+            WITH  LAST(COLLECT(main.name)) AS intent
+            UNWIND ${JSON.stringify(keywords)} AS token
+            MATCH (n:concept)
+            WHERE n.name = token
+            OPTIONAL MATCH (n)-[r:same_as]->(main)
+            WITH COLLECT(main) AS baseWords,intent AS intent
+            UNWIND baseWords AS token
+            MATCH p=(token)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
+            WITH length(p) AS max,baseWords AS baseWords,intent AS intent
+            UNWIND baseWords AS bw
+            match p=(bw)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
+            WHERE length(p) = max WITH COLLECT(bw) AS bws,intent AS intent
+            UNWIND bws AS keywords
+            OPTIONAL MATCH (keywords)<-[r]-(q:question)-[rel:answer]->(a)
+            WHERE TYPE(r)=intent
+            WITH a as a, rel as rel,intent as intent,keywords as keywords
+            OPTIONAL MATCH  (keywords)<-[subconcept]-(c:concept)
+            WHERE TYPE(subconcept)=intent
+            WITH a as a, c as c
+            RETURN LABELS(a),COLLECT(distinct a.value),LABELS(c),COLLECT(distinct c.name) `;
+        }
+          /* @yuvashree: modified query for multiple relationships and different domain for type specific question */
+          else {
             query = `UNWIND ${JSON.stringify(types)} AS token
               MATCH (n:type)
               WHERE n.name = token
@@ -90,12 +95,22 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
                 }
                 let resultArray = result.records.forEach((record) => {
                     let field = record._fields;
-                    answerObj[field[0][0]] = field[1].map((value, index) => {
-                        if (value !== '') {
-                            return {value: value};
-                        }
-                    });
-                });
+                    if(field[0] !== null)
+                    {
+                      answerObj[field[0][0]] = field[1].map((value, index) => {
+                      if (value !== '') {
+                          return {value: value};
+                      }
+                  });
+                }
+                else {
+                  field[3] = {
+                    value:field[3].join(",")
+                  }
+                  console.log(field[2][0]);
+                  answerObj[field[2][0]] = field[3];
+                }
+              });
                 // sending the answer to callback
                 answerFoundCallback(answerObj);
             }
