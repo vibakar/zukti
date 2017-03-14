@@ -24,10 +24,7 @@ export default class AddConcept extends React.Component {
             opensnackbar: false,
             snackbarMsg: '',
             relations: [],
-            concepts: [],
-            graph: <frameset>
-              <frame src = 'http://localhost:8080/graphie'/>
-            </frameset>
+            concepts: []
         };
     }
     // @vibakar: bind the dropdown with all concepts and relationships from neo4j databse
@@ -154,9 +151,7 @@ export default class AddConcept extends React.Component {
                         </Grid.Row>
                         <Grid.Row/>
                     </Grid.Column>
-                    <Grid.Column width={7}>
-                      {this.state.graph}
-                    </Grid.Column>
+
                 </Grid>
                 <Snackbar open={this.state.opensnackbar} message={this.state.snackbarMsg}
                   autoHIdeDuration={400} onRequestClose={this.handleRequestClose}/>

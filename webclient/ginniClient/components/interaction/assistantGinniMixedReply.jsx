@@ -9,7 +9,6 @@ import AssistantGinniOptions from './assistantGinniOptions';
 import AssistantGinniKeywordResponse from './assistantGinniKeywordResponse';
 import VideoPlayer from './videoPlayer';
 import UnfurlLink from './unfurlLink';
-import ReactPlayer from 'react-player';
 import './chatcontainerstyle.css';
 import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
 let Beautify = require('js-beautify').js_beautify;
@@ -37,7 +36,6 @@ export default class AssistantGinniMixedReply extends React.Component {
         });
         this.props.handleGinniReply(ginniReply);
     }
-    // @sundaresan: video display
     displayVideos() {
         let ginniReply = [<AssistantGinniPlainText value = 'Here is a top rated video for you' />];
         ginniReply.push(<AssistantGinniVideoDisplay
@@ -56,10 +54,10 @@ export default class AssistantGinniMixedReply extends React.Component {
      hashHistory.push('/');
   }
   /* @yuvashree: added function to play video on clicking the button */
-  playVideo() {
-      let videoUrl = this.props.data.video[0].value;
-
-  }
+    playVideo() {
+        let videoUrl = this.props.data.video[0].value;
+        this.props.handleGinniReply([< VideoPlayer url = {videoUrl} />]);
+    }
     render() {
           let text = '';
            //  : Initialize swear word count */
@@ -107,7 +105,6 @@ export default class AssistantGinniMixedReply extends React.Component {
   else {
     /* @yuvashree: for getting subconcepts */
     let subconcepts = '';
-    console.log(this.props.data.concept);
     if(this.props.data.concept) {
       subconcepts = this.props.data.concept.value;
       console.log(subconcepts);
@@ -236,18 +233,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                               basic color='orange' id='cursor'>Videos</Label>
                             : ''}
                             {/* @yuvashree: added button to play video */}
-                            {/* <Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label> */}
-                            <Modal closeOnRootNodeClick={false} closeIcon='close' trigger = {<Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>}> <Feed id='assistantView'>
-                                       <Feed.Event>
-                                           <Feed.Label image='../../images/geniebot.jpg'/>
-                                           <Feed.Content>
-                                               <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
-                                               <Feed.Extra >
-                                                 <ReactPlayer height={455} width={810} url={this.props.data.video[0]} playing={false} controls={true}/>
-                                               </Feed.Extra>
-                                           </Feed.Content>
-                                       </Feed.Event>
-                                   </Feed></Modal>
+                            <Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>
                               <AssistantGinniOptions question={this.props.question}
                                 type='text' value={text}/>
                     </Label.Group>

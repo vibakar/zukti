@@ -15,7 +15,7 @@ export default class AssistantView extends React.Component {
               <Feed.Event>
                   <Feed.Content>
                       <Feed.Summary >
-                          <ReactPlayer height={455} width={810} url={this.props.url} playing={false} controls={true}/>
+                          <ReactPlayer url={this.props.url} playing={false} controls={true}/>
                       </Feed.Summary>
                   </Feed.Content>
               </Feed.Event>

@@ -51,7 +51,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                             {this.props.message}
                         </Feed.Extra>
                         <Feed.Extra images>
-                                <ReactPlayer height={455} width={810} url={this.props.url} playing={false} controls={true}/>
+                                <ReactPlayer url={this.props.url} playing={false} controls={true}/>
                         </Feed.Extra>
                         <Feed.Meta>
                             <Popup trigger={< Icon circular name = 'flag' color = 'green' />}
