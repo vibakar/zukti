@@ -3,6 +3,7 @@ let getNeo4jDriver = require('../../../neo4j/connection');
 let answerNotFoundReply = require('../../../config/answerNotFoundReply');
 let replyForKeyword = require('../../../config/replyForKeyword.json');
 let User = require('./../../../models/user');
+let client = require('./redis');
 
 module.exports = function(keywords, email, types, sendResponse, flag, correctedQuestion) {
     /* @yuvashree: find domain from db using email id */
@@ -22,6 +23,25 @@ module.exports = function(keywords, email, types, sendResponse, flag, correctedQ
         }
         let domain = data.local.loggedinDomain;
         let query = '';
+        let intent = '';
+        let type = '';
+        getIntent();
+        function getIntent()
+        {
+          if(types.length === 0)
+          {
+            intentCallBack(intent);
+          }
+          else {
+            client.hmget('types', types[types.length-1],function(err, reply) {
+            console.log(reply);
+            type = reply;
+            intentCallBack(intent);
+            });
+          }
+      }
+        function intentCallBack(intent)
+        {
         // query to extract data
         /* @yuvashree: modified query for multiple relationships and different domain for normal question */
         if (types.length === 0) {
@@ -34,32 +54,29 @@ module.exports = function(keywords, email, types, sendResponse, flag, correctedQ
                  MATCH p=(token)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
                  WITH length(p) AS max,baseWords AS baseWords
                  UNWIND baseWords AS bw
-                 match p=(bw)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain/* @yuvashree: modified query for multiple relationships and different domain for type specific question */}'})
+                 match p=(bw)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
                  WHERE length(p) = max
                  WITH bw as bw
-                 MATCH (n)<-[rel:answer]-(q:question)-->(bw) where n:blog or n:video or n:image
+                 MATCH (n)<-[rel:answer]-(q:question)-->(bw) where n:blog or n:video or n:image or n:code
                  WITH bw as bw,n as n ,rel as rel
                  ORDER BY rel.rating DESC
                  RETURN LABELS(n)as contentType ,COLLECT(distinct n.value) `;
-        } else {
-            query = `UNWIND ${JSON.stringify(types)} AS token
-              MATCH (n:type)
-              WHERE n.name = token
-              OPTIONAL MATCH (n)-[r:same_as]->(main)
-              WITH  LAST(COLLECT(main.name)) AS type
-              UNWIND ${JSON.stringify(keywords)} AS token
+        }
+        /* @yuvashree: modified query for multiple relationships and different domain for type specific question */
+        else {
+            query = `UNWIND ${JSON.stringify(keywords)} AS token
                MATCH (n:concept)
                WHERE n.name = token
                OPTIONAL MATCH (n)-[r:same_as]->(main)
-               WITH COLLECT(main) AS baseWords, type as type
+               WITH COLLECT(main) AS baseWords
                UNWIND baseWords AS token
                MATCH p=(token)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
-               WITH length(p) AS max,baseWords AS baseWords,type as type
+               WITH length(p) AS max,baseWords AS baseWords
                UNWIND baseWords AS bw
                match p=(bw)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
                WHERE length(p) = max
-               WITH bw as bw,type as type
-               MATCH (n)<-[rel:answer]-(q:question)-->(bw) where labels(n) = type
+               WITH bw as bw
+               MATCH (n)<-[rel:answer]-(q:question)-->(bw) where labels(n) = '${type[0]}'
                WITH bw as bw,n as n ,rel as rel
                ORDER BY rel.rating DESC
                RETURN LABELS(n)as contentType ,COLLECT(distinct n.value) `;
@@ -114,5 +131,6 @@ module.exports = function(keywords, email, types, sendResponse, flag, correctedQ
         }).catch(function(error) {
             console.log(error);
         });
+      }
     });
 };

@@ -44,6 +44,7 @@
         var count = 1;
 
         function AjaxCall(json) {
+<<<<<<< HEAD
             var query = localStorage.getItem("query");
             $.ajax({
                 url: "http://192.168.1.33:7474/db/data/cypher",
@@ -102,6 +103,72 @@
                                 } else {
                                     count++;
                                 }
+=======
+        $.ajax({
+            url: "http://192.168.1.137:7474/db/data/cypher",
+            type: 'POST',
+            data: {
+                "query": "match (n) return n"
+            },
+            beforeSend: function(request) {
+                request.setRequestHeader("Authorization", "Basic " + btoa("neo4j:neo4js"));
+            },
+            success: function(data) {
+                var len = data.data.length;
+                for (var obj of data.data) {
+                    var node = {};
+                    node.id = obj[0].metadata.id + "";
+                    node.label = obj[0].data.name;
+                    node.x = Math.random();
+                    node.y = Math.random();
+                    node.size = 5;
+                    if (obj[0].metadata.labels == 'concept') {
+                      node.color = '#4da6ff';
+                    }
+                    else if (obj[0].metadata.labels == 'blog') {
+                      node.color = '#9966ff';
+                    }
+                    else if (obj[0].metadata.labels == 'intent') {
+                      node.color = '#29a329';
+                    }
+                    else if (obj[0].metadata.labels == 'question') {
+                      node.color = '#ff3333';
+                    }
+                    else if (obj[0].metadata.labels == 'text') {
+                      node.color = '#ff4d94';
+                    }
+                    else if (obj[0].metadata.labels == 'video') {
+                      node.color = '#ffbb33';
+                    }
+                    else if (obj[0].metadata.labels == 'image') {
+                      node.color = 'teal';
+                    }
+                    entry.nodes.push(node);
+                    $.ajax({
+
+                        url: `http://192.168.1.137:7474/db/data/node/${obj[0].metadata.id}/relationships/out`,
+                        type: 'GET',
+                        beforeSend: function(request) {
+                            request.setRequestHeader("Authorization", "Basic " + btoa("neo4j:neo4js"));
+                        },
+                        success: function(data) {
+                            for (var obj of data) {
+                                var edge = {};
+                                edge.id = obj.metadata.id + "";
+                                edge.source = obj.start.substr(obj.start.length - 4);
+                                edge.target = obj.end.substr(obj.end.length - 4);
+                                edge.label = obj.metadata.type;
+                                edge.type = 'curvedArrow';
+                                edge.color = 'grey'
+                                entry.edges.push(edge);
+                            }
+                            if (count == len) {
+                              DrawGraph(entry);
+                            }
+                            else {
+                              count++;
+                            }
+>>>>>>> b03e7a8e962bc5d05380370b3d1c93dac1818eed
 
                             },
                             error: function(err) {

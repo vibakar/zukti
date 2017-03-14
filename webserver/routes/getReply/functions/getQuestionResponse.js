@@ -2,6 +2,7 @@ let Cookie = require('react-cookie');
 // get response of the question asked by user from neo4j database
 let getNeo4jDriver = require('../../../neo4j/connection');
 let User = require('./../../../models/user');
+let client = require('./redis');
 
 module.exports = function(intents, keywords, email, types, answerFoundCallback, noAnswerFoundCallback, flag, correctedQuestion) {
     /* @yuvashree: find domain from db using email id */
@@ -22,59 +23,72 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
         }
         let domain = data.local.loggedinDomain;
         let query = '';
-        /* @yuvashree: modified query for multiple relationships and different domain for normal question */
+        let intent = '';
+        let type = '';
+        getIntent();
+        function getIntent()
+        {
+          if(types.length === 0)
+          {
+            client.hmget('intents', intents[intents.length-1],function(err, reply) {
+            console.log(reply);
+            intent = reply;
+            intentCallBack(intent);
+            });
+          }
+          else {
+            client.hmget('types', types[types.length-1],function(err, reply) {
+            console.log(reply);
+            type = reply;
+            });
+            client.hmget('intents', intents[intents.length-1],function(err, reply) {
+            console.log(reply);
+            intent = reply;
+            intentCallBack(intent);
+            });
+          }
+      }
+        function intentCallBack(intent)
+        {
         if (types.length === 0) {
-            query = `UNWIND ${JSON.stringify(intents)} AS token
-            MATCH (n:intent)
-            WHERE n.name = token
-            OPTIONAL MATCH (n)-[r:same_as]->(main)
-            WITH  LAST(COLLECT(main.name)) AS intent
-            UNWIND ${JSON.stringify(keywords)} AS token
+        /* @yuvashree: modified query for multiple relationships and different domain for normal question */
+          console.log('here');
+            query = `UNWIND ${JSON.stringify(keywords)} AS token
             MATCH (n:concept)
             WHERE n.name = token
             OPTIONAL MATCH (n)-[r:same_as]->(main)
-            WITH COLLECT(main) AS baseWords,intent AS intent
+            WITH COLLECT(main) AS baseWords
             UNWIND baseWords AS token
             MATCH p=(token)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
-            WITH length(p) AS max,baseWords AS baseWords,intent AS intent
+            WITH length(p) AS max,baseWords AS baseWords
             UNWIND baseWords AS bw
             match p=(bw)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
-            WHERE length(p) = max WITH COLLECT(bw) AS bws,intent AS intent
+            WHERE length(p) = max WITH COLLECT(bw) AS bws
             UNWIND bws AS keywords
             OPTIONAL MATCH (keywords)<-[r]-(q:question)-[rel:answer]->(a)
-            WHERE TYPE(r)=intent
-            WITH a as a, rel as rel,intent as intent,keywords as keywords
+            WHERE TYPE(r)='${intent[0]}'
+            WITH a as a, rel as rel,keywords as keywords
             OPTIONAL MATCH  (keywords)<-[subconcept]-(c:concept)
-            WHERE TYPE(subconcept)=intent
+            WHERE TYPE(subconcept)='${intent[0]}'
             WITH a as a, c as c
             RETURN LABELS(a),COLLECT(distinct a.value),LABELS(c),COLLECT(distinct c.name) `;
         }
           /* @yuvashree: modified query for multiple relationships and different domain for type specific question */
           else {
-            query = `UNWIND ${JSON.stringify(types)} AS token
-              MATCH (n:type)
-              WHERE n.name = token
-              OPTIONAL MATCH (n)-[r:same_as]->(main)
-              WITH  LAST(COLLECT(main.name)) AS type
-              UNWIND ${JSON.stringify(intents)} AS token
-              MATCH (n:intent)
-              WHERE n.name = token
-              OPTIONAL MATCH (n)-[r:same_as]->(main)
-              WITH  LAST(COLLECT(main.name)) AS intent, type as type
-              UNWIND ${JSON.stringify(keywords)} AS token
+            query = `UNWIND ${JSON.stringify(keywords)} AS token
               MATCH (n:concept)
               WHERE n.name = token
               OPTIONAL MATCH (n)-[r:same_as]->(main)
-              WITH COLLECT(main) AS baseWords,intent AS intent,type as type
+              WITH COLLECT(main) AS baseWords
               UNWIND baseWords AS token
               MATCH p=(token)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
-              WITH length(p) AS max,baseWords AS baseWords,intent AS intent,type as type
+              WITH length(p) AS max,baseWords AS baseWords
               UNWIND baseWords AS bw
               match p=(bw)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
-              WHERE length(p) = max WITH COLLECT(bw) AS bws,intent AS intent,type as type
+              WHERE length(p) = max WITH COLLECT(bw) AS bws
               UNWIND bws AS keywords
               MATCH (keywords)<-[r]-(q:question)-[rel:answer]->(a)
-              WHERE TYPE(r)=intent and labels(a)=type
+              WHERE TYPE(r)='${intent[0]}' and labels(a)='${type[0]}'
               WITH a as a, rel as rel
               RETURN LABELS(a),COLLECT(a.value) `
         }
@@ -117,5 +131,6 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
         }).catch(function(error) {
             console.log(error);
         });
+      }
     });
 };

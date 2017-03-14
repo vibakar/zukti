@@ -16,7 +16,7 @@ class ViewGraph extends React.Component {
             }}>
                 <EdgeShapes default="curvedArrow" />
                 <NeoCypher
-                  url="http://192.168.1.5:7474"
+                  url="http://192.168.1.137:7474"
                   user="neo4j"
                   password="neo4js"
                   query="match (n)-[r]->(m) return n,r,m" />

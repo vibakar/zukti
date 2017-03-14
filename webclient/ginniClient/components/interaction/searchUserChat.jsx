@@ -74,22 +74,6 @@ export default class ViewUserChat extends React.Component {
                         );
                       }
                     }
-                    else {
-                      this.state.chat.push(
-                        <div>
-                            <Accordion>
-                                <Accordion.Title>
-                                  <Icon name='dropdown' />
-                                      {conversation.question.value} &nbsp;&nbsp;&nbsp;
-                                      {conversation.question.time}
-                                    </Accordion.Title>
-                                <Accordion.Content>
-                                    {answer.value}
-                                </Accordion.Content>
-                            </Accordion>
-                        </div>
-                      );
-                    }
                 });
               } else if(conversation.answerObj.text) {
                   let text = conversation.answerObj.text[0].value;

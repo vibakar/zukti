@@ -12,6 +12,8 @@ import UnfurlLink from './unfurlLink';
 import ReactPlayer from 'react-player';
 import './chatcontainerstyle.css';
 import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
+let Beautify = require('js-beautify').js_beautify;
+
 export default class AssistantGinniMixedReply extends React.Component {
     // props validation
     static propTypes = {
@@ -184,10 +186,9 @@ export default class AssistantGinniMixedReply extends React.Component {
         </Feed>
         );
       }
-        let blog = '';
         /* @yuvashree: edited code for displaying blogs */
-        if(this.props.data.blog) {
-          blog = this.props.data.blog[0].value;
+        else if(this.props.data.blog) {
+          let blog = this.props.data.blog[0].value;
           console.log(blog);
         return (
               <Feed id="ginniview">
@@ -214,10 +215,9 @@ export default class AssistantGinniMixedReply extends React.Component {
             </Feed>
         );
       }
-      let video = '';
       /* @yuvashree: edited code for displaying videos */
-      if(this.props.data.video) {
-        video = this.props.data.video[0].value;
+      else if(this.props.data.video) {
+        let video = this.props.data.video[0].value;
         console.log(video);
       return (
             <Feed id="ginniview">
@@ -257,6 +257,33 @@ export default class AssistantGinniMixedReply extends React.Component {
           </Feed>
       );
         }
+        /* @rajalakshmi: edited code for displaying code snippets */
+        else if(this.props.data.code){
+             let code = this.props.data.code[0].value;
+               let value = Beautify(code, {indent_size: 1 });
+               return (
+                     <Feed id="ginniview">
+                         <Feed.Event>
+                         <Feed.Content id = 'ginniviewKeyword'>
+                             <Feed.Extra>
+                               <p>
+                               Click on the Code button to view the Content.
+                               </p>
+                                <Label.Group>
+                                   <Modal closeOnRootNodeClick={false} closeIcon ='close'  trigger ={<Label basic color='orange' id='cursor' >Code</Label>}><pre>{value}</pre></Modal>
+
+                                        <AssistantGinniOptions question={this.props.question}
+                                          type='text' value={code}/>
+                                </Label.Group>
+                            </Feed.Extra>
+                               <Feed.Extra id='assistantViewUserDate'>
+                                   {this.props.data.time}
+                               </Feed.Extra>
+                         </Feed.Content>
+                     </Feed.Event>
+                   </Feed>
+               );
+             }
       }
     }
   }
