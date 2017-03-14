@@ -81,13 +81,13 @@ else{
     let count = 0;
     let lexicon = function()
     {
-      client.smembers('keywords', function(err, reply) {
+      client.hkeys('keywords', function(err, reply) {
         keywordLexicon = reply;
       });
-      client.smembers('intents', function(err, reply) {
+      client.hkeys('intents', function(err, reply) {
         intentLexicon = reply;
       });
-      client.smembers('types', function(err, reply) {
+      client.hkeys('types', function(err, reply) {
         typeLexicon = reply;
         finalCallBack();
       });

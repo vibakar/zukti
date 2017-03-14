@@ -9,7 +9,7 @@ export default class Logout extends React.Component
     state = {
         open: true
     }
-    close = () => hashHistory.push('/chat');
+    close = () => hashHistory.push('/chat/'+Cookie.load('domain').toLowerCase());
     // all the cookies stored while login will be cleared and user will be logged out
     handleLogout()
     {
@@ -23,7 +23,7 @@ export default class Logout extends React.Component
 
             /* @ramvignesh: event to update the user list */
             socket.emit('updateUserList');
-            
+
             Cookie.remove('authType');
             Cookie.remove('token');
             Cookie.remove('profilepicture');
