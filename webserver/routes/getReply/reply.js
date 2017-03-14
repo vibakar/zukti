@@ -1,5 +1,6 @@
 // this route is used to get reply of questions asked by user
 let express = require('express');
+let nlp = require('nlp_compromise');
 let router = express.Router();
 let User = require('./../../models/user');
 let processQuestion = require('./functions/processQuestion');
@@ -55,54 +56,52 @@ router.post('/askQuestion', function(req, res) {
 //  @Mayanka: process the input if no abuse is found
 else{
     let spellResponse = getSpellChecker(question.value);
-    console.log('in reply  '+spellResponse.question+'flag'+spellResponse.flag);
-    // extract intents and keywords from the question
-    // intentRedis(intentCallBack);
-    // function intentCallBack(intent)
-    // {
-    //   intentLexicon = intent;
-    //   keywordRedis(keywordCallBack);
-    //   function keywordCallBack(keyword)
-    //   {
-    //     keywordLexicon = keyword;
-    //   }
-    //   typeRedis(typeCallBack)
-    //   function typeCallBack(type)
-    //   {
-    //     typeLexicon = type;
-    //   }
-    //
-    //   finalCallBack();
-    // }
-    /* @navinprasad: fetch the keywords,intents,types from redis */
+
     let intentLexicon = [];
     let keywordLexicon = [];
     let typeLexicon = [];
     let count = 0;
-    let lexicon = function()
+    let replacingPronoun = '';
+
+    // @vibakar: getting previously saved keyword from redis
+    let getKeyword = function(lexicon)
+    {
+      client.hget(username, 'keywords', function(err, value) {
+        if(value){
+          replacingPronoun = nlp.sentence(spellResponse.question).replace('[Pronoun]', value).text();
+          console.log('replaced :'+replacingPronoun);
+          lexicon();
+        }else{
+          replacingPronoun = spellResponse.question;
+          lexicon();
+        }
+      });
+    }
+
+    function lexicon()
     {
       client.hkeys('keywords', function(err, reply) {
         keywordLexicon = reply;
       });
       client.hkeys('intents', function(err, reply) {
         intentLexicon = reply;
+        finalCallBack();
       });
       client.hkeys('types', function(err, reply) {
         typeLexicon = reply;
-        finalCallBack();
       });
     }
-    lexicon();
+    getKeyword(lexicon);
     let finalCallBack = function()
     {
-      // console.log("intents"+intentLexicon+"keywords"+keywordLexicon+"type"+typeLexicon);
+    // console.log("keywords"+keywordLexicon+"type"+typeLexicon);
     // console.log(intentLexicon+"........here");
-    let query = processQuestion(spellResponse.question.toLowerCase(),intentLexicon,keywordLexicon,typeLexicon);
+    let query = processQuestion(replacingPronoun.toLowerCase(),intentLexicon,keywordLexicon,typeLexicon);
     let keywords = query.keywords;
     let intents = query.intents;
     let types = query.types;
 
-    // @vibakar: add keyword to redis
+    // @vibakar: adding keyword to redis
     let addKeywordToRedis = function(username,keyword,intent){
       client.hmset(username, 'keywords', keyword, 'intents', intent, function(err, reply) {
           if (err) {
@@ -139,27 +138,14 @@ else{
         sendResponse(true, resultArray);
     };
     if (keywords.length === 0) {
-        // @vibakar: getting the previously saved keyword from redis
-      client.hget(username, 'keywords', function(err, value) {
-          if (err) {
-              console.log('Error in retrieving keyword ' + err);
-          } else {
-              if (value) {
-                  var redisKeyword = [];
-                  redisKeyword.push(value);
-                  getQuestionResponse(intents, redisKeyword, email, types, answerFoundCallback, noAnswerFoundCallback, spellResponse.flag, spellResponse.question);
-              } else {
-                  saveUnansweredQuery(username, email, question.value);
-                  // get a random response string from keyword response found
-                  let foundNoAnswer = commonReply[Math.floor(Math.random() * commonReply.length)];
-                  let resultArray = [];
-                  let resultObj = {};
-                  resultObj.value = foundNoAnswer;
-                  resultArray.push(resultObj);
-                  sendResponse(true, resultArray);
-              }
-          }
-      });
+        saveUnansweredQuery(username, email, question.value);
+        // get a random response string from keyword response found
+        let foundNoAnswer = commonReply[Math.floor(Math.random() * commonReply.length)];
+        let resultArray = [];
+        let resultObj = {};
+        resultObj.value = foundNoAnswer;
+        resultArray.push(resultObj);
+        sendResponse(true, resultArray);
     }
     else if(intents.length === 0) {
       saveUnansweredQuery(username, email, question.value);
@@ -170,37 +156,12 @@ else{
     addKeywordToRedis(username,keywords[0],intents[0]);
     }
      else {
-       // @vibakar: checking whether the keywords arry contains 'this', 'it', 'that'
-          if(keywords.includes('it') || keywords.includes('that') || keywords.includes('this')) {
-            var searchKeyword = ['this','it','that'];
-             var k = '';
-            for(i=0;i<searchKeyword.length;i++){
-              if(keywords.includes(searchKeyword[i])) {
-                k = searchKeyword[i];
-              }
-            }
-              var index = keywords.indexOf(k);
-                client.hget(username, 'keywords', function(err, value) {
-                    if(err){
-                      console.log(err);
-                    }else{
-                      // @vibakar: emoving the identified keyword
-                      var ind = keywords.splice(index,1);
-                      // @vibakar: pushing the previous keyword
-                        keywords.push(value);
-                        // function to get response when both  intents and keywords are present
-                        /* @yuvashree: added two more attributes for specifying the user and thier requested type type */
-                        getQuestionResponse(intents, keywords, email, types, answerFoundCallback, noAnswerFoundCallback, spellResponse.flag, spellResponse.question);
-                        addKeywordToRedis(username,keywords[keywords.length-1],intents[0]);
-                    }
-                });
-          }else{
-            // function to get response when both  intents and keywords are present
+            // function to get response when both intents and keywords are present
             /* @yuvashree: added two more attributes for specifying the user and thier requested type type */
             getQuestionResponse(intents, keywords, email, types, answerFoundCallback, noAnswerFoundCallback, spellResponse.flag, spellResponse.question);
+            // @vibakar: adding keyword to redis
             addKeywordToRedis(username,keywords[0],intents[0]);
           }
-    }
   }
   }
 });
