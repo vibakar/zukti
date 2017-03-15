@@ -100,7 +100,6 @@ webclient/ginniClient/components/interaction/chatcontainerstyle.css
 webclient/ginniClient/components/interaction/inputUserMessage.jsx
 webclient/ginniClient/components/interaction/loadingDots.jsx
 webclient/ginniClient/components/interaction/unfurlLink.jsx
-webclient/ginniClient/components/interaction/videoPlayer.jsx
 webclient/ginniClient/components/leftmenu/leftmenu.css
 webclient/ginniClient/components/leftmenu/leftmenu.jsx
 webclient/ginniClient/components/leftmenuPusherContent/defaultpageclient.css

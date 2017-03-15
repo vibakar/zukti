@@ -1,4 +1,5 @@
 import React from 'react';
+import Embedly from 'react-embedly';
 import {Feed, Label, Modal} from 'semantic-ui-react';
 import {hashHistory} from 'react-router';
 import AssistantGinniUrlDisplay from './assistantGinniUrlDisplay';
@@ -7,11 +8,13 @@ import AssistantGinniMoreTextDisplay from './assistantGinniMoreTextDisplay';
 import AssistantGinniPlainText from './assistantGinniPlainText';
 import AssistantGinniOptions from './assistantGinniOptions';
 import AssistantGinniKeywordResponse from './assistantGinniKeywordResponse';
-import VideoPlayer from './videoPlayer';
 import UnfurlLink from './unfurlLink';
 import './chatcontainerstyle.css';
 import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
+import ReactPlayer from 'react-player';
 let Beautify = require('js-beautify').js_beautify;
+import BlogList from './assistantBlogList';
+
 
 export default class AssistantGinniMixedReply extends React.Component {
     // props validation
@@ -21,12 +24,32 @@ export default class AssistantGinniMixedReply extends React.Component {
     };
     constructor(props) {
         super(props);
+        let blog = this.props.data.blog[0].value;
         this.displayMoreText = this.displayMoreText.bind(this);
         this.displayVideos = this.displayVideos.bind(this);
         this.displayBlogs = this.displayBlogs.bind(this);
         this.playVideo = this.playVideo.bind(this);
         this.logoutAfterWarning = this.logoutAfterWarning.bind(this);
-    }
+        // this.changeBlog = this.changeBlog.bind(this);
+           this.openModal = this.openModal.bind(this);
+           this.closeModal = this.closeModal.bind(this);
+
+           this.state = {
+             open: false,
+            //  currentBlog: blog,
+             change: false
+           };
+       }
+       openModal() {
+         this.setState({
+           open: true
+         });
+       }
+       closeModal() {
+         this.setState({
+           open: false
+         });
+       }
     displayMoreText() {
         let textResponseArray = this.props.data.text;
         textResponseArray.shift();
@@ -36,6 +59,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         });
         this.props.handleGinniReply(ginniReply);
     }
+    /* @sundaresan: video display */
     displayVideos() {
         let ginniReply = [<AssistantGinniPlainText value = 'Here is a top rated video for you' />];
         ginniReply.push(<AssistantGinniVideoDisplay
@@ -50,16 +74,34 @@ export default class AssistantGinniMixedReply extends React.Component {
           blogs={this.props.data.blog}/>);
         this.props.handleGinniReply(ginniReply);
     }
+//     changeBlog(newBlog) {
+//       console.log('new url recieved: ', newBlog);
+//
+//       this.setState({
+//         open: false
+//       });
+//       console.log('modal closed');
+//
+//       this.setState({
+//         open: true,
+//         // currentBlog: newBlog,
+//         // currentBlog: this.props.data.blog.map((item, index) => {
+//         //   <Embedly url= {item.value} apiKey="73f538bb83f94560a044bc6f0f33c5f6"/>
+//         //     console.log('item coming'+item.value);
+//         // })
+//         change:true
+//       });
+// }
     logoutAfterWarning(){
      hashHistory.push('/');
   }
   /* @yuvashree: added function to play video on clicking the button */
     playVideo() {
         let videoUrl = this.props.data.video[0].value;
-        this.props.handleGinniReply([< VideoPlayer url = {videoUrl} />]);
     }
     render() {
           let text = '';
+          let data = '';
            //  : Initialize swear word count */
           let abuseCount = this.props.abuseCount;
            //  @Mayanka: check if swear is present in the current query
@@ -185,8 +227,28 @@ export default class AssistantGinniMixedReply extends React.Component {
       }
         /* @yuvashree: edited code for displaying blogs */
         else if(this.props.data.blog) {
-          let blog = this.props.data.blog[0].value;
-          console.log(blog);
+
+
+          data = (
+                        <Feed>
+                            <Feed.Event>
+                                <Feed.Label image='../../images/geniebot.jpg'/>
+                                <Feed.Content>
+                                    <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
+                                    <Button basic color='orange' id='cursor' onClick={this.openModal}>Blogs</Button>
+                                    <br></br>
+                                    <AssistantGinniOptions  question={this.props.question} type='blog' value={blog}/>
+                                </Feed.Content>
+                            </Feed.Event>
+                            <Modal open={this.state.open} closeOnRootNodeClick={false} closeIcon='close'>
+                              <Modal.Content>
+                                <br></br><BlogList blogList= {this.props.data.blog} />
+                              </Modal.Content>
+                            </Modal>
+                        </Feed>
+          );
+
+
         return (
               <Feed id="ginniview">
               <Feed.Event>
@@ -195,16 +257,13 @@ export default class AssistantGinniMixedReply extends React.Component {
                            {this.props.data.extras}
                          </Feed.Extra>
                     <Feed.Extra>
-                      <UnfurlLink url ={blog}/>
+                      {/* <UnfurlLink url ={blog}/> */}
                   </Feed.Extra>
                   <Feed.Extra>
                       <Label.Group>
-                          {this.props.data.blog.length - 1 > 0
-                              ? <Label onClick={this.displayBlogs}
-                                basic color='orange' id='cursor'>Blogs</Label>
-                              : ''}
+                        {data}
                               <AssistantGinniOptions question={this.props.question}
-                                type='text' value={text}/>
+                                type='blog' value={blog}/>
                       </Label.Group>
                     </Feed.Extra>
                   </Feed.Content>
@@ -232,8 +291,22 @@ export default class AssistantGinniMixedReply extends React.Component {
                             ? <Label onClick={this.displayVideos}
                               basic color='orange' id='cursor'>Videos</Label>
                             : ''}
-                            {/* @yuvashree: added button to play video */}
-                            <Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>
+                            <Modal
+                              closeOnRootNodeClick={false}
+                              closeIcon='close'
+                              trigger={<Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>}>
+                              <Feed id='assistantView'>
+                                  <Feed.Event>
+                                    <Feed.Label image='../../images/geniebot.jpg'/>
+                                    <Feed.Content>
+                                      <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
+                                        <Feed.Extra >
+                                          <ReactPlayer height={455} width={810} url={this.props.data.video[0]} playing={false} controls={true}/>
+                                        </Feed.Extra>
+                                    </Feed.Content>
+                                  </Feed.Event>
+                                </Feed>
+                            </Modal>
                               <AssistantGinniOptions question={this.props.question}
                                 type='text' value={text}/>
                     </Label.Group>

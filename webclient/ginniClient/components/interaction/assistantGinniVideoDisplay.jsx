@@ -1,11 +1,11 @@
 import React from 'react';
-import {Feed, Label} from 'semantic-ui-react';
+import {Feed, Label, Modal} from 'semantic-ui-react';
 import AssistantGinniMoreVideosView from './assistantGinniMoreVideosView';
 import AssistantGinniOptions from './assistantGinniOptions';
-import VideoPlayer from './videoPlayer';
 import UnfurlLink from './unfurlLink';
 import './chatcontainerstyle.css';
 import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
+import ReactPlayer from 'react-player';
 
 export default class AssistantGinniMixedReply extends React.Component {
     constructor(props) {
@@ -15,9 +15,6 @@ export default class AssistantGinniMixedReply extends React.Component {
     }
     playVideo() {
         let videoUrl = this.props.videos[0].value;
-        this.props.handleGinniReply([< VideoPlayer url = {
-                videoUrl
-            } />]);
     }
     displayMoreVideos() {
         let ginniReply = [];
@@ -42,7 +39,19 @@ export default class AssistantGinniMixedReply extends React.Component {
                                       ? <Label onClick={this.displayMoreVideos} basic color='orange' id='cursor'>
                                               View more videos</Label>
                                       : ''}
-                                  <Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>
+                                      <Modal closeOnRootNodeClick={false} closeIcon='close' trigger = {<Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>}>
+                                        <Feed id='assistantView'>
+                                          <Feed.Event>
+                                              <Feed.Label image='../../images/geniebot.jpg'/>
+                                              <Feed.Content>
+                                                  <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
+                                                  <Feed.Extra >
+                                                    <ReactPlayer height={455} width={810} url={this.props.videos[0].value} playing={false} controls={true}/>
+                                                  </Feed.Extra>
+                                              </Feed.Content>
+                                          </Feed.Event>
+                                        </Feed>
+                                      </Modal>
                               </Label.Group>
                           </Feed.Extra>
                           <AssistantGinniOptions question={this.props.question} type='video' value={videoUrl}/>
