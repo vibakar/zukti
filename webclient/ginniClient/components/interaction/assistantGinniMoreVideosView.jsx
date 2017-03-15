@@ -27,9 +27,7 @@ export default class AssistantGinniMoreVideosView extends React.Component {
                     <Modal closeOnRootNodeClick={false} closeIcon='close' trigger={<Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>}>
                       <Feed id='assistantView'>
                         <Feed.Event>
-                          <Feed.Label image='../../images/geniebot.jpg'/>
                           <Feed.Content>
-                              <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
                               <Feed.Extra >
                                 <ReactPlayer height={455} width={810} url={this.props.value} playing={false} controls={true}/>
                               </Feed.Extra>

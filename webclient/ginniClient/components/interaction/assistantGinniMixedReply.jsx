@@ -30,25 +30,8 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.playVideo = this.playVideo.bind(this);
         this.logoutAfterWarning = this.logoutAfterWarning.bind(this);
 
-          //  this.openModal = this.openModal.bind(this);
-          //  this.closeModal = this.closeModal.bind(this);
-           //
-          //  this.state = {
-          //    open: false,
-          //   //  currentBlog: blog,
-          //    change: false
-          //  };
        }
-      //  openModal() {
-      //    this.setState({
-      //      open: true
-      //    });
-      //  }
-      //  closeModal() {
-      //    this.setState({
-      //      open: false
-      //    });
-      //  }
+
     displayMoreText() {
         let textResponseArray = this.props.data.text;
         textResponseArray.shift();
@@ -73,24 +56,6 @@ export default class AssistantGinniMixedReply extends React.Component {
           blogs={this.props.data.blog}/>);
         this.props.handleGinniReply(ginniReply);
     }
-//     changeBlog(newBlog) {
-//       console.log('new url recieved: ', newBlog);
-//
-//       this.setState({
-//         open: false
-//       });
-//       console.log('modal closed');
-//
-//       this.setState({
-//         open: true,
-//         // currentBlog: newBlog,
-//         // currentBlog: this.props.data.blog.map((item, index) => {
-//         //   <Embedly url= {item.value} apiKey="73f538bb83f94560a044bc6f0f33c5f6"/>
-//         //     console.log('item coming'+item.value);
-//         // })
-//         change:true
-//       });
-// }
     logoutAfterWarning(){
      hashHistory.push('/');
   }
@@ -249,9 +214,6 @@ export default class AssistantGinniMixedReply extends React.Component {
                                 type='text' value={text}/>
                       </Label.Group>
                     </Feed.Extra>
-                        <Feed.Extra id='assistantViewUserDate'>
-                            {this.props.data.time}
-                        </Feed.Extra>
                   </Feed.Content>
               </Feed.Event>
             </Feed>
@@ -283,9 +245,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                               trigger={<Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>}>
                               <Feed id='assistantView'>
                                   <Feed.Event>
-                                    <Feed.Label image='../../images/geniebot.jpg'/>
                                     <Feed.Content>
-                                      <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
                                         <Feed.Extra >
                                           <ReactPlayer height={455} width={810} url={this.props.data.video[0]} playing={false} controls={true}/>
                                         </Feed.Extra>
@@ -321,9 +281,6 @@ export default class AssistantGinniMixedReply extends React.Component {
                                           type='text' value={code}/>
                                 </Label.Group>
                             </Feed.Extra>
-                               <Feed.Extra id='assistantViewUserDate'>
-                                   {this.props.data.time}
-                               </Feed.Extra>
                          </Feed.Content>
                      </Feed.Event>
                    </Feed>

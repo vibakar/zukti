@@ -82,11 +82,8 @@ export default class AssistantGinniMixedReply extends React.Component {
                                     trigger={<Label onClick={this.playVideo} basic color = 'orange' id = 'cursor' > Play video </Label>}>
                                       <Feed id='assistantView'>
                                           <Feed.Event>
-                                              <Feed.Label image='../../images/geniebot.jpg'/>
                                               <Feed.Content>
-                                                  <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
                                                   <Feed.Extra >
-
                                                       <ReactPlayer height={455} width={810} url={this.props.data.video[0]} playing={false} controls={true}/>
                                                   </Feed.Extra>
                                               </Feed.Content>
@@ -124,9 +121,6 @@ export default class AssistantGinniMixedReply extends React.Component {
                                     type='blog' value={blog} responseValue ={this.props.response}/>
                           </Label.Group>
                       </Feed.Extra>
-                        <Feed.Extra id='assistantViewUserDate'>
-                            {this.props.data.time}
-                        </Feed.Extra>
                   </Feed.Content>
               </Feed.Event>
             </Feed>
