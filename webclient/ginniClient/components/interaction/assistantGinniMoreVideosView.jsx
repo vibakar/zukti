@@ -4,7 +4,7 @@ import UnfurlLink from './unfurlLink';
 import AssistantGinniOptions from './assistantGinniOptions';
 import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
 import ReactPlayer from 'react-player';
-import BlogList from './assistantBlogList';
+
 
 
 export default class AssistantGinniMoreVideosView extends React.Component {

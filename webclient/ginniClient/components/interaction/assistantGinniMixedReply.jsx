@@ -13,7 +13,7 @@ import './chatcontainerstyle.css';
 import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
 import ReactPlayer from 'react-player';
 let Beautify = require('js-beautify').js_beautify;
-import BlogList from './assistantBlogList';
+
 
 
 export default class AssistantGinniMixedReply extends React.Component {
@@ -24,32 +24,31 @@ export default class AssistantGinniMixedReply extends React.Component {
     };
     constructor(props) {
         super(props);
-        let blog = this.props.data.blog[0].value;
         this.displayMoreText = this.displayMoreText.bind(this);
         this.displayVideos = this.displayVideos.bind(this);
         this.displayBlogs = this.displayBlogs.bind(this);
         this.playVideo = this.playVideo.bind(this);
         this.logoutAfterWarning = this.logoutAfterWarning.bind(this);
-        // this.changeBlog = this.changeBlog.bind(this);
-           this.openModal = this.openModal.bind(this);
-           this.closeModal = this.closeModal.bind(this);
 
-           this.state = {
-             open: false,
-            //  currentBlog: blog,
-             change: false
-           };
+          //  this.openModal = this.openModal.bind(this);
+          //  this.closeModal = this.closeModal.bind(this);
+           //
+          //  this.state = {
+          //    open: false,
+          //   //  currentBlog: blog,
+          //    change: false
+          //  };
        }
-       openModal() {
-         this.setState({
-           open: true
-         });
-       }
-       closeModal() {
-         this.setState({
-           open: false
-         });
-       }
+      //  openModal() {
+      //    this.setState({
+      //      open: true
+      //    });
+      //  }
+      //  closeModal() {
+      //    this.setState({
+      //      open: false
+      //    });
+      //  }
     displayMoreText() {
         let textResponseArray = this.props.data.text;
         textResponseArray.shift();
@@ -162,8 +161,8 @@ export default class AssistantGinniMixedReply extends React.Component {
     }
     /* subconcept code ends here */
 
+    /* @yuvashree: edited code for text view */
         let text = '';
-        /* @yuvashree: edited code for text view */
         if(this.props.data.text) {
           text = this.props.data.text[0].value;
           return (
@@ -226,29 +225,10 @@ export default class AssistantGinniMixedReply extends React.Component {
         );
       }
         /* @yuvashree: edited code for displaying blogs */
-        else if(this.props.data.blog) {
-
-
-          data = (
-                        <Feed>
-                            <Feed.Event>
-                                <Feed.Label image='../../images/geniebot.jpg'/>
-                                <Feed.Content>
-                                    <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
-                                    <Button basic color='orange' id='cursor' onClick={this.openModal}>Blogs</Button>
-                                    <br></br>
-                                    <AssistantGinniOptions  question={this.props.question} type='blog' value={blog}/>
-                                </Feed.Content>
-                            </Feed.Event>
-                            <Modal open={this.state.open} closeOnRootNodeClick={false} closeIcon='close'>
-                              <Modal.Content>
-                                <br></br><BlogList blogList= {this.props.data.blog} />
-                              </Modal.Content>
-                            </Modal>
-                        </Feed>
-          );
-
-
+        let blog = '';
+        if(this.props.data.blog) {
+          blog = this.props.data.blog[0].value;
+          console.log(blog);
         return (
               <Feed id="ginniview">
               <Feed.Event>
@@ -257,15 +237,21 @@ export default class AssistantGinniMixedReply extends React.Component {
                            {this.props.data.extras}
                          </Feed.Extra>
                     <Feed.Extra>
-                      {/* <UnfurlLink url ={blog}/> */}
+                      <UnfurlLink url ={blog}/>
                   </Feed.Extra>
                   <Feed.Extra>
                       <Label.Group>
-                        {data}
+                          {this.props.data.blog.length - 1 > 0
+                              ? <Label onClick={this.displayBlogs}
+                                basic color='orange' id='cursor'>Blogs</Label>
+                              : ''}
                               <AssistantGinniOptions question={this.props.question}
-                                type='blog' value={blog}/>
+                                type='text' value={text}/>
                       </Label.Group>
                     </Feed.Extra>
+                        <Feed.Extra id='assistantViewUserDate'>
+                            {this.props.data.time}
+                        </Feed.Extra>
                   </Feed.Content>
               </Feed.Event>
             </Feed>

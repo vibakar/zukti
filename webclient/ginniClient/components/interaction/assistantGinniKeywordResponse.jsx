@@ -7,7 +7,7 @@ import UnfurlLink from './unfurlLink';
 import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
 import AssistantGinniMoreVideosView from './assistantGinniMoreVideosView';
 import ReactPlayer from 'react-player';
-import BlogList from './assistantBlogList';
+
 
 
 export default class AssistantGinniMixedReply extends React.Component {
@@ -19,10 +19,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.displayMoreVideos = this.displayMoreVideos.bind(this);
         this.displayBlogs = this.displayBlogs.bind(this);
         this.playVideo = this.playVideo.bind(this);
-        // this.changeBlog = this.changeBlog.bind(this);
-        //  this.state = {
-        //    currentBlog: blog
-        //  };
+
     }
     /* @sundaresan: video display */
     displayMoreVideos() {
@@ -62,12 +59,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         let videoUrl = this.props.data.video[0];
         console.log(videoUrl);
     }
-    // changeBlog(newBlog) {
-    //   console.log('url changed: ', newBlog);
-    //   this.setState({
-    //     currentBlog: newBlog
-    //   });
-    // }
+
     render() {
       /* @yuvashree: edited code for displaying videos */
       if(this.props.data.blog === undefined)
@@ -78,9 +70,10 @@ export default class AssistantGinniMixedReply extends React.Component {
               <Feed.Event>
                   <Feed.Content id = 'ginniviewKeyword'>
                       <Feed.Extra>
+                        <UnfurlLink url ={video} />
                           <Label.Group>
                               {this.props.data.video.length - 1 > 0
-                                  ? <Label onClick={this.displayvideos}
+                                  ? <Label onClick={this.displayVideos}
                                     basic color='orange' id='cursor'>Videos</Label>
                                   : ''}
                                   <Modal
@@ -101,7 +94,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                                       </Feed>
                                   </Modal>
                                   <AssistantGinniOptions question={this.props.question}
-                                    type='blog' value={video}/>
+                                    type='video' value={video}/>
                           </Label.Group>
                       </Feed.Extra>
                   </Feed.Content>
@@ -111,48 +104,29 @@ export default class AssistantGinniMixedReply extends React.Component {
             }
             /* @yuvashree: edited code for displaying blogs */
             else {
-                let blog = this.props.data.blog[0];
-              let data = '';
-        if(this.props.data.blog.length >1) {
-          data = (
-            <Modal closeIcon='close' closeOnRootNodeClick={false} trigger = {<Label
-              basic color='orange' id='cursor'>Blogs</Label>}>
-                        <Feed>
-                            <Feed.Event>
-                                <Feed.Label image='../../images/geniebot.jpg'/>
-                                <Feed.Content>
-                                    <Feed.Summary date={new Date().toLocaleString()} user={CodeAssistant.Interaction.name}/>
-                                    <Modal.Description images>
-                                  <UnfurlLink url ={blog}/>
-                                    </Modal.Description>
-                                    <Feed.Extra>
-                                      <Modal.Content >
-                                      <br></br><BlogList blogList= {this.props.data.blog} />
-                                      </Modal.Content>
-                                    </Feed.Extra>
-                                    <br></br><AssistantGinniOptions  question={this.props.question}
-                                      type='blog' value={blog}/>
-                                </Feed.Content>
-                            </Feed.Event>
-                          </Feed>
-                         </Modal>
-          );
-        }
+              let blog = this.props.data.blog[0];
               return (
                 <Feed id="ginniview">
               <Feed.Event>
                   <Feed.Content id = 'ginniviewKeyword'>
-                      <Feed.Summary>
-                        {/* <UnfurlLink url ={blog}/> */}
-                      </Feed.Summary>
+                      <Feed.Summary> <UnfurlLink url ={blog}/></Feed.Summary>
                       <Feed.Extra>
                           <Label.Group>
-                            {data}
-
+                              {this.props.data.blog.length - 1 > 0
+                                  ? <Label onClick={this.displayBlogs}
+                                    basic color='orange' id='cursor'>Blogs</Label>
+                                  : ''}
+                              {this.props.data.video
+                                  ? <Label onClick={this.displayVideos}
+                                    basic color='orange' id='cursor'>Videos</Label>
+                                  : ''}
                                   <AssistantGinniOptions question={this.props.question}
-                                    type='blog' value={blog}/>
+                                    type='blog' value={blog} responseValue ={this.props.response}/>
                           </Label.Group>
                       </Feed.Extra>
+                        <Feed.Extra id='assistantViewUserDate'>
+                            {this.props.data.time}
+                        </Feed.Extra>
                   </Feed.Content>
               </Feed.Event>
             </Feed>

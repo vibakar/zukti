@@ -13,7 +13,7 @@ function createLexiconFiles(result) {
   let keywordTerms = [];
 
   let answerTypes = ["video", "video", "view", "video", "display", "video", "show", "video", "download",
-"video", "record", "video", "clip", "video", "website", "blog", "webpage", "blog", "link", "blog" ];
+"video", "record", "video", "clip", "video", "website", "blog", "webpage", "blog", "link", "blog","blog","blog"];
 
  //  console.log(result.records.length+"redis data");
 
