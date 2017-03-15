@@ -85,10 +85,10 @@ else{
       });
       client.hkeys('intents', function(err, reply) {
         intentLexicon = reply;
-        finalCallBack();
       });
       client.hkeys('types', function(err, reply) {
         typeLexicon = reply;
+        finalCallBack();
       });
     }
     getKeyword(lexicon);
