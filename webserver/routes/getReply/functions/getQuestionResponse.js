@@ -140,6 +140,9 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
                   console.log(field[2][0]);
                   answerObj[field[2][0]] = field[3];
                 }
+                else {
+                  noAnswerFoundCallback();
+                }
                 }
               });
                 // sending the answer to callback

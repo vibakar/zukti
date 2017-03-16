@@ -91,7 +91,6 @@ router.post('/askQuestion', function(req, res) {
         }
         let finalCallBack = function() {
             // console.log("intents"+intentLexicon+"keywords"+keywordLexicon+"type"+typeLexicon);
-            // console.log(intentLexicon+"........here");
             let query = processQuestion(newQuestion.toLowerCase(), intentLexicon, keywordLexicon, typeLexicon);
             let keywords = query.keywords;
             let intents = query.intents;
@@ -117,6 +116,12 @@ router.post('/askQuestion', function(req, res) {
                 console.log("reply " + isUnAnswered + "........" + answerObj + "......");
                 res.json({isUnAnswered: isUnAnswered, answerObj: answerObj});
             };
+
+            /* @Sindhujaadevi: if the domain is different */
+          let otherDomainResponse = function(inOtherDomain, differentDomain) {
+              res.json({inOtherDomain: inOtherDomain, differentDomain: differentDomain});
+          };
+
             // callback if a answer is found in the graph database
             let answerFoundCallback = function(answerObj) {
                 sendResponse(false, answerObj);
@@ -145,7 +150,7 @@ router.post('/askQuestion', function(req, res) {
                 saveUnansweredQuery(username, email, question.value);
                 // if no intent is found in the question then get a keyword response
                 /* @yuvashree: added two more attributes for specifying the user and thier requested type type */
-                getKeywordResponse(keywords, email, types, sendResponse, spellResponse.flag, spellResponse.question);
+                getKeywordResponse(keywords, email, types, sendResponse, otherDomainResponse, spellResponse.flag, spellResponse.question);
                 // @vibakar: adding keyword to redis
                 addKeywordToRedis(username, keywords[0], intents[0]);
             } else {
