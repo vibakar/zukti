@@ -6,15 +6,15 @@ describe('Run series of test for Swear checker', function() {
   it("should not result in error", function(done) {
      done();
    });
-   it('should fail if question is notprovided', function() {
+   it('should fail if question is not provided', function() {
         expect(swearChecker).to.throw(Error, "Not a String");
     });
 
-   it('should fail if question is not a number', function() {
+   it('should fail if question is not a String', function() {
         expect(swearChecker.bind({})).to.throw(Error, "Not a String");
     });
 
-  it('should not fail if the question is a literal number', function() {
+  it('should fail if the question is a literal number', function() {
         expect(swearChecker.bind(5432)).to.throw(Error, "Not a String");
     });
 
