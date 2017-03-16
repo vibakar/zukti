@@ -26,6 +26,7 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
         let intent = '';
         let type = '';
         let keyword = '';
+        let count = 0;
         getIntent();
         /* @navinprasad: find the base node */
         function getIntent()
@@ -142,11 +143,15 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
                   answerObj[field[2][0]] = field[3];
                 }
                 else {
+                  count = 1;
+                  /* @vibakar & Threka : calling noAnswerFoundCallback for fetching answer from stackoverflow,
+                                          when answer is not found in our db */
                   noAnswerFoundCallback();
                 }
                 }
               });
                 // sending the answer to callback
+                if(count == 0)
                 answerFoundCallback(answerObj);
             }
         }).catch(function(error) {

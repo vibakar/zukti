@@ -168,6 +168,9 @@ export default class AssistantGinniMixedReply extends React.Component {
         let text = '';
         if(this.props.data.text) {
           text = this.props.data.text[0].value;
+          let value = Beautify(text, {indent_size: 1 });
+          let newvalue = value.split("\\n");
+          value = newvalue.join("");
           return (
                 <Feed id="ginniview">
                     <Feed.Event>
