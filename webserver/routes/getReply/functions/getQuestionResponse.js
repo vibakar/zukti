@@ -119,11 +119,14 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
                   });
                 }
                 else {
+                  if(field[2] !== null)
+                  {
                   field[3] = {
                     value:field[3].join(",")
                   }
                   console.log(field[2][0]);
                   answerObj[field[2][0]] = field[3];
+                }
                 }
               });
                 // sending the answer to callback

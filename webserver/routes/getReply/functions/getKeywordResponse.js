@@ -57,9 +57,9 @@ module.exports = function(keywords, email, types, sendResponse, flag, correctedQ
                  match p=(bw)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
                  WHERE length(p) = max
                  WITH bw as bw
-                 MATCH (n)<-[rel:answer]-(q:question)-->(bw) where n:blog or n:video or n:image
+                 MATCH (n)<-[rel:answer]-(q:question)-->(bw) where n:blog or n:video or n:image or n:code
                  WITH bw as bw,n as n ,rel as rel
-                 ORDER BY rel.rating DESC
+                 ORDER BY CASE WHEN rel.likes=0 AND rel.dislikes=0 THEN rel.likes ELSE (rel.likes/(rel.likes+rel.dislikes)) END DESC
                  RETURN LABELS(n)as contentType ,COLLECT(distinct n.value) `;
         }
         /* @yuvashree: modified query for multiple relationships and different domain for type specific question */

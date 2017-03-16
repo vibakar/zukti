@@ -1,9 +1,11 @@
 import React from 'react';
-import {Feed, Label} from 'semantic-ui-react';
+import {Feed, Label, Modal} from 'semantic-ui-react';
 import UnfurlLink from './unfurlLink';
 import AssistantGinniOptions from './assistantGinniOptions';
-import VideoPlayer from './videoPlayer';
 import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
+import ReactPlayer from 'react-player';
+
+
 
 export default class AssistantGinniMoreVideosView extends React.Component {
     // props validation
@@ -13,9 +15,6 @@ export default class AssistantGinniMoreVideosView extends React.Component {
     }
     playVideo() {
         let videoUrl = this.props.value;
-        this.props.handleGinniReply([< VideoPlayer url = {
-                videoUrl
-            } />]);
     }
     /* @threkashri: edited code for displaying more Videos */
     render() {
@@ -25,7 +24,17 @@ export default class AssistantGinniMoreVideosView extends React.Component {
                 <Feed.Content id = 'ginniviewKeyword'>
                     <Feed.Summary><UnfurlLink url={this.props.value}/></Feed.Summary>
                     <AssistantGinniOptions question={this.props.question} type='video' value={this.props.value}/>
-                    <Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>
+                    <Modal closeOnRootNodeClick={false} closeIcon='close' trigger={<Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>}>
+                      <Feed id='assistantView'>
+                        <Feed.Event>
+                          <Feed.Content>
+                              <Feed.Extra >
+                                <ReactPlayer height={455} width={810} url={this.props.value} playing={false} controls={true}/>
+                              </Feed.Extra>
+                          </Feed.Content>
+                        </Feed.Event>
+                      </Feed>
+                    </Modal>
                 </Feed.Content>
             </Feed.Event>
         </Feed>

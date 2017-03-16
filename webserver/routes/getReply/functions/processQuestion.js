@@ -8,32 +8,6 @@ module.exports = function(sentence,intentLexicon,keywordLexicon,typeLexicon) {
   console.log(sentence);
 
   let nlp = require('nlp_compromise');
-  // let keywordLexicon = ;
-
-  // let redis = require('redis');
-  // let client = redis.createClient();
-  //
-  // let keywordLexicon = client.smembers('keywords');
-
-  // let intentLexicon  = intentRedis.getIntents();
-  // console.log(intentLexicon);
-
-  // let typeLexicon = client.smembers('types') ;
-  //
-  // console.log('keywords from redis: ', keywordLexicon);
-  // console.log('intent from redis: ', intentLexicon);
-  // console.log('type from redis: ', typeLexicon);
-
-  // Axios.get('./getKeywords').then((response) =>{
-  //   keywordLexicon = response;
-  // });
-  // Axios.get('./getIntents').then((response) =>{
-  //   intentLexicon = response;
-  // });
-  // Axios.get('./getTypes').then((response) =>{
-  //   typeLexicon = response;
-  // });
-
     //  console.log(intentLexicon);
     let str = nlp.text(sentence);
     // split str into individual words

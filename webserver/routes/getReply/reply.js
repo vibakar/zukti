@@ -1,5 +1,6 @@
 // this route is used to get reply of questions asked by user
 let express = require('express');
+let nlp = require('nlp_compromise');
 let router = express.Router();
 let User = require('./../../models/user');
 let processQuestion = require('./functions/processQuestion');
@@ -66,24 +67,7 @@ router.post('/askQuestion', function(req, res) {
     } else {
         let spellResponse = getSpellChecker(question.value);
         console.log('in reply  ' + spellResponse.question + 'flag' + spellResponse.flag);
-        // extract intents and keywords from the question
-        // intentRedis(intentCallBack);
-        // function intentCallBack(intent)
-        // {
-        //   intentLexicon = intent;
-        //   keywordRedis(keywordCallBack);
-        //   function keywordCallBack(keyword)
-        //   {
-        //     keywordLexicon = keyword;
-        //   }
-        //   typeRedis(typeCallBack)
-        //   function typeCallBack(type)
-        //   {
-        //     typeLexicon = type;
-        //   }
-        //
-        //   finalCallBack();
-        // }
+
         /* @navinprasad: fetch the keywords,intents,types from redis */
         let intentLexicon = [];
         let keywordLexicon = [];
