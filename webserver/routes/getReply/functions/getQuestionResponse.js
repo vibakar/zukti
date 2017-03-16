@@ -120,6 +120,7 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
                     answerObj.extras = 'Showing results for : ' +
                         "\"" + correctedQuestion + "\"" + ' instead';
                 }
+                console.log(query);
                 let resultArray = result.records.forEach((record) => {
                     let field = record._fields;
                     if(field[0] !== null)
@@ -131,11 +132,14 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
                   });
                 }
                 else {
+                  if(field[2] !== null)
+                  {
                   field[3] = {
                     value:field[3].join(",")
                   }
                   console.log(field[2][0]);
                   answerObj[field[2][0]] = field[3];
+                }
                 }
               });
                 // sending the answer to callback

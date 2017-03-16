@@ -258,7 +258,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         );
       }
       /* @yuvashree: edited code for displaying videos */
-      else if(this.props.data.video) {
+      if(this.props.data.video) {
         let video = this.props.data.video[0].value;
         console.log(video);
       return (

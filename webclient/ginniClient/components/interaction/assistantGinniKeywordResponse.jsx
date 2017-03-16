@@ -72,10 +72,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                       <Feed.Extra>
                         <UnfurlLink url ={video} />
                           <Label.Group>
-                              {this.props.data.video.length - 1 > 0
-                                  ? <Label onClick={this.displayVideos}
-                                    basic color='orange' id='cursor'>Videos</Label>
-                                  : ''}
+
                                   <Modal
                                     closeOnRootNodeClick={false}
                                     closeIcon='close'
@@ -90,6 +87,10 @@ export default class AssistantGinniMixedReply extends React.Component {
                                           </Feed.Event>
                                       </Feed>
                                   </Modal>
+                                  {this.props.data.video.length - 1 > 0
+                                      ? <Label onClick={this.displayMoreVideos}
+                                        basic color='orange' id='cursor'>ViewMoreVideos</Label>
+                                      : ''}
                                   <AssistantGinniOptions question={this.props.question}
                                     type='video' value={video}/>
                           </Label.Group>
