@@ -61,7 +61,6 @@ module.exports = function(keywords, email, types, sendResponse, otherDomainRespo
               WHERE length(p) = max
               WITH bw as bw
               MATCH (n)<-[:answer]-(q:question)-->(bw) where n:blog or n:video or n:image or n:code
-              WITH n AS n
               RETURN LABELS(n) AS contentType, COLLECT(distinct n.value),
               COLLECT(ANY(user IN n.likes WHERE user='${email}')),
               COLLECT(ANY(user IN n.dislikes WHERE user='${email}')),
@@ -87,8 +86,7 @@ module.exports = function(keywords, email, types, sendResponse, otherDomainRespo
             match p=(bw)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
             WHERE length(p) = max
             WITH bw as bw
-            MATCH (n)<-[:answer]-(q:question)-->(bw) where labels(n) = '${type[0]}'
-            WITH n AS n,
+            MATCH (n)<-[:answer]-(q:question)-->(bw) WHERE LABELS(n)='${type[0]}'
             RETURN LABELS(n) AS contentType, COLLECT(distinct n.value),
             COLLECT(ANY(user IN n.likes WHERE user='${email}')),
             COLLECT(ANY(user IN n.dislikes WHERE user='${email}')),
