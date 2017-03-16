@@ -12,6 +12,9 @@ function createLexiconFiles(result) {
    let domain = [];
    let keywordTerms = [];
 
+   let answerTypes = ["video", "video", "view", "video", "display", "video", "show", "video", "download",
+"video", "record", "video", "clip", "video", "website", "blog", "webpage", "blog", "link", "blog","blog","blog" ];
+
   //  console.log(result.records.length+"redis data");
 
    for(let k = 0 ; k<result.records.length ; k++)
@@ -61,15 +64,14 @@ function createLexiconFiles(result) {
    }
   //  let h = client.hgetall('keyword');
   //   console.log(h);
-   // for (let i = 0; i < typeTerms.length; i = i + 1) {
-   //     /* inserting 'types' in redis */
-   //     client.sadd(['types', typeTerms[i]], function(err, reply) {
-   //         if (err) {
-   //             throw(err);
-   //         }
-   //         // console.log('types: ', reply);
-   //     });
-   // }
+  for (let i = 0; i < answerTypes.length; i = i + 2) {
+   // client.hmset();
+   client.hmset(['types', answerTypes[i], answerTypes[i+1]], function(err, reply) {
+            if (err) {
+                throw(err);
+            }
+        });
+      };
 
 }
 module.exports = function() {

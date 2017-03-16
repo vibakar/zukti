@@ -107,6 +107,7 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
                     answerObj.extras = 'Showing results for : ' +
                         "\"" + correctedQuestion + "\"" + ' instead';
                 }
+                console.log(query);
                 let resultArray = result.records.forEach((record) => {
                     let field = record._fields;
                     if(field[0] !== null)

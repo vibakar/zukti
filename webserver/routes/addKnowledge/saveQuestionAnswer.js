@@ -1,6 +1,8 @@
 let getNeo4jDriver = require('./../../neo4j/connection');
 let processQuestion = require('./processQuestion');
 let getLexicon = require('../../lexicon/getLexicons');
+let client = require('./redis');
+
 module.exports = function(req, questionsAnswerSavedCallback) {
 
     //  let query = `CREATE (a:answer {textAnswer:'',videoAnswer:'',blogAnswer:'',CodeSnippetAnswer:''})
@@ -9,16 +11,29 @@ module.exports = function(req, questionsAnswerSavedCallback) {
     let blogs = req.body.blogs;
     let texts = req.body.texts;
     let videos = req.body.videos;
-    let questionInfo = processQuestion(question);
+    lexicon();
+    let keywordLexicon = [];
+    let intentLexicon = [];
+    function lexicon()
+    {
+      client.hkeys('keywords', function(err, reply) {
+          keywordLexicon = reply;
+      });
+      client.hkeys('intents', function(err, reply) {
+          intentLexicon = reply;
+          callBack();
+      });
+    }
+    function callBack()
+    {
+    let questionInfo = processQuestion(question,keywordLexicon,intentLexicon);
     let keywords = questionInfo.keywords;
     let intents = questionInfo.intents;
-    let mainIntent = intents[intents.length - 1];
+    let mainIntent = '';
     let blogsQuery = '';
     let textsQuery = '';
     let videoQuery = '';
 
-    console.log(keywords);
-    console.log(question);
     blogs.forEach((item) => {
         let blog = item.trim();
         if (blog != '') {
@@ -38,20 +53,27 @@ module.exports = function(req, questionsAnswerSavedCallback) {
         }
     });
 
-    console.log(mainIntent);
+    console.log(mainIntent+"before domain");
+    console.log(intents+"before domain after main");
+    let domain = 'design pattern';
     /* @yuvashree: added code to fetch the base intent to create a new question and answer */
+    /*
     let query1 = `MATCH (n:intent) where n.name='${mainIntent}'
                   OPTIONAL MATCH(n)-[:same_as]->(main)
                   WITH LAST(COLLECT(main.name)) AS intent
                   return intent`
 
-    let domain = 'design pattern';
 
     let session = getNeo4jDriver().session();
     session.run(query1).then(function(result) {
         mainIntent = result.records[0]._fields[0];
         // Completed!
         console.log('inside checkIntent: ', mainIntent);
+        */
+
+        client.hmget('intents', intents[intents.length-1],function(err, reply) {
+        console.log(reply+"........done");
+        mainIntent = reply;
 
         let session1 = getNeo4jDriver().session();
         /* @yuvashree: modified query for multiple relationships and different domain */
@@ -80,13 +102,6 @@ module.exports = function(req, questionsAnswerSavedCallback) {
         }).catch(function(error) {
             console.log(error);
         });
-
-        session.close();
-        console.log(query1);
-        console.log(result);
-    }).catch(function(error) {
-        console.log(error);
-        return error;
     });
-
+  }
 };
