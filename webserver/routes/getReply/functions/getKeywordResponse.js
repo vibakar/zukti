@@ -28,6 +28,7 @@ module.exports = function(keywords, email, types, sendResponse, otherDomainRespo
         let inOtherDomain = '';
         let differentDomain = '';
         getIntent();
+        /* @navinprasad: find the base node */
         function getIntent()
         {
           if(types.length === 0)
@@ -80,7 +81,7 @@ module.exports = function(keywords, email, types, sendResponse, otherDomainRespo
                WITH bw as bw
                MATCH (n)<-[rel:answer]-(q:question)-->(bw) where labels(n) = '${type[0]}'
                WITH bw as bw,n as n ,rel as rel
-               ORDER BY rel.rating DESC
+               ORDER BY CASE WHEN rel.likes=0 AND rel.dislikes=0 THEN rel.likes ELSE (rel.likes/(rel.likes+rel.dislikes)) END DESC
                RETURN LABELS(n)as contentType ,COLLECT(distinct n.value) `;
              }
         let session = getNeo4jDriver().session();
@@ -112,6 +113,8 @@ module.exports = function(keywords, email, types, sendResponse, otherDomainRespo
                     }
                 });
                 resultObj.time = new Date().toLocaleString();
+            /* @sangeetha: keywords for recommendations */
+                resultObj.keywords = keywords;
                 if (hasAtleastSomeContent) {
                   //  @Mayanka: If spell check done show this message
                     if (flag == 1) {

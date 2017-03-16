@@ -52,7 +52,7 @@ class   Methods implemented singletons  There certain situations unique   Having
 To unique singleton   By doing we avoid before     Instance operation instance  Instance Smalltalk member function
 own instance    adapter Adapter bridge two incompatible structural combines capability interface  This join
 functionalities interfacesadapter Convert interfac  expect   couldn   otherwise because you match need
-you cooperates unrelated orunforeseen classes   is   don   necessarily compatible interfaces
+you cooperates unrelated orunforeseen classes   is   dom   necessarily compatible interfaces
 object unpractical adapt subclassing every parent  target Target domain  specific using
 collaborates conforming  adaptee Adaptec hat adapting    adapts Adaptert Bridge decouple abstraction
 vary independently   decouples them  This acts makes functionality implementer Both altered structurally

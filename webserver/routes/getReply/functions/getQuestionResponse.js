@@ -27,6 +27,7 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
         let type = '';
         let keyword = '';
         getIntent();
+        /* @navinprasad: find the base node */
         function getIntent()
         {
           if(types.length === 0)
@@ -103,24 +104,24 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
             client.hmget('keywords', keywords[keywords.length-1],function(err, reply) {
             keyword = reply;
             if (domain !== keyword) {
-                      foundNoAnswer = 'you are in ' + domain + ' domain. Please refer ' + keyword + ' domain for the answer';
-                      noAnswerFoundCallback(foundNoAnswer);
+                      noAnswerFoundCallback(keyword, true);
                   }
             else{
-              foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
-                      noAnswerFoundCallback(foundNoAnswer);
-            }
+                      noAnswerFoundCallback(keyword, false);
+                }
             });
 
           } else {
                 let answerObj = {};
+            // @sangeetha : recommendations keywords  for QuestionResponse
+                answerObj.keywords = keywords;
                 answerObj.time = new Date().toLocaleString();
                 //  @Mayanka: If spell check done show this message
                 if (flag == 1) {
                     answerObj.extras = 'Showing results for : ' +
                         "\"" + correctedQuestion + "\"" + ' instead';
                 }
-                console.log(query);
+
                 let resultArray = result.records.forEach((record) => {
                     let field = record._fields;
                     if(field[0] !== null)

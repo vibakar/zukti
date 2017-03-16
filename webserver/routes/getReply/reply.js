@@ -68,13 +68,16 @@ router.post('/askQuestion', function(req, res) {
         let spellResponse = getSpellChecker(question.value);
         console.log('in reply  ' + spellResponse.question + 'flag' + spellResponse.flag);
 
-        /* @navinprasad: fetch the keywords,intents,types from redis */
         let intentLexicon = [];
         let keywordLexicon = [];
         let typeLexicon = [];
         let count = 0;
         let newQuestion = '';
+
+        /* @vibakar: replace pronoun with keyword from redis*/
         analyseQuestion(spellResponse.question, username, lexicon);
+
+        /* @navinprasad: find all the keywords,intents and types from redis */
         function lexicon(resQuestion) {
             newQuestion = resQuestion;
             console.log(resQuestion+"responded question");
@@ -127,16 +130,21 @@ router.post('/askQuestion', function(req, res) {
                 sendResponse(false, answerObj);
             };
             // callback method to tackle situation when answer is not present in database
-            let noAnswerFoundCallback = function() {
-                saveUnansweredQuery(username, email, question.value, keywords, intents);
-                // get a random response string from answerNotFoundReply json
-                let foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
-                let resultArray = [];
-                let resultObj = {};
-                resultObj.value = foundNoAnswer;
-                resultArray.push(resultObj);
-                sendResponse(true, resultArray);
-            };
+            let noAnswerFoundCallback = function(differentDomain, inOtherDomain) {
+              saveUnansweredQuery(username, email, question.value, keywords, intents);
+              if(differentDomain){
+                otherDomainResponse(inOtherDomain, differentDomain);
+              }
+              else{
+              let resultArray = [];
+              let resultObj = {};
+              // get a random response string from answerNotFoundReply json
+              let foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
+              resultObj.value = foundNoAnswer;
+              resultArray.push(resultObj);
+              sendResponse(true, resultArray);
+            }
+          };
             if (keywords.length === 0) {
                 saveUnansweredQuery(username, email, question.value);
                 // get a random response string from keyword response found
