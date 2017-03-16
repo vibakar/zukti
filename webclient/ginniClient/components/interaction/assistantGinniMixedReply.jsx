@@ -30,6 +30,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.playVideo = this.playVideo.bind(this);
         this.logoutAfterWarning = this.logoutAfterWarning.bind(this);
         this.redirectDomain = this.redirectDomain.bind(this);
+        this.displayRecommendations = this.displayRecommendations.bind(this);
 
        }
 
@@ -88,6 +89,14 @@ export default class AssistantGinniMixedReply extends React.Component {
     playVideo() {
         let videoUrl = this.props.data.video[0].value;
     }
+  /* @sangeetha: added function to display recommendations */
+    displayRecommendations(recommendations) {
+      console.log('recommendations inside Question response: ', recommendations);
+      let relatedTopics = recommendations.toLocaleString();
+      let provideSpace = relatedTopics.split(',').join(', ');
+      let displayValue = `You can also read about: ${provideSpace}`;
+      this.props.handleGinniReply([<AssistantGinniPlainText value={displayValue}/>]);
+  }
     render() {
           let differentDomain = this.props.differentDomain;
           let text = '';
@@ -167,6 +176,7 @@ export default class AssistantGinniMixedReply extends React.Component {
 
     /* @yuvashree: edited code for text view */
         let text = '';
+        /* @sangeetha : getting keywords for Question response recommendations */
         if(this.props.data.text) {
           text = this.props.data.text[0].value;
           return (
@@ -195,7 +205,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                                      basic color='orange' id='cursor'>Videos</Label>
                                    : ''}
                                    <AssistantGinniOptions question={this.props.question}
-                                     type='text' value={text}/>
+                                     type='text' value={text} keywords={this.props.keywords} onRecommend={this.displayRecommendations}/>
                            </Label.Group>
                        </Feed.Extra>
                     </Feed.Content>

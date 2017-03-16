@@ -114,6 +114,8 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
 
           } else {
                 let answerObj = {};
+            // @sangeetha : recommendations keywords  for QuestionResponse
+                answerObj.keywords = keywords;
                 answerObj.time = new Date().toLocaleString();
                 //  @Mayanka: If spell check done show this message
                 if (flag == 1) {

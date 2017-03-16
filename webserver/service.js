@@ -51,6 +51,8 @@ function setupZuktiRoutes(app) {
     app.use('/bookmarks', require('./routes/bookmarks/bookmarks'));
     /* @ramvignesh: route to set user's current domain */
     app.use('/user', require('./routes/user/user'));
+    /* @sangeetha: requiring the recommendations route */
+    app.use('/recommendations', require('./routes/recommendations/recommendations'));
     // app.use('/redis', require('./routes/redis/redis'));
     /* @keerthana: route to test graph */
     app.get('/graphie', function(req, res) {
