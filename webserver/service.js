@@ -38,10 +38,8 @@ function setupZuktiRoutes(app) {
     console.log('setting up zukti routes...');
     app.use('/', require('./routes/uploadimage'));
     app.use('/analytics', require('./routes/analyticsData/analytics'));
-    app.use('/savebroadcastmessage', isAuthenticated,
-    require('./routes/broadcastmessage/broadcastmessage'));
-    app.use('/getbroadcastmessage', isAuthenticated,
-    require('./routes/broadcastmessage/getbroadcastmessage'));
+    app.use('/savebroadcastmessage', isAuthenticated, require('./routes/broadcastmessage/broadcastmessage'));
+    app.use('/getbroadcastmessage', isAuthenticated, require('./routes/broadcastmessage/getbroadcastmessage'));
     app.use('/getadmin', isAuthenticated, require('./routes/getAdmin/getadminUser'));
     app.use('/intent', require('./routes/intent/intent'));
     app.use('/concept', require('./routes/concept/concept'));
@@ -62,7 +60,7 @@ function setupZuktiRoutes(app) {
         res.sendfile('graph.html');
     });
     /* @rajalakshmi: route to displayCode */
-      app.get('/code', function(req, res) {
+    app.get('/code', function(req, res) {
         res.sendfile('code.html');
     });
     return app;
@@ -107,8 +105,7 @@ function setupMiddlewares(app) {
     app.use(function(req, res, next) {
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Method', 'GET,POST,PUT,DELETE');
-        res.header('Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
         next();
     });
 
@@ -141,7 +138,7 @@ function setupWebpack(app) {
 }
 
 function setupMongooseConnections() {
-  console.log('inside service setupMongooseConnections...');
+    console.log('inside service setupMongooseConnections...');
 
     mongoose.connect(configDB.url);
 
@@ -153,38 +150,42 @@ function setupMongooseConnections() {
     });
 }
 
-
 /* @vibakar & Threka: getting question datas from stackoverflow */
-function getDataFromStackOverflow(){
-           var reqData = {
-               url: "http://api.stackexchange.com/questions?order=desc&sort=activity&tagged=design-pattern&site=stackoverflow&filter=!OfZM.T6xJbOFQb0GkH_I.StjO.)AK)..v-9a4UqI1HX",
-               method:"get",
-               headers: {'Accept-Encoding': 'gzip'}
-           }
-           var gunzip = zlib.createGunzip();
-           var json = "";
-           gunzip.on('data', function(data){
-               json += data.toString();
-           });
-           gunzip.on('end', function(){
-             var obj = JSON.parse(json);
-             var questionArray = [];
-             var count = 0;
-             for(var i=0;i<obj.items.length;i++){
-               count++;
-               questionArray.push(obj.items[i]);
-               if(count===obj.items.length){
-                 fs.writeFile(__dirname+"/routes/getReply/functions/stackoverflow.json", JSON.stringify(questionArray), function(err) {
-                 if(err) {
-                   return console.log(err);
-                 }
-                 console.log("The file was saved!");
-               });
-               }
-             }
-           });
-           request(reqData)
-               .pipe(gunzip)
+function getDataFromStackOverflow() {
+    var data = fs.readFileSync(__dirname + "/routes/getReply/functions/stackoverflow.json", 'utf8');
+    var result = JSON.parse(data);
+    if (result.length == 0) {
+        var reqData = {
+            url: "http://api.stackexchange.com/questions?order=desc&sort=activity&tagged=design-pattern&site=stackoverflow&filter=!OfZM.T6xJbOFQb0GkH_I.StjO.)AK)..v-9a4UqI1HX",
+            method: "get",
+            headers: {
+                'Accept-Encoding': 'gzip'
+            }
+        }
+        var gunzip = zlib.createGunzip();
+        var json = "";
+        gunzip.on('data', function(data) {
+            json += data.toString();
+        });
+        gunzip.on('end', function() {
+            var obj = JSON.parse(json);
+            var questionArray = [];
+            var count = 0;
+            for (var i = 0; i < obj.items.length; i++) {
+                count++;
+                questionArray.push(obj.items[i]);
+                if (count === obj.items.length) {
+                    fs.writeFile(__dirname + "/routes/getReply/functions/stackoverflow.json", JSON.stringify(questionArray), function(err) {
+                        if (err) {
+                            return console.log(err);
+                        }
+                        console.log("The file was saved!");
+                    });
+                }
+            }
+        });
+        request(reqData).pipe(gunzip);
+    }
 }
 getDataFromStackOverflow();
 
@@ -193,7 +194,6 @@ getDataFromStackOverflow();
 //   let getLexicons = require('./lexicon/getLexicons');
 //   getLexicons();
 // }
-
 
 // app constructor function is exported
 module.exports = {
