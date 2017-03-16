@@ -4,7 +4,8 @@
   "scripts": {
     "build": "node ./node_modules/webpack/bin/webpack.js",
     "serv": "node bin/www",
-    "lint": "gulp lint"
+    "lint": "gulp lint",
+    "test": "mocha test"
   },
   "dependencies": {
     "axios": "^0.15.3",
