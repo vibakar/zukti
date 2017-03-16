@@ -54,6 +54,14 @@ export default class LeftMenu extends Component {
         });
     }
     getNotificationCount() {
+      let differentDomain = Cookie.load('differentDomain');
+      if(!differentDomain){
+        this.setState({activeItem:'Build'});
+      }
+      else{
+          this.setState({activeItem:'ChatBot'});
+          Cookie.remove('differentDomain');
+      }
         let url = '/getbroadcastmessage/count';
         Axios.get(url).then((response) => {
             this.setState({counter: response.data.count});

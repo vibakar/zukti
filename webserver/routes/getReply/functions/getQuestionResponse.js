@@ -25,6 +25,7 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
         let query = '';
         let intent = '';
         let type = '';
+        let keyword = '';
         getIntent();
         function getIntent()
         {
@@ -98,8 +99,20 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
             session.close();
             //  @Mayanka: No records found
             if (result.records.length === 0) {
-                noAnswerFoundCallback();
-            } else {
+              /* @Sindhujaadevi: To find if the question is from different domain or not */
+            client.hmget('keywords', keywords[keywords.length-1],function(err, reply) {
+            keyword = reply;
+            if (domain !== keyword) {
+                      foundNoAnswer = 'you are in ' + domain + ' domain. Please refer ' + keyword + ' domain for the answer';
+                      noAnswerFoundCallback(foundNoAnswer);
+                  }
+            else{
+              foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
+                      noAnswerFoundCallback(foundNoAnswer);
+            }
+            });
+
+          } else {
                 let answerObj = {};
                 answerObj.time = new Date().toLocaleString();
                 //  @Mayanka: If spell check done show this message

@@ -36,6 +36,13 @@ export default class InputUserMesaage extends React.Component {
         ginniReply.push(<AssistantGinniMixedReply
           handleGinniReply={this.props.handleGinniReply} abuseCount={response.data.abuseCount} abusePresent={response.data.abusePresent} data={response.data}/>);
       }
+      /* @Sindhujaadevi: if question is of other domain */
+    else if(response.data.inOtherDomain == true){
+      ginniReply.push(<AssistantGinniMixedReply
+        handleGinniReply={this.props.handleGinniReply} question={message.value} inOtherDomain={response.data.inOtherDomain}
+        differentDomain={response.data.differentDomain}
+        data={response.data}/>);
+    }
       //  @Mayanka: If no abuse found, further processing
       else  if (response.data) {
               //  @Mayanka: answer not found Message

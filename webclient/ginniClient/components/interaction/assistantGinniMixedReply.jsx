@@ -13,8 +13,8 @@ import './chatcontainerstyle.css';
 import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
 import ReactPlayer from 'react-player';
 let Beautify = require('js-beautify').js_beautify;
-
-
+import Cookie from 'react-cookie';
+import Axios from 'axios';
 
 export default class AssistantGinniMixedReply extends React.Component {
     // props validation
@@ -29,6 +29,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.displayBlogs = this.displayBlogs.bind(this);
         this.playVideo = this.playVideo.bind(this);
         this.logoutAfterWarning = this.logoutAfterWarning.bind(this);
+        this.redirectDomain = this.redirectDomain.bind(this);
 
        }
 
@@ -59,11 +60,36 @@ export default class AssistantGinniMixedReply extends React.Component {
     logoutAfterWarning(){
      hashHistory.push('/');
   }
+  /* @Sindhujaadevi: redirecting user to other domain */
+  redirectDomain(){
+    let differentDomain = this.props.differentDomain;
+      Axios({
+              method: 'PUT',
+              url: '/user/setlogindomain',
+              data: { email: Cookie.load('email'), domain: differentDomain}
+            }).then(function (response) {
+              console.log(`User's current domain load in`+ differentDomain);
+            });
+            Cookie.save('domain', differentDomain);
+            Cookie.save('differentDomain', differentDomain);
+            let url = '/question/askQuestion';
+            let message = {};
+            message.time = new Date().toLocaleString();
+            message.value = this.props.question;
+            Axios.post(url, {
+                username: this.props.username,
+                question: message
+            }).then((response) => {
+              console.log('done');});
+      hashHistory.push('/chat/'+differentDomain);
+      window.location.reload();
+  }
   /* @yuvashree: added function to play video on clicking the button */
     playVideo() {
         let videoUrl = this.props.data.video[0].value;
     }
     render() {
+          let differentDomain = this.props.differentDomain;
           let text = '';
           let data = '';
            //  : Initialize swear word count */
@@ -106,6 +132,19 @@ export default class AssistantGinniMixedReply extends React.Component {
                   </Feed>
             );
             warningCount = warningCount - 1;
+          }
+          /* @Sindhujaadevi: asking user for suggessions */
+          else if(this.props.inOtherDomain === true){
+            return (
+                  <Feed id="ginniview">
+                  <Feed.Event>
+                      <Feed.Content id = 'ginniviewKeyword'>
+                          <Feed.Summary>You just asked a question of ' {this.props.differentDomain} 'domain </Feed.Summary>
+                          <Feed.Extra onClick={this.redirectDomain}>Click here to go to '{this.props.differentDomain} 'domain</Feed.Extra>
+                      </Feed.Content>
+                  </Feed.Event>
+                </Feed>
+            );
           }
            // @Mayanka: proper reply if no swear word
   else {
