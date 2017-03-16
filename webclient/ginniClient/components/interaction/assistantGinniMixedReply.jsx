@@ -30,7 +30,6 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.playVideo = this.playVideo.bind(this);
         this.logoutAfterWarning = this.logoutAfterWarning.bind(this);
         this.redirectDomain = this.redirectDomain.bind(this);
-
        }
 
     displayMoreText() {
