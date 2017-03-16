@@ -1,26 +1,23 @@
 let client = require('./redis');
-let nlp = require("nlp_compromise");
+let nlp = require('nlp_compromise');
 let pos = require('pos');
 
 module.exports = function(question, username, lexicon) {
     let tags = nlp.sentence(question).tags();
-    console.log(tags+"tags");
     let replacingPronoun = '';
     let v = 0;
-    for(let j = 0; j<tags.length ; j++)
+    for(let j = 0; j < tags.length; j = j + 1)
       {
         console.log(tags[j]);
         if(tags[j] === 'Pronoun')
         {
-          if(j < tags.length-1 && (tags[j+1] === 'Preposition' || tags[j+1] === 'Determiner'))
+          if(j < tags.length - 1 && (tags[j + 1] === 'Preposition' || tags[j + 1] === 'Determiner'))
           {
             tags[j] = 'Noun';
           }
-          else {
-            if(j < tags.length-2 && (tags[j+2] === 'Preposition' || tags[j+2] === 'Determiner'))
-            {
+          else if(j < tags.length - 2 && (tags[j + 2] === 'Preposition'
+          || tags[j + 2] === 'Determiner')) {
               tags[j] = 'Noun';
-            }
           }
         }
         if(tags[j] === 'Pronoun')
@@ -47,4 +44,4 @@ module.exports = function(question, username, lexicon) {
       replacingPronoun = question;
       lexicon(replacingPronoun);
     }
-}
+};
