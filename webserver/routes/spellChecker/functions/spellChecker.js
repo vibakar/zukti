@@ -1,5 +1,5 @@
 module.exports = function (question) {
-	if(typeof word !== 'string') {
+	if(typeof question !== 'string') {
     throw new Error('Not a String');
   }
 	let natural = require('natural');
