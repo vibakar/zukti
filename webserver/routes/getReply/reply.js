@@ -131,14 +131,20 @@ else{
           sendResponse(false, answerObj);
       };
     // callback method to tackle situation when answer is not present in database
-    let noAnswerFoundCallback = function(foundNoAnswer) {
+    let noAnswerFoundCallback = function(differentDomain, inOtherDomain) {
       saveUnansweredQuery(username, email, question.value, keywords, intents);
-      // get a random response string from answerNotFoundReply json
+      if(differentDomain){
+        otherDomainResponse(inOtherDomain, differentDomain);
+      }
+      else{
       let resultArray = [];
       let resultObj = {};
+      // get a random response string from answerNotFoundReply json
+      let foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
       resultObj.value = foundNoAnswer;
       resultArray.push(resultObj);
       sendResponse(true, resultArray);
+    }
   };
     if (keywords.length === 0) {
         saveUnansweredQuery(username, email, question.value);

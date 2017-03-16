@@ -40,8 +40,7 @@ export default class InputUserMesaage extends React.Component {
     else if(response.data.inOtherDomain == true){
       ginniReply.push(<AssistantGinniMixedReply
         handleGinniReply={this.props.handleGinniReply} question={message.value} inOtherDomain={response.data.inOtherDomain}
-        differentDomain={response.data.differentDomain}
-        data={response.data}/>);
+        differentDomain={response.data.differentDomain} data={response.data}/>);
     }
       //  @Mayanka: If no abuse found, further processing
       else  if (response.data) {

@@ -30,7 +30,6 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.playVideo = this.playVideo.bind(this);
         this.logoutAfterWarning = this.logoutAfterWarning.bind(this);
         this.redirectDomain = this.redirectDomain.bind(this);
-
        }
 
     displayMoreText() {
@@ -139,8 +138,8 @@ export default class AssistantGinniMixedReply extends React.Component {
                   <Feed id="ginniview">
                   <Feed.Event>
                       <Feed.Content id = 'ginniviewKeyword'>
-                          <Feed.Summary>You just asked a question of ' {this.props.differentDomain} 'domain </Feed.Summary>
-                          <Feed.Extra onClick={this.redirectDomain}>Click here to go to '{this.props.differentDomain} 'domain</Feed.Extra>
+                          <Feed.Summary> It seems like your question is of ' {this.props.differentDomain} ' domain </Feed.Summary>
+                          <Feed.Extra style={{color:'blue'}} onClick={this.redirectDomain}> <a>Click here to go to '{this.props.differentDomain} ' domain</a></Feed.Extra>
                       </Feed.Content>
                   </Feed.Event>
                 </Feed>

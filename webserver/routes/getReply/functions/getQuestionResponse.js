@@ -103,13 +103,11 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
             client.hmget('keywords', keywords[keywords.length-1],function(err, reply) {
             keyword = reply;
             if (domain !== keyword) {
-                      foundNoAnswer = 'you are in ' + domain + ' domain. Please refer ' + keyword + ' domain for the answer';
-                      noAnswerFoundCallback(foundNoAnswer);
+                      noAnswerFoundCallback(keyword, true);
                   }
             else{
-              foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
-                      noAnswerFoundCallback(foundNoAnswer);
-            }
+                      noAnswerFoundCallback(keyword, false);
+                }
             });
 
           } else {
