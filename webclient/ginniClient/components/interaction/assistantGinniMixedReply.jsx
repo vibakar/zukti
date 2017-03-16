@@ -31,7 +31,6 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.logoutAfterWarning = this.logoutAfterWarning.bind(this);
         this.redirectDomain = this.redirectDomain.bind(this);
         this.displayRecommendations = this.displayRecommendations.bind(this);
-
        }
 
     displayMoreText() {
