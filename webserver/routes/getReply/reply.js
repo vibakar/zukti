@@ -121,22 +121,25 @@ else{
         console.log("reply "+isUnAnswered+"........"+answerObj+"......");
         res.json({isUnAnswered: isUnAnswered, answerObj: answerObj});
     };
+
+      /* @Sindhujaadevi: if the domain is different */
+    let otherDomainResponse = function(inOtherDomain, differentDomain) {
+        res.json({inOtherDomain: inOtherDomain, differentDomain: differentDomain});
+    };
     // callback if a answer is found in the graph database
     let answerFoundCallback = function(answerObj) {
           sendResponse(false, answerObj);
       };
     // callback method to tackle situation when answer is not present in database
-    let noAnswerFoundCallback = function() {
-        saveUnansweredQuery(username, email, question.value, keywords, intents);
-        // get a random response string from answerNotFoundReply json
-        let foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() *
-           answerNotFoundReply.length)];
-        let resultArray = [];
-        let resultObj = {};
-        resultObj.value = foundNoAnswer;
-        resultArray.push(resultObj);
-        sendResponse(true, resultArray);
-    };
+    let noAnswerFoundCallback = function(foundNoAnswer) {
+      saveUnansweredQuery(username, email, question.value, keywords, intents);
+      // get a random response string from answerNotFoundReply json
+      let resultArray = [];
+      let resultObj = {};
+      resultObj.value = foundNoAnswer;
+      resultArray.push(resultObj);
+      sendResponse(true, resultArray);
+  };
     if (keywords.length === 0) {
         saveUnansweredQuery(username, email, question.value);
         // get a random response string from keyword response found
@@ -151,7 +154,7 @@ else{
       saveUnansweredQuery(username, email, question.value);
       // if no intent is found in the question then get a keyword response
       /* @yuvashree: added two more attributes for specifying the user and thier requested type type */
-    getKeywordResponse(keywords, email, types, sendResponse, spellResponse.flag, spellResponse.question);
+      getKeywordResponse(keywords, email, types, sendResponse, otherDomainResponse, spellResponse.flag, spellResponse.question);
     // @vibakar: adding keyword to redis
     addKeywordToRedis(username,keywords[0],intents[0]);
     }

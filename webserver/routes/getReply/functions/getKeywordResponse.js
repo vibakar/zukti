@@ -5,7 +5,7 @@ let replyForKeyword = require('../../../config/replyForKeyword.json');
 let User = require('./../../../models/user');
 let client = require('./redis');
 
-module.exports = function(keywords, email, types, sendResponse, flag, correctedQuestion) {
+module.exports = function(keywords, email, types, sendResponse, otherDomainResponse, flag, correctedQuestion) {
     /* @yuvashree: find domain from db using email id */
     User.findOne({
         $or: [
@@ -25,6 +25,8 @@ module.exports = function(keywords, email, types, sendResponse, flag, correctedQ
         let query = '';
         let intent = '';
         let type = '';
+        let inOtherDomain = '';
+        let differentDomain = '';
         getIntent();
         function getIntent()
         {
@@ -59,7 +61,7 @@ module.exports = function(keywords, email, types, sendResponse, flag, correctedQ
                  WITH bw as bw
                  MATCH (n)<-[rel:answer]-(q:question)-->(bw) where n:blog or n:video or n:image or n:code
                  WITH bw as bw,n as n ,rel as rel
-                 ORDER BY CASE WHEN rel.likes=0 AND rel.dislikes=0 THEN rel.likes ELSE (rel.likes/(rel.likes+rel.dislikes)) END DESC
+                 ORDER BY rel.rating DESC
                  RETURN LABELS(n)as contentType ,COLLECT(distinct n.value) `;
         }
         /* @yuvashree: modified query for multiple relationships and different domain for type specific question */
@@ -86,15 +88,16 @@ module.exports = function(keywords, email, types, sendResponse, flag, correctedQ
             // Completed!
             session.close();
             // condition to handle when no result is found
-            if (result.records[0] === 0) {
-                // randomly generating answer and send response
-                let foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
-                let resultArray = [];
-                let resultObj = {};
-                resultObj.value = foundNoAnswer;
-                resultObj.time = new Date().toLocaleString();
-                resultArray.push(resultObj);
-                sendResponse(true, resultArray);
+            /* @Sindhujaadevi: To find whether the keyword is from different domain or not */
+            if (result.records.length === 0) {
+                // generating answer and send response
+                client.hmget('keywords', keywords[keywords.length-1],function(err, reply) {
+                differentDomain = reply[0];
+                if(domain!== differentDomain){
+                  inOtherDomain = true;
+                }
+                otherDomainResponse(inOtherDomain, differentDomain);
+                  });
             } else {
                 let hasAtleastSomeContent = false;
                 let resultArray = [];
