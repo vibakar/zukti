@@ -6,6 +6,8 @@ import AssistantGinniOptions from './assistantGinniOptions';
 import UnfurlLink from './unfurlLink';
 import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
 import AssistantGinniMoreVideosView from './assistantGinniMoreVideosView';
+import AssistantView from './assistantGinniPlainText';
+
 import ReactPlayer from 'react-player';
 
 
@@ -19,6 +21,8 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.displayMoreVideos = this.displayMoreVideos.bind(this);
         this.displayBlogs = this.displayBlogs.bind(this);
         this.playVideo = this.playVideo.bind(this);
+        this.displayRecommendations = this.displayRecommendations.bind(this);
+
 
     }
     /* @sundaresan: video display */
@@ -59,6 +63,14 @@ export default class AssistantGinniMixedReply extends React.Component {
         let videoUrl = this.props.data.video[0];
         console.log(videoUrl);
     }
+    /* @sangeetha: added function to display recommendations */
+      displayRecommendations(recommendations) {
+        console.log('recommendations inside keyword response: ', recommendations);
+        let relatedTopics = recommendations.toLocaleString();
+        let provideSpace = relatedTopics.split(',').join(', ');
+        let displayValue = `You can also read about: ${provideSpace}`;
+        this.props.handleGinniReply([<AssistantView value={displayValue}/>]);
+    }
 
     render() {
       /* @yuvashree: edited code for displaying videos */
@@ -72,10 +84,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                       <Feed.Extra>
                         <UnfurlLink url ={video} />
                           <Label.Group>
-                              {this.props.data.video.length - 1 > 0
-                                  ? <Label onClick={this.displayVideos}
-                                    basic color='orange' id='cursor'>Videos</Label>
-                                  : ''}
+
                                   <Modal
                                     closeOnRootNodeClick={false}
                                     closeIcon='close'
@@ -90,6 +99,10 @@ export default class AssistantGinniMixedReply extends React.Component {
                                           </Feed.Event>
                                       </Feed>
                                   </Modal>
+                                  {this.props.data.video.length - 1 > 0
+                                      ? <Label onClick={this.displayMoreVideos}
+                                        basic color='orange' id='cursor'>ViewMoreVideos</Label>
+                                      : ''}
                                   <AssistantGinniOptions question={this.props.question}
                                     type='video' value={video}/>
                           </Label.Group>
@@ -101,6 +114,7 @@ export default class AssistantGinniMixedReply extends React.Component {
             }
             /* @yuvashree: edited code for displaying blogs */
             else {
+              /* @Sangeetha: keyword Response recommendations  */
               let blog = this.props.data.blog[0];
               return (
                 <Feed id="ginniview">
@@ -118,7 +132,9 @@ export default class AssistantGinniMixedReply extends React.Component {
                                     basic color='orange' id='cursor'>Videos</Label>
                                   : ''}
                                   <AssistantGinniOptions question={this.props.question}
-                                    type='blog' value={blog} responseValue ={this.props.response}/>
+                                    type='blog' value={blog} responseValue ={this.props.response}
+                                    keywords={this.props.keywords}
+                                      onRecommend={this.displayRecommendations}/>
                           </Label.Group>
                       </Feed.Extra>
                   </Feed.Content>

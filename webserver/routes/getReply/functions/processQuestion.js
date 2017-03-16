@@ -1,7 +1,11 @@
+// let client = require('./redis');
+// let intentRedis = require('./../../redis/functions/redisController');
+let pos = require('pos');
+
 module.exports = function(sentence,intentLexicon,keywordLexicon,typeLexicon) {
 
   console.log('inside getReply processQuestion...');
-  console.log(sentence+".................my question");
+  console.log(sentence);
 
   let nlp = require('nlp_compromise');
     //  console.log(intentLexicon);
@@ -14,39 +18,68 @@ module.exports = function(sentence,intentLexicon,keywordLexicon,typeLexicon) {
     let intents = [];
     /* @yuvashree: type array will contain types extracted from question */
     let types = [];
+
+    /* @yuvashree: finding the intent using pos */
+    let words = new pos.Lexer().lex(sentence);
+    let tagger = new pos.Tagger();
+    let taggedWords = tagger.tag(words);
+    console.log(taggedWords+"tags");
+    for(y in taggedWords)
+    {
+      let taggedWord = taggedWords[y];
+      let tag = taggedWord[1];
+      if(tag !== 'NN' && tag !== 'JJ')
+      {
+        if(intentLexicon.includes(taggedWord[0]))
+        {
+          intents.push(taggedWord[0]);
+          console.log(taggedWord[0]+"pushed word");
+        }
+      }
+    }
+    /* finding intent using nlp done */
+
     /* iterate over the tokens and search for keywords and intents (if a given token
     is keyword or intent then check the next words for kwyword or intent)*/
     for (let i = 0; i < tokens.length; i = i + 1) {
         let keyword = [];
         let intent = [];
         let type = [];
-        for (let m = 0; m < intentLexicon.length; m = m + 1) {
-            let splitIntent = intentLexicon[m].split(' ');
-            if (splitIntent[0] === tokens[i]) {
-                let intentPhraseLength = 1;
-                for (let n = 1; n < splitIntent.length && i + 1 < tokens.length; n = n + 1) {
-                    if (tokens[i + n] === splitIntent[n]) {
-                        intentPhraseLength = intentPhraseLength + 1;
-                    } else {
-                        break;
-                    }
-                }
-                if (intentPhraseLength === splitIntent.length) {
-                    intent = splitIntent;
-                }
-            }
+
+        // console.log(intentLexicon+"intents");
+        if(intents.length === 0)
+        {
+          for (let m = 0; m < intentLexicon.length; m = m + 1) {
+              let splitIntent = intentLexicon[m].split(' ');
+              if (splitIntent[0] === tokens[i]) {
+                  let intentPhraseLength = 1;
+                  for (let n = 1; n < splitIntent.length && i + 1 < tokens.length; n = n + 1) {
+                      if (tokens[i + n] === splitIntent[n]) {
+                          intentPhraseLength = intentPhraseLength + 1;
+                      } else {
+                          break;
+                      }
+                  }
+                  if (intentPhraseLength === splitIntent.length) {
+                      intent = splitIntent;
+                  }
+              }
+          }
+          if (intent.length !== 0) {
+              i = i + intent.length - 1;
+              intents.push(intent.join(' '));
+              // if intent found skip this iteration
+               continue;
+          }
         }
-        if (intent.length !== 0) {
-            i = i + intent.length - 1;
-            intents.push(intent.join(' '));
-            // if intent found skip this iteration
-            continue;
-        }
+
         for (let j = 0; j < keywordLexicon.length; j = j + 1) {
             let splitkeyword = keywordLexicon[j].split(' ');
             if (splitkeyword[0] === tokens[i]) {
                 let phraseLength = 1;
+                console.log(splitkeyword[0]+"......."+tokens[i]);
                 for (let k = 1; k < splitkeyword.length && i + 1 < tokens.length; k = k + 1) {
+                  console.log(splitkeyword[k]+"......."+tokens[i+k]);
                     if (tokens[i + k] === splitkeyword[k]) {
                         phraseLength = phraseLength + 1;
                     } else {

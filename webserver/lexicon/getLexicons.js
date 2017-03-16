@@ -12,10 +12,10 @@ function createLexiconFiles(result) {
   let domain = [];
   let keywordTerms = [];
 
-  let answerTypes = ["video", "video", "view", "video", "display", "video", "show", "video", "download",
-"video", "record", "video", "clip", "video", "website", "blog", "webpage", "blog", "link", "blog","blog","blog"];
+   let answerTypes = ["video", "video", "view", "video", "display", "video", "show", "video", "download",
+"video", "record", "video", "clip", "video", "website", "blog", "webpage", "blog", "link", "blog","blog","blog" ];
 
- //  console.log(result.records.length+"redis data");
+  //  console.log(result.records.length+"redis data");
 
   for(let k = 0 ; k<result.records.length ; k++)
     {
@@ -54,8 +54,34 @@ function createLexiconFiles(result) {
                throw(err);
            }
        });
-     };
+   }
+   // let h = client.hgetall('intent');
+  //  console.log(intentTerms+"intents");
+  //  console.log(baseIntents+"baseIntents");
+  //  console.log(domain.length+"no of domains");
+  //  console.log("domain:"+domain);
+  //  console.log("keywords:"+keywordTerms);
 
+   for (let i = 0; i < keywordTerms.length; i = i + 1) {
+       /* inserting 'keywords' in redis */
+       for(let j = 0; j < keywordTerms[i].length; j = j + 1) {
+       client.hmset(['keywords', keywordTerms[i][j], domain[i]], function(err, reply) {
+           if (err) {
+               throw(err);
+           }
+       });
+     }
+   }
+  //  let h = client.hgetall('keyword');
+  //   console.log(h);
+  for (let i = 0; i < answerTypes.length; i = i + 2) {
+   // client.hmset();
+   client.hmset(['types', answerTypes[i], answerTypes[i+1]], function(err, reply) {
+            if (err) {
+                throw(err);
+            }
+        });
+      };
 }
 module.exports = function() {
   /* query to get all concept words, types and intents */

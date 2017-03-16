@@ -52,7 +52,7 @@ class   Methods implemented singletons  There certain situations unique   Having
 To unique singleton   By doing we avoid before     Instance operation instance  Instance Smalltalk member function
 own instance    adapter Adapter bridge two incompatible structural combines capability interface  This join
 functionalities interfacesadapter Convert interfac  expect   couldn   otherwise because you match need
-you cooperates unrelated orunforeseen classes   is   don   necessarily compatible interfaces
+you cooperates unrelated orunforeseen classes   is   dom   necessarily compatible interfaces
 object unpractical adapt subclassing every parent  target Target domain  specific using
 collaborates conforming  adaptee Adaptec hat adapting    adapts Adaptert Bridge decouple abstraction
 vary independently   decouples them  This acts makes functionality implementer Both altered structurally
@@ -153,4 +153,4 @@ react abstracts away the DOM from you, giving a simpler programming model and be
  uses virtual DOM which is JavaScript object. This will improve apps performance since JavaScript virtual DOM is faster than the regular DOM.
  can be used on client and server side.Component and Data patterns improve readability which helps to maintain larger apps. can be used with other frameworks.
  uses JSX for templating instead of regular JavaScript. It is not necessary to use it, but there are some pros that comes with it.
-  view download link video record show display blog webpage website for necessiated
+  view download link video record show display blog webpage website for necessiated gof

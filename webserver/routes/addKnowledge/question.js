@@ -3,11 +3,28 @@ let saveQuestionAnswer = require('./saveQuestionAnswer');
 let processQuestion = require('./processQuestion');
 let voteAnswer = require('./voteAnswer');
 let router = express.Router();
+let client = require('./redis');
 
 // router to verify input question has keyword or not
 router.post('/verifyQuestion', function(req, res) {
     let question = req.body.question;
-    let questionInfo = processQuestion(question);
+    lexicon();
+    let keywordLexicon = [];
+    let intentLexicon = [];
+    function lexicon()
+    {
+      client.hkeys('keywords', function(err, reply) {
+          keywordLexicon = reply;
+      });
+      client.hkeys('intents', function(err, reply) {
+          intentLexicon = reply;
+          callBack();
+      });
+    }
+    function callBack()
+    {
+    let questionInfo = processQuestion(question,keywordLexicon,intentLexicon);
+    console.log(questionInfo.keywords+",,,,,,,,,typed now");
         if (questionInfo.keywords.length === 0) {
         res.json({
             isValidQuestion: false,
@@ -23,6 +40,7 @@ router.post('/verifyQuestion', function(req, res) {
     else{
       res.json({isValidQuestion: true});
     }
+  }
 });
 // router to add a question answer set to Ginni knowledge base
 router.post('/addQuestionAnswer', function(req, res) {

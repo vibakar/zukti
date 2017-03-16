@@ -46,17 +46,21 @@ export default class InputUserMesaage extends React.Component {
       else  if (response.data) {
               //  @Mayanka: answer not found Message
                 if(!response.data.isUnAnswered) {
+                  // @sangeetha : keywords for question response recommendations
                       ginniReply.push(<AssistantGinniMixedReply
                         handleGinniReply={this.props.handleGinniReply} question={message.value}
-                        data={response.data.answerObj}/>);
+                        data={response.data.answerObj} keywords={response.data.answerObj.keywords}/>);
                 }
                 //  @Mayanka: display answer
+
+                /* @sangeetha: sending keywords for recommendations */
                   else{
                   response.data.answerObj.forEach((reply)=>{
                     ginniReply.push(<AssistantGinniPlainText value={reply.value}/>);
                     if(reply.keywordResponse) {
                       ginniReply.push(<AssistantGinniKeywordResponse
                         handleGinniReply={this.props.handleGinniReply} question={message.value}
+                        keywords={reply.keywords}
                         data={reply}/>);
                     }
                   });
