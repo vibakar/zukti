@@ -30,7 +30,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.playVideo = this.playVideo.bind(this);
         this.logoutAfterWarning = this.logoutAfterWarning.bind(this);
         this.redirectDomain = this.redirectDomain.bind(this);
-        this.displayRecommendations = this.displayRecommendations.bind(this);
+
        }
 
     displayMoreText() {
@@ -88,14 +88,6 @@ export default class AssistantGinniMixedReply extends React.Component {
     playVideo() {
         let videoUrl = this.props.data.video[0].value;
     }
-  /* @sangeetha: added function to display recommendations */
-    displayRecommendations(recommendations) {
-      console.log('recommendations inside Question response: ', recommendations);
-      let relatedTopics = recommendations.toLocaleString();
-      let provideSpace = relatedTopics.split(',').join(', ');
-      let displayValue = `You can also read about: ${provideSpace}`;
-      this.props.handleGinniReply([<AssistantGinniPlainText value={displayValue}/>]);
-  }
     render() {
           let differentDomain = this.props.differentDomain;
           let text = '';
@@ -175,7 +167,6 @@ export default class AssistantGinniMixedReply extends React.Component {
 
     /* @yuvashree: edited code for text view */
         let text = '';
-        /* @sangeetha : getting keywords for Question response recommendations */
         if(this.props.data.text) {
           text = this.props.data.text[0].value;
           return (
@@ -204,7 +195,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                                      basic color='orange' id='cursor'>Videos</Label>
                                    : ''}
                                    <AssistantGinniOptions question={this.props.question}
-                                     type='text' value={text} keywords={this.props.keywords} onRecommend={this.displayRecommendations}/>
+                                     type='text' value={text}/>
                            </Label.Group>
                        </Feed.Extra>
                     </Feed.Content>
@@ -314,6 +305,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         else if(this.props.data.code){
              let code = this.props.data.code[0].value;
                let value = Beautify(code, {indent_size: 1 });
+                 localStorage.setItem("code",value);
                return (
                      <Feed id="ginniview">
                          <Feed.Event>
@@ -322,8 +314,15 @@ export default class AssistantGinniMixedReply extends React.Component {
                                <p>
                                Click on the Code button to view the Content.
                                </p>
-                                <Label.Group>
-                                   <Modal closeOnRootNodeClick={false} closeIcon ='close'  trigger ={<Label basic color='orange' id='cursor' >Code</Label>}><pre>{value}</pre></Modal>
+                               <Label.Group>
+  <Modal  id ="modelcontent" closeOnRootNodeClick={false} closeIcon ='close'
+    trigger ={<Label basic color='orange' id='cursor' >Code</Label>}>
+    <frameset>
+      <frame src="http://localhost:8080/code" style={{width:'50px'}}/>
+    </frameset>
+    {/* <pre>{value}</pre> */}
+
+  </Modal>
 
                                         <AssistantGinniOptions question={this.props.question}
                                           type='text' value={code}/>

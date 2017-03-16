@@ -58,7 +58,10 @@ function setupZuktiRoutes(app) {
     app.get('/graphie', function(req, res) {
         res.sendfile('graph.html');
     });
-
+    /* @rajalakshmi: route to displayCode */
+      app.get('/code', function(req, res) {
+        res.sendfile('code.html');
+    });
     return app;
 }
 
