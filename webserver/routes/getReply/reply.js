@@ -123,14 +123,14 @@ router.post('/askQuestion', function(req, res) {
                     let miJSON = JSON.parse(json);
                     let ansObj = {};
                     if (miJSON.items.length > 0) {
-                        if (miJSON.items[0].is_answered) {
+                        if (miJSON.items[0].is_accepted) {
                             let answer = JSON.stringify(miJSON.items[0].body);
                             let strip_html = striptags(answer);
                             let result = strip_html.replace(/\\"/g, '"');
                             console.log('stripped result :' + result);
                             ansObj.text = [];
                             ansObj.text.push({value: result});
-                            sendResponse(false, ansObj);;
+                            sendResponse(false, ansObj);
                         } else {
                             saveUnansweredQuery(username, email, question.value);
                             // get a random response string from keyword response found
