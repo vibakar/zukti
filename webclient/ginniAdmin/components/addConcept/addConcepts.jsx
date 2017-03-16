@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-    Form,
-    Grid,
-    Button,
-    Icon,
-    Divider
-} from 'semantic-ui-react';
+import {Form, Grid, Button, Icon, Divider} from 'semantic-ui-react';
 import ConceptDropdown from './conceptDropdown';
 import './addConcept.css';
 import Config from '../../../../config/url';
@@ -24,7 +18,8 @@ export default class AddConcept extends React.Component {
             opensnackbar: false,
             snackbarMsg: '',
             relations: [],
-            concepts: []
+            concepts: [],
+            graph: <span></span>
         };
     }
     // @vibakar: bind the dropdown with all concepts and relationships from neo4j databse
@@ -47,6 +42,12 @@ export default class AddConcept extends React.Component {
     }
     getConcept(concept) {
         this.setState({conceptValue: concept});
+        localStorage.setItem("query", "match (n:concept)-[r]-(m:concept) where n.name = '" + concept + "' return n,r,m");
+        this.setState({
+            graph: <frameset>
+                    <frame src='http://localhost:8080/graphie'/>
+                </frameset>
+        });
     }
     getRelation(relation) {
         this.setState({relationValue: relation});
@@ -88,6 +89,15 @@ export default class AddConcept extends React.Component {
                 this.refs.newConceptText.value = '';
                 this.setState({relationValue: ''});
                 this.setState({conceptValue: ''});
+                localStorage.setItem("query", "match (n:concept)-[r]-(m:concept) where n.name = '" + existingConcept + "' return n,r,m");
+                this.setState({
+                  graph: <span></span>
+                })
+                this.setState({
+                    graph: <frameset>
+                            <frame src='http://localhost:8080/graphie'/>
+                        </frameset>
+                });
             }).catch((error) => {
                 console.log(error);
             });
@@ -114,26 +124,22 @@ export default class AddConcept extends React.Component {
                             <Divider/>
                         </Grid.Row>
                         <Grid.Row>
-                            <Grid.Column width={5} />
+                            <Grid.Column width={5}/>
+                            <Grid.Column width={6}>
+                                <ConceptDropdown relations={this.state.relations} concepts={this.state.concepts} handleRelation={this.getRelation} handleConcept={this.getConcept} value1={this.state.relationValue} value2={this.state.conceptValue}/>
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row>
+                            <Grid.Column width={5}/>
                             <Grid.Column width={6}>
                                 <Form>
                                     <Form.Field>
                                         <label>
                                             <h4>New Concept Name</h4>
                                         </label>
-                                        <input autoComplete='off' type='text' ref='newConceptText'
-                                          placeholder='Type Concept Name'/>
+                                        <input autoComplete='off' type='text' ref='newConceptText' placeholder='Type Concept Name'/>
                                     </Form.Field>
                                 </Form>
-                            </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row>
-                            <Grid.Column width={5} />
-                            <Grid.Column width={6}>
-                                <ConceptDropdown relations={this.state.relations}
-                                  concepts={this.state.concepts} handleRelation={this.getRelation}
-                                   handleConcept={this.getConcept} value1={this.state.relationValue}
-                                    value2={this.state.conceptValue}/>
                             </Grid.Column>
                         </Grid.Row>
                         <br/>
@@ -143,18 +149,19 @@ export default class AddConcept extends React.Component {
                             </Button>
 
                         </Grid.Row>
-                      <br/>
-                      <Grid.Row/>
+                        <br/>
+                        <Grid.Row/>
                         <Grid.Row>
-                            <Grid.Column width={5} />
-                            <Grid.Column width={6} />
+                            <Grid.Column width={5}/>
+                            <Grid.Column width={6}/>
                         </Grid.Row>
                         <Grid.Row/>
                     </Grid.Column>
-
+                    <Grid.Column width={8}>
+                        <Grid.Row/> {this.state.graph}
+                    </Grid.Column>
                 </Grid>
-                <Snackbar open={this.state.opensnackbar} message={this.state.snackbarMsg}
-                  autoHIdeDuration={400} onRequestClose={this.handleRequestClose}/>
+                <Snackbar open={this.state.opensnackbar} message={this.state.snackbarMsg} autoHIdeDuration={400} onRequestClose={this.handleRequestClose}/>
             </div>
         );
     }

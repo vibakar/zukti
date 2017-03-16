@@ -258,15 +258,59 @@ router.post('/askQuestion', function(req, res) {
                     }
                 }
             };
-            if (keywords.length === 0) {
-                saveUnansweredQuery(username, email, question.value);
-                // get a random response string from keyword response found
-                let foundNoAnswer = commonReply[Math.floor(Math.random() * commonReply.length)];
-                let resultArray = [];
-                let resultObj = {};
-                resultObj.value = foundNoAnswer;
-                resultArray.push(resultObj);
-                sendResponse(true, resultArray);
+            // @keerthana: callback to send suggestion
+          function suggestionCallback(result) {
+              sendResponse(false, result);
+          }
+          // @keerthana: send suggestion response
+          let suggestionConcepts = function(conceptArray, suggestionCallback) {
+              let suggestion = conceptArray.join("");
+              let ansObj = {};
+              ansObj.suggestion = [];
+              conceptArray.forEach((item, index) => {
+                  ansObj.suggestion.push({value: item});
+              });
+              suggestionCallback(ansObj);
+          };
+          // @keerthana: to extract a keyword that is a part of the concept
+          if (keywords.length === 0) {
+              let splitQuestion = question.value.split(' ');
+              let extractedKeyword = '';
+              let isKeywordFound = false;
+              console.log(nlp.sentence(question.value).tags());
+              splitQuestion.forEach((item, index) => {
+                  if (nlp.sentence(item).tags()[0] == 'Noun' || nlp.sentence(item).tags()[0] == 'Adjective' || nlp.sentence(item).tags()[0] == 'Infinitive') {
+                      extractedKeyword = extractedKeyword + item;
+                  }
+              })
+              console.log(extractedKeyword);
+              let matchingConcepts = [];
+              for (let i = 0; i < keywordLexicon.length; i = i + 1) {
+                  if (keywordLexicon[i].includes(extractedKeyword)) {
+                      matchingConcepts.push(keywordLexicon[i]);
+                      isKeywordFound = true;
+                  }
+              }
+              if (isKeywordFound) {
+                  console.log(matchingConcepts);
+                  suggestionConcepts(matchingConcepts, suggestionCallback);
+                  // if(matchingConcepts.length == 1) {
+                  //   // getQuestionResponse(intents, matchingConcepts, email, types, answerFoundCallback, noAnswerFoundCallback, spellResponse.flag, spellResponse.question);
+                  //   suggestionConcepts(matchingConcepts, suggestionCallback);
+                  // }
+                  // else {
+                  //   suggestionConcepts(matchingConcepts, suggestionCallback);
+                  // }
+              } else {
+                  saveUnansweredQuery(username, email, question.value);
+                  // get a random response string from keyword response found
+                  let foundNoAnswer = commonReply[Math.floor(Math.random() * commonReply.length)];
+                  let resultArray = [];
+                  let resultObj = {};
+                  resultObj.value = foundNoAnswer;
+                  resultArray.push(resultObj);
+                  sendResponse(true, resultArray);
+              }
             } else if (intents.length === 0) {
                 saveUnansweredQuery(username, email, question.value);
                 // if no intent is found in the question then get a keyword response
