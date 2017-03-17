@@ -168,6 +168,9 @@ export default class AssistantGinniMixedReply extends React.Component {
         let text = '';
         if(this.props.data.text) {
           text = this.props.data.text[0].value;
+          let value = Beautify(text, {indent_size: 1 });
+          let newvalue = value.split("\\n");
+          value = newvalue.join("");
           return (
                 <Feed id="ginniview">
                     <Feed.Event>
@@ -222,6 +225,29 @@ export default class AssistantGinniMixedReply extends React.Component {
                       <AssistantGinniOptions question={this.props.question}
                         type='text' value={text}/>
                     </Feed.Extra>
+              </Feed.Content>
+          </Feed.Event>
+        </Feed>
+        );
+      }
+      // @keerthana: to display suggestions
+      if (this.props.data.suggestion) {
+        console.log(this.props.data.suggestion);
+        let suggestion = this.props.data.suggestion;
+        console.log(suggestion);
+        let suggestedConcept = suggestion.map(function(item) {
+          return(
+            <div>{item.value}</div>
+          )
+        });
+        return (
+          <Feed id="ginniview">
+          <Feed.Event>
+              <Feed.Content id = 'ginniviewKeyword'>
+                  <Feed.Summary> <span>Which one of these concepts do you mean?</span>
+                 </Feed.Summary>
+                 <hr/>
+                    <Feed.Summary> {suggestedConcept} </Feed.Summary>
               </Feed.Content>
           </Feed.Event>
         </Feed>

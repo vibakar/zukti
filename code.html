@@ -6,12 +6,12 @@
         #editor
         {
             display: block;
-            width: 700px;
+            width: 920px;
             position: absolute;
             top: 0;
-            right: 0;
-            bottom: 100px;
-            left: 0;
+            right: 900px;
+            bottom: 99px;
+            left: -10px;
         }
       </style>
 </head>
@@ -23,8 +23,8 @@
       var code = localStorage.getItem("code");
       document.getElementById("editor").innerHTML = code;
       var editor = ace.edit("editor");
-      editor.setTheme("https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/theme-monokai.js");
-      editor.getSession().setMode("https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/mode-javascript.js");
+      editor.setTheme("ace/theme/dreamweaver");
+      editor.getSession().setMode("ace/mode/java");
 </script>
 </body>
 </html>

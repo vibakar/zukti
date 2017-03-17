@@ -26,6 +26,7 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
         let intent = '';
         let type = '';
         let keyword = '';
+        let count = 0;
         getIntent();
         /* @navinprasad: find the base node */
         function getIntent()
@@ -73,7 +74,16 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
             OPTIONAL MATCH  (keywords)<-[subconcept]-(c:concept)
             WHERE TYPE(subconcept)='${intent[0]}'
             WITH a as a, c as c
-            RETURN LABELS(a),COLLECT(distinct a.value),LABELS(c),COLLECT(distinct c.name) `;
+            RETURN LABELS(a),COLLECT(distinct a.value),LABELS(c),COLLECT(distinct c.name),
+            COLLECT(ANY(user IN a.likes WHERE user='${email}')),
+            COLLECT(ANY(user IN a.dislikes WHERE user='${email}')),
+            CASE
+             WHEN SIZE(a.likes)=0 AND SIZE(a.dislikes)=0 THEN 0
+             WHEN SIZE(a.likes)=0 AND SIZE(a.dislikes)>0 THEN -SIZE(a.dislikes)
+             WHEN SIZE(a.likes)>0 AND SIZE(a.dislikes)>=0 THEN (SIZE(a.likes)*100)/(SIZE(a.likes)+SIZE(a.dislikes))
+            END
+            AS rating
+            ORDER BY rating DESC `;
         }
           /* @yuvashree: modified query for multiple relationships and different domain for type specific question */
           else {
@@ -92,7 +102,16 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
               MATCH (keywords)<-[r]-(q:question)-[rel:answer]->(a)
               WHERE TYPE(r)='${intent[0]}' and labels(a)='${type[0]}'
               WITH a as a, rel as rel
-              RETURN LABELS(a),COLLECT(a.value) `
+              RETURN LABELS(a),COLLECT(a.value),
+              COLLECT(ANY(user IN a.likes WHERE user='${email}')),
+              COLLECT(ANY(user IN a.dislikes WHERE user='${email}')),
+              CASE
+               WHEN SIZE(a.likes)=0 AND SIZE(a.dislikes)=0 THEN 0
+               WHEN SIZE(a.likes)=0 AND SIZE(a.dislikes)>0 THEN -SIZE(a.dislikes)
+               WHEN SIZE(a.likes)>0 AND SIZE(a.dislikes)>=0 THEN (SIZE(a.likes)*100)/(SIZE(a.likes)+SIZE(a.dislikes))
+              END
+              AS rating
+              ORDER BY rating DESC `;
         }
         let session = getNeo4jDriver().session();
         session.run(query).then(function(result) {
@@ -142,11 +161,15 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
                   answerObj[field[2][0]] = field[3];
                 }
                 else {
+                  count = 1;
+                  /* @vibakar & Threka : calling noAnswerFoundCallback for fetching answer from stackoverflow,
+                                          when answer is not found in our db */
                   noAnswerFoundCallback();
                 }
                 }
               });
                 // sending the answer to callback
+                if(count == 0)
                 answerFoundCallback(answerObj);
             }
         }).catch(function(error) {

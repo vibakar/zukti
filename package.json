@@ -4,10 +4,12 @@
   "scripts": {
     "build": "node ./node_modules/webpack/bin/webpack.js",
     "serv": "node bin/www",
-    "lint": "gulp lint"
+    "lint": "gulp lint",
+    "test": "mocha test"
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "babel-polyfill": "^6.23.0",
     "bad-words": "^1.5.0",
     "bcrypt-nodejs": "0.0.3",
     "better-react-spinkit": "^2.0.0-4",
@@ -63,14 +65,17 @@
     "react-tap-event-plugin": "^2.0.1",
     "read-json": "^1.0.3",
     "redis": "^2.7.1",
+    "request": "^2.81.0",
     "segmentize": "^0.4.1",
     "semantic-ui": "^2.2.7",
     "semantic-ui-css": "^2.2.4",
     "semantic-ui-react": "^0.63.5",
     "sentiment": "^3.0.1",
     "socket.io": "^1.7.2",
+    "striptags": "^3.0.1",
     "supertest": "^3.0.0",
-    "validator": "^6.2.1"
+    "validator": "^6.2.1",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
     "babel-core": "^6.16.0",

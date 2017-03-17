@@ -12,6 +12,11 @@ export default class NewIntentText extends React.Component {
           snakbarmsg: ''
         };
         this.createNewIntent = this.createNewIntent.bind(this);
+        this.addNewIntent = this.addNewIntent.bind(this);
+    }
+    addNewIntent(newIntent) {
+      console.log(newIntent+' eeeeeeeeeeeeeeeeeeeeeeeeeee');
+      this.props.addNewIntent(newIntent);
     }
     createNewIntent(e) {
         e.preventDefault();
@@ -31,6 +36,7 @@ export default class NewIntentText extends React.Component {
         } else {
             this.setState({opensnackbar: true, snakbarmsg: 'The field is empty'});
         }
+        this.addNewIntent(newIntent);
     }
     handleRequestClose=()=>
     {

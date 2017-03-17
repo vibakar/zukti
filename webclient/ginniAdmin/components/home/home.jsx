@@ -69,7 +69,7 @@ export default class FrontPage extends React.Component {
               Cookie.save('domain','DESIGN PATTERN');
               console.log(Cookie.load('domain'));
               socket.emit('updateUserList');
-              hashHistory.push('/design pattern');
+              hashHistory.push('/design_pattern');
           break;
         default:
           break;

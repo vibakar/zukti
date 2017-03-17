@@ -1,7 +1,7 @@
 let client = require('./redis');
 let nlp = require('nlp_compromise');
 
-/* @vibakar: finds the pronoun and replaces it with previous keyword */ 
+/* @vibakar: finds the pronoun and replaces it with previous keyword */
 module.exports = function(question, username, lexicon) {
     let tags = nlp.sentence(question).tags();
     let replacingPronoun = '';

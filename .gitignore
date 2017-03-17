@@ -4,3 +4,4 @@ node_modules
 *.gpg
 *.csv
 webclient/dist
+webserver/CsvFiles

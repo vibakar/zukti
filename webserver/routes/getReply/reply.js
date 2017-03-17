@@ -25,6 +25,12 @@ let analyseQuestion = require('./functions/analyseQuestion');
 let getSpellChecker = require('../spellChecker/functions/spellChecker');
 let detectSwear = require('../filterAbuse/functions/filterAbuse');
 
+// stackoverflow
+let stackoverflow = require('./functions/stackoverflow.json');
+let request = require('request');
+let zlib = require('zlib');
+let striptags = require('striptags');
+
 // router to take question and give reply to user
 router.post('/askQuestion', function(req, res) {
     // get the user email
@@ -62,7 +68,7 @@ router.post('/askQuestion', function(req, res) {
             return 'Abuse Count updated successfully';
         });
         //  @Mayanka: if abuse found, return true and count
-        res.json({abuseCount: abuseCount, abusePresent: abusePresent}//  @Mayanka: process the input if no abuse is found
+        res.json({abuseCount: abuseCount, abusePresent: abusePresent} //  @Mayanka: process the input if no abuse is found
         );
     } else {
         let spellResponse = getSpellChecker(question.value);
@@ -80,7 +86,7 @@ router.post('/askQuestion', function(req, res) {
         /* @navinprasad: find all the keywords,intents and types from redis */
         function lexicon(resQuestion) {
             newQuestion = resQuestion;
-            console.log(resQuestion+"responded question");
+            console.log(resQuestion + "responded question");
             client.hkeys('keywords', function(err, reply) {
                 keywordLexicon = reply;
             });
@@ -99,6 +105,55 @@ router.post('/askQuestion', function(req, res) {
             let intents = query.intents;
             let types = query.types;
 
+            /* @vibakar & Threka: getting answer from stackoverflow for the question id */
+            let getJson = function(q_id, sendResponse) {
+                var reqData = {
+                    url: "https://api.stackexchange.com/2.2/questions/" + q_id + "/answers?order=desc&sort=activity&site=stackoverflow&filter=!9YdnSM64y",
+                    method: "get",
+                    headers: {
+                        'Accept-Encoding': 'gzip'
+                    }
+                }
+                var gunzip = zlib.createGunzip();
+                var json = "";
+                gunzip.on('data', function(data) {
+                    json += data.toString();
+                });
+                gunzip.on('end', function() {
+                    let miJSON = JSON.parse(json);
+                    let ansObj = {};
+                    if (miJSON.items.length > 0) {
+                        if (miJSON.items[0].is_accepted) {
+                            let answer = JSON.stringify(miJSON.items[0].body);
+                            let strip_html = striptags(answer);
+                            let result = strip_html.replace(/\\"/g, '"');
+                            console.log('stripped result :' + result);
+                            ansObj.text = [];
+                            ansObj.text.push({value: result});
+                            sendResponse(false, ansObj);
+                        } else {
+                            saveUnansweredQuery(username, email, question.value);
+                            // get a random response string from keyword response found
+                            let foundNoAnswer = commonReply[Math.floor(Math.random() * commonReply.length)];
+                            let resultArray = [];
+                            let resultObj = {};
+                            resultObj.value = foundNoAnswer;
+                            resultArray.push(resultObj);
+                            sendResponse(true, resultArray);
+                        }
+                    } else {
+                        saveUnansweredQuery(username, email, question.value);
+                        // get a random response string from keyword response found
+                        let foundNoAnswer = commonReply[Math.floor(Math.random() * commonReply.length)];
+                        let resultArray = [];
+                        let resultObj = {};
+                        resultObj.value = foundNoAnswer;
+                        resultArray.push(resultObj);
+                        sendResponse(true, resultArray);
+                    }
+                });
+                request(reqData).pipe(gunzip)
+            }
             // @vibakar: add keyword to redis
             let addKeywordToRedis = function(username, keyword, intent) {
                 client.hmset(username, 'keywords', keyword, 'intents', intent, function(err, reply) {
@@ -121,9 +176,9 @@ router.post('/askQuestion', function(req, res) {
             };
 
             /* @Sindhujaadevi: if the domain is different */
-          let otherDomainResponse = function(inOtherDomain, differentDomain) {
-              res.json({inOtherDomain: inOtherDomain, differentDomain: differentDomain});
-          };
+            let otherDomainResponse = function(inOtherDomain, differentDomain) {
+                res.json({inOtherDomain: inOtherDomain, differentDomain: differentDomain});
+            };
 
             // callback if a answer is found in the graph database
             let answerFoundCallback = function(answerObj) {
@@ -131,29 +186,131 @@ router.post('/askQuestion', function(req, res) {
             };
             // callback method to tackle situation when answer is not present in database
             let noAnswerFoundCallback = function(differentDomain, inOtherDomain) {
-              saveUnansweredQuery(username, email, question.value, keywords, intents);
-              if(differentDomain){
-                otherDomainResponse(inOtherDomain, differentDomain);
-              }
-              else{
-              let resultArray = [];
-              let resultObj = {};
-              // get a random response string from answerNotFoundReply json
-              let foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
-              resultObj.value = foundNoAnswer;
-              resultArray.push(resultObj);
-              sendResponse(true, resultArray);
-            }
+                if (differentDomain && inOtherDomain) {
+                    saveUnansweredQuery(username, email, question.value, keywords, intents);
+                    if (differentDomain) {
+                        otherDomainResponse(inOtherDomain, differentDomain);
+                    } else {
+                        let resultArray = [];
+                        let resultObj = {};
+                        // get a random response string from answerNotFoundReply json
+                        let foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
+                        resultObj.value = foundNoAnswer;
+                        resultArray.push(resultObj);
+                        sendResponse(true, resultArray);
+                    }
+                } else {
+                  /* @vibakar & Threka : moving to stackoverflow for getting the question id,when no answer were found in db*/
+                    let count = 0;
+                    let wordCount = 0;
+                    let qid_array = [];
+                    for (let m = 0; m < stackoverflow.length; m++) {
+                        count++;
+                        let userQuery = question.value.split(' ');
+                        let title = stackoverflow[m].title.split(' ');
+                        for (var u = 0; u < userQuery.length; u++) {
+                            for (let t = 0; t < title.length; t++) {
+                                if (userQuery[u] === title[t]) {
+                                    wordCount++;
+                                    if (wordCount === userQuery.length) {
+                                        console.log('success');
+                                        if (stackoverflow[m].is_answered) {
+                                            let q_id = stackoverflow[m].question_id;
+                                            qid_array.push(q_id);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if (count === stackoverflow.length) {
+                            if (qid_array.length > 1) {
+                                console.log('array of ids :' + qid_array);
+                                let final_qid = [];
+                                let final_qid_count = 0;
+                                for (let l = 0; l < qid_array.length; l++) {
+                                    final_qid_count++;
+                                    let like_count = (stackoverflow[l].up_vote_count) / (stackoverflow[l].up_vote_count + stackoverflow[l].down_vote_count);
+                                    let count_question = (stackoverflow[l].up_vote_count == 0 && stackoverflow[l].down_vote_count == 0)
+                                        ? stackoverflow[l].up_vote_count
+                                        : like_count;
+                                    console.log('count_question ' + count_question);
+                                    final_qid.push(count_question);
+                                }
+                                if (final_qid_count === qid_array.length) {
+                                    let max = Math.max.apply(null, final_qid);
+                                    let f_qid = final_qid.indexOf(max);
+                                    getJson(qid_array[f_qid], sendResponse);
+                                }
+                            } else if (qid_array.length == 1) {
+                                getJson(qid_array[0], sendResponse);
+                            } else {
+                                saveUnansweredQuery(username, email, question.value, keywords, intents);
+                                // get a random response string from answerNotFoundReply json
+                                let foundNoAnswer = answerNotFoundReply[Math.floor(Math.random() * answerNotFoundReply.length)];
+                                let resultArray = [];
+                                let resultObj = {};
+                                resultObj.value = foundNoAnswer;
+                                resultArray.push(resultObj);
+                                sendResponse(true, resultArray);
+                            }
+                        }
+                    }
+                }
+            };
+            // @keerthana: callback to send suggestion
+          function suggestionCallback(result) {
+              sendResponse(false, result);
+          }
+          // @keerthana: send suggestion response
+          let suggestionConcepts = function(conceptArray, suggestionCallback) {
+              let suggestion = conceptArray.join("");
+              let ansObj = {};
+              ansObj.suggestion = [];
+              conceptArray.forEach((item, index) => {
+                  ansObj.suggestion.push({value: item});
+              });
+              suggestionCallback(ansObj);
           };
-            if (keywords.length === 0) {
-                saveUnansweredQuery(username, email, question.value);
-                // get a random response string from keyword response found
-                let foundNoAnswer = commonReply[Math.floor(Math.random() * commonReply.length)];
-                let resultArray = [];
-                let resultObj = {};
-                resultObj.value = foundNoAnswer;
-                resultArray.push(resultObj);
-                sendResponse(true, resultArray);
+          // @keerthana: to extract a keyword that is a part of the concept
+          if (keywords.length === 0) {
+              let splitQuestion = question.value.split(' ');
+              let extractedKeyword = '';
+              let isKeywordFound = false;
+              console.log(nlp.sentence(question.value).tags());
+              splitQuestion.forEach((item, index) => {
+                  if (nlp.sentence(item).tags()[0] == 'Noun' || nlp.sentence(item).tags()[0] == 'Adjective' || nlp.sentence(item).tags()[0] == 'Infinitive') {
+                      extractedKeyword = extractedKeyword + item;
+                  }
+              })
+              console.log(extractedKeyword);
+              let matchingConcepts = [];
+              for (let i = 0; i < keywordLexicon.length; i = i + 1) {
+                  if (keywordLexicon[i].includes(extractedKeyword)) {
+                      matchingConcepts.push(keywordLexicon[i]);
+                      isKeywordFound = true;
+                  }
+              }
+              if (isKeywordFound) {
+                  console.log(matchingConcepts);
+                  suggestionConcepts(matchingConcepts, suggestionCallback);
+                  // if(matchingConcepts.length == 1) {
+                  //   // getQuestionResponse(intents, matchingConcepts, email, types, answerFoundCallback, noAnswerFoundCallback, spellResponse.flag, spellResponse.question);
+                  //   suggestionConcepts(matchingConcepts, suggestionCallback);
+                  // }
+                  // else {
+                  //   suggestionConcepts(matchingConcepts, suggestionCallback);
+                  // }
+              } else {
+                  saveUnansweredQuery(username, email, question.value);
+                  // get a random response string from keyword response found
+                  let foundNoAnswer = commonReply[Math.floor(Math.random() * commonReply.length)];
+                  let resultArray = [];
+                  let resultObj = {};
+                  resultObj.value = foundNoAnswer;
+                  resultArray.push(resultObj);
+                  sendResponse(true, resultArray);
+              }
             } else if (intents.length === 0) {
                 saveUnansweredQuery(username, email, question.value);
                 // if no intent is found in the question then get a keyword response
