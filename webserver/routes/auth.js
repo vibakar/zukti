@@ -530,6 +530,7 @@ module.exports = function(app, passport) {
      }
  });
  const upload = multer({storage: storage});
+/* @santhosh: upload csv to add question and answers to neo4j graph */
  app.post('/uploadcsv', upload.any('csv'), function(req, res) {
       InsertQuestion(name);
      let domain = req.query.domain;
