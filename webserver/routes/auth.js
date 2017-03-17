@@ -1,6 +1,9 @@
 const RegisteredUser = require('../models/user');
 const UnansweredQuery = require('../models/unansweredQuery');
 const nodemailer = require('nodemailer');
+const InsertQuestion = require('../insertQuestions');
+const multer = require('multer');
+let name;
 module.exports = function(app, passport) {
     let rand, mailOptions, host, link;
     app.post('/login', passport.authenticate('local', {failureRedirect: '/'}), (req, res) => {
@@ -511,4 +514,25 @@ module.exports = function(app, passport) {
         res.cookie('email', req.user.google.email);
         res.redirect('/#/clienthome');
     });
+
+    let storage = multer.diskStorage({
+     destination: function(req, file, cb) {
+         cb(null, './webserver/CsvFiles');
+     },
+     filename: function(req, file, cb) {
+         let extArray = file.mimetype.split('/');
+         let extension = extArray[extArray.length - 1];
+          let domain = req.query.domain;
+          domain = domain.replace('%20', '');
+          let email = req.query.email;
+         name = domain + '_' + email + '.' + 'csv';
+         cb(null, name);
+     }
+ });
+ const upload = multer({storage: storage});
+ app.post('/uploadcsv', upload.any('csv'), function(req, res) {
+      InsertQuestion(name);
+     let domain = req.query.domain;
+     res.redirect(`/#/${domain}`);
+ });
 };

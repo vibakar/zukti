@@ -7,6 +7,7 @@ import './buildAi.css';
 import AddQuestionAnswerSet from './addQuestionAnswerSet';
 import DisplayQAset from '../getquestionanswerset/displayqaset';
 import BuildAI from './buildAI';
+import UploadCSV from '../views/uploadCSV';
 import Pagination from '../getquestionanswerset/pagination';
 import SetUp from '../../../Multi_Lingual/Wordings.json';
 export default class QuestionSetDisplay extends React.Component {
@@ -51,12 +52,15 @@ export default class QuestionSetDisplay extends React.Component {
                         </div>
                     </Grid.Row>
                     <Grid.Row>
-                      <Grid.Column width={8}>
+                      <Grid.Column width={5}>
                         <AddQuestionAnswerSet handlerAddQASet={this.addQuestionAnswerSet}/>
                         </Grid.Column>
 
-                    <Grid.Column width={8}>
+                    <Grid.Column width={5}>
                         <DisplayQAset handlerdisplayQASet = {this.displayQuestionAnswerSet}/>
+                    </Grid.Column>
+                    <Grid.Column width={6}>
+                      <UploadCSV/>
                     </Grid.Column>
                     </Grid.Row>
                     <Grid.Row>
