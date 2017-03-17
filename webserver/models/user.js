@@ -23,11 +23,11 @@ const userSchema = mongoose.Schema({
           type: String,
           default: 'nil'
         },
-        domain: Array
-    },
-    abusecount: {
-      type: Number,
-      default: 0
+        domain: Array,
+        abusecount: {
+          type: Number,
+          default: 0
+        }
     },
     facebook: {
         id: String,

@@ -50,7 +50,6 @@ export default class Pagination extends React.Component {
     //handle pagination when page changed
     handlePageChanged(newPage) {
         this.state.showData = [];
-        console.log(newPage);
         this.state.current = newPage;
         this.state.data[this.state.current].map((data1) => {
         this.state.showData.push(<Display questions={data1.questions} answers={data1.answers}/>);
@@ -60,7 +59,6 @@ export default class Pagination extends React.Component {
 
     /* @yuvashree: to store filtered data */
     updateArray() {
-      console.log("filterdata");
       let lengthOfData = this.state.filterData.length;
       if(lengthOfData === 0)
         this.state.filterData = [{questions:'',answers:''}];

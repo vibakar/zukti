@@ -15,15 +15,11 @@ import ReactPlayer from 'react-player';
 export default class AssistantGinniMixedReply extends React.Component {
     constructor(props) {
         super(props);
-
-
         this.displayVideos = this.displayVideos.bind(this);
         this.displayMoreVideos = this.displayMoreVideos.bind(this);
         this.displayBlogs = this.displayBlogs.bind(this);
         this.playVideo = this.playVideo.bind(this);
         this.displayRecommendations = this.displayRecommendations.bind(this);
-
-
     }
     /* @sundaresan: video display */
     displayMoreVideos() {

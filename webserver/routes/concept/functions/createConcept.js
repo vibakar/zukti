@@ -15,6 +15,5 @@ module.exports = function(newConcept, relationship, oldConcept, resultCallback) 
         resultCallback({saved: true});
     }).catch((error) => {
         resultCallback({saved: false});
-        console.log(error);
     });
 };

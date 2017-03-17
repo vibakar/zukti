@@ -51,7 +51,8 @@ export default class QuestionSetDisplay extends React.Component {
                             width: '100%'
                         }}>
                             <p id="textpara">
-                                {SetUp.SetUp.Heading}</p>
+                                {SetUp.SetUp.Heading}
+                              </p>
                             <Divider fitted/>
                         </div>
                     </Grid.Row>

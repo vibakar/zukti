@@ -15,5 +15,7 @@ module.exports = function(renameConceptText, oldConcept, resultCallback) {
         // update the lexicon json files in lexicon folder
         getLexicon();
         resultCallback({saved: true});
+    }).catch((error) => {
+        resultCallback({saved: false});
     });
 };
