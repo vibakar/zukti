@@ -130,6 +130,7 @@ router.post('/askQuestion', function(req, res) {
                             console.log('stripped result :' + result);
                             ansObj.text = [];
                             ansObj.text.push({value: result});
+                            ansObj.extras = 'Showing results from StackExchange:';
                             sendResponse(false, ansObj);
                         } else {
                             saveUnansweredQuery(username, email, question.value);
