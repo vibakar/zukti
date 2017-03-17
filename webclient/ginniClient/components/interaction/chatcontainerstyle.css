@@ -60,6 +60,7 @@
     font-style: normal;
     font-size: 15px;
     overflow-x: hidden;
+    overflow-y: hidden;
     width: 100%;
     text-align: right;
     margin-left: -9px;
@@ -145,4 +146,8 @@
 #modelcontent
 {
   height:85%;
+}
+#videomodal
+{
+  padding-left: 50px;
 }

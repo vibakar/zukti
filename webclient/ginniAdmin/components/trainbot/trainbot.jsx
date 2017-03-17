@@ -55,12 +55,12 @@ export default class TrainBot extends React.Component {
       console.log(newIntent+'iiiiiiiiiiiiiiiiiiiiiiiiii');
       localStorage.setItem("query", "match (n:intent)-[r]-(m:intent) where n.name = '" + newIntent + "' return n,r,m");
       this.setState({
-          graph: <span></span>
-      });
-      this.setState({
-          graph: <frameset>
-                  <frame src='http://localhost:8080/graphie'/>
-              </frameset>
+          graph: <div>
+                    <span></span>
+                    <frameset>
+                        <frame src='http://localhost:8080/graphie'/>
+                    </frameset>
+                </div>
       });
     }
     handleopen = () => {

@@ -24,7 +24,9 @@ export default class AssistantGinniMoreVideosView extends React.Component {
                 <Feed.Content id = 'ginniviewKeyword'>
                     <Feed.Summary><UnfurlLink url={this.props.value}/></Feed.Summary>
                     <AssistantGinniOptions question={this.props.question} type='video' value={this.props.value}/>
-                    <Modal closeOnRootNodeClick={false} closeIcon='close' trigger={<Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>}>
+                    <Modal
+                      id='videomodal'
+                      closeOnRootNodeClick={false} closeIcon='close' trigger={<Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>}>
                       <Feed id='assistantView'>
                         <Feed.Event>
                           <Feed.Content>

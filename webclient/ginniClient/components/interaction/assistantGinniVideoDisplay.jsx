@@ -39,7 +39,9 @@ export default class AssistantGinniMixedReply extends React.Component {
                                       ? <Label onClick={this.displayMoreVideos} basic color='orange' id='cursor'>
                                               View more videos</Label>
                                       : ''}
-                                      <Modal closeOnRootNodeClick={false} closeIcon='close' trigger = {<Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>}>
+                                      <Modal
+                                        id='videomodal'
+                                        closeOnRootNodeClick={false} closeIcon='close' trigger = {<Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>}>
                                         <Feed id='assistantView'>
                                           <Feed.Event>
                                               <Feed.Content>
