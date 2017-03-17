@@ -1,9 +1,9 @@
 // let client = require('./redis');
 // let intentRedis = require('./../../redis/functions/redisController');
-let pos = require('pos');
 
 module.exports = function(sentence,intentLexicon,keywordLexicon,typeLexicon) {
 
+  let pos = require('pos');
   console.log('inside getReply processQuestion...');
   console.log(sentence);
 
@@ -109,7 +109,7 @@ module.exports = function(sentence,intentLexicon,keywordLexicon,typeLexicon) {
             i = i + type.length - 1;
             types.push(type.join(' '));
         }
-        console.log("its working");
+        console.log("its working"+keywords+"........"+intents);
     }
     return {
         keywords,

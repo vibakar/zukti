@@ -10,8 +10,6 @@ export default class CardDisplay extends React.Component {
             <h4>
               {this.props.data}
             </h4>
-          <Button style={{marginLeft: '70%'}} basic color='blue'>update</Button>
-          <Button style={{marginLeft: '2%'}} basic color='red'>Delete</Button>
         <Divider/>
   </div>
 );

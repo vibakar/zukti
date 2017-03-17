@@ -25,6 +25,7 @@ export default class FilterData extends React.Component {
     }
     // function to handle dropdown change
     handleDropdownChange(e, {value}) {
+      console.log(value);
       this.props.intent(value);
     }
 
