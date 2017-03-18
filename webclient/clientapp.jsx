@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, hashHistory, IndexRoute} from 'react-router';
+import {Router, Route, hashHistory, IndexRoute, Redirect} from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import react from './ginniAdmin/components/menu/menu';
@@ -27,6 +27,7 @@ import SuccessfullyRegistered from './applicationHome/successfullyregistered';
 import AdminProfilePage from './ginniAdmin/components/admin/adminProfile';
 import Cookie from 'react-cookie';
 import MailNotSend from './applicationHome/mailnotsend.jsx';
+import PageNotFound from './pagenotfound.jsx';
 injectTapEventPlugin();
 // route protection - if the token is empty then it should not move forward or backward into the application and it should not display any user information
 let requireAuth = function(nextState, replace) {
@@ -68,5 +69,8 @@ ReactDOM.render(
         <Route path='/successfullyregistered' component={SuccessfullyRegistered}/>
         <Route path='/mailnotsend' component={MailNotSend}/>
         <Route path='/logoutfile' component={LogoutFile}/>
+
+        <Route path='/404' component={PageNotFound} />
+        <Redirect from='*' to='/404' />
     </Router>
 </MuiThemeProvider>, document.getElementById('mountapp'));

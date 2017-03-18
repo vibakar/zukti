@@ -57,11 +57,14 @@ function setupZuktiRoutes(app) {
     // app.use('/redis', require('./routes/redis/redis'));
     /* @keerthana: route to test graph */
     app.get('/graphie', function(req, res) {
-        res.sendfile('graph.html');
+        res.sendfile('./webserver/views/graph.html');
     });
     /* @rajalakshmi: route to displayCode */
     app.get('/code', function(req, res) {
-        res.sendfile('code.html');
+        res.sendfile('./webserver/views/code.html');
+    });
+    app.get('*', function(req, res){
+      res.sendfile('./webserver/views/pagenotfound.html', 404);
     });
     return app;
 }
