@@ -2,7 +2,8 @@ let getNeo4jDriver = require('./../../neo4j/connection');
 let processQuestion = require('./processQuestion');
 let getLexicon = require('../../lexicon/getLexicons');
 let client = require('./redis');
-
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 module.exports = function(req, questionsAnswerSavedCallback) {
 
     //  let query = `CREATE (a:answer {textAnswer:'',videoAnswer:'',blogAnswer:'',CodeSnippetAnswer:''})
@@ -57,8 +58,8 @@ module.exports = function(req, questionsAnswerSavedCallback) {
         }
     });
 
-    console.log(mainIntent+"before domain");
-    console.log(intents+"before domain after main");
+    logger.debug(mainIntent+"before domain");
+    logger.debug(intents+"before domain after main");
     let domain = 'design pattern';
     /* @yuvashree: added code to fetch the base intent to create a new question and answer */
     /*
@@ -72,11 +73,11 @@ module.exports = function(req, questionsAnswerSavedCallback) {
     session.run(query1).then(function(result) {
         mainIntent = result.records[0]._fields[0];
         // Completed!
-        console.log('inside checkIntent: ', mainIntent);
+        logger.debug('inside checkIntent: ', mainIntent);
         */
 
         client.hmget('intents', intents[intents.length-1],function(err, reply) {
-        console.log(reply+"........done");
+        logger.debug(reply+"........done");
         mainIntent = reply;
 
         let session1 = getNeo4jDriver().session();
@@ -100,11 +101,11 @@ module.exports = function(req, questionsAnswerSavedCallback) {
         session1.run(query).then(function(result) {
             // Completed!
             session1.close();
-            console.log(query);
-            console.log("here" + result);
+            logger.debug(query);
+            logger.debug("here" + result);
             questionsAnswerSavedCallback(1);
         }).catch(function(error) {
-            console.log(error);
+            logger.debug(error);
         });
     });
   }

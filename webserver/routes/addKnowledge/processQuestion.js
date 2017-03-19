@@ -1,13 +1,14 @@
 // let Axios = require('axios');
 let nlp = require('nlp_compromise');
 // let client = redis.createClient();
-
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 module.exports = function(sentence,keywordLexicon,intentLexicon) {
     // let keywordLexicon = client.smembers('keywords');
     // let intentLexicon  = client.smembers('intents');
     //
-    // console.log('keywords from redis: ', keywordLexicon);
-    // console.log('intent from redis: ', intentLexicon);
+    // logger.debug('keywords from redis: ', keywordLexicon);
+    // logger.debug('intent from redis: ', intentLexicon);
 
     let str = nlp.text(sentence);
     // Axios.get('/getKeywords').then((response) =>{

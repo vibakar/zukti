@@ -1,5 +1,6 @@
 let getNeo4jDriver = require('../../neo4j/connection');
-
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 /* @yuvashree: to get all data */
 let allQuestionAnswer = function(resultCallback) {
     // get all intent which have same_as to themselves these are our baseIntents
@@ -12,7 +13,7 @@ let allQuestionAnswer = function(resultCallback) {
             resultCallback(result.records);
         })
         .catch((error) => {
-            console.log(error);
+            logger.debug(error);
         });
 };
 
@@ -28,7 +29,7 @@ let intentAnswer = function(intent, resultCallback) {
             resultCallback(result.records);
         })
         .catch((error) => {
-            console.log(error);
+            logger.debug(error);
         });
 };
 
@@ -44,7 +45,7 @@ let keywordAnswer = function(keyword, resultCallback) {
             resultCallback(result.records);
         })
         .catch((error) => {
-            console.log(error);
+            logger.debug(error);
         });
 };
 
@@ -60,7 +61,7 @@ let keywordintentAnswer = function(intent, keyword, resultCallback) {
             resultCallback(result.records);
         })
         .catch((error) => {
-            console.log(error);
+            logger.debug(error);
         });
 };
 

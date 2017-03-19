@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 
 // creating an instance of zukti app
-var app = require('../webserver/webapp.service')();
+let app = require('../webserver/webapp.service')();
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 
 // listening to port 8080
 let server = app.listen(8080, '0.0.0.0', function(err, result) {
     if (err) {
-        console.error("error ", err);
+        logger.debug("error: ", err);
     }
-    console.log("server started at 8080");
+    logger.debug("server started at 8080");
 });
 let io = require('socket.io')(server);
 

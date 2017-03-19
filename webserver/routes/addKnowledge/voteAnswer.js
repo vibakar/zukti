@@ -1,5 +1,7 @@
 let getNeo4jDriver = require('./../../neo4j/connection');
 // function to save user preference in neo4j database
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 module.exports = function(liked, type, value) {
   // checking vote is liked
     let voteValue = liked ? 1 : -1;
@@ -13,6 +15,6 @@ module.exports = function(liked, type, value) {
             session.close();
         })
         .catch(function(error) {
-            console.log(error);
+            logger.debug(error);
         });
 };

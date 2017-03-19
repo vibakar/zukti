@@ -1,14 +1,15 @@
 // let client = require('./redis');
 // let intentRedis = require('./../../redis/functions/redisController');
-
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 module.exports = function(sentence,intentLexicon,keywordLexicon,typeLexicon) {
 
   let pos = require('pos');
-  console.log('inside getReply processQuestion...');
-  console.log(sentence);
+  logger.debug('inside getReply processQuestion...');
+  logger.debug(sentence);
 
   let nlp = require('nlp_compromise');
-    //  console.log(intentLexicon);
+    //  logger.debug(intentLexicon);
     let str = nlp.text(sentence);
     // split str into individual words
     let tokens = str.root().split(' ');
@@ -23,7 +24,7 @@ module.exports = function(sentence,intentLexicon,keywordLexicon,typeLexicon) {
     let words = new pos.Lexer().lex(sentence);
     let tagger = new pos.Tagger();
     let taggedWords = tagger.tag(words);
-    console.log(taggedWords+"tags");
+    logger.debug(taggedWords+"tags");
     for(y in taggedWords)
     {
       let taggedWord = taggedWords[y];
@@ -33,7 +34,7 @@ module.exports = function(sentence,intentLexicon,keywordLexicon,typeLexicon) {
         if(intentLexicon.includes(taggedWord[0]))
         {
           intents.push(taggedWord[0]);
-          console.log(taggedWord[0]+"pushed word");
+          logger.debug(taggedWord[0]+"pushed word");
         }
       }
     }
@@ -46,7 +47,7 @@ module.exports = function(sentence,intentLexicon,keywordLexicon,typeLexicon) {
         let intent = [];
         let type = [];
 
-        // console.log(intentLexicon+"intents");
+        // logger.debug(intentLexicon+"intents");
         if(intents.length === 0)
         {
           for (let m = 0; m < intentLexicon.length; m = m + 1) {
@@ -77,9 +78,9 @@ module.exports = function(sentence,intentLexicon,keywordLexicon,typeLexicon) {
             let splitkeyword = keywordLexicon[j].split(' ');
             if (splitkeyword[0] === tokens[i]) {
                 let phraseLength = 1;
-                console.log(splitkeyword[0]+"......."+tokens[i]);
+                logger.debug(splitkeyword[0]+"......."+tokens[i]);
                 for (let k = 1; k < splitkeyword.length && i + 1 < tokens.length; k = k + 1) {
-                  console.log(splitkeyword[k]+"......."+tokens[i+k]);
+                  logger.debug(splitkeyword[k]+"......."+tokens[i+k]);
                     if (tokens[i + k] === splitkeyword[k]) {
                         phraseLength = phraseLength + 1;
                     } else {
@@ -109,7 +110,7 @@ module.exports = function(sentence,intentLexicon,keywordLexicon,typeLexicon) {
             i = i + type.length - 1;
             types.push(type.join(' '));
         }
-        console.log("its working"+keywords+"........"+intents);
+        logger.debug("its working"+keywords+"........"+intents);
     }
     return {
         keywords,

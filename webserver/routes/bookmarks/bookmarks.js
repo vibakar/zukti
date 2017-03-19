@@ -2,6 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const UserBookmarks = require('../../models/userBookmarks');
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 // router to get user bookmarked answers from mongodb
 router.get('/', function(req, res) {
   let email = req.user.local.email || req.user.facebook.email || req.user.google.email;
@@ -32,7 +34,7 @@ router.post('/', function(req, res, next) {
             userBookmarks.email = email;
             userBookmarks.bookmarks = bookmark;
             userBookmarks.save(function(err, data) {
-                console.log('saved');
+                logger.debug('saved');
                 });
         } else {
             let bookmark = {question: question, responseType: responseType,
@@ -42,10 +44,10 @@ router.post('/', function(req, res, next) {
             userBookmarks.bookmarks = bookmarks;
             userBookmarks.save(function(error) {
               if(error) {
-                console.log(error);
+                logger.debug(error);
               }
               else {
-                console.log('saved');
+                logger.debug('saved');
               }
             });
         }

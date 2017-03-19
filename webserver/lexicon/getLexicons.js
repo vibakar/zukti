@@ -15,7 +15,10 @@ function createLexiconFiles(result) {
    let answerTypes = ["video", "video", "view", "video", "display", "video", "show", "video", "download",
 "video", "record", "video", "clip", "video", "website", "blog", "webpage", "blog", "link", "blog","blog","blog" ];
 
-  //  console.log(result.records.length+"redis data");
+let log4js = require('log4js');
+let logger = log4js.getLogger();
+
+  //  logger.debug(result.records.length+"redis data");
 
   for(let k = 0 ; k<result.records.length ; k++)
     {
@@ -46,7 +49,7 @@ function createLexiconFiles(result) {
     }
   }
  //  let h = client.hgetall('keyword');
- //   console.log(h);
+ //   logger.debug(h);
  for (let i = 0; i < answerTypes.length; i = i + 2) {
   // client.hmset();
   client.hmset(['types', answerTypes[i], answerTypes[i+1]], function(err, reply) {
@@ -56,11 +59,11 @@ function createLexiconFiles(result) {
        });
    }
    // let h = client.hgetall('intent');
-  //  console.log(intentTerms+"intents");
-  //  console.log(baseIntents+"baseIntents");
-  //  console.log(domain.length+"no of domains");
-  //  console.log("domain:"+domain);
-  //  console.log("keywords:"+keywordTerms);
+  //  logger.debug(intentTerms+"intents");
+  //  logger.debug(baseIntents+"baseIntents");
+  //  logger.debug(domain.length+"no of domains");
+  //  logger.debug("domain:"+domain);
+  //  logger.debug("keywords:"+keywordTerms);
 
    for (let i = 0; i < keywordTerms.length; i = i + 1) {
        /* inserting 'keywords' in redis */
@@ -73,7 +76,7 @@ function createLexiconFiles(result) {
      }
    }
   //  let h = client.hgetall('keyword');
-  //   console.log(h);
+  //   logger.debug(h);
   for (let i = 0; i < answerTypes.length; i = i + 2) {
    // client.hmset();
    client.hmset(['types', answerTypes[i], answerTypes[i+1]], function(err, reply) {
@@ -95,6 +98,6 @@ module.exports = function() {
       session.close();
       createLexiconFiles(result);
   }).catch(function(error) {
-      console.log(error);
+      logger.debug(error);
   });
 };

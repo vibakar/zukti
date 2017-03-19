@@ -3,6 +3,8 @@ let express = require('express');
 let router = express.Router();
 let Broadcast = require('../../models/broadcast');
 let UserNotificationCount = require('../../models/userNotificationCount');
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 // get broadcast messages saved in mongodb
 router.get('/', function(req, res) {
     Broadcast.find(function(err, broadcast) {
@@ -20,7 +22,7 @@ router.get('/count', function(req, res) {
     let totalBroadCastCount = 0;
     Broadcast.count({}, function(err, count) {
         if (err) {
-            console.log('ERROR WHILE RETRIVING NOTIFICATION COUNT');
+            logger.debug('ERROR WHILE RETRIVING NOTIFICATION COUNT');
         } else {
             totalBroadCastCount = count;
             UserNotificationCount.findOne({
@@ -32,7 +34,7 @@ router.get('/count', function(req, res) {
                     userNotificationCount.count = 0;
                     userNotificationCount.save(function(err) {
                         if (error) {
-                            console.log('Error in saving new user notification count');
+                            logger.debug('Error in saving new user notification count');
                         }
                         res.json({
                             count: totalBroadCastCount
@@ -53,7 +55,7 @@ router.post('/updateCount', function(req, res) {
     let totalBroadCastCount = 0;
     Broadcast.count({}, function(err, count) {
         if (err) {
-            console.log('ERROR WHILE RETRIVING NOTIFICATION COUNT');
+            logger.debug('ERROR WHILE RETRIVING NOTIFICATION COUNT');
         } else {
             totalBroadCastCount = count;
                 UserNotificationCount.findOne({
@@ -63,7 +65,7 @@ router.post('/updateCount', function(req, res) {
                     data.count = totalBroadCastCount;
                     data.save(function(errorvalue) {
                         if (errorvalue) {
-                            console.log('Error in saving  user notification count');
+                            logger.debug('Error in saving  user notification count');
                         }
                     });
                 }

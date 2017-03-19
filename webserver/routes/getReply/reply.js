@@ -30,7 +30,8 @@ let stackoverflow = require('./functions/stackoverflow.json');
 let request = require('request');
 let zlib = require('zlib');
 let striptags = require('striptags');
-
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 // router to take question and give reply to user
 router.post('/askQuestion', function(req, res) {
     // get the user email
@@ -44,7 +45,7 @@ router.post('/askQuestion', function(req, res) {
     let abusePresent = foundAbuse.swearPresent;
     //  @Mayanka: update the abusive word count everytime in database
     if (abusePresent == true) {
-        console.log('inside database');
+        logger.debug('inside database');
         User.findOneAndUpdate({
             $or: [
                 {
@@ -60,11 +61,11 @@ router.post('/askQuestion', function(req, res) {
                 'abusecount': abuseCount
             }
         }, function(error) {
-            console.log(error);
+            logger.debug(error);
             if (error) {
                 return 'abuse count updation';
             }
-            console.log('updated');
+            logger.debug('updated');
             return 'Abuse Count updated successfully';
         });
         //  @Mayanka: if abuse found, return true and count
@@ -72,7 +73,7 @@ router.post('/askQuestion', function(req, res) {
         );
     } else {
         let spellResponse = getSpellChecker(question.value);
-        console.log('in reply  ' + spellResponse.question + 'flag' + spellResponse.flag);
+        logger.debug('in reply  ' + spellResponse.question + 'flag' + spellResponse.flag);
 
         let intentLexicon = [];
         let keywordLexicon = [];
@@ -86,7 +87,7 @@ router.post('/askQuestion', function(req, res) {
         /* @navinprasad: find all the keywords,intents and types from redis */
         function lexicon(resQuestion) {
             newQuestion = resQuestion;
-            console.log(resQuestion + "responded question");
+            logger.debug(resQuestion + "responded question");
             client.hkeys('keywords', function(err, reply) {
                 keywordLexicon = reply;
             });
@@ -99,7 +100,7 @@ router.post('/askQuestion', function(req, res) {
             });
         }
         let finalCallBack = function() {
-            // console.log("intents"+intentLexicon+"keywords"+keywordLexicon+"type"+typeLexicon);
+            // logger.debug("intents"+intentLexicon+"keywords"+keywordLexicon+"type"+typeLexicon);
             let query = processQuestion(newQuestion.toLowerCase(), intentLexicon, keywordLexicon, typeLexicon);
             let keywords = query.keywords;
             let intents = query.intents;
@@ -127,7 +128,7 @@ router.post('/askQuestion', function(req, res) {
                             let answer = JSON.stringify(miJSON.items[0].body);
                             let strip_html = striptags(answer);
                             let result = strip_html.replace(/\\"/g, '"');
-                            console.log('stripped result :' + result);
+                            logger.debug('stripped result :' + result);
                             ansObj.text = [];
                             ansObj.text.push({value: result});
                             ansObj.extras = 'Showing results from StackExchange:';
@@ -159,9 +160,9 @@ router.post('/askQuestion', function(req, res) {
             let addKeywordToRedis = function(username, keyword, intent) {
                 client.hmset(username, 'keywords', keyword, 'intents', intent, function(err, reply) {
                     if (err) {
-                        console.log(err);
+                        logger.debug(err);
                     } else {
-                        console.log(reply);
+                        logger.debug(reply);
                     }
                 });
             }
@@ -172,7 +173,7 @@ router.post('/askQuestion', function(req, res) {
                 // function to save user queries
                 saveUserQueries(email, isUnAnswered, question, answerObj);
                 // isUnAnswered used to indentify unanswered questions
-                console.log("reply " + isUnAnswered + "........" + answerObj + "......");
+                logger.debug("reply " + isUnAnswered + "........" + answerObj + "......");
                 res.json({isUnAnswered: isUnAnswered, answerObj: answerObj});
             };
 
@@ -214,7 +215,7 @@ router.post('/askQuestion', function(req, res) {
                                 if (userQuery[u] === title[t]) {
                                     wordCount++;
                                     if (wordCount === userQuery.length) {
-                                        console.log('success');
+                                        logger.debug('success');
                                         if (stackoverflow[m].is_answered) {
                                             let q_id = stackoverflow[m].question_id;
                                             qid_array.push(q_id);
@@ -226,7 +227,7 @@ router.post('/askQuestion', function(req, res) {
 
                         if (count === stackoverflow.length) {
                             if (qid_array.length > 1) {
-                                console.log('array of ids :' + qid_array);
+                                logger.debug('array of ids :' + qid_array);
                                 let final_qid = [];
                                 let final_qid_count = 0;
                                 for (let l = 0; l < qid_array.length; l++) {
@@ -235,7 +236,7 @@ router.post('/askQuestion', function(req, res) {
                                     let count_question = (stackoverflow[l].up_vote_count == 0 && stackoverflow[l].down_vote_count == 0)
                                         ? stackoverflow[l].up_vote_count
                                         : like_count;
-                                    console.log('count_question ' + count_question);
+                                    logger.debug('count_question ' + count_question);
                                     final_qid.push(count_question);
                                 }
                                 if (final_qid_count === qid_array.length) {
@@ -278,13 +279,13 @@ router.post('/askQuestion', function(req, res) {
               let splitQuestion = question.value.split(' ');
               let extractedKeyword = '';
               let isKeywordFound = false;
-              console.log(nlp.sentence(question.value).tags());
+              logger.debug(nlp.sentence(question.value).tags());
               splitQuestion.forEach((item, index) => {
                   if (nlp.sentence(item).tags()[0] == 'Noun' || nlp.sentence(item).tags()[0] == 'Adjective' || nlp.sentence(item).tags()[0] == 'Infinitive') {
                       extractedKeyword = extractedKeyword + item;
                   }
               })
-              console.log(extractedKeyword);
+              logger.debug(extractedKeyword);
               let matchingConcepts = [];
               for (let i = 0; i < keywordLexicon.length; i = i + 1) {
                   if (keywordLexicon[i].includes(extractedKeyword)) {
@@ -293,7 +294,7 @@ router.post('/askQuestion', function(req, res) {
                   }
               }
               if (isKeywordFound) {
-                  console.log(matchingConcepts);
+                  logger.debug(matchingConcepts);
                   suggestionConcepts(matchingConcepts, suggestionCallback);
                   // if(matchingConcepts.length == 1) {
                   //   // getQuestionResponse(intents, matchingConcepts, email, types, answerFoundCallback, noAnswerFoundCallback, spellResponse.flag, spellResponse.question);
