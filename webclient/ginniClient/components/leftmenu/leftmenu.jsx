@@ -172,10 +172,8 @@ export default class LeftMenu extends Component {
                                           content='Back' size='mini'/>
                                     </a>
                                 </Menu.Item>
-                                <Menu.Item position='right' />
-                                <Menu.Item/><Menu.Item/>
-                                <Menu.Item>
-                                    <h3>{LeftMenuPage.LeftMenu.Heading}</h3>
+                                <Menu.Item position='right'>
+                                  <h3>{this.props.params.domain.toUpperCase()}</h3>
                                 </Menu.Item>
                                 <Menu.Item position='right'>
                                     <Dropdown trigger={trigger} pointing='top right' icon={null}>

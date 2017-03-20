@@ -4,8 +4,8 @@ import UserTable from '../users/userTable';
 import Analytics from '../Analytics/info';
 import Broadcast from '../broadcast/broadcast';
 import TrainBot from '../trainbot/trainbot';
-import AddConcept from '../addConcept/addConcepts';
-import RenameConcept from '../addConcept/rename';
+import AddConcept from '../manageConcept/addConcepts';
+import RenameConcept from '../manageConcept/rename';
 import UnansweredQueries from '../unansweredqueries/unansweredqueries';
 import Graph from '../views/htmlGraph';
 

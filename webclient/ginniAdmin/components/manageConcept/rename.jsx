@@ -10,9 +10,9 @@ import AllConcepts from './allConcept';
 import Config from '../../../../config/url';
 import Axios from 'axios';
 import Snackbar from 'material-ui/Snackbar';
-import './addConcept.css';
+import './manageConcept.css';
 
-export default class renameConcept extends React.Component {
+export default class rename extends React.Component {
     constructor(props) {
         super(props);
         this.getConcept = this.getConcept.bind(this);
@@ -46,12 +46,6 @@ export default class renameConcept extends React.Component {
                     <frame src='http://localhost:8080/graphie'/>
                 </frameset>
         });
-    }
-    handleopen = () => {
-        this.setState({open: true});
-    }
-    handleclose = () => {
-        this.setState({open: false});
     }
     handleRequestClose = () => {
         this.setState({opensnackbar: false});
@@ -99,7 +93,7 @@ renameConcepts(e) {
                 height: '100%'
             }}>
                 <Grid >
-                  <Grid.Column width={1}/>
+                  <Grid.Column width={4}/>
                     <Grid.Column width={6}>
                         <Grid.Row/>
                         <Grid.Row textAlign='center'>
@@ -117,6 +111,7 @@ renameConcepts(e) {
                                     value={this.state.conceptValue}/>
                             </Grid.Column>
                         </Grid.Row>
+                      <Grid.Row/>
                         <Grid.Row>
                             <Grid.Column width={5}/>
                             <Grid.Column width={6}>
@@ -131,11 +126,10 @@ renameConcepts(e) {
                                 </Form>
                             </Grid.Column>
                         </Grid.Row>
+                        <Grid.Row/>
                         <br/>
                         <Grid.Row>
-                            <Button color="facebook" fluid large onClick={this.renameConcepts}>
-                                <Icon name='refresh'>Rename</Icon>
-                            </Button>
+          <Button color="facebook" fluid large onClick={this.renameConcepts}>Rename</Button>
                         </Grid.Row>
                     </Grid.Column>
                     <Grid.Column width={8}>
