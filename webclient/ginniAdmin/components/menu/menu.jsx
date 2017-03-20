@@ -79,11 +79,6 @@ export default class SidebarBot extends Component {
                     </Accordion.Content>
                 </Accordion>
                     </Menu.Item>
-                    <Menu.Item name='View Graph' active={activeItem === 'View Graph'}
-                      onClick={this.handleItemClick}>
-                        <Icon name='find' color='teal'/>
-                        {AdminMenu.AdminMenu.Topic9}
-                    </Menu.Item>
                     <Menu.Item name='Test Graph' active={activeItem === 'Test Graph'}
                       onClick={this.handleItemClick}>
                         <Icon name='find' color='teal'/>{AdminMenu.AdminMenu.Topic10}

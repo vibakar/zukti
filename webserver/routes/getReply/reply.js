@@ -219,6 +219,7 @@ router.post('/askQuestion', function(req, res) {
                                         if (stackoverflow[m].is_answered) {
                                             let q_id = stackoverflow[m].question_id;
                                             qid_array.push(q_id);
+                                            wordCount=0;
                                         }
                                     }
                                 }
@@ -233,7 +234,7 @@ router.post('/askQuestion', function(req, res) {
                                 for (let l = 0; l < qid_array.length; l++) {
                                     final_qid_count++;
                                     let like_count = (stackoverflow[l].up_vote_count) / (stackoverflow[l].up_vote_count + stackoverflow[l].down_vote_count);
-                                    let count_question = (stackoverflow[l].up_vote_count == 0 && stackoverflow[l].down_vote_count == 0)
+                                    let count_question = (stackoverflow[l].up_vote_count == 0)
                                         ? stackoverflow[l].up_vote_count
                                         : like_count;
                                     logger.debug('count_question ' + count_question);

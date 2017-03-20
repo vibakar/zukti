@@ -7,7 +7,6 @@ import TrainBot from '../trainbot/trainbot';
 import AddConcept from '../addConcept/addConcepts';
 import RenameConcept from '../addConcept/rename';
 import UnansweredQueries from '../unansweredqueries/unansweredqueries';
-import IndexComponent from '../views/viewGraph';
 import Graph from '../views/htmlGraph';
 
 export default class Content extends React.Component {
@@ -47,10 +46,6 @@ export default class Content extends React.Component {
             case 'Rename Concept':
                 {
                     return <RenameConcept/>;
-                }
-            case 'View Graph':
-                {
-                    return <IndexComponent/>;
                 }
             case 'Test Graph':
                 {

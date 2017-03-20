@@ -92,9 +92,11 @@ export default class AssistantChatContainer extends React.Component {
                 if (response.data) {
                   /* @yuvashree: welcome message if user is new to specific domain */
                   if(response.data.chats.length === 0) {
+                    let domain = Cookie.load('domain');
+                    let message = `Hi! I'm Zukti and I'll try to answer your queries on ${domain}.Shall we get started?`;
                     this.state.messages.push(
                         <div ref={(ref) => this['_div' + length] = ref}>
-                            <AssistantUserView userMessage='nil'/>
+                          <AssistantGinniPlainText value = {message} />
                         </div>
                     );
                   }
@@ -135,9 +137,11 @@ export default class AssistantChatContainer extends React.Component {
                 }
                 /* @yuvashree: welcome message for new user */
                   else {
+                    let domain = Cookie.load('domain');
+                    let message = `Hi! I'm Zukti and I'll try to answer your queries on ${domain}.Shall we get started?`;
                     this.state.messages.push(
                         <div ref={(ref) => this['_div' + length] = ref}>
-                            <AssistantUserView userMessage='nil'/>
+                          <AssistantGinniPlainText value = {message} />
                         </div>
                     );
                   }
@@ -194,7 +198,7 @@ export default class AssistantChatContainer extends React.Component {
                         <Input className='icon' style={{
                             width: 400
                         }} onChange={this.updateSearchValue} placeholder='Search your content' focus/>
-                      
+
                         &nbsp; <SearchUserChat searchValue={this.state.searchValue} messageHistort={this.state.messageHistort}/>
                     </Menu.Item>
                 </Menu>
