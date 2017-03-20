@@ -98,7 +98,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                                   </Modal>
                                   {this.props.data.video.length - 1 > 0
                                       ? <Label onClick={this.displayMoreVideos}
-                                        basic color='orange' id='cursor'>ViewMoreVideos</Label>
+                                        basic color='orange' id='cursor'>View More Videos</Label>
                                       : ''}
                                   <AssistantGinniOptions question={this.props.question}
                                     type='video' value={video}/>

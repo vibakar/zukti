@@ -52,7 +52,6 @@ export default class TrainBot extends React.Component {
         });
     }
     addNewIntent(newIntent) {
-      console.log(newIntent+'iiiiiiiiiiiiiiiiiiiiiiiiii');
       localStorage.setItem("query", "match (n:intent)-[r]-(m:intent) where n.name = '" + newIntent + "' return n,r,m");
       this.setState({
           graph: <div>
@@ -82,7 +81,7 @@ export default class TrainBot extends React.Component {
                     <Grid.Row/>
                     <Grid.Row textAlign='center'>
                         <Grid.Column width={5}>
-                            <h4>ADD TO EXISTING INTENT</h4>
+                            <h4>ADD SIMILAR INTENT TO EXISTING INTENT</h4>
                         </Grid.Column>
                         <Divider/>
                     </Grid.Row>
@@ -112,7 +111,7 @@ export default class TrainBot extends React.Component {
                             <Card.Content>
                                 <Card.Header>
                                     <label>
-                                        <h4>List of Relevant Intent</h4>
+                                        <h4>List of Similar Intents</h4>
                                     </label>
                                 </Card.Header>
                             </Card.Content>
