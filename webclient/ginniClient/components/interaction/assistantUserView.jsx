@@ -13,8 +13,7 @@ export default class AssistantView extends React.Component {
    render() {
      let storedTime;
      let date = new Date().toLocaleDateString();
-     if(this.props.msgDate)
-     {
+
      let historydate = this.props.msgDate;
      let splitDate = historydate.split(',');
      let finalDate = splitDate[0];
@@ -57,22 +56,5 @@ export default class AssistantView extends React.Component {
              </div>
          );
      }
-   }
-   else {
-     storedTime = '';
-   }
-       /* @yuvashree: welcome message for user */
-       if (this.props.userMessage === 'nil') {
-           return (
-               <div id='assistantView'>
-                   <div id='assistantViewUser'>
-                       Hi! I'm Zukti and I'll try to answer your queries on {Cookie.load('domain')}.
-                       <br/>Shall we get started?
-                       <div id='assistantViewUserDate'>{storedTime}
-                       </div>
-                   </div>
-               </div>
-           );
-       }
    }
 }

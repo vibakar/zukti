@@ -311,7 +311,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                                   <Feed.Event>
                                     <Feed.Content>
                                         <Feed.Extra >
-                                          <ReactPlayer height={455} width={810} url={this.props.data.video[0]} playing={false} controls={true}/>
+                                          <ReactPlayer id='video' height={455} width={810} url={this.props.data.video[0]} playing={false} controls={true}/>
                                         </Feed.Extra>
                                     </Feed.Content>
                                   </Feed.Event>

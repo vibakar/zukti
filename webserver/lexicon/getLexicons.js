@@ -45,8 +45,7 @@ function createLexiconFiles(result) {
       });
     }
   }
- //  let h = client.hgetall('keyword');
- //   console.log(h);
+
  for (let i = 0; i < answerTypes.length; i = i + 2) {
   // client.hmset();
   client.hmset(['types', answerTypes[i], answerTypes[i+1]], function(err, reply) {
@@ -55,33 +54,6 @@ function createLexiconFiles(result) {
            }
        });
    }
-   // let h = client.hgetall('intent');
-  //  console.log(intentTerms+"intents");
-  //  console.log(baseIntents+"baseIntents");
-  //  console.log(domain.length+"no of domains");
-  //  console.log("domain:"+domain);
-  //  console.log("keywords:"+keywordTerms);
-
-   for (let i = 0; i < keywordTerms.length; i = i + 1) {
-       /* inserting 'keywords' in redis */
-       for(let j = 0; j < keywordTerms[i].length; j = j + 1) {
-       client.hmset(['keywords', keywordTerms[i][j], domain[i]], function(err, reply) {
-           if (err) {
-               throw(err);
-           }
-       });
-     }
-   }
-  //  let h = client.hgetall('keyword');
-  //   console.log(h);
-  for (let i = 0; i < answerTypes.length; i = i + 2) {
-   // client.hmset();
-   client.hmset(['types', answerTypes[i], answerTypes[i+1]], function(err, reply) {
-            if (err) {
-                throw(err);
-            }
-        });
-      };
 }
 module.exports = function() {
   /* query to get all concept words, types and intents */

@@ -22,6 +22,10 @@
     text-align: left;
 }
 
+#video {
+  padding-left: 50px !important;
+}
+
 #ginniviewKeyword{
   display: block;
   float: left;
