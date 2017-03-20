@@ -259,6 +259,9 @@ export default class AssistantGinniMixedReply extends React.Component {
                       splicedSuggestion.push(suggestion[i]);
                     }
                   }
+                  else {
+                    splicedSuggestion = suggestion;
+                  }
                   console.log('spliced');
                   console.log(splicedSuggestion);
                   let firstSuggestion = <div>{splicedSuggestion.map(function(item) {
@@ -270,6 +273,15 @@ export default class AssistantGinniMixedReply extends React.Component {
                   })}
 
                   <a onClick={this.allSuggestion}>more...</a></div>;
+                  if(suggestion.length <= 5) {
+                    firstSuggestion = <div>{splicedSuggestion.map(function(item) {
+                        return (
+                          <div>
+                            {item.value}
+                          </div>
+                        )
+                    })}</div>;
+                  }
                   return (
                       <Feed id="ginniview">
                           <Feed.Event>
