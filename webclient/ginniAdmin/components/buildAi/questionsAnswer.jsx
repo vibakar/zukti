@@ -80,12 +80,10 @@ export default class QuestionsAnswer extends React.Component {
     }
     render() {
         const styleFirstCardBoxInRow = {
-            'margin-right': '0px'
+            'margin-right': '0px',
+            'width': '427%'
         };
         return (
-            <Card.Group itemsPerRow={1} style={{
-                width: '100%'
-            }}>
                 <Card fluid style={styleFirstCardBoxInRow}>
                     <Card.Content>
                         <Card.Meta
@@ -122,7 +120,6 @@ export default class QuestionsAnswer extends React.Component {
                         </Card.Description>
                     </Card.Content>
                 </Card>
-            </Card.Group>
         );
     }
 }

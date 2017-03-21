@@ -289,19 +289,23 @@ router.post('/askQuestion', function(req, res) {
               logger.debug(extractedKeyword);
               let matchingConcepts = [];
               for (let i = 0; i < keywordLexicon.length; i = i + 1) {
-                  if (keywordLexicon[i].includes(extractedKeyword)) {
-                      matchingConcepts.push(keywordLexicon[i]);
-                      isKeywordFound = true;
+                let splitLexicon = keywordLexicon[i].split(' ');
+                  for (let j = 0; j < splitLexicon.length; j = j + 1) {
+                      if (splitLexicon[j] == extractedKeyword) {
+                          matchingConcepts.push(keywordLexicon[i]);
+                          isKeywordFound = true;
+                      }
                   }
               }
               if (isKeywordFound) {
                   logger.debug(matchingConcepts);
                   // suggestionConcepts(matchingConcepts, suggestionCallback);
-                  if(matchingConcepts.length == 1) {
+                  if(matchingConcepts.length == 1 && intents.length > 0) {
                     getQuestionResponse(intents, matchingConcepts, email, types, answerFoundCallback, noAnswerFoundCallback, spellResponse.flag, spellResponse.question);
                     // suggestionConcepts(matchingConcepts, suggestionCallback);
-                  }
-                  else {
+                  } else if (matchingConcepts.length == 1 && intents.length == 0) {
+                        getKeywordResponse(matchingConcepts, email, types, sendResponse, otherDomainResponse, spellResponse.flag, spellResponse.question);
+                    } else {
                     suggestionConcepts(matchingConcepts, suggestionCallback);
                   }
               } else {
