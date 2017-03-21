@@ -37,18 +37,17 @@ module.exports = function(passport) {
             User.findOne({
                 'local.email': email
             }, function(err, user) {
-  // @Mayanka: Check if user has been abusive and redirect if he has signed up
-            if(user) {
-               if(user.abusecount == 4)  {
+               if (!user) {
+                  const error = new Error('Your Email ID is not registered');
+                  error.name = 'You have not Registered Yet! Please Sign Up first';
+                  return done(error.name);
+              }
+  // @Mayanka: Check if user has signed up and been abusive and redirect to failure page
+               else if(user.abusecount == 4)  {
                  done(returnAbuseResponse());
               }
-            }
               else  if (err) {
                     return done(err);
-                } else if (!user) {
-                    const error = new Error('Your Email ID is not registered');
-                    error.name = 'You have not Registered Yet! Please Sign Up first';
-                    return done(error.name);
                 } else if (!user.local.isEmailVerified) {
                     const error = new Error('Email ID is not Verified');
                     error.name = 'Please verify your registered mail!';
