@@ -3,10 +3,11 @@ let Cookie = require('react-cookie');
 let getNeo4jDriver = require('../../../neo4j/connection');
 let User = require('./../../../models/user');
 let client = require('./redis');
-
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 module.exports = function(intents, keywords, email, types, answerFoundCallback, noAnswerFoundCallback, flag, correctedQuestion) {
     /* @yuvashree: find domain from db using email id */
-    console.log('flag in que'+flag);
+    logger.debug('flag in que'+flag);
     User.findOne({
         $or: [
             {
@@ -34,18 +35,18 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
           if(types.length === 0)
           {
             client.hmget('intents', intents[intents.length-1],function(err, reply) {
-            console.log(reply);
+            logger.debug(reply);
             intent = reply;
             intentCallBack(intent);
             });
           }
           else {
             client.hmget('types', types[types.length-1],function(err, reply) {
-            console.log(reply);
+            logger.debug(reply);
             type = reply;
             });
             client.hmget('intents', intents[intents.length-1],function(err, reply) {
-            console.log(reply);
+            logger.debug(reply);
             intent = reply;
             intentCallBack(intent);
             });
@@ -55,7 +56,7 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
         {
         if (types.length === 0) {
         /* @yuvashree: modified query for multiple relationships and different domain for normal question */
-          console.log('here');
+          logger.debug('here');
             query = `UNWIND ${JSON.stringify(keywords)} AS token
             MATCH (n:concept)
             WHERE n.name = token
@@ -157,7 +158,7 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
                   field[3] = {
                     value:field[3].join(",")
                   }
-                  console.log(field[2][0]);
+                  logger.debug(field[2][0]);
                   answerObj[field[2][0]] = field[3];
                 }
                 else {
@@ -173,7 +174,7 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
                 answerFoundCallback(answerObj);
             }
         }).catch(function(error) {
-            console.log(error);
+            logger.debug(error);
         });
       }
     });

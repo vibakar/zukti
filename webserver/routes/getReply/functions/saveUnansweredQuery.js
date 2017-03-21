@@ -1,5 +1,7 @@
 // to save unanswered Query
 let UnansweredQuery = require('../../../models/unansweredQuery');
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 module.exports = function(username, email, question, keywords, intents) {
     let unansweredQuery = new UnansweredQuery();
     unansweredQuery.user = email;
@@ -9,9 +11,9 @@ module.exports = function(username, email, question, keywords, intents) {
     unansweredQuery.intents = intents;
     unansweredQuery.save((error) => {
         if (error) {
-            console.log(error);
+            logger.debug(error);
         } else {
-            console.log('saved ' + question);
+            logger.debug('saved ' + question);
         }
     });
 };

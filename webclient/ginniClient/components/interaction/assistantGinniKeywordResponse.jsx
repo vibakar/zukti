@@ -82,6 +82,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                           <Label.Group>
 
                                   <Modal
+                                    id='videomodal'
                                     closeOnRootNodeClick={false}
                                     closeIcon='close'
                                     trigger={<Label onClick={this.playVideo} basic color = 'orange' id = 'cursor' > Play video </Label>}>

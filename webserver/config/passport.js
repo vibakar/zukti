@@ -6,6 +6,9 @@ const LocalStrategy = require('passport-local').Strategy;
 const configAuth = require('./auth');
 // load up the user model
 const User = require('../models/user');
+
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 module.exports = function(passport) {
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
@@ -72,9 +75,9 @@ module.exports = function(passport) {
                         }
                     }, function(error) {
                         if (error) {
-                            console.log('status not updated');
+                            logger.debug('status not updated');
                         } else {
-                            console.log('LoginStatus updated Successfully');
+                            logger.debug('LoginStatus updated Successfully');
                         }
                     });
                     return done(null, userData);
@@ -173,7 +176,7 @@ module.exports = function(passport) {
     // allows us to pass in the req from our route (lets us check if a user is logged in or not)
 }, function(req, token, refreshToken, profile, done) {
     // asynchronous
-    console.log('in google sign');
+    logger.debug('in google sign');
     process.nextTick(function() {
         // check if the user is already logged in
         if (!req.user) {

@@ -15,7 +15,10 @@ function createLexiconFiles(result) {
    let answerTypes = ["video", "video", "view", "video", "display", "video", "show", "video", "download",
 "video", "record", "video", "clip", "video", "website", "blog", "webpage", "blog", "link", "blog","blog","blog" ];
 
-  //  console.log(result.records.length+"redis data");
+let log4js = require('log4js');
+let logger = log4js.getLogger();
+
+  //  logger.debug(result.records.length+"redis data");
 
   for(let k = 0 ; k<result.records.length ; k++)
     {
@@ -54,7 +57,7 @@ function createLexiconFiles(result) {
            }
        });
    }
-}
+ }
 module.exports = function() {
   /* query to get all concept words, types and intents */
   let query = `MATCH (m:intent)-[:same_as]->(n:intent) with collect(m.name) as intent,collect(n.name) as base
@@ -67,6 +70,6 @@ module.exports = function() {
       session.close();
       createLexiconFiles(result);
   }).catch(function(error) {
-      console.log(error);
+      logger.debug(error);
   });
 };

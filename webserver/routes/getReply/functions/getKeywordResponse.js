@@ -4,7 +4,8 @@ let answerNotFoundReply = require('../../../config/answerNotFoundReply');
 let replyForKeyword = require('../../../config/replyForKeyword.json');
 let User = require('./../../../models/user');
 let client = require('./redis');
-
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 module.exports = function(keywords, email, types, sendResponse, otherDomainResponse, flag, correctedQuestion) {
     /* @yuvashree: find domain from db using email id */
     User.findOne({
@@ -37,7 +38,7 @@ module.exports = function(keywords, email, types, sendResponse, otherDomainRespo
           }
           else {
             client.hmget('types', types[types.length-1],function(err, reply) {
-            console.log(reply);
+            logger.debug(reply);
             type = reply;
             intentCallBack(intent);
             });
@@ -149,7 +150,7 @@ module.exports = function(keywords, email, types, sendResponse, otherDomainRespo
                 }
             }
         }).catch(function(error) {
-            console.log(error);
+            logger.debug(error);
         });
       }
     });

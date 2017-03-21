@@ -1,5 +1,7 @@
 // to save queries asked and unanswered queries
 let GinniAnalytics = require('../../../models/ginniAnalytics');
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 module.exports = function(isUnAnswered) {
     GinniAnalytics.findOne({}, (err, data)=> {
     let ginniAnalytics;
@@ -20,7 +22,7 @@ module.exports = function(isUnAnswered) {
     }
     ginniAnalytics.save(function(error) {
       if(error) {
-        console.log(error);
+        logger.debug(error);
       }
     });
   });

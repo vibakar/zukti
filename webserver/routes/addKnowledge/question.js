@@ -11,6 +11,8 @@ router.post('/verifyQuestion', function(req, res) {
     lexicon();
     let keywordLexicon = [];
     let intentLexicon = [];
+    let log4js = require('log4js');
+    let logger = log4js.getLogger();
     /* @yuvashree: fetching intents and lexicons from redis */
     function lexicon()
     {
@@ -27,7 +29,7 @@ router.post('/verifyQuestion', function(req, res) {
     function callBack()
     {
     let questionInfo = processQuestion(question,keywordLexicon,intentLexicon);
-    console.log(questionInfo.keywords+",,,,,,,,,typed now");
+    logger.debug(questionInfo.keywords+",,,,,,,,,typed now");
         if (questionInfo.keywords.length === 0) {
         res.json({
             isValidQuestion: false,

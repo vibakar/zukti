@@ -1,5 +1,6 @@
 let getNeo4jDriver = require('../../../neo4j/connection');
-
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 module.exports = function(resultCallback) {
     // @vibakar: get all the concepts and relations from neo4j
     let query = `MATCH(n:concept) WITH COLLECT(n.name) AS concepts
@@ -15,6 +16,6 @@ module.exports = function(resultCallback) {
             resultCallback(result.records[0]);
         })
         .catch((error) => {
-            console.log(error);
+            logger.debug(error);
         });
 };

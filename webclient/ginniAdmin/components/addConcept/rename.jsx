@@ -22,7 +22,8 @@ export default class renameConcept extends React.Component {
             conceptValue: '',
             opensnackbar: false,
             snackbarMsg: '',
-            concepts: []
+            concepts: [],
+            graph: <span></span>
                   };
     }
     // load the dropdown with all concepts from neo4j database
@@ -39,6 +40,12 @@ export default class renameConcept extends React.Component {
     }
     getConcept(concept) {
         this.setState({conceptValue: concept});
+        localStorage.setItem("query", "match (n:concept)-[r]-(m:concept) where n.name = '" + concept + "' return n,r,m");
+        this.setState({
+            graph: <frameset>
+                    <frame src='http://localhost:8080/graphie'/>
+                </frameset>
+        });
     }
     handleopen = () => {
         this.setState({open: true});
@@ -73,6 +80,14 @@ renameConcepts(e) {
         }).catch((error) => {
             console.log(error);
         });
+        localStorage.setItem("query", "match (n:concept)-[r]-(m:concept) where n.name = '" + renameConceptText + "' return n,r,m");
+        this.setState({
+            graph:<div><span></span>
+            <frameset>
+                    <frame src='http://localhost:8080/graphie'/>
+                </frameset>
+                </div>
+        });
     } else {
         this.setState({opensnackbar: true, snackbarMsg: 'Please fill all the fields'});
     }
@@ -84,7 +99,7 @@ renameConcepts(e) {
                 height: '100%'
             }}>
                 <Grid >
-                  <Grid.Column width={4}/>
+                  <Grid.Column width={1}/>
                     <Grid.Column width={6}>
                         <Grid.Row/>
                         <Grid.Row textAlign='center'>
@@ -122,6 +137,9 @@ renameConcepts(e) {
                                 <Icon name='refresh'>Rename</Icon>
                             </Button>
                         </Grid.Row>
+                    </Grid.Column>
+                    <Grid.Column width={8}>
+                        <Grid.Row/> {this.state.graph}
                     </Grid.Column>
                 </Grid>
                 <Snackbar open={this.state.opensnackbar} message={this.state.snackbarMsg}

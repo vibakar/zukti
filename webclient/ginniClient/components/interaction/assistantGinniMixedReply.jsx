@@ -24,12 +24,17 @@ export default class AssistantGinniMixedReply extends React.Component {
     };
     constructor(props) {
         super(props);
+        this.state = {
+            suggestedConcept: <div></div>,
+            firstSuggestionCompleted: false
+        };
         this.displayMoreText = this.displayMoreText.bind(this);
         this.displayVideos = this.displayVideos.bind(this);
         this.displayBlogs = this.displayBlogs.bind(this);
         this.playVideo = this.playVideo.bind(this);
         this.logoutAfterWarning = this.logoutAfterWarning.bind(this);
         this.redirectDomain = this.redirectDomain.bind(this);
+        this.allSuggestion = this.allSuggestion.bind(this);
        }
 
     displayMoreText() {
@@ -83,6 +88,17 @@ export default class AssistantGinniMixedReply extends React.Component {
       hashHistory.push('/chat/'+differentDomain);
       window.location.reload();
   }
+  // @keerthana: to show suggestion when clicked on more...
+  allSuggestion() {
+        let fullSuggestion = this.props.data.suggestion.map(function(item) {
+            return (
+                <div>
+                    {item.value}
+                </div>
+            )
+        });
+        this.setState({suggestedConcept: fullSuggestion, firstSuggestionCompleted:true});
+      }
   /* @yuvashree: added function to play video on clicking the button */
     playVideo() {
         let videoUrl = this.props.data.video[0].value;
@@ -232,27 +248,62 @@ export default class AssistantGinniMixedReply extends React.Component {
       }
       // @keerthana: to display suggestions
       if (this.props.data.suggestion) {
-        console.log(this.props.data.suggestion);
-        let suggestion = this.props.data.suggestion;
-        console.log(suggestion);
-        let suggestedConcept = suggestion.map(function(item) {
-          return(
-            <div>{item.value}</div>
-          )
-        });
-        return (
-          <Feed id="ginniview">
-          <Feed.Event>
-              <Feed.Content id = 'ginniviewKeyword'>
-                  <Feed.Summary> <span>Which one of these concepts do you mean?</span>
-                 </Feed.Summary>
-                 <hr/>
-                    <Feed.Summary> {suggestedConcept} </Feed.Summary>
-              </Feed.Content>
-          </Feed.Event>
-        </Feed>
-        );
-      }
+                console.log(this.props.data.suggestion);
+                if(!this.state.firstSuggestionCompleted){
+                  let suggestion = this.props.data.suggestion;
+                  console.log('suggestion');
+                  console.log(suggestion);
+                  let splicedSuggestion = [];
+                  if(suggestion.length > 5) {
+                    for(let i = 0; i<5; i = i + 1) {
+                      splicedSuggestion.push(suggestion[i]);
+                    }
+                  }
+                  console.log('spliced');
+                  console.log(splicedSuggestion);
+                  let firstSuggestion = <div>{splicedSuggestion.map(function(item) {
+                      return (
+                        <div>
+                          {item.value}
+                        </div>
+                      )
+                  })}
+
+                  <a onClick={this.allSuggestion}>more...</a></div>;
+                  return (
+                      <Feed id="ginniview">
+                          <Feed.Event>
+                              <Feed.Content id='ginniviewKeyword'>
+                                  <Feed.Summary>
+                                      <span>Which one of these concepts do you mean?</span>
+                                  </Feed.Summary>
+                                  <hr/>
+                                  <Feed.Summary>
+                                      {firstSuggestion}
+                                  </Feed.Summary>
+                              </Feed.Content>
+                          </Feed.Event>
+                      </Feed>
+                  );
+                } else {
+                  return (
+                      <Feed id="ginniview">
+                          <Feed.Event>
+                              <Feed.Content id='ginniviewKeyword'>
+                                  <Feed.Summary>
+                                      <span>Which one of these concepts do you mean?</span>
+                                  </Feed.Summary>
+                                  <hr/>
+                                  <Feed.Summary>
+                                      {this.state.suggestedConcept}
+                                  </Feed.Summary>
+                              </Feed.Content>
+                          </Feed.Event>
+                      </Feed>
+                  );
+                }
+                this.allSuggestion;
+            }
         /* @yuvashree: edited code for displaying blogs */
         let blog = '';
         if(this.props.data.blog) {
@@ -304,6 +355,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                               basic color='orange' id='cursor'>Videos</Label>
                             : ''}
                             <Modal
+                              id='videomodal'
                               closeOnRootNodeClick={false}
                               closeIcon='close'
                               trigger={<Label onClick={this.playVideo} basic color='orange' id='cursor'>Play video</Label>}>

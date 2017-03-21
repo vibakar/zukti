@@ -10,6 +10,7 @@ import UnfurlLink from './unfurlLink';
 import AssistantGinniMixedReply from './assistantGinniMixedReply';
 import AssistantGinniPlainText from './assistantGinniPlainText';
 import AssistantGinniKeywordResponse from './assistantGinniKeywordResponse';
+let Beautify = require('js-beautify').js_beautify;
 export default class ViewUserChat extends React.Component {
     constructor(props) {
         super(props);
@@ -102,6 +103,22 @@ export default class ViewUserChat extends React.Component {
                             <Accordion.Content>
                               <a title='click to open the image in new tab'
                                 href={imageURL} target='_blank'><img src={imageURL}></img></a>
+                            </Accordion.Content>
+                        </Accordion>
+                  );
+              }
+              else if(conversation.answerObj.code) {
+                  let code = conversation.answerObj.code[0].value;
+                  let value = Beautify(code, {indent_size: 1 });
+                  this.state.chat.push(
+                        <Accordion>
+                            <Accordion.Title>
+                              <Icon name='dropdown' />
+                                  {conversation.question.value} &nbsp;&nbsp;&nbsp;
+                                  {conversation.question.time}
+                                </Accordion.Title>
+                            <Accordion.Content>
+                              <pre>{value}</pre>
                             </Accordion.Content>
                         </Accordion>
                   );

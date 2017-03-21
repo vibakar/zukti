@@ -4,6 +4,8 @@ const nodemailer = require('nodemailer');
 const InsertQuestion = require('../insertQuestions');
 const multer = require('multer');
 let name;
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 module.exports = function(app, passport) {
     let rand, mailOptions, host, link;
     app.post('/login', passport.authenticate('local', {failureRedirect: '/'}), (req, res) => {
@@ -33,7 +35,7 @@ module.exports = function(app, passport) {
             }
         }, function(err) {
             if (err) {
-                console.log('status not updated');
+                logger.debug('status not updated');
             } else {
                 req.logout();
             }
@@ -186,7 +188,7 @@ module.exports = function(app, passport) {
                 };
                 transporter.sendMail(mailOptions, function(error, info) {
                     if (error) {
-                        console.log(error);
+                        logger.debug(error);
                     } else {
                         res.json({yo: info.response});
                     }
@@ -220,7 +222,7 @@ module.exports = function(app, passport) {
                 res.send(err);
             } else {
                 if ((req.protocol + '://' + req.get('host')) === ('http://' + host)) {
-                    console.log('Domain is matched. Information is from Authentic email');
+                    logger.debug('Domain is matched. Information is from Authentic email');
                     if (profile[0].local.verificationID !== 0) {
                         RegisteredUser.update({
                             'local.email': req.query.email
@@ -231,9 +233,9 @@ module.exports = function(app, passport) {
                             }
                         }, function(error) {
                             if (error) {
-                                console.log(error);
+                                logger.debug(error);
                             } else {
-                                console.log('Account Verified and Changed to true');
+                                logger.debug('Account Verified and Changed to true');
                             }
                         });
                         res.redirect('/#/successfullyregistered');
@@ -259,9 +261,9 @@ module.exports = function(app, passport) {
             }
         }, function(err) {
             if (err) {
-                console.log(err);
+                logger.debug(err);
             } else {
-                console.log('id changed');
+                logger.debug('id changed');
             }
         });
         // find whether the user exists with that email id
@@ -298,9 +300,9 @@ module.exports = function(app, passport) {
                 };
                 transporter.sendMail(mailOptions, function(error, info) {
                     if (error) {
-                        console.log(error);
+                        logger.debug(error);
                     } else {
-                        console.log('Message sent: ' + info.response);
+                        logger.debug('Message sent: ' + info.response);
                         res.json({yo: info.response});
                     }
                 });
@@ -344,7 +346,7 @@ module.exports = function(app, passport) {
                             }
                         }, function(error) {
                             if (error) {
-                                console.log(error);
+                                logger.debug(error);
                             } else {
                                 res.redirect('/#/');
                             }

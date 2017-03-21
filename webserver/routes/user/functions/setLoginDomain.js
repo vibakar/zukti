@@ -1,8 +1,10 @@
 /* @ramvignesh: updating the user's current domain in mongo */
 /* @deepika: updating the user's tracked domain in mongo */
 let User = require('./../../../models/user');
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 let setLoginDomain = function(email, domain, domainSet) {
-  console.log(email + ' inside setLogin Domain');
+  logger.debug(email + ' inside setLogin Domain');
     User.findOneAndUpdate({
       $or: [{ 'local.email': email }, { 'google.email': email }, { 'facebook.email': email }]
   }, {
@@ -11,11 +13,11 @@ let setLoginDomain = function(email, domain, domainSet) {
             'local.domain': domainSet
         }
     }, function(error) {
-      console.log(error);
+      logger.debug(error);
         if (error) {
             return 'LoggedinDomain not updated';
         }
-        console.log('updated');
+        logger.debug('updated');
         return 'LoggedinDomain updated successfully';
     });
 };

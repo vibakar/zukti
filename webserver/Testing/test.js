@@ -6,7 +6,8 @@ app = require("../../server.js");
 var url = supertest("http://localhost:8080");
 let Testing = require('../config/testing');
 
-
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 
 describe("Signup route", function(err){
 
@@ -127,7 +128,7 @@ describe("Updates Password", function(err){
         .expect(302)
         .expect('Content-Type', /text/)
         .end(function(err, res){
-          //console.log().log("success")
+          //logger.debug().log("success")
           should.not.exist(err);
           done();
         });

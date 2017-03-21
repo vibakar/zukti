@@ -9,20 +9,21 @@ let getLexicons = require('./lexicon/getLexicons');
 let request = require('request');
 let zlib = require('zlib');
 let fs = require('fs');
-
+let log4js = require('log4js');
+let logger = log4js.getLogger();
 function createApp() {
     let app = express();
     return app;
 }
 
 function setupStaticRoutes(app) {
-    console.log('inside service setupStaticRoutes...');
+    logger.debug('inside service setupStaticRoutes...');
     app.use(express.static(path.resolve(__dirname, '../', 'webclient')));
     return app;
 }
 
 function setupZuktiRoutes(app) {
-    console.log('inside service setupZuktiRoutes...');
+    logger.debug('inside service setupZuktiRoutes...');
 
     let isAuthenticated = function isLoggedIn(req, res, next) {
         if (req.isAuthenticated()) {
@@ -31,11 +32,11 @@ function setupZuktiRoutes(app) {
         res.redirect('/#/');
     };
 
-    console.log('getLexicons called...');
+    logger.debug('getLexicons called...');
     // getLexicons();
     getLexicons();
     // setupRedisStore();
-    console.log('setting up zukti routes...');
+    logger.debug('setting up zukti routes...');
     app.use('/', require('./routes/uploadimage'));
     app.use('/analytics', require('./routes/analyticsData/analytics'));
     app.use('/savebroadcastmessage', isAuthenticated, require('./routes/broadcastmessage/broadcastmessage'));
@@ -57,17 +58,20 @@ function setupZuktiRoutes(app) {
     // app.use('/redis', require('./routes/redis/redis'));
     /* @keerthana: route to test graph */
     app.get('/graphie', function(req, res) {
-        res.sendfile('graph.html');
+        res.sendfile('./webserver/views/graph.html');
     });
     /* @rajalakshmi: route to displayCode */
     app.get('/code', function(req, res) {
-        res.sendfile('code.html');
+        res.sendfile('./webserver/views/code.html');
+    });
+    app.get('*', function(req, res){
+      res.sendfile('./webserver/views/pagenotfound.html', 404);
     });
     return app;
 }
 
 function setupMiddlewares(app) {
-    console.log('inside service setupMiddlewares...');
+    logger.debug('inside service setupMiddlewares...');
     let passport = require('passport');
     let bodyParser = require('body-parser');
     let requestAuthenticate = require('./middleware/requestAuthenticate');
@@ -113,7 +117,7 @@ function setupMiddlewares(app) {
 }
 
 function setupWebpack(app) {
-    console.log('inside service setupWebpack...');
+    logger.debug('inside service setupWebpack...');
 
     if (configDB.NODE_ENV !== 'production') {
         const webpack = require('webpack');
@@ -138,7 +142,7 @@ function setupWebpack(app) {
 }
 
 function setupMongooseConnections() {
-    console.log('inside service setupMongooseConnections...');
+    logger.debug('inside service setupMongooseConnections...');
 
     mongoose.connect(configDB.url);
 
@@ -146,7 +150,7 @@ function setupMongooseConnections() {
 
     db.on('error', console.error.bind(console, 'connection error: '));
     db.once('open', function() {
-        console.log('connected with mongo');
+        logger.debug('connected with mongo');
     });
 }
 
@@ -177,9 +181,9 @@ function getDataFromStackOverflow() {
                 if (count === obj.items.length) {
                     fs.writeFile(__dirname + "/routes/getReply/functions/stackoverflow.json", JSON.stringify(questionArray), function(err) {
                         if (err) {
-                            return console.log(err);
+                            return logger.debug(err);
                         }
-                        console.log("The file was saved!");
+                        logger.debug("The file was saved!");
                     });
                 }
             }
@@ -190,7 +194,7 @@ function getDataFromStackOverflow() {
 getDataFromStackOverflow();
 
 // function setupRedisStore() {
-//   console.log('inside service setupRedisStore...');
+//   logger.debug('inside service setupRedisStore...');
 //   let getLexicons = require('./lexicon/getLexicons');
 //   getLexicons();
 // }
