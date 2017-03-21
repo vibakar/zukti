@@ -27,6 +27,11 @@ let detectSwear = require('../filterAbuse/functions/filterAbuse');
 
 // stackoverflow
 let stackoverflow = require('./functions/stackoverflow.json');
+// Levenshtein
+let Levenshtein = require('./functions/levenshtein');
+// compare
+let Compare = require('./functions/compare');
+
 let request = require('request');
 let zlib = require('zlib');
 let striptags = require('striptags');
@@ -206,45 +211,62 @@ router.post('/askQuestion', function(req, res) {
                     let count = 0;
                     let wordCount = 0;
                     let qid_array = [];
+                    let difference = question.value.length;
+                    let diffIndex = 0;
                     for (let m = 0; m < stackoverflow.length; m++) {
                         count++;
-                        let userQuery = question.value.split(' ');
-                        let title = stackoverflow[m].title.split(' ');
-                        for (var u = 0; u < userQuery.length; u++) {
-                            for (let t = 0; t < title.length; t++) {
-                                if (userQuery[u] === title[t]) {
-                                    wordCount++;
-                                    if (wordCount === userQuery.length) {
-                                        logger.debug('success');
-                                        if (stackoverflow[m].is_answered) {
-                                            let q_id = stackoverflow[m].question_id;
-                                            qid_array.push(q_id);
-                                            wordCount=0;
-                                        }
-                                    }
-                                }
-                            }
+                        // @vibakar: compare logic
+                        // let userQuery = question.value.split(' ');
+                        // let title = stackoverflow[m].title.split(' ');
+                        // let wordCount = Compare(userQuery, title);
+                        //
+                        // if (wordCount === userQuery.length) {
+                        //     // logger.debug('success');
+                        //     if (stackoverflow[m].is_answered) {
+                        //         let q_id = stackoverflow[m].question_id;
+                        //         qid_array.push(stackoverflow[m]);
+                        //         wordCount = 0;
+                        //     }
+                        // }
+
+                        // Levenshtein Distance algorithm
+                        let userQuery = question.value;
+                        let title = stackoverflow[m].title;
+                        let distance = Levenshtein(userQuery, title);
+
+                        if (difference > distance && stackoverflow[m].is_answered) {
+                            difference = distance;
+                            diffIndex = m;
+                            qid_array = [];
+                            qid_array.push(stackoverflow[m]);
                         }
+
+                        if (difference === distance && stackoverflow[m].is_answered) {
+                            qid_array.push(stackoverflow[m]);
+                        }
+
 
                         if (count === stackoverflow.length) {
                             if (qid_array.length > 1) {
-                                logger.debug('array of ids :' + qid_array);
-                                let final_qid = [];
-                                let final_qid_count = 0;
-                                for (let l = 0; l < qid_array.length; l++) {
-                                    final_qid_count++;
-                                    let like_count = (stackoverflow[l].up_vote_count) / (stackoverflow[l].up_vote_count + stackoverflow[l].down_vote_count);
-                                    let count_question = (stackoverflow[l].up_vote_count == 0)
-                                        ? stackoverflow[l].up_vote_count
-                                        : like_count;
-                                    logger.debug('count_question ' + count_question);
-                                    final_qid.push(count_question);
-                                }
-                                if (final_qid_count === qid_array.length) {
-                                    let max = Math.max.apply(null, final_qid);
-                                    let f_qid = final_qid.indexOf(max);
-                                    getJson(qid_array[f_qid], sendResponse);
-                                }
+                              console.log("question_id "+qid_array.length);
+                              logger.debug('array of ids :' + qid_array);
+                              let final_qid = [];
+                              let final_qid_count = 0;
+                              for (let l = 0; l < qid_array.length; l++) {
+                                  final_qid_count++;
+                                  let like_count = (qid_array[l].up_vote_count) / (qid_array[l].up_vote_count + qid_array[l].down_vote_count);
+                                  let count_question = (qid_array[l].up_vote_count == 0)
+                                      ? qid_array[l].up_vote_count
+                                      : like_count;
+                                  logger.debug('count_question ' + count_question);
+                                  final_qid.push(count_question);
+                              }
+                              if (final_qid_count === qid_array.length) {
+                                  let max = Math.max.apply(null, final_qid);
+                                  let f_qid = final_qid.indexOf(max);
+                                  let questionid = qid_array[f_qid].question_id;
+                                  getJson(questionid, sendResponse);
+                              }
                             } else if (qid_array.length == 1) {
                                 getJson(qid_array[0], sendResponse);
                             } else {
