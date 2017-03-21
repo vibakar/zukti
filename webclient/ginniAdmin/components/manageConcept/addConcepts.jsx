@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form, Grid, Button, Icon, Divider} from 'semantic-ui-react';
 import ConceptDropdown from './conceptDropdown';
-import './addConcept.css';
+import './manageConcept.css';
 import Config from '../../../../config/url';
 import Axios from 'axios';
 import Snackbar from 'material-ui/Snackbar';
@@ -43,9 +43,10 @@ export default class AddConcept extends React.Component {
     getConcept(concept) {
         this.setState({conceptValue: concept});
         localStorage.setItem("query", "match (n:concept)-[r]-(m:concept) where n.name = '" + concept + "' return n,r,m");
+        let tempUrl  = 'http://localhost:8080/graphie?concept='+concept;
         this.setState({
             graph: <frameset>
-                    <frame src='http://localhost:8080/graphie'/>
+                    <frame src={tempUrl}/>
                 </frameset>
         });
     }
@@ -126,7 +127,9 @@ export default class AddConcept extends React.Component {
                         <Grid.Row>
                             <Grid.Column width={5}/>
                             <Grid.Column width={6}>
-                                <ConceptDropdown relations={this.state.relations} concepts={this.state.concepts} handleRelation={this.getRelation} handleConcept={this.getConcept} value1={this.state.relationValue} value2={this.state.conceptValue}/>
+              <ConceptDropdown relations={this.state.relations} concepts={this.state.concepts}
+                handleRelation={this.getRelation} handleConcept={this.getConcept}
+                value1={this.state.relationValue} value2={this.state.conceptValue}/>
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row>
@@ -137,16 +140,14 @@ export default class AddConcept extends React.Component {
                                         <label>
                                             <h4>New Concept Name</h4>
                                         </label>
-                                        <input autoComplete='off' type='text' ref='newConceptText' placeholder='Type Concept Name'/>
+        <input autoComplete='off' type='text' ref='newConceptText' placeholder='Type Concept Name'/>
                                     </Form.Field>
                                 </Form>
                             </Grid.Column>
                         </Grid.Row>
                         <br/>
                         <Grid.Row>
-                            <Button color="facebook" fluid large onClick={this.createNewConcept}>
-                                <Icon name='plus circle'></Icon>Add
-                            </Button>
+                <Button color="facebook" fluid large onClick={this.createNewConcept}>Add</Button>
 
                         </Grid.Row>
                         <br/>

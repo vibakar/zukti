@@ -296,14 +296,14 @@ router.post('/askQuestion', function(req, res) {
               }
               if (isKeywordFound) {
                   logger.debug(matchingConcepts);
-                  suggestionConcepts(matchingConcepts, suggestionCallback);
-                  // if(matchingConcepts.length == 1) {
-                  //   // getQuestionResponse(intents, matchingConcepts, email, types, answerFoundCallback, noAnswerFoundCallback, spellResponse.flag, spellResponse.question);
-                  //   suggestionConcepts(matchingConcepts, suggestionCallback);
-                  // }
-                  // else {
-                  //   suggestionConcepts(matchingConcepts, suggestionCallback);
-                  // }
+                  // suggestionConcepts(matchingConcepts, suggestionCallback);
+                  if(matchingConcepts.length == 1) {
+                    getQuestionResponse(intents, matchingConcepts, email, types, answerFoundCallback, noAnswerFoundCallback, spellResponse.flag, spellResponse.question);
+                    // suggestionConcepts(matchingConcepts, suggestionCallback);
+                  }
+                  else {
+                    suggestionConcepts(matchingConcepts, suggestionCallback);
+                  }
               } else {
                   saveUnansweredQuery(username, email, question.value);
                   // get a random response string from keyword response found

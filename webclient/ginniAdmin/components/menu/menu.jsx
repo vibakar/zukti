@@ -70,11 +70,11 @@ export default class SidebarBot extends Component {
                     <Accordion.Content >
                       <Menu.Item name='Add Concept' active={activeItem === 'Add Concept'}
                           onClick={this.handleItemClick}>
-                          {AdminMenu.AdminMenu.Topic8a}
+                          <Icon color='teal' name='add' size='mini' />
                       </Menu.Item>
                       <Menu.Item name='Rename Concept' active={activeItem === 'Rename Concept'}
                           onClick={this.handleItemClick}>
-                          {AdminMenu.AdminMenu.Topic8b}
+                          <Icon color='teal' name='edit' size='mini'/>
                     </Menu.Item>
                     </Accordion.Content>
                 </Accordion>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form, Dropdown, Input} from 'semantic-ui-react';
 
-export default class allConcepts extends React.Component {
+export default class allConcept extends React.Component {
     constructor(props) {
         super(props);
         this.handleConcept = this.handleConcept.bind(this);
@@ -20,12 +20,13 @@ export default class allConcepts extends React.Component {
                         <Dropdown fluid options={this.props.concepts} placeholder='Concept'
                           search selection onChange={this.handleConcept} value={this.props.value}/>
                     </Input>
+                    <br/>
                 </Form.Field>
             </Form>
         );
     }
 }
-allConcepts.propTypes = {
+allConcept.propTypes = {
   concepts: React.PropTypes.array,
   handleConcept: React.PropTypes.function,
   value: React.PropTypes.string

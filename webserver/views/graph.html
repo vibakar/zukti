@@ -19,6 +19,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.0/plugins/sigma.plugins.dragNodes.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.0/plugins/sigma.renderers.edgeLabels.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.0/plugins/sigma.renderers.parallelEdges.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.0/plugins/sigma.layout.noverlap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.0/plugins/sigma.plugins.animate.min.js"></script>
     <script>
         var entry = {
             "nodes": [],
@@ -142,7 +144,23 @@
             dragListener.bind('dragend', function(event) {
                 console.log(event);
             });
-
+            var noverlapListener = s.configNoverlap({
+                nodeMargin: 10,
+                scaleNodes: 1.05,
+                gridSize: 20
+            });
+            // Bind the events:
+            noverlapListener.bind('start stop interpolate', function(e) {
+                console.log(e.type);
+                if (e.type === 'start') {
+                    console.time('noverlap');
+                }
+                if (e.type === 'interpolate') {
+                    console.timeEnd('noverlap');
+                }
+            });
+            // Start the layout:
+            s.startNoverlap();
         }
         AjaxCall();
     </script>

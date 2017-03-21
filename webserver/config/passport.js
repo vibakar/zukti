@@ -37,10 +37,12 @@ module.exports = function(passport) {
             User.findOne({
                 'local.email': email
             }, function(err, user) {
-  // @Mayanka: Check if user has been abusive and redirect
+  // @Mayanka: Check if user has been abusive and redirect if he has signed up
+            if(user) {
                if(user.abusecount == 4)  {
                  done(returnAbuseResponse());
               }
+            }
               else  if (err) {
                     return done(err);
                 } else if (!user) {

@@ -6,6 +6,7 @@ import AssistantGinniOptions from './assistantGinniOptions';
 import UnfurlLink from './unfurlLink';
 import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
 import AssistantGinniMoreVideosView from './assistantGinniMoreVideosView';
+import AssistantGinniRecommendation from './assistantGinniRecommendation'
 import AssistantView from './assistantGinniPlainText';
 
 import ReactPlayer from 'react-player';
@@ -61,11 +62,8 @@ export default class AssistantGinniMixedReply extends React.Component {
     }
     /* @sangeetha: added function to display recommendations */
       displayRecommendations(recommendations) {
-        console.log('recommendations inside keyword response: ', recommendations);
-        let relatedTopics = recommendations.toLocaleString();
-        let provideSpace = relatedTopics.split(',').join(', ');
-        let displayValue = `You can also read about: ${provideSpace}`;
-        this.props.handleGinniReply([<AssistantView value={displayValue}/>]);
+       let relatedTopics = recommendations.toLocaleString().split(',').join(', ');
+        this.props.handleGinniReply([<AssistantGinniRecommendation value={relatedTopics}/>]);
     }
 
     render() {
@@ -98,7 +96,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                                   </Modal>
                                   {this.props.data.video.length - 1 > 0
                                       ? <Label onClick={this.displayMoreVideos}
-                                        basic color='orange' id='cursor'>ViewMoreVideos</Label>
+                                        basic color='orange' id='cursor'>View More Videos</Label>
                                       : ''}
                                   <AssistantGinniOptions question={this.props.question}
                                     type='video' value={video}/>

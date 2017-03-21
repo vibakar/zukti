@@ -15,6 +15,7 @@ module.exports = function(app, passport) {
         res.cookie('profilepicture', req.user.photos);
         res.cookie('email', req.user.email); // v2
         res.cookie('domain', 'nil'); // v2
+        res.cookie('recommendations', 'true');
         res.send(req.user);
     });
     /* logout - all the user informations will be

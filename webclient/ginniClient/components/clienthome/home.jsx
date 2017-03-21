@@ -3,14 +3,35 @@ import {Image, Icon, Divider, Grid, Popup} from 'semantic-ui-react';
 import {hashHistory} from 'react-router';
 import Axios from 'axios';
 import Cookie from 'react-cookie';
+import Tour from "react-user-tour"
 import './homestyle.css';
 import ClientHomePage from '../../../Multi_Lingual/Wordings.json';
 export default class ClientHome extends React.Component {
 
   constructor() {
       super();
-
+      this.state = {
+			isTourActive: false,
+			tourStep: 1,
+      tourFlag: 0
+		};
       this.onSubmitEmail = this.onSubmitEmail.bind(this);
+      this.retriveChat = this.retriveChat.bind(this);
+      this.setTourState = this.setTourState.bind(this);
+  }
+  //  @Mayanka: call retriveChat to check history
+  componentWillMount(){
+    this.retriveChat();
+  }
+  //  @Mayanka: if chat history is empty start the user-tour
+setTourState() {
+    if(this.state.tourFlag == 1)
+    {
+      this.setState({
+        isTourActive: true,
+        tourStep: 1
+      });
+    }
   }
 /* if the user clicks logout it clears all the cookies
 which is stored when user login and redirect to apphome */
@@ -30,7 +51,6 @@ which is stored when user login and redirect to apphome */
               hashHistory.push('/');
             })
              .catch(function (error) {
-                 console.log(error);
             });
     }
     // redirects to chat page
@@ -76,8 +96,41 @@ which is stored when user login and redirect to apphome */
       }
 
     }
-    render() {
-        return (
+    retriveChat(e) {
+      let flag = 0;
+          Axios.get('/retriveChat').then((response) => {
+            //  @Mayanka: chat history is empty if there's no response data
+              if (response.data == null) {
+            //  @Mayanka: set flag to one if history is empty
+                flag = 1;
+              }
+              else{
+                flag = 0;
+              }this.setState({tourFlag: flag});
+              if(flag == 1){
+                this.setTourState();
+              }
+          }).catch((err) => {
+          });
+
+          }
+  render() {
+    const tourTitleStyle = {
+    fontWeight: 700,
+    fontSize: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    color:'teal'
+  };
+
+  const tourMessageStyle = {
+    fontSize: 16,
+    paddingLeft: 10,
+    paddingTop:10,
+      color:'teal'
+  };
+      return (
             <div style={{
                 backgroundImage: "url('../../images/homepage.jpg')"
             }}>
@@ -116,7 +169,7 @@ which is stored when user login and redirect to apphome */
                         <Grid.Column width={4} centered={true}>
                             <Grid.Row>
                                 <center>
-                          <Image className="imagepointer" src='../../images/designlogo.png'
+                          <Image className="imagepointer" className="stop-1"  src='../../images/designlogo.png'
                           alt='design pattern' size='small' avatar onClick={this.onSubmitEmail}/>
                                 </center>
                             </Grid.Row>
@@ -185,6 +238,23 @@ which is stored when user login and redirect to apphome */
                     <Grid.Row/>
                     <Grid.Row/><br/><br/>
                 </Grid>
+                <div style={{position: "absolute", top: 0}}>
+               <Tour
+                 active={this.state.isTourActive}
+                 step={this.state.tourStep}
+                 onNext={(step) => this.setState({tourStep: step})}
+                 onBack={(step) => this.setState({tourStep: step})}
+                 onCancel={() => this.setState({isTourActive: false})}
+                 steps={[
+                       {
+                           step: 1,
+                           selector: ".stop-1",
+                           title: <div style={tourTitleStyle}>Welcome to Zukti Tour</div>,
+                           body: <div style={tourMessageStyle}>Click on a domain to start learning</div>
+                       }
+                   ]}
+               />
+            </div>
             </div>
         );
     }

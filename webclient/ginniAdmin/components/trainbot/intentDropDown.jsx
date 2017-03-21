@@ -39,7 +39,7 @@ export default class IntentDropDown extends React.Component {
             <Form>
                 <Form.Field >
                     <label>
-                        <h4>Choose Intent</h4>
+                        <h4>Choose Existing Intent</h4>
                     </label>
                     <Input>
                         <Dropdown fluid options={this.state.options} placeholder='Intent'

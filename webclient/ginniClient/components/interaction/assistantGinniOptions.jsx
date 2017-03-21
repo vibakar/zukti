@@ -1,6 +1,8 @@
 import React from 'react';
 import {Feed, Popup, Icon, Label} from 'semantic-ui-react';
 import Axios from 'axios';
+import Cookie from 'react-cookie';
+
 export default class AssistantGinniOptions extends React.Component {
     constructor(props) {
         super(props);
@@ -51,7 +53,9 @@ export default class AssistantGinniOptions extends React.Component {
             });
         }
         this.setState({likeEnabled: false, likeDislikeMsg: 'Liked'});
-        this.getSiblings(this.props.keywords);
+        if(Cookie.load('recommendations') === 'true') {
+          this.getSiblings(this.props.keywords);
+        }
     }
     downVoteAnswer(type, value) {
         if (this.state.dislikeEnabled) {

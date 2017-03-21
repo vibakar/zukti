@@ -44,7 +44,7 @@ export default class InputNewsSameAsIntent extends React.Component {
             <Form onSubmit={this.addNewSameAsIntent}>
                 <Form.Field>
                     <label>
-                        <h4>Relevant To</h4>
+                        <h4>Similar Intent</h4>
                     </label>
                     <input autoComplete='off' type='text' name='newSameAsIntent'
                       ref='newSameAsIntent' placeholder='Type new same as intent value'/>

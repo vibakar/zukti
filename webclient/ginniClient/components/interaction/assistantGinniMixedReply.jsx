@@ -8,6 +8,7 @@ import AssistantGinniMoreTextDisplay from './assistantGinniMoreTextDisplay';
 import AssistantGinniPlainText from './assistantGinniPlainText';
 import AssistantGinniOptions from './assistantGinniOptions';
 import AssistantGinniKeywordResponse from './assistantGinniKeywordResponse';
+import AssistantGinniRecommendation from './assistantGinniRecommendation'
 import UnfurlLink from './unfurlLink';
 import './chatcontainerstyle.css';
 import CodeAssistant from '../../../Multi_Lingual/Wordings.json';
@@ -35,6 +36,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         this.logoutAfterWarning = this.logoutAfterWarning.bind(this);
         this.redirectDomain = this.redirectDomain.bind(this);
         this.allSuggestion = this.allSuggestion.bind(this);
+        this.displayRecommendations = this.displayRecommendations.bind(this);
        }
 
     displayMoreText() {
@@ -103,6 +105,11 @@ export default class AssistantGinniMixedReply extends React.Component {
     playVideo() {
         let videoUrl = this.props.data.video[0].value;
     }
+    /* @sangeetha: added function to display recommendations */
+    displayRecommendations(recommendations) {
+      let relatedTopics = recommendations.toLocaleString().split(',').join(', ');
+      this.props.handleGinniReply([<AssistantGinniRecommendation value={relatedTopics}/>]);
+  }
     render() {
           let differentDomain = this.props.differentDomain;
           let text = '';
@@ -182,6 +189,7 @@ export default class AssistantGinniMixedReply extends React.Component {
 
     /* @yuvashree: edited code for text view */
         let text = '';
+        /* @sangeetha : getting keywords for Question response recommendations */
         if(this.props.data.text) {
           text = this.props.data.text[0].value;
           let value = Beautify(text, {indent_size: 1 });
@@ -213,7 +221,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                                      basic color='orange' id='cursor'>Videos</Label>
                                    : ''}
                                    <AssistantGinniOptions question={this.props.question}
-                                     type='text' value={text}/>
+                                     type='text' value={text} keywords={this.props.keywords} onRecommend={this.displayRecommendations}/>
                            </Label.Group>
                        </Feed.Extra>
                     </Feed.Content>
@@ -259,6 +267,9 @@ export default class AssistantGinniMixedReply extends React.Component {
                       splicedSuggestion.push(suggestion[i]);
                     }
                   }
+                  else {
+                    splicedSuggestion = suggestion;
+                  }
                   console.log('spliced');
                   console.log(splicedSuggestion);
                   let firstSuggestion = <div>{splicedSuggestion.map(function(item) {
@@ -270,6 +281,15 @@ export default class AssistantGinniMixedReply extends React.Component {
                   })}
 
                   <a onClick={this.allSuggestion}>more...</a></div>;
+                  if(suggestion.length <= 5) {
+                    firstSuggestion = <div>{splicedSuggestion.map(function(item) {
+                        return (
+                          <div>
+                            {item.value}
+                          </div>
+                        )
+                    })}</div>;
+                  }
                   return (
                       <Feed id="ginniview">
                           <Feed.Event>

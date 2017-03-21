@@ -15,7 +15,6 @@ export default class NewIntentText extends React.Component {
         this.addNewIntent = this.addNewIntent.bind(this);
     }
     addNewIntent(newIntent) {
-      console.log(newIntent+' eeeeeeeeeeeeeeeeeeeeeeeeeee');
       this.props.addNewIntent(newIntent);
     }
     createNewIntent(e) {
