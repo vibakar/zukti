@@ -39,9 +39,11 @@ export default class LeftMenu extends Component {
         this.retriveChat = this.retriveChat.bind(this);
         this.setTourState = this.setTourState.bind(this);
     }
+    //  @Mayanka: call retriveChat to check history
     componentWillMount(){
       this.retriveChat();
     }
+    //  @Mayanka: if chat history is empty start the user-tour
   setTourState() {
       if(this.state.tourFlag == 1)
       {
@@ -125,7 +127,9 @@ export default class LeftMenu extends Component {
     retriveChat(e) {
       let flag = 0;
           Axios.get('/retriveChat').then((response) => {
+            //  @Mayanka: chat history is empty if there's no response data
               if (response.data == null) {
+            //  @Mayanka: set flag to one if history is empty
                 flag = 1;
               }
               else{
@@ -139,6 +143,7 @@ export default class LeftMenu extends Component {
 
           }
   render() {
+    //  @Mayanka: style element for user-tour
     const tourTitleStyle = {
     fontWeight: 700,
     fontSize: 20,
@@ -147,7 +152,7 @@ export default class LeftMenu extends Component {
     paddingLeft: 10,
     color:'teal'
   };
-
+  //  @Mayanka: style elements for user-tour
   const tourMessageStyle = {
     fontSize: 16,
     paddingLeft: 10,

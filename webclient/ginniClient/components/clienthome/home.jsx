@@ -19,9 +19,11 @@ export default class ClientHome extends React.Component {
       this.retriveChat = this.retriveChat.bind(this);
       this.setTourState = this.setTourState.bind(this);
   }
+  //  @Mayanka: call retriveChat to check history
   componentWillMount(){
     this.retriveChat();
   }
+  //  @Mayanka: if chat history is empty start the user-tour
 setTourState() {
     if(this.state.tourFlag == 1)
     {
@@ -97,7 +99,9 @@ which is stored when user login and redirect to apphome */
     retriveChat(e) {
       let flag = 0;
           Axios.get('/retriveChat').then((response) => {
+            //  @Mayanka: chat history is empty if there's no response data
               if (response.data == null) {
+            //  @Mayanka: set flag to one if history is empty
                 flag = 1;
               }
               else{
