@@ -152,7 +152,7 @@ export default class LeftMenu extends Component {
     paddingLeft: 10,
     color:'teal'
   };
-  //  @Mayanka: style elements for user-tour
+  //  @Mayanka: style element for user-tour
   const tourMessageStyle = {
     fontSize: 16,
     paddingLeft: 10,
