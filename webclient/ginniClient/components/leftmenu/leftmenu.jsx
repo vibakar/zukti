@@ -13,6 +13,7 @@ import {
 import Axios from 'axios';
 import Cookie from 'react-cookie';
 import {hashHistory} from 'react-router';
+import Tour from "react-user-tour"
 import './leftmenu.css';
 import LeftMenuPage from '../../../Multi_Lingual/Wordings.json';
 export default class LeftMenu extends Component {
@@ -27,12 +28,28 @@ export default class LeftMenu extends Component {
             usertype: false,
             name: '',
             photo: '',
-            counter: 0
+            counter: 0,
+            isTourActive: false,
+      			tourStep: 1
         };
         this.onSubmitEmail = this.onSubmitEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
         this.getNotificationCount = this.getNotificationCount.bind(this);
         this.getUserInformation = this.getUserInformation.bind(this);
+        this.retriveChat = this.retriveChat.bind(this);
+        this.setTourState = this.setTourState.bind(this);
+    }
+    componentWillMount(){
+      this.retriveChat();
+    }
+  setTourState() {
+      if(this.state.tourFlag == 1)
+      {
+        this.setState({
+          isTourActive: true,
+          tourStep: 1
+        });
+      }
     }
     handleItemClick = ((e, {name}) => {
         if (this.state.activeItem === 'notifications') {
@@ -47,6 +64,7 @@ export default class LeftMenu extends Component {
     componentDidMount() {
         this.getUserInformation();
         this.getNotificationCount();
+        this.getDomainInformation();
         let socket = io();
         socket.on('update label', (data) => {
             this.state.counter = this.state.counter + 1;
@@ -54,6 +72,15 @@ export default class LeftMenu extends Component {
         });
     }
     getNotificationCount() {
+        let url = '/getbroadcastmessage/count';
+        Axios.get(url).then((response) => {
+            this.setState({counter: response.data.count});
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+    /* @Sindhujaadevi: To get the domain information */
+    getDomainInformation(){
       let differentDomain = Cookie.load('differentDomain');
       if(!differentDomain){
         this.setState({activeItem:'Build'});
@@ -62,12 +89,6 @@ export default class LeftMenu extends Component {
           this.setState({activeItem:'ChatBot'});
           Cookie.remove('differentDomain');
       }
-        let url = '/getbroadcastmessage/count';
-        Axios.get(url).then((response) => {
-            this.setState({counter: response.data.count});
-        }).catch((error) => {
-            console.log(error);
-        });
     }
     // to fetch the information about the user
     getUserInformation() {
@@ -101,7 +122,38 @@ export default class LeftMenu extends Component {
     onChangePassword() {
         hashHistory.push('/change');
     }
-    render() {
+    retriveChat(e) {
+      let flag = 0;
+          Axios.get('/retriveChat').then((response) => {
+              if (response.data == null) {
+                flag = 1;
+              }
+              else{
+                flag = 0;
+              }this.setState({tourFlag: flag});
+              if(flag == 1){
+                this.setTourState();
+              }
+          }).catch((err) => {
+          });
+
+          }
+  render() {
+    const tourTitleStyle = {
+    fontWeight: 700,
+    fontSize: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    color:'teal'
+  };
+
+  const tourMessageStyle = {
+    fontSize: 16,
+    paddingLeft: 10,
+    paddingTop:10,
+      color:'teal'
+  };
         const activeItem = this.state.activeItem;
         const customername = this.state.name;
         let trigger;
@@ -143,7 +195,7 @@ export default class LeftMenu extends Component {
                         <Icon name='home' color='teal'/>
                         {LeftMenuPage.LeftMenu.Menu1}
                     </Menu.Item>
-                    <Menu.Item name='ChatBot' active={activeItem === 'ChatBot'}
+                    <Menu.Item name='ChatBot' className="stop-1" active={activeItem === 'ChatBot'}
                       onClick={this.handleItemClick}>
                         <Icon name='discussions' color='teal'/>
                         {LeftMenuPage.LeftMenu.Menu2}
@@ -199,6 +251,23 @@ export default class LeftMenu extends Component {
                         </div>
                     </Segment>
                 </Sidebar.Pusher>
+                <div style={{position: "absolute", top: 0}}>
+             <Tour
+               active={this.state.isTourActive}
+               step={this.state.tourStep}
+               onNext={(step) => this.setState({tourStep: step})}
+               onBack={(step) => this.setState({tourStep: step})}
+               onCancel={() => this.setState({isTourActive: false})}
+               steps={[
+                     {
+                       step: 1,
+                       selector: ".stop-1",
+                       title: <div style={tourTitleStyle}>Knowledge Hub!!</div>,
+                       body: <div style={tourMessageStyle}>Click Lets Explore & start asking your queries</div>
+                     }
+                 ]}
+             />
+          </div>
             </div>
         );
     }
