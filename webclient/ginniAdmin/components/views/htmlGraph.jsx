@@ -9,7 +9,7 @@ export default class Graph extends React.Component {
       return(
         <div>
             <frameset>
-              <frame src = 'http://192.168.1.55:8081/graphie'/>
+              <frame src = 'http://localhost:8080/graphie'/>
             </frameset>
         </div>
       );

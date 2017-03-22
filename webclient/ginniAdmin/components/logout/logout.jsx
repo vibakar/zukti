@@ -16,7 +16,7 @@ export default class LogoutAdmin extends React.Component
     {
         Axios({
           method: 'GET',
-          url: 'http://192.168.1.55:8081/signout',
+          url: 'http://localhost:8080/signout',
           data: 'json'})
           .then(function(response) {
             Cookie.remove('authType');
