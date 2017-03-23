@@ -92,7 +92,7 @@ export default class AssistantGinniMixedReply extends React.Component {
   }
   // @keerthana: to show suggestion when clicked on more...
   allSuggestion() {
-        let fullSuggestion = this.props.data.suggestion.map(function(item) {
+        let fullSuggestion = this.props.data[0].suggestion.map(function(item) {
             return (
                 <div>
                     {item.value}
@@ -191,25 +191,48 @@ export default class AssistantGinniMixedReply extends React.Component {
     }
     /* subconcept code ends here */
 
+    /* @vibakar: display stackoverflow data */
+    let stackoverflow = '';
+    if(this.props.data[0].stackoverflow) {
+      console.log('in ');
+      stackoverflow = this.props.data[0].stackoverflow[0].value;
+      let value = stackoverflow.substring(1,stackoverflow.length-1);
+      let newvalue = value.split("\\n");
+      value = newvalue.join("");
+      return (
+            <Feed id="ginniview">
+                <Feed.Event>
+                <Feed.Content id = 'ginniviewKeyword'>
+                  <Feed.Extra extras>
+                    <h3 style={{'color':'blue'}}>
+                       {this.props.data[0].extras}
+                   </h3>
+                   <br/>
+                   </Feed.Extra>
+                    <Feed.Summary>
+                      <div className="content" dangerouslySetInnerHTML={{__html: value}}></div>
+                     </Feed.Summary>
+                </Feed.Content>
+            </Feed.Event>
+          </Feed>
+      );
+    }
     /* @yuvashree: edited code for text view */
         let text = '';
         /* @sangeetha : getting keywords for Question response recommendations */
         if(this.props.data[0].text) {
           text = this.props.data[0].text[0].value;
-          let value = Beautify(text, {indent_size: 1 });
-          let newvalue = value.split("\\n");
-          value = newvalue.join("");
           return (
                 <Feed id="ginniview">
                     <Feed.Event>
                     <Feed.Content id = 'ginniviewKeyword'>
                       <Feed.Extra extras>
                         <p>
-                           {this.props.data[0].extras}
+                           {/* {this.props.data[0].extras} */}
                        </p>
                        <br/>
                        </Feed.Extra>
-                        <Feed.Summary> <div className="content" dangerouslySetInnerHTML={{__html: value}}></div> </Feed.Summary>
+                        <Feed.Summary> {text}</Feed.Summary>
                         <Feed.Extra>
                           <hr/>
                           <p>

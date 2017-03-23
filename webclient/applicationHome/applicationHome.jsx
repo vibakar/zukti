@@ -48,10 +48,10 @@ export default class AdminWelcomePage extends React.Component {
                             textAlign: 'center'
                         }}>
                             <p id='head1'>{ApplicationHome.ApplicationContent.Line1}<br/>
-                              <h5 id='head2'>{ApplicationHome.ApplicationContent.Line2}</h5>
-                                <h5 id='head3'>
+                              {/* <h5 id='head2'>{ApplicationHome.ApplicationContent.Line2}</h5> */}
+                                <h2 id='head3'>
                                     <i>{ApplicationHome.ApplicationContent.Line3}</i>
-                                </h5>
+                                </h2>
                             </p>
                         </Grid.Column>
                     </Grid.Row>

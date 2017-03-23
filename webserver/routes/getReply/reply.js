@@ -149,8 +149,8 @@ router.post('/askQuestion', function(req, res) {
                             // let strip_html = striptags(answer);
                             let result = answer.replace(/\\"/g, '"');
                             logger.debug('stripped result :' + result);
-                            ansObj.text = [];
-                            ansObj.text.push({value: result});
+                            ansObj.stackoverflow = [];
+                            ansObj.stackoverflow.push({value: result});
                             ansObj.extras = 'Showing results from StackExchange:';
                             ansObjArray = [];
                             ansObjArray.push(ansObj);
