@@ -20,6 +20,7 @@ export default class UserAvatar extends React.Component
             paddingLeft: '2px',
             borderRadius: '50%'
         };
+        /* @santhosh - view online user updated for google and facebook */
         if(this.props.authType === 'local') {
           return (
               <div>

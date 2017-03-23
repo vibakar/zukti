@@ -84,6 +84,7 @@ export default class UserTable extends React.Component
             let email = '';
             let photo = '';
             let name = '';
+            /* @santhosh - view online user updated for google and facebook */
             if(newsdata.facebook !== undefined)
             {
               authType = newsdata.facebook.authType;
