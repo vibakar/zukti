@@ -42,19 +42,19 @@ module.exports = function(req, questionsAnswerSavedCallback) {
     blogs.forEach((item) => {
         let blog = item.trim();
         if (blog != '') {
-            blogsQuery = blogsQuery + `MERGE (q)-[:answer {rating:0}]-> (:blog {value:${JSON.stringify(blog)}}) `;
+            blogsQuery = blogsQuery + `MERGE (q)-[:answer {rating:0}]-> (:blog {value:${JSON.stringify(blog)},likes:[],dislikes:[]}) `;
         }
     });
     videos.forEach((item) => {
         let video = item.trim();
         if (video != '') {
-            videoQuery = videoQuery + `MERGE (q)-[:answer {rating:0}]-> (:video {value:${JSON.stringify(video)}}) `;
+            videoQuery = videoQuery + `MERGE (q)-[:answer {rating:0}]-> (:video {value:${JSON.stringify(video)},likes:[],dislikes:[]}) `;
         }
     });
     texts.forEach((item) => {
         let text = item.trim();
         if (text != '') {
-            textsQuery = textsQuery + `MERGE (q)-[:answer {rating:0}]-> (:text {value:${JSON.stringify(text)}}) `;
+            textsQuery = textsQuery + `MERGE (q)-[:answer {rating:0}]-> (:text {value:${JSON.stringify(text)},likes:[],dislikes:[]}) `;
         }
     });
 

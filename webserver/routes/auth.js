@@ -491,6 +491,19 @@ module.exports = function(app, passport) {
         res.cookie('username', req.user.facebook.displayName);
         res.cookie('profilepicture', req.user.facebook.photos);
         res.cookie('email', req.user.facebook.email);
+        RegisteredUser.update({
+            'facebook.email': req.user.facebook.email
+        }, {
+            $set: {
+                'local.loggedinStatus': true
+            }
+        }, function(error) {
+            if (error) {
+                logger.debug('status not updated');
+            } else {
+                logger.debug('LoginStatus updated Successfully');
+            }
+        });
         res.redirect('/#/clienthome');
     });
     // userprofile-in which all the user informations will be stored
@@ -515,6 +528,19 @@ module.exports = function(app, passport) {
         res.cookie('authType', req.user.google.authType);
         res.cookie('profilepicture', req.user.google.photos);
         res.cookie('email', req.user.google.email);
+        RegisteredUser.update({
+          'google.email': req.user.google.email
+        }, {
+            $set: {
+                'local.loggedinStatus': true
+            }
+        }, function(error) {
+            if (error) {
+                logger.debug('status not updated');
+            } else {
+                logger.debug('LoginStatus updated Successfully');
+            }
+        });
         res.redirect('/#/clienthome');
     });
 

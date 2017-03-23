@@ -27,26 +27,26 @@ export default class UserTable extends React.Component
         // populating the user list for the first time
         Axios({url: 'http://localhost:8080/viewall', method: 'GET'}).then(function(response) {
             self.setState({userinformation: response.data});
-            console.log(JSON.stringify(response.data));
+            // console.log(JSON.stringify(response.data));
         });
         //@Deepika: To Get the Admin Details
         Axios({url: 'http://localhost:8080/adminProfile', method: 'GET'}).then(function(response){
           self.setState({admininDomainName: response.data[0].local.loggedinDomain});
-          console.log('Admindtails'+ response.data[0].local.loggedinDomain);
+          // console.log('Admindtails'+ response.data[0].local.loggedinDomain);
         });
 
        // @deepika: updating the user list on login or logout
         socket.on('update userlist', function() {
             Axios({url: 'http://localhost:8080/viewall', method: 'GET'}).then(function(response) {
                 self.setState({userinformation: response.data});
-                console.log(response.data);
+                // console.log(response.data);
             });
          });
         /* @keerthana: Sentiment Color Code */
         var sentimentArray = this.state.sentimentColor;
         let con = this;
         socket.on('sentiment score', function(data) {
-            console.log('user' + JSON.stringify(data));
+            // console.log('user' + JSON.stringify(data));
             let email = data.email;
             if (data.score == 0) {
                 sentimentArray[email] = 'black';
@@ -68,7 +68,7 @@ export default class UserTable extends React.Component
                 sentimentArray[email] = 'brown';
             }
             con.setState({sentimentColor: sentimentArray});
-            console.log(sentimentArray);
+            // console.log(sentimentArray);
         });
     }
     render() {
@@ -80,20 +80,43 @@ export default class UserTable extends React.Component
                 paddingTop: '7px',
                 paddingLeft: '2px'
             };
-            let emailindex = newsdata.local.email;
+            let authType = '';
+            let email = '';
+            let photo = '';
+            let name = '';
+            if(newsdata.facebook !== undefined)
+            {
+              authType = newsdata.facebook.authType;
+              email = newsdata.facebook.email;
+              photo = newsdata.facebook.photos;
+              name = newsdata.facebook.displayName;
+            }
+            else if(newsdata.google !== undefined)
+            {
+              authType = newsdata.google.authType;
+              email = newsdata.google.email;
+              photo = newsdata.google.photos;
+              name = newsdata.google.name;
+            }
+            else {
+              authType = newsdata.local.authType;
+              email = newsdata.local.email;
+              photo = newsdata.local.photos;
+              name = newsdata.local.name;
+            }
             return (
                 <div id='eachcardstyle' key={index}>
                     <Grid>
                         <Grid.Row>
                             <Grid.Column width={3}>
-                                <UserAvatar loginStatus={newsdata.local.loggedinStatus} photo={newsdata.local.photos} name={newsdata.local.name} email={newsdata.local.email}></UserAvatar>
+                              <UserAvatar loginStatus={newsdata.local.loggedinStatus} authType={authType} photo={photo} name={name} email={email}></UserAvatar>
                             </Grid.Column>
                             <Grid.Column width={4}>
                                 <div style={textStyle}>
                                     <h4>
                                         <b style={{
                                             margin: '0px'
-                                        }}>{newsdata.local.name}</b>
+                                        }}>{name}</b>
                                     </h4>
                                 </div>
                             </Grid.Column>
@@ -101,12 +124,12 @@ export default class UserTable extends React.Component
                                 <div style={textStyle}>
                                     <b style={{
                                         color: 'blue'
-                                    }}>{newsdata.local.email}</b>
+                                    }}>{email}</b>
                                 </div>
                             </Grid.Column>
                             <Grid.Column width={3}>
                                 <div>
-                                    <ViewUserChat userEmail={newsdata.local.email}/>
+                                    <ViewUserChat userEmail={email}/>
                                 </div>
                             </Grid.Column>
                             <Grid.Column width={1}>
@@ -114,7 +137,7 @@ export default class UserTable extends React.Component
                                     paddingTop: '5px'
                                 }}>
                                 {/* @keerthana:Sentiment icon for each user */}
-                                    <Icon name='circle' size='large' color={this.state.sentimentColor[emailindex]}/>
+                                    <Icon name='circle' size='large' color={this.state.sentimentColor[email]}/>
                                 </div>
                             </Grid.Column>
                         </Grid.Row>

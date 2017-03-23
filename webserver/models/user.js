@@ -13,9 +13,15 @@ const userSchema = mongoose.Schema({
         email: String,
         password: String,
         authType: String,
-        localType: String,
+        localType: {
+          type: String,
+          default: 'Customer'
+        },
         name: String,
-        loggedinStatus: Boolean,
+        loggedinStatus: {
+          type: Boolean,
+          default: false
+        },
         isEmailVerified: Boolean,
         verificationID: String,
         photos: String,

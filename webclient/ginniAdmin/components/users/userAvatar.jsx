@@ -20,19 +20,36 @@ export default class UserAvatar extends React.Component
             paddingLeft: '2px',
             borderRadius: '50%'
         };
-        return (
-            <div>
-                <a>
-                    <div style={divStyle}>
-                        <center>
-                          <Image
-                             avatar
-                            src={require('../../../../webserver/images/' + p)}
-                          />
-                        </center>
-                    </div>
-                </a>
-            </div>
-        );
+        if(this.props.authType === 'local') {
+          return (
+              <div>
+                  <a>
+                      <div style={divStyle}>
+                          <center>
+                            <Image
+                               avatar
+                              src={require('../../../../webserver/images/' + p)}
+                            />
+                          </center>
+                      </div>
+                  </a>
+              </div>
+          );
+        } else {
+          return (
+              <div>
+                  <a>
+                      <div style={divStyle}>
+                          <center>
+                            <Image
+                               avatar
+                              src={p}
+                            />
+                          </center>
+                      </div>
+                  </a>
+              </div>
+          );
+        }
     }
 }

@@ -307,12 +307,14 @@ router.post('/askQuestion', function(req, res) {
           // @keerthana: send suggestion response
           let suggestionConcepts = function(conceptArray, suggestionCallback) {
               let suggestion = conceptArray.join("");
+              let ansObjArray = [];
               let ansObj = {};
               ansObj.suggestion = [];
               conceptArray.forEach((item, index) => {
                   ansObj.suggestion.push({value: item});
               });
-              suggestionCallback(ansObj);
+              ansObjArray.push(ansObj);
+              suggestionCallback(ansObjArray);
           };
           // @keerthana: to extract a keyword that is a part of the concept
           if (keywords.length === 0) {
