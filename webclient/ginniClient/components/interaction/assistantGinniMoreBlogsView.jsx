@@ -16,8 +16,8 @@ export default class AssistantGinniMoreBlogsView extends React.Component {
               <Feed.Event>
                   <Feed.Content id = 'ginniviewKeyword'>
                       <Feed.Summary><UnfurlLink url={this.props.value} /></Feed.Summary>
-                          <AssistantGinniOptions question={this.props.question}
-                            type='blog' value={this.props.value}/>
+                      <AssistantGinniOptions question={this.props.question}
+                        type='blog' value={this.props.value} likes={this.props.likes} dislikes={this.props.dislikes}/>
                   </Feed.Content>
               </Feed.Event>
           </Feed>

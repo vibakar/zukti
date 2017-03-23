@@ -61,16 +61,12 @@ router.post('/addQuestionAnswer', function(req, res) {
 });
   // router to rate answer which user liked
 router.post('/rateAnswer', function(req, res) {
-  let liked = req.body.liked;
+  let action = req.body.action;
   let type = req.body.type;
   let value = req.body.value;
+  let user = req.body.email;
   // method to save user preference in neo4j
-  voteAnswer(liked, type, value);
-  if(liked === true) {
-    res.send('liked');
-  }
-  else {
-    res.send('disliked');
-  }
+  voteAnswer(action, type, value, user);
+  res.send('done');
 });
 module.exports = router;

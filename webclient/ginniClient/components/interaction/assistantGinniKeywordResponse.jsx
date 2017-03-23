@@ -28,14 +28,14 @@ export default class AssistantGinniMixedReply extends React.Component {
         let videosResponseArray = this.props.data.video;
         videosResponseArray.shift();
         videosResponseArray.forEach((video) => {
-            ginniReply.push(<AssistantGinniMoreVideosView handleGinniReply={this.props.handleGinniReply} question={this.props.question} value={video}/>);
+            ginniReply.push(<AssistantGinniMoreVideosView handleGinniReply={this.props.handleGinniReply} question={this.props.question} value={video.value} likes={video.likes} dislikes={video.dislikes}/>);
         });
         this.props.handleGinniReply(ginniReply);
     }
     displayVideos() {
         let ginniReply = [];
         let videos = this.props.data.video.map((item, index)=>{
-            return {value: item};
+            return {value: item.value, likes: item.likes, dislikes: item.dislikes};
           });
         videos.shift();
         ginniReply.push(<AssistantGinniVideoDisplay
@@ -46,8 +46,8 @@ export default class AssistantGinniMixedReply extends React.Component {
     displayBlogs() {
         let ginniReply = [];
         let blogs = this.props.data.blog.map((item, index)=>{
-            return {value: item};
-        });
+              return {value: item.value, likes: item.likes, dislikes:item.dislikes};
+          });
         blogs.shift();
         ginniReply.push(<AssistantGinniUrlDisplay
           question={this.props.question} handleGinniReply={this.props.handleGinniReply}
@@ -56,21 +56,23 @@ export default class AssistantGinniMixedReply extends React.Component {
     }
     /* @yuvashree: added function to play video on clicking the button */
     playVideo() {
-        console.log(this.props.data.video[0]);
-        let videoUrl = this.props.data.video[0];
+      console.log(this.props.data.video[0].value);
+      let videoUrl = this.props.data.video[0].value;
         console.log(videoUrl);
     }
     /* @sangeetha: added function to display recommendations */
       displayRecommendations(recommendations) {
-       let relatedTopics = recommendations.toLocaleString().split(',').join(', ');
+        if(recommendations != ''){
+       let relatedTopics = recommendations.toLocaleString();
         this.props.handleGinniReply([<AssistantGinniRecommendation value={relatedTopics}/>]);
+      }
     }
 
     render() {
       /* @yuvashree: edited code for displaying videos */
       if(this.props.data.blog === undefined)
       {
-        let video = this.props.data.video[0];
+        let video = this.props.data.video[0].value;
         return (
           <Feed id="ginniview">
               <Feed.Event>
@@ -88,7 +90,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                                           <Feed.Event>
                                               <Feed.Content>
                                                   <Feed.Extra >
-                                                      <ReactPlayer id='video' height={455} width={810} url={this.props.data.video[0]} playing={false} controls={true}/>
+                                                      <ReactPlayer id='video' height={455} width={810} url={this.props.data.video[0].value} playing={false} controls={true}/>
                                                   </Feed.Extra>
                                               </Feed.Content>
                                           </Feed.Event>
@@ -99,7 +101,9 @@ export default class AssistantGinniMixedReply extends React.Component {
                                         basic color='orange' id='cursor'>View More Videos</Label>
                                       : ''}
                                   <AssistantGinniOptions question={this.props.question}
-                                    type='video' value={video}/>
+                                    type='video' value={video} likes ={this.props.data.video[0].likes}
+                                    dislikes ={this.props.data.video[0].dislikes}
+                                    keywords={this.props.keywords} onRecommend={this.displayRecommendations}/>
                           </Label.Group>
                       </Feed.Extra>
                   </Feed.Content>
@@ -110,7 +114,7 @@ export default class AssistantGinniMixedReply extends React.Component {
             /* @yuvashree: edited code for displaying blogs */
             else {
               /* @Sangeetha: keyword Response recommendations  */
-              let blog = this.props.data.blog[0];
+              let blog = this.props.data.blog[0].value;
               return (
                 <Feed id="ginniview">
               <Feed.Event>
@@ -127,7 +131,8 @@ export default class AssistantGinniMixedReply extends React.Component {
                                     basic color='orange' id='cursor'>Videos</Label>
                                   : ''}
                                   <AssistantGinniOptions question={this.props.question}
-                                    type='blog' value={blog} responseValue ={this.props.response}
+                                    type='blog' value={blog} likes ={this.props.data.blog[0].likes} dislikes ={this.props.data.blog[0].dislikes}
+                                    responseValue ={this.props.response}
                                     keywords={this.props.keywords}
                                       onRecommend={this.displayRecommendations}/>
                           </Label.Group>

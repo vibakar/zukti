@@ -43,7 +43,7 @@ export default class ViewUserChat extends React.Component {
                 conversation.answerObj.forEach((answer, index) => {
                     if (answer.keywordResponse) {
                       if(answer.blog === undefined) {
-                          let video = answer.video[0];
+                          let video = answer.video[0].value;
                           this.state.chat.push(
                                 <Accordion>
                                     <Accordion.Title>
@@ -59,7 +59,7 @@ export default class ViewUserChat extends React.Component {
                           );
                       }
                       else {
-                        let blog = answer.blog[0];
+                        let blog = answer.blog[0].value;
                         this.state.chat.push(
                               <Accordion>
                                   <Accordion.Title>
@@ -76,8 +76,8 @@ export default class ViewUserChat extends React.Component {
                       }
                     }
                 });
-              } else if(conversation.answerObj.text) {
-                  let text = conversation.answerObj.text[0].value;
+              } else if(conversation.answerObj[0].text) {
+                  let text = conversation.answerObj[0].text[0].value;
                   this.state.chat.push(
                         <Accordion>
                             <Accordion.Title>
@@ -91,8 +91,8 @@ export default class ViewUserChat extends React.Component {
                         </Accordion>
                   );
                 }
-                else if (conversation.answerObj.image) {
-                  let imageURL = conversation.answerObj.image[0].value;
+                else if (conversation.answerObj[0].image) {
+                  let imageURL = conversation.answerObj[0].image[0].value;
                   this.state.chat.push(
                         <Accordion>
                             <Accordion.Title>
@@ -107,8 +107,8 @@ export default class ViewUserChat extends React.Component {
                         </Accordion>
                   );
               }
-              else if(conversation.answerObj.code) {
-                  let code = conversation.answerObj.code[0].value;
+              else if(conversation.answerObj[0].code) {
+                  let code = conversation.answerObj[0].code[0].value;
                   let value = Beautify(code, {indent_size: 1 });
                   this.state.chat.push(
                         <Accordion>

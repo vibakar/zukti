@@ -1,6 +1,6 @@
 // let Axios = require('axios');
 let nlp = require('nlp_compromise');
-// let client = redis.createClient('6379', 'localhost');
+// let client = redis.createClient();
 let log4js = require('log4js');
 let logger = log4js.getLogger();
 module.exports = function(sentence,keywordLexicon,intentLexicon) {

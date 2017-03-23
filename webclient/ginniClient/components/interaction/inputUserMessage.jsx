@@ -49,7 +49,7 @@ export default class InputUserMesaage extends React.Component {
                   // @sangeetha : keywords for question response recommendations
                       ginniReply.push(<AssistantGinniMixedReply
                         handleGinniReply={this.props.handleGinniReply} question={message.value}
-                        data={response.data.answerObj} keywords={response.data.answerObj.keywords}/>);
+                        data={response.data.answerObj} keywords={response.data.answerObj[0].keywords}/>);
                 }
                 //  @Mayanka: display answer
 

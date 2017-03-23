@@ -54,9 +54,14 @@ export default class AssistantView extends React.Component {
         let keywords = this.props.value;
         let keyArray = keywords.split(',');
         let sibling = [];
-        if (keyArray.length > 3) {
+        let capArray = [];
+        for(let j = 0; j < keyArray.length; j = j + 1)
+        {
+          capArray[j] = keyArray[j].charAt(0).toUpperCase() + keyArray[j].slice(1);
+        }
+        if (capArray.length > 3) {
             for (let i = 0; i < 3; i = i + 1) {
-                sibling.push(keyArray[i], ',');
+                sibling.push(capArray[i], ', ');
             }
             this.setState({siblingsArray: sibling, msg: '(more...)'});
         } else {
@@ -69,11 +74,16 @@ export default class AssistantView extends React.Component {
         let keywords = this.props.value;
         let keyArray = keywords.split(',');
         let sibling = [];
-        for (let i = 0; i < keyArray.length; i = i + 1) {
-            if (keyArray.length === i + 1) {
-                sibling.push(keyArray[i]);
+        let capArray = [];
+        for(let j = 0; j < keyArray.length; j = j + 1)
+        {
+          capArray[j] = keyArray[j].charAt(0).toUpperCase() + keyArray[j].slice(1);
+        }
+        for (let i = 0; i < capArray.length; i = i + 1) {
+            if (capArray.length === i + 1) {
+                sibling.push(capArray[i]);
             } else {
-                sibling.push(keyArray[i], ', ');
+                sibling.push(capArray[i], ', ');
             }
         }
 
@@ -122,9 +132,9 @@ export default class AssistantView extends React.Component {
         if (this.state.flag) {
             return (
                 <Modal open={this.open} close={this.close}>
-                    <Header icon='archive' content='Turn Off Recommendations'/>
+                    <Header icon='alarm' content='Turn Off Recommendations'/>
                     <Modal.Content>
-                        <p>Would you like to Turn Off your Recommendations</p>
+                        <p>Would you like to Turn Off Recommendations</p>
                     </Modal.Content>
                     <Modal.Actions>
                         <Button onClick={this.continueRecommend} color='red'>

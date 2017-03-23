@@ -11,6 +11,7 @@ let client = require('./functions/redis');
 let answerNotFoundReply = require('./../../config/answerNotFoundReply');
 let saveUnansweredQuery = require('./functions/saveUnansweredQuery');
 let saveUserQueries = require('./functions/saveUserQueries');
+let saveUserResponse = require('./functions/saveUserResponse');
 let saveAnalyticsData = require('./functions/saveAnalyticsData');
 // getKeywordResponse json file containing statements for keyword responses
 let getKeywordResponse = require('./functions/getKeywordResponse');
@@ -38,6 +39,20 @@ let striptags = require('striptags');
 let log4js = require('log4js');
 let logger = log4js.getLogger();
 // router to take question and give reply to user
+//@deepika : likeOrDislike value update in db
+router.post('/likeOrDislike', function(req, res)
+{
+
+  let email = req.user.local.email || req.user.facebook.email || req.user.google.email;
+  //let username = req.user.local.name;
+  let type = req.body.type;
+  let value = req.body.value;
+  let likes = req.body.liked;
+  let dislikes = req.body.disliked;
+  console.log('in reply function '+ email +type +value +likes+dislikes);
+  saveUserResponse(email,type,value,likes,dislikes);
+
+});
 router.post('/askQuestion', function(req, res) {
     // get the user email
     let email = req.user.local.email || req.user.facebook.email || req.user.google.email;
@@ -131,13 +146,15 @@ router.post('/askQuestion', function(req, res) {
                     if (miJSON.items.length > 0) {
                         if (miJSON.items[0].is_accepted) {
                             let answer = JSON.stringify(miJSON.items[0].body);
-                            let strip_html = striptags(answer);
-                            let result = strip_html.replace(/\\"/g, '"');
+                            // let strip_html = striptags(answer);
+                            let result = answer.replace(/\\"/g, '"');
                             logger.debug('stripped result :' + result);
                             ansObj.text = [];
                             ansObj.text.push({value: result});
                             ansObj.extras = 'Showing results from StackExchange:';
-                            sendResponse(false, ansObj);
+                            ansObjArray = [];
+                            ansObjArray.push(ansObj);
+                            sendResponse(false, ansObjArray);
                         } else {
                             saveUnansweredQuery(username, email, question.value);
                             // get a random response string from keyword response found

@@ -62,9 +62,7 @@ module.exports = function(keywords, email, types, sendResponse, otherDomainRespo
               WHERE length(p) = max
               WITH bw as bw
               MATCH (n)<-[:answer]-(q:question)-->(bw) where n:blog or n:video or n:image or n:code
-              RETURN LABELS(n) AS contentType, COLLECT(distinct n.value),
-              COLLECT(ANY(user IN n.likes WHERE user='${email}')),
-              COLLECT(ANY(user IN n.dislikes WHERE user='${email}')),
+              RETURN LABELS(n) AS contentType, COLLECT(DISTINCT[n.value, ANY(user IN n.likes WHERE user='${email}'), ANY(user IN n.dislikes WHERE user='${email}')]),
               CASE
                   WHEN SIZE(n.likes)=0 AND SIZE(n.dislikes)=0 THEN 0
                   WHEN SIZE(n.likes)=0 AND SIZE(n.dislikes)>0 THEN -SIZE(n.dislikes)
@@ -88,9 +86,7 @@ module.exports = function(keywords, email, types, sendResponse, otherDomainRespo
             WHERE length(p) = max
             WITH bw as bw
             MATCH (n)<-[:answer]-(q:question)-->(bw) WHERE LABELS(n)='${type[0]}'
-            RETURN LABELS(n) AS contentType, COLLECT(distinct n.value),
-            COLLECT(ANY(user IN n.likes WHERE user='${email}')),
-            COLLECT(ANY(user IN n.dislikes WHERE user='${email}')),
+            RETURN LABELS(n) AS contentType, COLLECT(DISTINCT[n.value, ANY(user IN n.likes WHERE user='${email}'), ANY(user IN n.dislikes WHERE user='${email}')]),
             CASE
              WHEN SIZE(n.likes)=0 AND SIZE(n.dislikes)=0 THEN 0
              WHEN SIZE(n.likes)=0 AND SIZE(n.dislikes)>0 THEN -SIZE(n.dislikes)
@@ -115,19 +111,50 @@ module.exports = function(keywords, email, types, sendResponse, otherDomainRespo
                 otherDomainResponse(inOtherDomain, differentDomain);
                   });
             } else {
-                let hasAtleastSomeContent = false;
-                let resultArray = [];
-                let resultObj = {};
+
+              let hasAtleastSomeContent = false;
+              let resultArray = [];
+              let resultObj = {};
+              let blogArray = [];
+              let videoArray = [];
+              let codeArray = [];
+              let imageArray = [];
+              let textArray = [];
                 result.records.forEach((record) => {
-                    let field = record._fields;
-                    let contentType = field[0][0];
-                    let content = field[1];
-                    if (content.length !== 0) {
-                        hasAtleastSomeContent = true;
-                        resultObj[contentType] = content;
+                  let field = record._fields;
+                  let contentType = field[0][0];
+                  hasAtleastSomeContent = true;
+                  field[1].map((value, index) =>{
+                  let content = {value: value[0], likes: value[1], dislikes: value[2]}
+                  if(contentType === 'blog') {
+                      blogArray.push(content);
+                    } else if(contentType === 'video') {
+                      videoArray.push(content);
+                    } else if(contentType === 'code') {
+                      codeArray.push(content);
+                    } else if(contentType === 'image') {
+                      imageArray.push(content);
+                    } else if(contentType === 'text') {
+                      textArray.push(content);
                     }
+                      });
                 });
                 resultObj.time = new Date().toLocaleString();
+                if(blogArray.length > 0) {
+                  resultObj['blog'] = blogArray;
+                }
+                if(videoArray.length > 0) {
+                  resultObj['video'] = videoArray;
+                }
+                if(codeArray.length > 0) {
+                  resultObj['code'] = codeArray;
+                }
+                if(imageArray.length > 0) {
+                  resultObj['image'] = imageArray;
+                }
+                if(textArray.length > 0) {
+                  resultObj['text'] = textArray;
+                }
             /* @sangeetha: keywords for recommendations */
                 resultObj.keywords = keywords;
                 if (hasAtleastSomeContent) {

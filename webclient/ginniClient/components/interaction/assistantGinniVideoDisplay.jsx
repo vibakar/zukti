@@ -21,7 +21,7 @@ export default class AssistantGinniMixedReply extends React.Component {
         let videosResponseArray = this.props.videos;
         videosResponseArray.shift();
         videosResponseArray.forEach((video) => {
-            ginniReply.push(<AssistantGinniMoreVideosView handleGinniReply={this.props.handleGinniReply} question={this.props.question} value={video.value}/>);
+            ginniReply.push(<AssistantGinniMoreVideosView handleGinniReply={this.props.handleGinniReply} question={this.props.question} value={video.value} likes={video.likes} dislikes={video.dislikes}/>);
         });
         this.props.handleGinniReply(ginniReply);
     }
@@ -54,7 +54,7 @@ export default class AssistantGinniMixedReply extends React.Component {
                                           : ''}
                               </Label.Group>
                           </Feed.Extra>
-                          <AssistantGinniOptions question={this.props.question} type='video' value={videoUrl}/>
+                          <AssistantGinniOptions question={this.props.question} type='video' value={videoUrl} likes={this.props.videos[0].likes} dislikes ={this.props.videos[0].dislikes}/>
                       </Feed.Content>
                   </Feed.Event>
               </Feed>

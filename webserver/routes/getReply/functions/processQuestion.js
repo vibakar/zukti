@@ -25,7 +25,7 @@ module.exports = function(sentence,intentLexicon,keywordLexicon,typeLexicon) {
     let tagger = new pos.Tagger();
     let taggedWords = tagger.tag(words);
     logger.debug(taggedWords+"tags");
-    for(y in taggedWords)
+    for(let y = 0; y < taggedWords.length; y = y + 1)
     {
       let taggedWord = taggedWords[y];
       let tag = taggedWord[1];
@@ -37,6 +37,19 @@ module.exports = function(sentence,intentLexicon,keywordLexicon,typeLexicon) {
           logger.debug(taggedWord[0]+"pushed word");
         }
       }
+      if(y<taggedWords.length-1)
+        {
+          let taggedWord1 = taggedWords[y+1];
+          let tag1 = taggedWord1[1];
+          if(tag === 'NN' && tag1 === 'IN')
+          {
+            if(intentLexicon.includes(taggedWord[0]))
+            {
+              intents.push(taggedWord[0]);
+              logger.debug(taggedWord[0]+"pushed word");
+            }
+          }
+        }
     }
     /* finding intent using nlp done */
 

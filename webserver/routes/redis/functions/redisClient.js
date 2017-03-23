@@ -1,3 +1,3 @@
 /* @navinprasad: create redis client */
-let redis = require('redis').createClient('6379', 'localhost');
+let redis = require('redis').createClient();
 module.exports = redis;
