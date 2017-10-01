@@ -169,7 +169,7 @@ which is stored when user login and redirect to apphome */
                         <Grid.Column width={4} centered={true}>
                             <Grid.Row>
                                 <center>
-                          <Image className="imagepointer" className="stop-1"  src='../../images/designlogo.png'
+                          <Image className="imagepointer stop-1" src='../../images/designlogo.png'
                           alt='design pattern' size='small' avatar onClick={this.onSubmitEmail}/>
                                 </center>
                             </Grid.Row>

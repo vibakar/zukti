@@ -66,6 +66,7 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
               UNWIND baseWords AS token
               MATCH p=(token)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
               WITH length(p) AS max,baseWords AS baseWords
+              with baseWords AS baseWords,max(max) as max
               UNWIND baseWords AS bw
               match p=(bw)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
               WHERE length(p) = max WITH COLLECT(bw) AS bws
@@ -99,6 +100,7 @@ module.exports = function(intents, keywords, email, types, answerFoundCallback, 
                 UNWIND baseWords AS token
                 MATCH p=(token)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
                 WITH length(p) AS max,baseWords AS baseWords
+                with baseWords AS baseWords,max(max) as max
                 UNWIND baseWords AS bw
                 match p=(bw)-[:part_of|:subconcept|:actor_of|:same_as*]->(:concept{name:'${domain}'})
                 WHERE length(p) = max WITH COLLECT(bw) AS bws

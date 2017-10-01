@@ -115,7 +115,7 @@ export default class FrontPage extends React.Component {
                         <Grid.Column width={4}>
                             <Grid.Row>
                                 <center>
-                                    <Image src='../../images/designlogo.png' size='small' alt='design pattern' avatar onClick={this.onSubmitEmail.bind(this)}/>
+                                    <Image className="imagepointer" src='../../images/designlogo.png' size='small' alt='design pattern' avatar onClick={this.onSubmitEmail.bind(this)}/>
                                 </center>
                             </Grid.Row>
                             <Grid.Row>

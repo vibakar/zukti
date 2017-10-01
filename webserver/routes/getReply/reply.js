@@ -228,12 +228,12 @@ router.post('/askQuestion', function(req, res) {
                     let count = 0;
                     let wordCount = 0;
                     let qid_array = [];
-                    let difference = question.value.length;
+                    let difference = newQuestion.length;
                     let diffIndex = 0;
                     for (let m = 0; m < stackoverflow.length; m++) {
                         count++;
                         // @vibakar: compare logic
-                        // let userQuery = question.value.split(' ');
+                        // let userQuery = newQuestion.value.split(' ');
                         // let title = stackoverflow[m].title.split(' ');
                         // let wordCount = Compare(userQuery, title);
                         //
@@ -247,7 +247,7 @@ router.post('/askQuestion', function(req, res) {
                         // }
 
                         // Levenshtein Distance algorithm
-                        let userQuery = question.value;
+                        let userQuery = newQuestion;
                         let title = stackoverflow[m].title;
                         let distance = Levenshtein(userQuery, title);
 

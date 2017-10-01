@@ -77,6 +77,7 @@ export default class QuestionsAnswer extends React.Component {
         catch((error)=>{
           console.log(error);
         });
+        alert('Suceessfully saved');
     }
     render() {
         const styleFirstCardBoxInRow = {

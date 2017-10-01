@@ -28,7 +28,7 @@ export default class SidebarBot extends Component {
                 <Sidebar as={Menu} className='fixed' animation='slide along'
                   width='thin' visible={true} icon='labeled' vertical inverted>
                     <Menu.Item name='Genie'>
-                        <a href="/home"><Image src='../../images/ginianim.gif'
+                        <a href="/#/adminhome"><Image src='../../images/ginianim.gif'
                         size='tiny' avatar/></a>
                     </Menu.Item>
                     <Menu.Item name='SetupAi' active={activeItem === 'SetupAi'}
